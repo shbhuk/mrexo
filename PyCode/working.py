@@ -5,7 +5,9 @@ from scipy.stats import beta,norm
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
-from scipy.optimize import minimize
+from scipy.optimize import minimize, fmin_slsqp
+    
+    
 
 t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
 t = t.filled()
@@ -22,16 +24,18 @@ Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-select_deg = 55
+select_deg = 5
 
 data = np.vstack((M_obs,R_obs)).T
 sigma = np.vstack((M_sigma,R_sigma)).T
 
 bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
+Log = True
+deg = 5
 
 
 
-
+'''
 x_max = 5
 x_min = 0.01
 x = 0.1
@@ -39,33 +43,39 @@ y = 0.17
 y_max = 11
 y_min = 0.03
 w_hat = 1
+'''
 deg = 5
+abs_tol = 1e-20
+Log = True
 
 
-def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, log = True):
+
+def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log = True):
     '''
     Product of normal and beta distribution
     '''
-    if log == True:
+
+    if Log == True:
         norm_beta = norm.pdf(x_obs, loc = 10**x, scale = x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a = shape1, b = shape2)/(x_max - x_min)
     else:
         norm_beta = norm.pdf(x_obs, loc = x, scale = x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a = shape1, b = shape2)/(x_max - x_min)     
         
     return norm_beta   
  
-def integrate_function(data, data_sd, deg, degree, x_max, x_min, log = False, abs_tol = 1e-10):
+def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, abs_tol = 1e-10):
     '''
     Integrate the product of the normal and beta distribution
+    Comment about absolute tolerance ............................ (data set specific)
     '''
     
     x_obs = data
     x_sd = data_sd
     shape1 = degree
     shape2 = deg - degree + 1
-    log = log
+    Log = Log
     
     return quad(pdfnorm_beta, a = x_min, b = x_max,
-                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, log), epsabs = abs_tol)[0]
+                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]
        
 
 def marginal_density(x, x_max, x_min, deg, w_hat):
@@ -184,14 +194,15 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
 #'                the upper bound for mass, the lower bound for mass
 #'                the upper bound for radius, the lower bound for radius
 #' @param deg: degree used for the Bernstein polynomials
-#' @param log: is the data transformed into a log scale
+#' @param Log: is the data transformed into a Log scale
 #' @param abs.tol: precision when calculate the integral 
 #' @param output.weights.only only output the estimated weights from the
 #'                            Bernstein polynomials if it is TRUE;
 #'                            otherwise, output the conditional densities
 
 
-def MLE_fit(data, bounds, deg, sigma = None, log = False,
+
+def MLE_fit(data, bounds, deg, sigma = None, Log = False,
                     abs_tol = 1e-20, output_weights_only = False):
     '''
     INPUT:
@@ -201,12 +212,13 @@ def MLE_fit(data, bounds, deg, sigma = None, log = False,
         sigma: Measurement Errors for the Data. Default is None
         bounds: Vector with 4 elements. Upper and lower bound for Mass, Upper and lower bound for Radius.
         deg: Degree used for Bernstein polynomials
-        log: If True, data is transformed into log scale
+        Log: If True, data is transformed into Log scale
         abs_tol: Precision used to calculate integral
         output_weights_only: If True, only output the estimated weights from 
         the Bernstein polynomials. Else, output the conditional densities
 
     '''
+
     
     if np.shape(data)[0] < np.shape(data)[1]:
         data = np.transpose(data)
@@ -234,53 +246,100 @@ def MLE_fit(data, bounds, deg, sigma = None, log = False,
         R_indv_pdf = np.array([beta.pdf((R - R_min)/(R_max - R_min), a = d, b = deg - d+1)/(R_max - R_min) for d in deg_vec])        
         
     else:
-        print(deg)
+        print('{} degrees'.format(deg))
         
-        res_M_pdf = np.zeros((n,deg))
-        res_R_pdf = np.zeros((n,deg))
+        M_indv_pdf = np.zeros((n,deg))
+        R_indv_pdf = np.zeros((n,deg))
         C_pdf = np.zeros((n,deg**2))
         
         for i in range(0,n):        
             for d in deg_vec:
-
-                res_M_pdf[i,d-1] = integrate_function(data = M[i], data_sd = sigma_M[i], deg = deg, degree = d , x_max = M_max, x_min = M_min, log = log, abs_tol = abs_tol)
-                res_R_pdf[i,d-1] = integrate_function(data = R[i], data_sd = sigma_R[i], deg = deg, degree = d , x_max = R_max, x_min = R_min, log = log, abs_tol = abs_tol)
+                # pdf for Mass for integrated beta density and normal density
+                M_indv_pdf[i,d-1] = integrate_function(data = M[i], data_sd = sigma_M[i], 
+                                    deg = deg, degree = d , x_max = M_max, x_min = M_min, Log = Log, abs_tol = abs_tol)
+                # pdf for Radius for integrated beta density and normal density
+                R_indv_pdf[i,d-1] = integrate_function(data = R[i], data_sd = sigma_R[i], 
+                                    deg = deg, degree = d , x_max = R_max, x_min = R_min, Log = Log, abs_tol = abs_tol)
 
             # put M.indv.pdf and R.indv.pdf into a big matrix
-            C_pdf[i,:] = np.kron(res_M_pdf[i],res_R_pdf[i])
+            C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
 
             
         C_pdf = C_pdf.T 
-       
+    print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
+     
+    test = []     
     # Function input to optimizer            
     def fn1(w):
-        return - np.sum(np.log(np.matmul(w,C_pdf)))
+        # Log of 0 throws weird errors
+        C_pdf[C_pdf == 0] = 1e-300
+        
+        a = - np.sum(np.log(np.matmul(w,C_pdf)))
+        test.append(a)
+        return a
   
         
     def eqn(w):
         return np.sum(w) - 1
-    
-    def eqn_jacobian(w):
-        return len(w)
-        
-    #        (fun, x0, args=(), method=None, jac=None, hess=None, hessp=None, bounds=None, constraints=(), tol=None, callback=None, options=None)
-        
-    eq_cons = {'type': 'eq',
-               'fun' : eqn,
-               'jac' : eqn_jacobian} 
 
     bounds = [[0,1]]*deg**2
-     
-    res = minimize(fun = fn1, x0 = np.repeat(1./(deg**2),deg**2) , jac = False, method='SLSQP',
-                   constraints = [eq_cons], bounds =  bounds, options={'ftol': 1e-9, 'disp': True} )
+    x0 = np.repeat(1./(deg**2),deg**2)
     
-    '''    
-      opt.w <- solnp(rep(1/(deg^2), deg^2), 
-                 fun = fn1, eqfun = eqn, eqB = 1, 
-                 LB = rep(0, deg^2), UB = rep(1, deg^2), 
-                 control=list(trace = 0))
+    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True)
+    print('Optimization run')
+    
+    w_hat = opt_result[0]
+    n_log_lik = opt_result[1]
+    
+    # Calculate AIC and BIC
+    
+    aic = n_log_lik*2 + 2*(deg**2 - 1)
+    bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
+    
+    
+    # marginal densities
+    M_seq = np.linspace(M_min,M_max,100)
+    R_seq = np.linspace(R_min,R_max,100)
+    Mass_marg = np.array([marginal_density(x = m, x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat) for m in M_seq])
+    Radius_marg = np.array([marginal_density(x = r, x_max = R_max, x_min = R_min, deg = deg, w_hat = w_hat) for r in R_seq])
         
-    '''
+    output = {'weights':w_hat,'aic':aic,'bic':bic,'M_points':M_seq,'R_points':R_seq,
+                  'Mass_marg':Mass_marg,'Radius_marg':Radius_marg}
+
+    # conditional densities with 16% and 84% quantile
+    try:
+        M_cond_R = np.array([cond_density_quantile(y = r, y_max = R_max, y_min = R_min,
+                            x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84]) for r in R_seq])
+        M_cond_R_mean = M_cond_R[:,0]
+        M_cond_R_var = M_cond_R[:,1]
+        M_cond_R_quantile = M_cond_R[:,3:4]
+        R_cond_M = np.array([cond_density_quantile(y = r, y_max = R_max, y_min = R_min,
+                            x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84]) for r in R_seq])
+        R_cond_M_mean = R_cond_M[:,0]
+        R_cond_M_var = R_cond_M[:,1]
+        R_cond_M_quantile = R_cond_M[:,3:4]
+        
+        output['M_cond_R'] = M_cond_R_mean
+        output['M_cond_R_var'] = M_cond_R_var
+        output['M_cond_R_quantile'] = M_cond_R_quantile
+        output['R_cond_M'] = R_cond_M_mean
+        output['R_cond_M_var'] = R_cond_M_var
+        output['R_cond_M_quantile'] = R_cond_M_quantile
+        
+    except ValueError as e:
+        print('Could not run conditional density function')
+        print(e)
+    
+    if output_weights_only == True:
+        return w_hat
+    else:
+        return output
+    
+
+    
+
+  
+    
 
         
     
