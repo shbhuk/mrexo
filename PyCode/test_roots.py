@@ -7,13 +7,15 @@ from scipy.optimize import brentq as root
     
    
 
-w_hat = np.loadtxt('Test/what.txt')
+w_hat = np.loadtxt('Test/what0.txt')
 R_max , R_min = np.loadtxt('Test/R_bounds.txt')
 M_max , M_min = np.loadtxt('Test/M_bounds.txt')
 M_seq = np.loadtxt('Test/M_seq.txt')
 R_seq = np.loadtxt('Test/R_seq.txt')
 deg = 5
 
+what_R = np.loadtxt('Test/what.txt').flatten()
+y_beta_pdf_R = np.loadtxt('Test/ybetapdf.txt')
 
 x_max = M_max
 x_min = M_min
@@ -41,10 +43,10 @@ deg_vec = np.arange(1,deg+1)
 
 y_std = (y - y_min)/(y_max - y_min)
 y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
-y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
+y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
 
 denominator = np.sum(w_hat * y_beta_pdf)
-denominator = 0.5025214
+
 
 # Mean
 mean_beta_indv = (deg_vec * (x_max - x_min) / (deg + 1)) + x_min
