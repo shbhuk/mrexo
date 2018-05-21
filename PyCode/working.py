@@ -93,5 +93,13 @@ def MR_fit(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Rad
             
     MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose)
     
+    if bootstrap == True:
+        
+        n_boot = np.random.choice(n, n, replace = True) 
+        data_boot = data[n_boot]
+        data_sigma = sigma[n_boot]
+        MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
+        
+    
     
     

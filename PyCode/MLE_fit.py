@@ -6,6 +6,7 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp
+import datetime
     
     
 
@@ -24,14 +25,14 @@ Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-select_deg = 5
+#select_deg = 5
 
 data = np.vstack((M_obs,R_obs)).T
 sigma = np.vstack((M_sigma,R_sigma)).T
 
 bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
 Log = True
-deg = 5
+#deg = 5
 
 
 
@@ -44,7 +45,7 @@ y_max = 11
 y_min = 0.03
 w_hat = 1
 '''
-deg = 5
+#deg = 5
 abs_tol = 1e-20
 Log = True
 
@@ -240,6 +241,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         R_indv_pdf = np.zeros((n,deg))
         C_pdf = np.zeros((n,deg**2))
         
+        print(datetime.datetime.now())
         for i in range(0,n):        
             for d in deg_vec:
                 # pdf for Mass for integrated beta density and normal density
@@ -254,6 +256,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
 
             
         C_pdf = C_pdf.T 
+    print(datetime.datetime.now())
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
     test = []     
@@ -305,7 +308,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     M_cond_R_quantile = M_cond_R[:,3:4]
     
     R_cond_M = np.array([cond_density_quantile(y = m, y_max = M_max, y_min = M_min,
-                        x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(5,5)).T.flatten(), qtl = [0.16,0.84]) for m in M_seq])
+                        x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84]) for m in M_seq])
     R_cond_M_mean = R_cond_M[:,0]
     R_cond_M_var = R_cond_M[:,1]
     R_cond_M_quantile = R_cond_M[:,3:4]
