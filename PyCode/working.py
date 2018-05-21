@@ -141,9 +141,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     pool = Pool(processes = cores)
     results = pool.map(bootsample_mle,inputs)
     
-    for i in len(results):
-            
-    
     return results
             
             
