@@ -6,7 +6,7 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp
-from multiprocessing import Pool
+from multiprocessing import Pool,cpu_count
 import os
 import sys
 
@@ -55,31 +55,30 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, bootstrap = True, store_output = False, cores = 4):
+            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count()):
     '''
     Predict the Mass and Radius relationship
     INPUT:
                 
-        1) data: the first column contains the mass measurements and 
+        data: the first column contains the mass measurements and 
              the second column contains the radius measurements.
-        2) sigma: measurement errors for the data, if no measuremnet error, 
+        sigma: measurement errors for the data, if no measuremnet error, 
                     it is NULL
-        3) Mass_max: the upper bound for mass. Default = None
-        4) Mass_min: the lower bound for mass. Default = None
-        5) Radius_max: the upper bound for radius. Default = None
-        6) Radius_min: the upper bound for radius. Default = None
-        7) degree: the maximum degree used for cross-validation/AIC/BIC. Default = 60
-        8) select_deg: if input "cv": cross validation
+        Mass_max: the upper bound for mass. Default = None
+        Mass_min: the lower bound for mass. Default = None
+        Radius_max: the upper bound for radius. Default = None
+        Radius_min: the upper bound for radius. Default = None
+        degree: the maximum degree used for cross-validation/AIC/BIC. Default = 60
+        select_deg: if input "cv": cross validation
                             if input "aic": aic method
                             if input "bic": bic method
                             if input a number: default using that number and 
                             skip the select process 
-        9) Log: is the data transformed into a log scale if Log = True. Default = False
-        10) k_fold: number of fold used for cross validation. Default = 10
-        11) bootstrap: if using bootstrap to obtain confidence interval. Default = True
-        12) num_boot: number of bootstrap replication. Default = 100
-        13) store_output: store the output into csv files if True. Default = False
-        14) cores: this program uses parallel computing for bootstrap. Default = 1
+        Log: is the data transformed into a log scale if Log = True. Default = False
+        k_fold: number of fold used for cross validation. Default = 10
+        num_boot: number of bootstrap replication. Default = 100
+        store_output: store the output into csv files if True. Default = False
+        cores: this program uses parallel computing for bootstrap. Default = 1
       
     '''
     
@@ -134,15 +133,18 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
     #MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose)
     
-    if bootstrap == True:
-        n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
-        inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose) for n_boot in n_boot_iter)
-        
-        
-        pool = Pool(processes = cores)
-        results = pool.map(bootsample_mle,inputs)
+
+    n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
+    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose) for n_boot in n_boot_iter)
     
-        return results
+    print('Running {} bootstraps for the MLE code with {} threads'.format(str(num_boot),str(cores)))
+    pool = Pool(processes = cores)
+    results = pool.map(bootsample_mle,inputs)
+    
+    for i in len(results):
+            
+    
+    return results
             
             
 if __name__ == '__main__':           
