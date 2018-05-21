@@ -6,15 +6,56 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp
+from multiprocessing import Pool
 import os
 import sys
 
 sys.path.append(os.path.dirname(__file__))
 from MLE_fit import MLE_fit
+
+
+t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
+t = t.filled()
+
+M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
+R_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
+
+M_obs = np.array(t['pl_masse'])
+R_obs = np.array(t['pl_rade'])
+
+# bounds for Mass and Radius
+Radius_min = -0.3
+Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
+Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
+Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
+num_boot = 100
+#select_deg = 5
+
+data = np.vstack((M_obs,R_obs)).T
+sigma = np.vstack((M_sigma,R_sigma)).T
+
+bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
+Log = True
+
+
+def bootsample_mle(inputs):
+    '''
+    To bootstrap the data and run MLE
+    Input:
+        dummy : Variable required for mapping for parallel processing
+    '''
+
+
+    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4])
+    #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
+
+    return MR_boot
+
+
     
 
-def MR_fit(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, bootstrap = True, store_output = False, cores = 1):
+def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
+            Log = False, k_fold = 10, num_boot = 100, bootstrap = True, store_output = False, cores = 4):
     '''
     Predict the Mass and Radius relationship
     INPUT:
@@ -91,14 +132,26 @@ def MR_fit(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Rad
     ## Step 2: Estimate the model
             
             
-    MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose)
+    #MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose)
     
     if bootstrap == True:
+        n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
+        inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose) for n_boot in n_boot_iter)
         
-        n_boot = np.random.choice(n, n, replace = True) 
-        data_boot = data[n_boot]
-        data_sigma = sigma[n_boot]
-        MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
+        
+        pool = Pool(processes = cores)
+        results = pool.map(bootsample_mle,inputs)
+    
+        return results
+            
+            
+if __name__ == '__main__':           
+    a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 3, Log = True, num_boot = 8, cores = 8)
+            
+            
+        
+        
+        
         
     
     
