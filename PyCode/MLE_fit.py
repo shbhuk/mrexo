@@ -276,7 +276,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
     
-    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True)
+    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True, iprint = 2)
     print('Optimization run')
     
     w_hat = opt_result[0]
