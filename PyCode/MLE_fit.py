@@ -181,7 +181,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
  
     quantile = [conditional_quantile(i) for i in qtl]
     
-    return np.array([mean,var,quantile[0],quantile[1]])
+    return np.array([mean,var]+quantile)
     
     
 ######################################
