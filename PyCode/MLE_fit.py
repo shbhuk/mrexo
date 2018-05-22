@@ -31,21 +31,7 @@ data = np.vstack((M_obs,R_obs)).T
 sigma = np.vstack((M_sigma,R_sigma)).T
 
 bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
-Log = True
-#deg = 5
 
-
-
-'''
-x_max = 5
-x_min = 0.01
-x = 0.1
-y = 0.17
-y_max = 11
-y_min = 0.03
-w_hat = 1
-'''
-#deg = 5
 abs_tol = 1e-20
 Log = True
 
