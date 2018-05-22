@@ -1,0 +1,12 @@
+*.pyc
+.DS_Store
+__pycache__
+docs/.*
+.ipynb_checkpoints
+*.swp
+*.swm
+*.swo
+*.swm
+*.swk
+*.swl
+*.swn
