@@ -55,7 +55,7 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count()):
+            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(),location = os.path.dirname(__file__)):
     '''
     Predict the Mass and Radius relationship
     INPUT:
@@ -137,15 +137,50 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
     inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose) for n_boot in n_boot_iter)
     
-    print('Running {} bootstraps for the MLE code with {} threads'.format(str(num_boot),str(cores)))
+    print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
     results = pool.map(bootsample_mle,inputs)
     
+    weights_boot = np.array([x['weights'] for x in results])
+    aic_boot = np.array([x['aic'] for x in results])
+    bic_boot = np.array([x['bic'] for x in results]) 
+    M_points_boot =  np.array([x['M_points'] for x in results]) 
+    R_points_boot = np.array([x['R_points'] for x in results]) 
+    M_cond_R_boot = np.array([x['M_cond_R'] for x in results]) 
+    M_cond_R_var_boot = np.array([x['M_cond_R_var'] for x in results]) 
+    M_cond_R_lower_boot = np.array([x['M_cond_R_quantile'][:,0] for x in results]) 
+    M_cond_R_upper_boot = np.array([x['M_cond_R_quantile'][:,1] for x in results]) 
+    R_cond_M_boot = np.array([x['R_cond_M'] for x in results])      
+    R_cond_M_var_boot = np.array([x['R_cond_M_var'] for x in results]) 
+    R_cond_M_lower_boot = np.array([x['R_cond_M_quantile'][:,0] for x in results])  
+    R_cond_M_upper_boot = np.array([x['R_cond_M_quantile'][:,1] for x in results])  
+    Radius_marg_boot = np.array([x['Radius_marg'] for x in results])  
+    Mass_marg_boot = np.array([x['Mass_marg'] for x in results])       
+    
+    np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
+    np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)    
+    np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot) 
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)
+    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)    
+    np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
+    np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
+    np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
+    np.savetxt(os.path.join(location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot)
+    np.savetxt(os.path.join(location,'R_cond_M_boot.txt'),R_cond_M_boot)
+    np.savetxt(os.path.join(location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot) 
+    np.savetxt(os.path.join(location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot)
+    np.savetxt(os.path.join(location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot)
+    np.savetxt(os.path.join(location,'Radius_marg_boot.txt'),Radius_marg_boot)  
+    np.savetxt(os.path.join(location,'Mass_marg_boot.txt'),Mass_marg_boot) 
+            
+                                    
     return results
             
             
 if __name__ == '__main__':           
-    a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 3, Log = True, num_boot = 32)
+    a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
+    Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 3, Log = True, num_boot = 2,
+    location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'))
             
             
         

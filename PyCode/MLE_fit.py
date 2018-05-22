@@ -181,7 +181,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
  
     quantile = [conditional_quantile(i) for i in qtl]
     
-    return np.array([mean,var]+quantile)
+    return mean, var, quantile[0], quantile[1]
     
     
 ######################################
@@ -234,9 +234,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         M_indv_pdf = np.array([beta.pdf((M - M_min)/(M_max - M_min), a = d, b = deg - d+1)/(M_max - M_min) for d in deg_vec])
         R_indv_pdf = np.array([beta.pdf((R - R_min)/(R_max - R_min), a = d, b = deg - d+1)/(R_max - R_min) for d in deg_vec])        
         
-    else:
-        print('{} degrees'.format(deg))
-        
+    else:        
         M_indv_pdf = np.zeros((n,deg))
         R_indv_pdf = np.zeros((n,deg))
         C_pdf = np.zeros((n,deg**2))
@@ -276,7 +274,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
     
-    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True, iprint = 2)
+    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True, iprint = 0)
     print('Optimization run')
     
     w_hat = opt_result[0]
@@ -305,13 +303,13 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         
     M_cond_R_mean = M_cond_R[:,0]
     M_cond_R_var = M_cond_R[:,1]
-    M_cond_R_quantile = M_cond_R[:,3:4]
+    M_cond_R_quantile = M_cond_R[:,2:4]
     
     R_cond_M = np.array([cond_density_quantile(y = m, y_max = M_max, y_min = M_min,
                         x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84]) for m in M_seq])
     R_cond_M_mean = R_cond_M[:,0]
     R_cond_M_var = R_cond_M[:,1]
-    R_cond_M_quantile = R_cond_M[:,3:4]
+    R_cond_M_quantile = R_cond_M[:,2:4]
     
     output['M_cond_R'] = M_cond_R_mean
     output['M_cond_R_var'] = M_cond_R_var
@@ -319,11 +317,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     output['R_cond_M'] = R_cond_M_mean
     output['R_cond_M_var'] = R_cond_M_var
     output['R_cond_M_quantile'] = R_cond_M_quantile
-    '''    
-    except ValueError as e:
-        print('Could not run conditional density function')
-        print(e)
-    '''
     
     if output_weights_only == True:
         return w_hat
