@@ -31,7 +31,21 @@ data = np.vstack((M_obs,R_obs)).T
 sigma = np.vstack((M_sigma,R_sigma)).T
 
 bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
+Log = True
+#deg = 5
 
+
+
+'''
+x_max = 5
+x_min = 0.01
+x = 0.1
+y = 0.17
+y_max = 11
+y_min = 0.03
+w_hat = 1
+'''
+#deg = 5
 abs_tol = 1e-20
 Log = True
 
@@ -174,11 +188,11 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
 ##### Main function: MLE.fit #########
 ######################################
 
-#a = MLE_fit(data = data, bounds = bounds, deg = deg, sigma = sigma, output_weights_only = False, Log = True)
+#a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 
 def MLE_fit(data, bounds, deg, sigma = None, Log = False,
-                    abs_tol = 1e-20, output_weights_only = False):
+                    abs_tol = 1e-8, output_weights_only = False):
     '''
     INPUT:
         data: The first column contains the mass measurements and 
@@ -226,7 +240,8 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         C_pdf = np.zeros((n,deg**2))
         
         print(datetime.datetime.now())
-        for i in range(0,n):        
+        for i in range(0,n):   
+            #print(i)     
             for d in deg_vec:
                 # pdf for Mass for integrated beta density and normal density
                 M_indv_pdf[i,d-1] = integrate_function(data = M[i], data_sd = sigma_M[i], 
