@@ -192,7 +192,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
 
 
 def MLE_fit(data, bounds, deg, sigma = None, Log = False,
-                    abs_tol = 1e-8, output_weights_only = False):
+                    abs_tol = 1e-10, output_weights_only = False):
     '''
     INPUT:
         data: The first column contains the mass measurements and 

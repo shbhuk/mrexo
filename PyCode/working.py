@@ -46,7 +46,7 @@ def bootsample_mle(inputs):
     '''
 
 
-    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4])
+    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
@@ -55,7 +55,7 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(),location = os.path.dirname(__file__)):
+            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(),location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
     INPUT:
@@ -79,8 +79,10 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
         num_boot: number of bootstrap replication. Default = 100
         store_output: store the output into csv files if True. Default = False
         cores: this program uses parallel computing for bootstrap. Default = 1
+        abs_tol : Defined for integration in MLE_fit()
       
     '''
+    print(abs_tol)
     
     n = np.shape(data)[0]
     M = data[:,0]
@@ -114,11 +116,11 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     deg_length = len(degree_candidate)
         
     if select_deg == 'aic' : 
-        aic = np.array([MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = d)['aic'] for d in range(2,degree)])
+        aic = np.array([MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = d, abs_tol = abs_tol)['aic'] for d in range(2,degree)])
         deg_choose = np.nanmin(aic)
 
     elif select_deg == 'bic':
-        bic = np.array([MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = d)['bic'] for d in range(2,degree)])
+        bic = np.array([MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = d, abs_tol = abs_tol)['bic'] for d in range(2,degree)])
         deg_choose = np.nanmin(bic)   
                  
     elif isinstance(select_deg, (int,float)):
@@ -131,11 +133,11 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     ## Step 2: Estimate the model
             
             
-    #MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose)
+    #MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
     
 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
-    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose) for n_boot in n_boot_iter)
+    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol) for n_boot in n_boot_iter)
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
@@ -180,7 +182,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
     Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 5, Log = True, num_boot = 2,
-    location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'))
+    location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
+    abs_tol = 1e-2)
             
             
         

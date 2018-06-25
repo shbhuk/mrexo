@@ -10,3 +10,16 @@ docs/.*
 *.swk
 *.swl
 *.swn
+PyCode/Bootstrap_results/aic_boot.txt
+PyCode/Bootstrap_results/bic_boot.txt
+PyCode/Bootstrap_results/M_cond_R_boot.txt
+PyCode/Bootstrap_results/M_cond_R_lower_boot.txt
+PyCode/Bootstrap_results/M_cond_R_upper_boot.txt
+PyCode/Bootstrap_results/M_cond_R_var_boot.txt
+PyCode/Bootstrap_results/Mass_marg_boot.txt
+PyCode/Bootstrap_results/R_cond_M_boot.txt
+PyCode/Bootstrap_results/R_cond_M_lower_boot.txt
+PyCode/Bootstrap_results/R_cond_M_upper_boot.txt
+PyCode/Bootstrap_results/R_cond_M_var_boot.txt
+PyCode/Bootstrap_results/Radius_marg_boot.txt
+PyCode/Bootstrap_results/weights_boot.txt
