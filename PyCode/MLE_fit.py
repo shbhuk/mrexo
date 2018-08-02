@@ -7,7 +7,7 @@ from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp
 import datetime
-    
+import matplotlib.pyplot as plt    
     
 
 t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
@@ -74,9 +74,10 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
+
     
     return quad(pdfnorm_beta, a = x_min, b = x_max,
-                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]
+                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsrel = abs_tol)[0]
        
 
 def marginal_density(x, x_max, x_min, deg, w_hat):
@@ -215,6 +216,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     # Read the Data
     
     n = np.shape(data)[0]
+    print(n)
     M = data[:,0]
     R = data[:,1]
       
@@ -239,23 +241,26 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         R_indv_pdf = np.zeros((n,deg))
         C_pdf = np.zeros((n,deg**2))
         
-        print(datetime.datetime.now())
+        print('aaa',datetime.datetime.now())
         for i in range(0,n):   
             #print(i)     
             for d in deg_vec:
+                
+                a = datetime.datetime.now()
                 # pdf for Mass for integrated beta density and normal density
                 M_indv_pdf[i,d-1] = integrate_function(data = M[i], data_sd = sigma_M[i], 
                                     deg = deg, degree = d , x_max = M_max, x_min = M_min, Log = Log, abs_tol = abs_tol)
                 # pdf for Radius for integrated beta density and normal density
                 R_indv_pdf[i,d-1] = integrate_function(data = R[i], data_sd = sigma_R[i], 
                                     deg = deg, degree = d , x_max = R_max, x_min = R_min, Log = Log, abs_tol = abs_tol)
-
+                b = datetime.datetime.now()
+                print(i,M[i],R[i],(b-a))
             # put M.indv.pdf and R.indv.pdf into a big matrix
             C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
 
             
         C_pdf = C_pdf.T 
-    print(datetime.datetime.now())
+    print('eeeee',datetime.datetime.now())
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
     test = []     
@@ -275,14 +280,14 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
     
-    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons=eqn,iter=1e3,full_output = True, iprint = 0)
+    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 0)
+    print(datetime.datetime.now())
     print('Optimization run')
     
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
     
-    # Calculate AIC and BIC
-    
+    # Calculate AIC and BIC    
     aic = n_log_lik*2 + 2*(deg**2 - 1)
     bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
     
