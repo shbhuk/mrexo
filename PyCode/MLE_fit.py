@@ -243,7 +243,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         
         print('aaa',datetime.datetime.now())
         for i in range(0,n):   
-            #print(i)     
+                 
             for d in deg_vec:
                 
                 a = datetime.datetime.now()
@@ -254,7 +254,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
                 R_indv_pdf[i,d-1] = integrate_function(data = R[i], data_sd = sigma_R[i], 
                                     deg = deg, degree = d , x_max = R_max, x_min = R_min, Log = Log, abs_tol = abs_tol)
                 b = datetime.datetime.now()
-                print(i,M[i],R[i],(b-a))
             # put M.indv.pdf and R.indv.pdf into a big matrix
             C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
 
