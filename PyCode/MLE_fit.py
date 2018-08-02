@@ -263,14 +263,13 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     print('eeeee',datetime.datetime.now())
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
-    test = []     
+  
     # Function input to optimizer            
     def fn1(w):
         # Log of 0 throws weird errors
         C_pdf[C_pdf == 0] = 1e-300
         
         a = - np.sum(np.log(np.matmul(w,C_pdf)))
-        test.append(a)
         return a
         
     def eqn(w):
@@ -283,14 +282,13 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         w[-1] = 1- np.sum(w[0:-1])
         
         a = - np.sum(np.log(np.matmul(w,C_pdf)))
-        test.append(a)
         return a
 
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
     
     opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 0)
-    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 0)
+    #opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 0)
     print(datetime.datetime.now())
     print('Optimization run')
     
