@@ -9,6 +9,7 @@ from scipy.optimize import minimize, fmin_slsqp
 from multiprocessing import Pool,cpu_count
 import os
 import sys
+import datetime
 
 sys.path.append(os.path.dirname(__file__))
 from MLE_fit import MLE_fit
@@ -47,6 +48,7 @@ def bootsample_mle(inputs):
 
 
     MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5])
+    print(inputs[5])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
@@ -82,7 +84,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
         abs_tol : Defined for integration in MLE_fit()
       
     '''
-    print(abs_tol)
+    print(datetime.datetime.now())
+    
     
     n = np.shape(data)[0]
     M = data[:,0]
@@ -181,9 +184,9 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-    Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 5, Log = True, num_boot = 2,
-    location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
-    abs_tol = 1e-2)
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 2, Log = True, num_boot = 1,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
+                        abs_tol = 1e-8)
             
             
         
