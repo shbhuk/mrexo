@@ -156,8 +156,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     np.savetxt(os.path.join(location,'weights.txt'),weights)
     np.savetxt(os.path.join(location,'aic.txt'),[aic])    
     np.savetxt(os.path.join(location,'bic.txt'),[bic]) 
-    np.savetxt(os.path.join(location,'M_points.txt'),M_points[0])
-    np.savetxt(os.path.join(location,'R_points.txt'),R_points[0])    
+    np.savetxt(os.path.join(location,'M_points.txt'),M_points)
+    np.savetxt(os.path.join(location,'R_points.txt'),R_points)    
     np.savetxt(os.path.join(location,'M_cond_R.txt'),M_cond_R)
     np.savetxt(os.path.join(location,'M_cond_R_var.txt'),M_cond_R_var)
     np.savetxt(os.path.join(location,'M_cond_R_lower.txt'),M_cond_R_lower)
@@ -216,7 +216,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 2, Log = True, num_boot = 1, cores = 3,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 100, cores = 3,
                         location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
                         abs_tol = 1e-8)
             
