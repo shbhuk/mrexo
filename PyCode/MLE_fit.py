@@ -287,7 +287,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
     
-    opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0)
+    opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0, approx_grad = True)
     #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 0)
     #opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 0)
     print('Optimization run finished at', datetime.datetime.now())
