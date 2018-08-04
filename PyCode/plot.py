@@ -10,7 +10,7 @@ import importlib
 importlib.reload(MLE_fit)
 
 
-result_dir = os.path.join(pwd,'Bootstrap_results_windows')
+result_dir = os.path.join(pwd,'Bootstrap_results_mac')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
@@ -30,8 +30,8 @@ Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 
 
-M_points = np.loadtxt(os.path.join(result_dir, 'M_points_boot.txt'))[0]
-R_points = np.loadtxt(os.path.join(result_dir, 'R_points_boot.txt'))[0]
+M_points = np.loadtxt(os.path.join(result_dir, 'M_points_boot.txt'))
+R_points = np.loadtxt(os.path.join(result_dir, 'R_points_boot.txt'))
 weights = np.loadtxt(os.path.join(result_dir, 'weights.txt'))
 Mass_marg = np.loadtxt(os.path.join(result_dir, 'Mass_marg.txt'))
 Radius_marg = np.loadtxt(os.path.join(result_dir, 'Radius_marg.txt'))
