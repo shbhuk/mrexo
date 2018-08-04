@@ -9,7 +9,7 @@ from scipy.optimize import minimize, fmin_slsqp, fmin_l_bfgs_b
 import datetime
 import matplotlib.pyplot as plt    
     
-
+'''
 t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
 t = t.filled()
 
@@ -34,7 +34,7 @@ bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
 Log = True
 #deg = 5
 
-
+'''
 
 '''
 x_max = 5
@@ -77,7 +77,7 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
 
     
     return quad(pdfnorm_beta, a = x_min, b = x_max,
-                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsrel = abs_tol)[0]
+                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]
        
 
 def marginal_density(x, x_max, x_min, deg, w_hat):
@@ -108,26 +108,26 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat):
     if type(y) == list:
         y = np.array(y)
     
-    deg_vec = np.arange(1,deg+1)  
+    deg_vec = np.arange(0,deg)  
     
     # Return Conditional Mean, Variance, Quantile, Distribution
     y_std = (y - y_min)/(y_max - y_min)
     x_std = (x - x_min)/(x_max - x_min)
-    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
+    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d )/(y_max - y_min) for d in deg_vec])
     y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
     
     denominator = np.sum(w_hat * y_beta_pdf)
     
     ########### Density ##########
     
-    density_indv_pdf = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
+    density_indv_pdf = np.array([beta.pdf(x_std, a = d, b = deg - d )/(x_max - x_min) for d in deg_vec])
     density_pdf = w_hat * np.kron(density_indv_pdf,y_beta_indv)
     
     density = density_pdf / denominator
-    
+        
     return density
     
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16,0.84]):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84]):
     '''
     Calculate 16% and 84% quantiles of a conditional density
         
@@ -137,13 +137,15 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
         y = np.array(y)
     
     deg_vec = np.arange(1,deg+1)  
-    
-    y_std = (y - y_min)/(y_max - y_min)
-    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
-    y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
-    
-    denominator = np.sum(w_hat * y_beta_pdf)
-    
+    if y_std == None:
+        y_std = (y - y_min)/(y_max - y_min)
+        y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
+    else: 
+        y_beta_indv = np.array([integrate_function(data = y, data_sd = y_std, deg = d, degree = deg - d + 1, x_max = x_max, x_min = x_min) for d in deg_vec])        
+  
+    y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
+    denominator = np.sum(w_hat * y_beta_pdf) 
+        
     # Mean
     mean_beta_indv = (deg_vec * (x_max - x_min) / (deg + 1)) + x_min
     mean_beta = np.kron(mean_beta_indv,y_beta_indv)
@@ -182,7 +184,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, qtl = [0.16
  
     quantile = [conditional_quantile(i) for i in qtl]
     
-    return mean, var, quantile[0], quantile[1]
+    return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
     
     
 ######################################
@@ -216,7 +218,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     # Read the Data
     
     n = np.shape(data)[0]
-    print(n)
     M = data[:,0]
     R = data[:,1]
       
@@ -241,7 +242,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         R_indv_pdf = np.zeros((n,deg))
         C_pdf = np.zeros((n,deg**2))
         
-        print('aaa',datetime.datetime.now())
+        print('Started Integration at ',datetime.datetime.now())
         for i in range(0,n):   
                  
             for d in deg_vec:
@@ -259,7 +260,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
 
             
         C_pdf = C_pdf.T 
-    print('eeeee',datetime.datetime.now())
+    print('Finished Integration at ',datetime.datetime.now())
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
   
@@ -289,8 +290,8 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0)
     #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 0)
     #opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 0)
-    print(datetime.datetime.now())
-    print('Optimization run')
+    print('Optimization run finished at', datetime.datetime.now())
+
     
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
@@ -312,7 +313,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     # conditional densities with 16% and 84% quantile
 
     M_cond_R = np.array([cond_density_quantile(y = r, y_max = R_max, y_min = R_min,
-                        x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84]) for r in R_seq])
+                        x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
     
         
     M_cond_R_mean = M_cond_R[:,0]
@@ -320,7 +321,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     M_cond_R_quantile = M_cond_R[:,2:4]
     
     R_cond_M = np.array([cond_density_quantile(y = m, y_max = M_max, y_min = M_min,
-                        x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84]) for m in M_seq])
+                        x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
     R_cond_M_mean = R_cond_M[:,0]
     R_cond_M_var = R_cond_M[:,1]
     R_cond_M_quantile = R_cond_M[:,2:4]
@@ -336,8 +337,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         return w_hat
     else:
         return output
-    
-
     
 
   

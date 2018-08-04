@@ -48,7 +48,6 @@ def bootsample_mle(inputs):
 
 
     MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5])
-    print(inputs[5])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
@@ -136,8 +135,41 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     ## Step 2: Estimate the model
             
             
-    #MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
+    fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
     
+    weights = fullMLEresult['weights']
+    aic = fullMLEresult['aic']
+    bic = fullMLEresult['bic'] 
+    M_points =  fullMLEresult['M_points'] 
+    R_points = fullMLEresult['R_points'] 
+    M_cond_R = fullMLEresult['M_cond_R'] 
+    M_cond_R_var = fullMLEresult['M_cond_R_var'] 
+    M_cond_R_lower = fullMLEresult['M_cond_R_quantile'][:,0] 
+    M_cond_R_upper = fullMLEresult['M_cond_R_quantile'][:,1] 
+    R_cond_M = fullMLEresult['R_cond_M']      
+    R_cond_M_var = fullMLEresult['R_cond_M_var'] 
+    R_cond_M_lower = fullMLEresult['R_cond_M_quantile'][:,0]  
+    R_cond_M_upper = fullMLEresult['R_cond_M_quantile'][:,1]  
+    Radius_marg = fullMLEresult['Radius_marg']  
+    Mass_marg = fullMLEresult['Mass_marg']  
+    
+    np.savetxt(os.path.join(location,'weights.txt'),weights)
+    np.savetxt(os.path.join(location,'aic.txt'),aic)    
+    np.savetxt(os.path.join(location,'bic.txt'),bic) 
+    np.savetxt(os.path.join(location,'M_points.txt'),M_points[0])
+    np.savetxt(os.path.join(location,'R_points.txt'),R_points[0])    
+    np.savetxt(os.path.join(location,'M_cond_R.txt'),M_cond_R)
+    np.savetxt(os.path.join(location,'M_cond_R_var.txt'),M_cond_R_var)
+    np.savetxt(os.path.join(location,'M_cond_R_lower.txt'),M_cond_R_lower)
+    np.savetxt(os.path.join(location,'M_cond_R_upper.txt'),M_cond_R_upper)
+    np.savetxt(os.path.join(location,'R_cond_M.txt'),R_cond_M)
+    np.savetxt(os.path.join(location,'R_cond_M_var.txt'),R_cond_M_var) 
+    np.savetxt(os.path.join(location,'R_cond_M_lower.txt'),R_cond_M_lower)
+    np.savetxt(os.path.join(location,'R_cond_M_upper.txt'),R_cond_M_upper)
+    np.savetxt(os.path.join(location,'Radius_marg.txt'),Radius_marg)  
+    np.savetxt(os.path.join(location,'Mass_marg.txt'),Mass_marg) 
+    
+
 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
     inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol) for n_boot in n_boot_iter)
@@ -165,8 +197,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
     np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)    
     np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot) 
-    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)
-    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)    
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
+    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])    
     np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
     np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
     np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
@@ -184,7 +216,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 20,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 2,
                         location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
                         abs_tol = 1e-8)
             
