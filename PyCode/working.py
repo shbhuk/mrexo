@@ -134,7 +134,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     ###########################################################
     ## Step 2: Estimate the model
             
-            
+    print('Running full dataset MLE before bootstrap')        
     fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
     
     weights = fullMLEresult['weights']
