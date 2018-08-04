@@ -10,7 +10,7 @@ import importlib
 importlib.reload(MLE_fit)
 
 
-result_dir = os.path.join(pwd,'Bootstrap_results_fullrun')
+result_dir = os.path.join(pwd,'Bootstrap_results_windows')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()

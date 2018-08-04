@@ -214,8 +214,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     endtime = datetime.datetime.now()
     print(endtime - starttime)
     
-    with open(os.path.join(location,'log_file.txt')) as f:
-       f.write('Started at {}\n'.format(starttime))
+    with open(os.path.join(location,'log_file.txt'),'w') as f:
+       f.write('Started run at {}\n'.format(starttime))
        f.write('Ended run at {}\n'.format(endtime))
     f.close()
                                         
