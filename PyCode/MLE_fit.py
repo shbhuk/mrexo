@@ -108,23 +108,23 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat):
     if type(y) == list:
         y = np.array(y)
     
-    deg_vec = np.arange(0,deg)  
+    deg_vec = np.arange(1,deg+1)  
     
     # Return Conditional Mean, Variance, Quantile, Distribution
     y_std = (y - y_min)/(y_max - y_min)
     x_std = (x - x_min)/(x_max - x_min)
-    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d )/(y_max - y_min) for d in deg_vec])
+    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
     y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
     
     denominator = np.sum(w_hat * y_beta_pdf)
     
     ########### Density ##########
     
-    density_indv_pdf = np.array([beta.pdf(x_std, a = d, b = deg - d )/(x_max - x_min) for d in deg_vec])
+    density_indv_pdf = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
     density_pdf = w_hat * np.kron(density_indv_pdf,y_beta_indv)
     
     density = density_pdf / denominator
-        
+    
     return density
     
 def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84]):
