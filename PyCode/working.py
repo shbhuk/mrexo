@@ -83,7 +83,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
         abs_tol : Defined for integration in MLE_fit()
       
     '''
-    print(datetime.datetime.now())
+    starttime = datetime.datetime.now()
+    print('Started at',starttime)
     
     
     n = np.shape(data)[0]
@@ -208,9 +209,16 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     np.savetxt(os.path.join(location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot)
     np.savetxt(os.path.join(location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot)
     np.savetxt(os.path.join(location,'Radius_marg_boot.txt'),Radius_marg_boot)  
-    np.savetxt(os.path.join(location,'Mass_marg_boot.txt'),Mass_marg_boot) 
-            
-                                    
+    np.savetxt(os.path.join(location,'Mass_marg_boot.txt'),Mass_marg_boot)
+    
+    endtime = datetime.datetime.now()
+    print(endtime - starttime)
+    
+    with open(os.path.join(location,'log_file.txt'),'w') as f:
+       f.write('Started run at {}\n'.format(starttime))
+       f.write('Ended run at {}\n'.format(endtime))
+    f.close()
+                                        
     return results
             
             
