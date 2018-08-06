@@ -10,7 +10,7 @@ import importlib
 importlib.reload(MLE_fit)
 
 
-result_dir = os.path.join(pwd,'Bootstrap_results_mac')
+result_dir = os.path.join(pwd,'Bootstrap_results_BFGS','Bootstrap_results_Mac')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
@@ -87,7 +87,7 @@ ax1.set_title('Kepler data: Mass - radius relations')
 plt.show()
 
 ####################
-'''
+
 M_1 = np.log10(1)
 M_10 = np.log10(10)
 M_50 = np.log10(50)
@@ -124,5 +124,5 @@ ax2.plot(R_seq[M_1_ind],density_M_1_quantile[M_1_ind])
 ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
 ax2.plot(R_seq[M_10_ind],density_M_10_quantile[M_10_ind])
 
-'''
+
 
