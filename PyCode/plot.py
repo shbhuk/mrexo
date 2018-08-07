@@ -10,7 +10,7 @@ import importlib
 importlib.reload(MLE_fit)
 
 
-result_dir = os.path.join(pwd,'Bootstrap_results_BFGS','Bootstrap_results_Mac')
+result_dir = os.path.join(pwd,'Bootstrap_results_SLSQP_mac')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
@@ -87,7 +87,7 @@ ax1.set_title('Kepler data: Mass - radius relations')
 plt.show()
 
 ####################
-
+'''
 M_1 = np.log10(1)
 M_10 = np.log10(10)
 M_50 = np.log10(50)
@@ -107,8 +107,7 @@ for i in range(0,n_boot):
         density_M_10[j,i] = sum(MLE_fit.conditional_density(y = M_10, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
         density_M_50[j,i] = sum(MLE_fit.conditional_density(y = M_50, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
         density_M_100[j,i] = sum(MLE_fit.conditional_density(y = M_100, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
-        break
-    break
+
 density_M_1_quantile = mquantiles(density_M_1,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
 density_M_10_quantile = mquantiles(density_M_10,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
 density_M_50_quantile = mquantiles(density_M_50,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
@@ -126,4 +125,4 @@ ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
 ax2.plot(R_seq[M_10_ind],density_M_10_quantile[M_10_ind])
 ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
 
-
+'''
