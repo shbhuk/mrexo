@@ -1,5 +1,4 @@
 #%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
-
 import numpy as np
 from scipy.stats import beta,norm
 from scipy.integrate import quad
