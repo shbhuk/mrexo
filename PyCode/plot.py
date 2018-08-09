@@ -10,7 +10,7 @@ import importlib
 importlib.reload(MLE_fit)
 
 
-result_dir = os.path.join(pwd,'Bootstrap_results_SLSQP_mac')
+result_dir = os.path.join(pwd,'Bootstrap_results_fullslsqp')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
@@ -69,7 +69,6 @@ logRadius_sigma = 0.434 * R_sigma/R_obs
 lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
 
-x = 1
 
 fig = plt.figure()                                                               
 ax1 = fig.add_subplot(1,1,1)

@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(__file__))
 from MLE_fit import MLE_fit
 
 
-t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
+t = Table.read(os.path.join(os.path.dirname(__file__),'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
 
 M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -37,6 +37,7 @@ sigma = np.vstack((M_sigma,R_sigma)).T
 
 bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
 Log = True
+
 
 
 def bootsample_mle(inputs):
@@ -224,7 +225,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 100, cores = 3,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 1, cores = 1,
                         location = os.path.join(os.path.dirname(__file__),'Bootstrap_results'),
                         abs_tol = 1e-8)
             

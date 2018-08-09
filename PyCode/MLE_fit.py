@@ -149,8 +149,8 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     # Mean
     mean_beta_indv = (deg_vec * (x_max - x_min) / (deg + 1)) + x_min
     mean_beta = np.kron(mean_beta_indv,y_beta_indv)
-    mean_nominator = np.sum(w_hat * mean_beta)
-    mean = mean_nominator / denominator
+    mean_numerator = np.sum(w_hat * mean_beta)
+    mean = mean_numerator / denominator
     
     # Variance 
     var_beta_indv = (deg_vec * (deg - deg_vec + 1) * (x_max - x_min)**2 / ((deg + 2)*(deg + 1)**2)) 
@@ -183,6 +183,10 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
         return root(g,a = x_min, b = x_max)
  
     quantile = [conditional_quantile(i) for i in qtl]
+    
+    print(mean,var,quantile,denominator,y_beta_indv)
+    
+
     
     return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
     
