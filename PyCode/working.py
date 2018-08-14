@@ -86,13 +86,14 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     starttime = datetime.datetime.now()
     print('Started at',starttime)
     
+    if not os.path.exists(location):
+        os.mkdir(location)   
         
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Started run at {}\n'.format(starttime))
     f.close()
     
-    if not os.path.exists(location):
-        os.mkdir(location)
+
     
     
     n = np.shape(data)[0]
