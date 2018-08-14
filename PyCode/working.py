@@ -86,6 +86,11 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     starttime = datetime.datetime.now()
     print('Started at',starttime)
     
+        
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Started run at {}\n'.format(starttime))
+    f.close()
+    
     if not os.path.exists(location):
         os.mkdir(location)
     
@@ -142,7 +147,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Started run at {}\n'.format(starttime))
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
     f.close()
     
