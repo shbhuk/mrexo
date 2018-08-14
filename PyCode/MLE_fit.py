@@ -214,6 +214,8 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         the Bernstein polynomials. Else, output the conditional densities
 
     '''
+    
+    print('New MLE')
 
     
     if np.shape(data)[0] < np.shape(data)[1]:

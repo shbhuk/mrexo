@@ -141,6 +141,11 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     print('Running full dataset MLE before bootstrap')        
     fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
     
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Started run at {}\n'.format(starttime))
+       f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
+    f.close()
+    
     weights = fullMLEresult['weights']
     aic = fullMLEresult['aic']
     bic = fullMLEresult['bic'] 
@@ -217,8 +222,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     endtime = datetime.datetime.now()
     print(endtime - starttime)
     
-    with open(os.path.join(location,'log_file.txt'),'w') as f:
-       f.write('Started run at {}\n'.format(starttime))
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Ended run at {}\n'.format(endtime))
     f.close()
                                         
