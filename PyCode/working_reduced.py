@@ -11,7 +11,7 @@ import sys
 import datetime
 
 sys.path.append(os.path.dirname(__file__))
-from MLE_fit import MLE_fit
+from MLE_fit_reduced import MLE_fit
 
 
 t = Table.read(os.path.join(os.path.dirname(__file__),'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
@@ -237,7 +237,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 100, cores = 100,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_results_cluster_100'))
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_results_cluster_reduced100'))
 
             
             

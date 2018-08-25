@@ -15,6 +15,6 @@ cd /storage/home/szk381/work/Py_mass_radius_working/PyCode         # change into
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working.py > running_logfile_cluster_reduced100.txt
+python working_reduced.py > running_logfile_cluster_reduced100.txt
 
 
