@@ -287,11 +287,12 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         
         w[-1] = 1- np.sum(w[0:-1])
         
-        a = - np.sum(np.log(np.matmul(w,C_pdf)))
+        a = - np.sum(np.log(np.matmul(w,C_pdf))) #Negative since you want to maximize log likelihood
         return a
 
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
+    #x0 = np.repeat(1e-8,deg**2)
     #print('Using slsqp with bigger steps')
     #opt_result = minimize(fun = fn2, x0 = x0, bounds = bounds, method = 'Nelder_Mead')
     #opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0, approx_grad = True)
