@@ -12,7 +12,11 @@ importlib.reload(MLE_fit)
 print(pwd)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 result_dir = os.path.join(pwd,'Bootstrap_results_cluster_Apple100')
+=======
+result_dir = os.path.join(pwd,'Bootstrap_results_Apple100')
+>>>>>>> 5768be954a8b44296816c59970febfc7fc8d4a1f
 =======
 result_dir = os.path.join(pwd,'Bootstrap_results_Apple100')
 >>>>>>> 5768be954a8b44296816c59970febfc7fc8d4a1f
