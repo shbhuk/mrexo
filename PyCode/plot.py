@@ -11,7 +11,11 @@ importlib.reload(MLE_fit)
 
 print(pwd)
 
-result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
+<<<<<<< HEAD
+result_dir = os.path.join(pwd,'Bootstrap_results_cluster_Apple100')
+=======
+result_dir = os.path.join(pwd,'Bootstrap_results_Apple100')
+>>>>>>> 5768be954a8b44296816c59970febfc7fc8d4a1f
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
@@ -59,7 +63,7 @@ R_cond_M_upper_boot = np.loadtxt(os.path.join(result_dir, 'R_cond_M_upper_boot.t
 R_cond_M_lower_boot = np.loadtxt(os.path.join(result_dir, 'R_cond_M_lower_boot.txt'))
 
 n_boot = np.shape(weights_boot)[0]
-deg_choose = int(np.sqrt(np.size(weights_boot)/len(weights_boot)))
+deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
 
 logMass = np.log10(M_obs)
 logRadius = np.log10(R_obs)
