@@ -1,5 +1,5 @@
-setwd('C:/Users/shbhu/Documents/Git/Predicting-exoplanet-mass-and-radius-relationship/Kepler-code/Result-Kepler/')
-
+setwd('C:/Users/szk381/Documents/GitHub/Predicting-exoplanet-mass-and-radius-relationship/Kepler-code/Result-Kepler/')
+setwd('C:/Users/szk381/Documents/GitHub/Py_mass_radius_working/R_code/Kepler-code/')
 ##### Read the dataset #######
 rm(list = ls())
 raw.data <- read.csv(file = "MR_Kepler_170605_noanalytTTV_noupplim.csv", skip = 49)

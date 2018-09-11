@@ -11,7 +11,7 @@ importlib.reload(MLE_fit)
 
 print(pwd)
 
-result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
+result_dir = os.path.join(pwd,'Bootstrap_results_Apple_reduced100')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()

@@ -279,7 +279,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         return a
         
     def eqn(w):
-        return np.sum(w) - 1
+        return np.sum(w)
         
     def fn2(w):
         # Log of 0 throws weird errors
@@ -296,14 +296,27 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     #print('Using slsqp with bigger steps')
     #opt_result = minimize(fun = fn2, x0 = x0, bounds = bounds, method = 'Nelder_Mead')
     #opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0, approx_grad = True)
-    opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 1, acc = 1e-5, epsilon = 1e-5)
+
+    from rpy2.robjects.packages import importr
+    
+    import rpy2.robjects.numpy2ri
+    rpy2.robjects.numpy2ri.activate()
+
+    base = importr('base')
+    rsolnp = importr('Rsolnp')
+    solnp = rsolnp.solnp
+    print('imported rpy2')
+        
+    opt_result = solnp(x0, fun = fn1, eqfun = eqn, eqB = 1, LB = np.repeat(0, deg**2), UB = np.repeat(1, deg**2))
+    #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 1, acc = 1e-5, epsilon = 1e-5)
     #opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 1e3,full_output = True, iprint = 1)
     print('Optimization run finished at', datetime.datetime.now())
 
-    print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
+    print(opt_result[1])
+    #print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
     
     w_hat = opt_result[0]
-    n_log_lik = opt_result[1]
+    n_log_lik = np.min(opt_result[2])
     
     # Calculate AIC and BIC    
     aic = n_log_lik*2 + 2*(deg**2 - 1)
