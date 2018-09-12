@@ -1,4 +1,4 @@
-setwd('C:/Users/szk381/Documents/GitHub/Predicting-exoplanet-mass-and-radius-relationship/Kepler-code/Result-Kepler/')
+#setwd('C:/Users/szk381/Documents/GitHub/Predicting-exoplanet-mass-and-radius-relationship/Kepler-code/Result-Kepler/')
 setwd('C:/Users/szk381/Documents/GitHub/Py_mass_radius_working/R_code/Kepler-code/')
 ##### Read the dataset #######
 rm(list = ls())
@@ -42,8 +42,8 @@ source("MainFunctions/MRpredict.R")
 result <- MRpredict(data, sigma, Mass.min = Mass.min, Mass.max = Mass.max,
                     Radius.min = Radius.min, Radius.max = Radius.max, 
                     log = TRUE, select.deg = select.deg, 
-                    bootstrap = FALSE, num.boot = 20, store.output = FALSE,
-                    cores = 7)
+                    bootstrap = FALSE, num.boot = 1, store.output = FALSE,
+                    cores = 1)
 
 M.points <- result$M.points
 R.points <- result$R.points
