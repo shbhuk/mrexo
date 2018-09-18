@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "working_imap.py", line 242, in <module>
+    location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp_imap'))
+  File "working_imap.py", line 216, in MLE_fit_bootstrap
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
+IndexError: index 0 is out of bounds for axis 0 with size 0
