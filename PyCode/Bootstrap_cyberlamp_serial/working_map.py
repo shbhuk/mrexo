@@ -192,7 +192,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = imap(bootsample_mle,inputs)
+    results = map(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -239,7 +239,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 5, cores = 5,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_serial'))
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp_serial'))
             
             
         
