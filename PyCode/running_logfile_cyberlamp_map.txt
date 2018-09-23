@@ -15,3 +15,74 @@ Optimization terminated after 61 iterations. Exit Code = 0Optimization terminate
 
 
 Running 5 bootstraps for the MLE code with degree = 55, using 5 threads.
+New MLE
+('Started Integration at ', datetime.datetime(2018, 9, 21, 17, 22, 42, 913607))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 9, 21, 17, 30, 3, 92278))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Positive directional derivative for linesearch    (Exit mode 8)
+            Current function value: 888.862157289
+            Iterations: 135
+            Function evaluations: 397516
+            Gradient evaluations: 131
+('Optimization run finished at', datetime.datetime(2018, 9, 22, 4, 41, 52, 534443))
+Optimization terminated after 135 iterations. Exit Code = 8Positive directional derivative for linesearch
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 9, 22, 4, 42, 13, 648242))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 9, 22, 4, 49, 34, 75415))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 1017.85053541
+            Iterations: 66
+            Function evaluations: 200125
+            Gradient evaluations: 66
+('Optimization run finished at', datetime.datetime(2018, 9, 22, 8, 58, 4, 544687))
+Optimization terminated after 66 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 9, 22, 8, 58, 28, 939926))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 9, 22, 9, 5, 50, 959961))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 925.318968858
+            Iterations: 70
+            Function evaluations: 212260
+            Gradient evaluations: 70
+('Optimization run finished at', datetime.datetime(2018, 9, 22, 13, 17, 28, 664991))
+Optimization terminated after 70 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 9, 22, 13, 17, 48, 732800))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 9, 22, 13, 24, 52, 601040))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Positive directional derivative for linesearch    (Exit mode 8)
+            Current function value: 1010.83265002
+            Iterations: 153
+            Function evaluations: 452163
+            Gradient evaluations: 149
+('Optimization run finished at', datetime.datetime(2018, 9, 23, 2, 20, 42, 366134))
+Optimization terminated after 153 iterations. Exit Code = 8Positive directional derivative for linesearch
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 9, 23, 2, 21, 6, 458544))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 9, 23, 2, 28, 44, 859452))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 1010.60289101
+            Iterations: 75
+            Function evaluations: 227457
+            Gradient evaluations: 75
+('Optimization run finished at', datetime.datetime(2018, 9, 23, 6, 34, 12, 9252))
+Optimization terminated after 75 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+1 day, 16:48:14.630201
