@@ -192,7 +192,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs))
+    results = pool.map(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])

@@ -94,7 +94,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
        f.write('Started run at {}\n'.format(starttime))
     f.close()
     
-    copyfile(os.path.join(os.path.dirname(location),'working_imap.py'), os.path.join(location,'working_imap.py'))
+    copyfile(os.path.join(os.path.dirname(location),'working.py'), os.path.join(location,'working.py'))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
     
     
@@ -192,7 +192,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs))
+    results = pool.imap(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -213,14 +213,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
     np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)    
     np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot) 
-    try:    
-        np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
-        np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])    
-    except:    
-        print('Caught exception while saving M_points')
-        print(np.shape(M_points_boot))
-        np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)    
-        np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)    
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
+    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])    
     np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
     np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
     np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
@@ -244,5 +238,14 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 5, Log = True, num_boot = 1, 
-                        location = os.path.join(os.path.dirname(__file__),'test'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 20, cores = 20,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp'))
+            
+            
+        
+        
+        
+        
+    
+    
+    
