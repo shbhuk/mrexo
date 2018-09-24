@@ -14,4 +14,4 @@ cd /storage/home/szk381/work/Py_mass_radius_working/PyCode         # change into
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working_imap.py > running_logfile_cluster_map.txt
+python working_open_imap.py > running_logfile_open_imap.txt
