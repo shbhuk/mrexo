@@ -85,6 +85,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
       
     '''
     starttime = datetime.datetime.now()
+    if cores > num_boot:
+       cores = num_boot
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
     
     if not os.path.exists(location):
