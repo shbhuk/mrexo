@@ -47,7 +47,6 @@ def bootsample_mle(inputs):
         dummy : Variable required for mapping for parallel processing
     '''
 
-
     MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5], location = inputs[6])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
@@ -85,8 +84,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
       
     '''
     starttime = datetime.datetime.now()
-    if cores > num_boot:
-       cores = num_boot
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
     
     if not os.path.exists(location):
@@ -98,7 +95,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
-    
     
     n = np.shape(data)[0]
     M = data[:,0]
@@ -190,11 +186,11 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 
 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
-    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
+    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol) for n_boot in n_boot_iter)
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs))
+    results = map(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -215,14 +211,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
     np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)    
     np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot) 
-    try:    
-        np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
-        np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])    
-    except:    
-        print('Caught exception while saving M_points')
-        print(np.shape(M_points_boot))
-        np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)    
-        np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)    
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
+    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])    
     np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
     np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
     np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
@@ -246,5 +236,15 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 20, 
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_imap_full'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 8,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp_serial'))
+
+            
+            
+        
+        
+        
+        
+    
+    
+    

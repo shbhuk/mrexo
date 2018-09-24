@@ -47,8 +47,7 @@ def bootsample_mle(inputs):
         dummy : Variable required for mapping for parallel processing
     '''
 
-
-    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5])
+    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5], location = inputs[6])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
@@ -94,9 +93,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
        f.write('Started run at {}\n'.format(starttime))
     f.close()
     
-    copyfile(os.path.join(os.path.dirname(location),'working.py'), os.path.join(location,'working.py'))
+    copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
-    
     
     n = np.shape(data)[0]
     M = data[:,0]
@@ -147,7 +145,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     ## Step 2: Estimate the model
             
     print('Running full dataset MLE before bootstrap')        
-    fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol)
+    fullMLEresult = MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = deg_choose, abs_tol = abs_tol, location = location)
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
@@ -192,7 +190,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = pool.map(bootsample_mle,inputs)
+    results = map(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -238,18 +236,9 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-<<<<<<< HEAD
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 5,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_poolmap_full'))
-=======
-<<<<<<< HEAD
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 50,
-                        location = os.path.join(os.path.dirname(__file__),'Apple_fullworking_50boot'))
-=======
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 20, cores = 20,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp'))
->>>>>>> ce4f1a201ae95de56b460b963a1f0b7fba46316e
->>>>>>> 638f111ce265926bbf0f00427f1c372fa2f4d163
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 8,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_apple_serial'))
+
             
             
         
