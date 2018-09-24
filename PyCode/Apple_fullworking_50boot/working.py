@@ -238,18 +238,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-<<<<<<< HEAD
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 5,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_poolmap_full'))
-=======
-<<<<<<< HEAD
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 50,
                         location = os.path.join(os.path.dirname(__file__),'Apple_fullworking_50boot'))
-=======
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 20, cores = 20,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp'))
->>>>>>> ce4f1a201ae95de56b460b963a1f0b7fba46316e
->>>>>>> 638f111ce265926bbf0f00427f1c372fa2f4d163
             
             
         
