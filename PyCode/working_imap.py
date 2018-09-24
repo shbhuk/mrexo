@@ -94,7 +94,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
        f.write('Started run at {}\n'.format(starttime))
     f.close()
     
-    copyfile(os.path.join(os.path.dirname(location),'working_imap.py'), os.path.join(location,'working_imap.py'))
+    copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
     
     
