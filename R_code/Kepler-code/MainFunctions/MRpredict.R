@@ -39,8 +39,8 @@ MRpredict <- function(data, sigma, Mass.min = NULL, Mass.max = NULL,
       if(!require(x,character.only = TRUE)) stop("Package not found")
     } 
   }
-  pkgTest("Rsolnp")
-  pkgTest("parallel")
+  #pkgTest("Rsolnp")
+  #pkgTest("parallel")
   
   # load function
   library(Rsolnp)
@@ -189,13 +189,13 @@ MRpredict <- function(data, sigma, Mass.min = NULL, Mass.max = NULL,
   ###########################################################
   ## Step 2: Estimate the model
   MR.MLE <- MLE.fit(data = data, bounds = bounds, sigma = data.sg, 
-                    deg = deg.choose, log = TRUE)
+                    deg = deg.choose, use_log = TRUE)
   
   if (bootstrap == TRUE) {
     
     # weights <- Mass.marg.boot <- Radius.marg.boot <- 
       #   M.cond.R.boot.var <- M.cond.R.boot <- R.cond.M.boot <- list() 
-    pb  <- txtProgressBar(1, num.boot, style=3)
+    #pb  <- txtProgressBar(1, num.boot, style=3)
     cat("\nStarting Bootstrap: \n")
     
     boot.parallel.fn <- function(rep) {
@@ -205,7 +205,7 @@ MRpredict <- function(data, sigma, Mass.min = NULL, Mass.max = NULL,
       n.boot <- sample(1:n, replace = T)
       data.boot <- data[n.boot, ]
       data.sg.boot <- data.sg[n.boot, ]
-      MR.boot <- MLE.fit(data.boot, data.sg.boot, bounds, deg = deg.choose, log = log)
+      MR.boot <- MLE.fit(data.boot, data.sg.boot, bounds, deg = deg.choose, use_log = log)
     }
     
     library(parallel)

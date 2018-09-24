@@ -164,7 +164,7 @@ cond.density.quantile <- function(y, y.max, y.min, x.max, x.min, deg, w.hat,
 
 abs_tol = 1e-20
 use_log = TRUE
-deg = 5
+deg = 55
 
 #MLE.fit(data = data, sigma = sigma, bounds = bounds, deg = deg, use_log = TRUE,abs.tol = 1e-20, output.weights.only = FALSE)
 
@@ -260,6 +260,7 @@ MLE.fit <- function(data, sigma = NULL, bounds, deg, use_log = FALSE,
   if (opt.w$convergence != 0) {
     warning("solnp result does not converge!!!")
   }
+  print(c(opt.w$values,opt.w$convergence,opt.w$elapsed,length((opt.w$values))))
   w.hat <- opt.w$pars
   nlog.lik <- min(opt.w$values)
 
