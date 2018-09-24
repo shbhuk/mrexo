@@ -48,7 +48,7 @@ def bootsample_mle(inputs):
     '''
 
 
-    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5])
+    MR_boot = MLE_fit(data = inputs[0], sigma = inputs[1], bounds = inputs[2], Log = inputs[3], deg = inputs[4], abs_tol = inputs[5], location = inputs[6])
     #MR_boot = MLE_fit(data = data_boot, bounds = bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
@@ -190,7 +190,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 
 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
-    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol) for n_boot in n_boot_iter)
+    inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
