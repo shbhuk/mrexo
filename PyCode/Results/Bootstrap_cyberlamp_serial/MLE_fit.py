@@ -6,7 +6,7 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp, fmin_l_bfgs_b
-import datetime
+import datetime,os
 import matplotlib.pyplot as plt    
     
 '''
@@ -199,7 +199,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
 
 def MLE_fit(data, bounds, deg, sigma = None, Log = False,
-                    abs_tol = 1e-10, output_weights_only = False):
+                    abs_tol = 1e-10, output_weights_only = False, location = None):
     '''
     INPUT:
         data: The first column contains the mass measurements and 
@@ -212,10 +212,17 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         abs_tol: Precision used to calculate integral
         output_weights_only: If True, only output the estimated weights from 
         the Bernstein polynomials. Else, output the conditional densities
+        location : For logging
 
     '''
     
     print('New MLE')
+    starttime = datetime.datetime.now()
+    if location is None:
+        location = os.path.dirname(__file__)
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Started run at {}\n'.format(starttime))
+    f.close()
 
     
     if np.shape(data)[0] < np.shape(data)[1]:
@@ -249,6 +256,9 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         C_pdf = np.zeros((n,deg**2))
         
         print('Started Integration at ',datetime.datetime.now())
+        with open(os.path.join(location,'log_file.txt'),'a') as f:
+            f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
+        f.close()
         for i in range(0,n):   
                  
             for d in deg_vec:
@@ -269,6 +279,9 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         
     print(np.shape(C_pdf))
     print('Finished Integration at ',datetime.datetime.now())
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+        f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
+    f.close()
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
   
@@ -301,7 +314,10 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     print('Optimization run finished at', datetime.datetime.now())
 
     print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
-    
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+        f.write('Finished Optimization at {}\n'.format(datetime.datetime.now()))
+    f.close()
+
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
     

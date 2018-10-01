@@ -14,4 +14,4 @@ cd /storage/home/szk381/work/Py_mass_radius_working/PyCode         # change into
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working_cyber_serial.py > running_logfile_cluster_serial.txt
+python working_cyber_parallel.py > running_logfile_cyber_parallel.txt
