@@ -221,7 +221,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     if location is None:
         location = os.path.dirname(__file__)
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('\n======================================\n')
        f.write('Started run at {}\n'.format(starttime))
     f.close()
 
@@ -316,7 +315,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
 
     print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-        f.write('Finished Optimization at {}\n\n\n'.format(datetime.datetime.now()))
+        f.write('Finished Optimization at {}\n'.format(datetime.datetime.now()))
     f.close()
 
     w_hat = opt_result[0]

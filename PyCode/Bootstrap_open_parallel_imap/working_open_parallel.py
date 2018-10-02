@@ -86,9 +86,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
     
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-       
     if not os.path.exists(location):
         os.mkdir(location)   
         
@@ -193,7 +190,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs))
+    results = pool.imap(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -239,8 +236,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 40, Log = True, num_boot = 25,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap2'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 25, Log = True, num_boot = 12,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap'))
 
             
             

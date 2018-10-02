@@ -221,7 +221,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     if location is None:
         location = os.path.dirname(__file__)
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('\n======================================\n')
        f.write('Started run at {}\n'.format(starttime))
     f.close()
 

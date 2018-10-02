@@ -86,9 +86,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
     
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-       
     if not os.path.exists(location):
         os.mkdir(location)   
         
