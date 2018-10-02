@@ -196,6 +196,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 
     pool = Pool(processes = cores)
     results = list(pool.imap(bootsample_mle,inputs))
+
+    print('Finished bootstrap at {}'.format(datetime.datetime.now()))
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -241,8 +243,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 40, Log = True, num_boot = 25,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap2'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 10, Log = True, num_boot = 10,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap_0chunk'))
 
             
             
