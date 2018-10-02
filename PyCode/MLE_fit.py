@@ -223,7 +223,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('\n======================================\n')
        f.write('Started run at {}\n'.format(starttime))
-    f.close()
+
 
     
     if np.shape(data)[0] < np.shape(data)[1]:
@@ -259,7 +259,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
         print('Started Integration at ',datetime.datetime.now())
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
-        f.close()
+
         for i in range(0,n):   
                  
             for d in deg_vec:
@@ -282,7 +282,7 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
-    f.close()
+
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
      
   
@@ -317,7 +317,6 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Optimization at {}\n\n\n'.format(datetime.datetime.now()))
-    f.close()
 
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
