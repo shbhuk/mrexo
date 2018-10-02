@@ -1,0 +1,90 @@
+Started for 10 degrees at 2018-10-02 16:24:42.879191, using 24 cores
+======================================
+Started run at 2018-10-02 16:24:42.884305
+Started Integration at 2018-10-02 16:24:42.884915
+Finished Integration at 2018-10-02 16:26:37.681983
+Finished Optimization at 2018-10-02 16:26:38.033609
+
+
+Finished full dataset MLE run at 2018-10-02 16:26:42.305599
+Running 10 bootstraps for the MLE code with degree = 10, using 24 threads.
+======================================
+Started run at 2018-10-02 16:26:42.374060
+Started Integration at 2018-10-02 16:26:42.375167
+Finished Integration at 2018-10-02 16:28:34.419006
+Finished Optimization at 2018-10-02 16:28:34.792502
+
+
+
+======================================
+Started run at 2018-10-02 16:28:39.045985
+Started Integration at 2018-10-02 16:28:39.046619
+Finished Integration at 2018-10-02 16:30:34.815403
+Finished Optimization at 2018-10-02 16:30:35.310198
+
+
+
+======================================
+Started run at 2018-10-02 16:30:39.600032
+Started Integration at 2018-10-02 16:30:39.600796
+Finished Integration at 2018-10-02 16:32:39.835002
+Finished Optimization at 2018-10-02 16:32:40.114184
+
+
+
+======================================
+Started run at 2018-10-02 16:32:44.507282
+Started Integration at 2018-10-02 16:32:44.507940
+Finished Integration at 2018-10-02 16:34:38.011352
+Finished Optimization at 2018-10-02 16:34:38.386197
+
+
+
+======================================
+Started run at 2018-10-02 16:34:42.646092
+Started Integration at 2018-10-02 16:34:42.646839
+Finished Integration at 2018-10-02 16:36:38.334596
+Finished Optimization at 2018-10-02 16:36:39.012150
+
+
+
+======================================
+Started run at 2018-10-02 16:36:43.307733
+Started Integration at 2018-10-02 16:36:43.308506
+Finished Integration at 2018-10-02 16:38:35.815543
+Finished Optimization at 2018-10-02 16:38:35.981316
+
+
+
+======================================
+Started run at 2018-10-02 16:38:40.454637
+Started Integration at 2018-10-02 16:38:40.455328
+Finished Integration at 2018-10-02 16:40:38.105371
+Finished Optimization at 2018-10-02 16:40:38.288487
+
+
+
+======================================
+Started run at 2018-10-02 16:40:42.740645
+Started Integration at 2018-10-02 16:40:42.741361
+Finished Integration at 2018-10-02 16:42:37.886151
+Finished Optimization at 2018-10-02 16:42:38.104996
+
+
+
+======================================
+Started run at 2018-10-02 16:42:42.413264
+Started Integration at 2018-10-02 16:42:42.413972
+Finished Integration at 2018-10-02 16:44:36.217080
+Finished Optimization at 2018-10-02 16:44:36.466051
+
+
+
+======================================
+Started run at 2018-10-02 16:44:40.754974
+Started Integration at 2018-10-02 16:44:40.755673
+Finished Integration at 2018-10-02 16:46:36.269615
+Finished Optimization at 2018-10-02 16:46:36.552927
+
+
+Ended run at 2018-10-02 16:46:40.875074

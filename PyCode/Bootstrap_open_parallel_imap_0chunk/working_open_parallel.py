@@ -197,7 +197,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
        f.write('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
 
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs,chunksize = 10))
+    results = list(pool.imap(bootsample_mle,inputs))
 
     print('Finished bootstrap at {}'.format(datetime.datetime.now()))
     
@@ -246,7 +246,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 10, Log = True, num_boot = 10,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap_10chunk'))
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap_0chunk'))
 
             
             

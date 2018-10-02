@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "working_open_parallel.py", line 245, in <module>
-    location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap_0chunk'))
-  File "working_open_parallel.py", line 89, in MLE_fit_bootstrap
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-IOError: [Errno 2] No such file or directory: 'Bootstrap_open_parallel_imap_0chunk/log_file.txt'
