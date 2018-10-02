@@ -85,13 +85,16 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     '''
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
-    
+
     if not os.path.exists(location):
         os.mkdir(location)   
-        
+    
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Started run at {}\n'.format(starttime))
-    f.close()
+       f.write('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
+       
+
+        
+
     
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
@@ -149,7 +152,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-    f.close()
+
     
     weights = fullMLEresult['weights']
     aic = fullMLEresult['aic']
@@ -189,8 +192,14 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
+
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
+
     pool = Pool(processes = cores)
-    results = pool.map(bootsample_mle,inputs)
+    results = list(pool.imap(bootsample_mle,inputs))
+
+    print('Finished bootstrap at {}'.format(datetime.datetime.now()))
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -229,15 +238,15 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Ended run at {}\n'.format(endtime))
-    f.close()
+
                                         
     return results
             
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 10, Log = True, num_boot = 8,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp_parallel'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 10, Log = True, num_boot = 20,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_cyberlamp_parallel520'))
 
             
             
