@@ -64,68 +64,10 @@ def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False, 
             y_beta_indv_sample[i,:] = results[5:]
         
         predicted_mean = np.mean(mean_sample)
-        
-        def pbeta_conditional_density(x):
-            
-            def mix_density(j):
-                
-                x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
-    
-                quantile_nominator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
-                p_beta = quantile_nominator / denominator
-                
-                return p_beta
-    
-            if np.size(x)>1:
-                return np.array([mix_density(i) for i in x])
-            else:
-                return mix_density(x)
-            
-            
-        def conditional_quantile(q):
-            def g(x):
-                return pbeta_conditional_density(x) - q
-            return root(g,a = x_min, b = x_max)
- 
-        quantile = [conditional_quantile(i) for i in qtl]
+
         
         
-        
-        
-        
-            pbeta.conditional.density <- function(x){ 
-      
-      mix.density <- function(j) {
-        
-        deg.vec <- 1:55
-        x.indv.cdf <-
-          sapply(deg.vec, 
-                 function(x, degree) {pbeta(x, degree, deg-degree+1)}, 
-                 x = (j-x.min)/(x.max-x.min))
-        quantile.numerator <- rep(0,k)
-        p.beta.sample <- rep(0, k)
-        for (ii in 1:k) {
-          quantile.numerator[ii] <- 
-            sum(weights.mle * kronecker(x.indv.cdf, y.beta.indv.sample[ii, ]))
-          p.beta.sample[ii] <- quantile.numerator[ii]/denominator.sample[ii]
-        }
-        p.beta <- mean(p.beta.sample)
-      }
-      sapply(x, mix.density)
-    }
-  
-    mixture.conditional.quantile <- function(q, x.min, x.max){ 
-      g <- function(x){ pbeta.conditional.density(x)-q }
-      root <- uniroot(g, interval=c(x.min, x.max) )$root
-      return(root) 
-    }
-    predicted.quantiles <- sapply(qtl, mixture.conditional.quantile,
-                                  x.min = Mass.min, x.max = Mass.max)
-    predicted.lower.quantile <- predicted.quantiles[1]
-    predicted.upper.quantile <- predicted.quantiles[2]
-    
-  } 
-        
+   
         
     return predicted_mean,predicted_lower_quantile,predicted_upper_quantile
             
