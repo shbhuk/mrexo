@@ -236,14 +236,14 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
 #a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 
-def MLE_fit(data, bounds, deg, sigma = None, Log = False,
+def MLE_fit(data, bounds, deg, sigma, Log = False,
                     abs_tol = 1e-10, output_weights_only = False, location = None):
     '''
     INPUT:
         data: The first column contains the mass measurements and 
               the second column contains the radius measurements.
               Numpy Array
-        sigma: Measurement Errors for the Data. Default is None
+        sigma: Measurement Errors for the Data.
         bounds: Vector with 4 elements. Upper and lower bound for Mass, Upper and lower bound for Radius.
         deg: Degree used for Bernstein polynomials
         Log: If True, data is transformed into Log scale
@@ -273,9 +273,9 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     M = data[:,0]
     R = data[:,1]
       
-    if sigma is not None:
-        sigma_M = sigma[:,0]
-        sigma_R = sigma[:,1]
+
+    sigma_M = sigma[:,0]
+    sigma_R = sigma[:,1]
         
     M_max = bounds[0]
     M_min = bounds[1]

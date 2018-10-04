@@ -108,7 +108,8 @@ r_posterior = np.random.normal(5,0.5,10)
 print(predict_mass_given_radius(radius = r_posterior, r_sigma = np.repeat(None,10), posterior_sample = True))
     
   
+print(predict_mass_given_radius(radius = 5, r_sigma = 0.1, posterior_sample = False))  
 print(predict_mass_given_radius(radius = 5, r_sigma = None, posterior_sample = False))  
-    
+       
     
     
