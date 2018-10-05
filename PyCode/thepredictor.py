@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy.table import Table
 import os,sys
+from scipy.stats import beta
+
 from scipy.stats.mstats import mquantiles
 pwd = os.path.dirname(__file__)
 #sys.path.append(pwd)
@@ -9,20 +11,41 @@ import MLE_fit
 import importlib
 importlib.reload(MLE_fit)
 
-def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False, qtl = [0.16,0.84], islog = False):
+
+Radius = 5
+r_sigma = 0.1
+Radius_min = -0.3
+Radius_max = 1.357
+Mass_min = -1
+Mass_max = 3.809
+qtl = [0.16,0.84]
+
+
+weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
+degrees = int(np.sqrt(len(weights_mle)))
+'''
+a = MLE_fit.cond_density_quantile(y = np.log10(Radius), y_std = r_sigma, y_max = Radius_max, y_min = Radius_min,
+                                                      x_max = Mass_max, x_min = Mass_min, deg = degrees, 
+                                                      w_hat = weights_mle, qtl = qtl)
+
+'''
+
+
+def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False, 
+                                qtl = [0.16,0.84], islog = False,Radius_min = -0.3, 
+                                Radius_max = 1.357,Mass_min = -1,Mass_max = 3.809):
     '''
     INPUT:
-        radius = 
-        
-        islog = If True. Radius and Radius sigma is already in log scale. If False, will be converted to log
-    
+        radius = The radius for which Mass is being predicted. [Earth Radii]
+        r_sigma = 1 sigma error on radius [Earth Radii]
+        posterior_sample = If the input is a posterior sample. Default is False
+        qtl = Quantile values returned. Default is 0.16 and 0.84
+        islog = Whether the radius given is in log scale or not. Default is False. The r_sigma is always in original units
+        Radius, Mass = upper bounds and lower bounds used in the Bernstein polynomial model in log10 scale
     '''
     
-    # upper bounds and lower bounds used in the Bernstein polynomial model in log10 scale
-    Radius_min = -0.3
-    Radius_max = 1.357
-    Mass_min = -1
-    Mass_max = 3.809
+    
+
     
     # read weights
     weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
@@ -61,77 +84,32 @@ def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False, 
                                                       
             mean_sample[i] = results[0]
             denominator_sample[i] = results[4]
-            y_beta_indv_sample[i,:] = results[5:]
+            y_beta_indv_sample[i,:] = results[5:][0]
         
         predicted_mean = np.mean(mean_sample)
+
+        # Calculate the quantiles
         
-        def pbeta_conditional_density(x):
-            
-            def mix_density(j):
-                
-                x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
-    
-                quantile_nominator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
-                p_beta = quantile_nominator / denominator
-                
-                return p_beta
-    
-            if np.size(x)>1:
-                return np.array([mix_density(i) for i in x])
-            else:
-                return mix_density(x)
-            
-            
-        def conditional_quantile(q):
-            def g(x):
-                return pbeta_conditional_density(x) - q
-            return root(g,a = x_min, b = x_max)
- 
-        quantile = [conditional_quantile(i) for i in qtl]
+        mixture_conditional_quantile = MLE_fit.mixture_conditional_density_qtl( y_max = Radius_max, y_min = Radius_min,
+                                                      x_max = Mass_max, x_min = Mass_min, deg = degrees, 
+                                                      w_hat = weights_mle, 
+                                                      denominator_sample = denominator_sample,
+                                                      y_beta_indv_sample = y_beta_indv_sample, qtl = qtl)
+
         
-        
-        
-        
-        
-            pbeta.conditional.density <- function(x){ 
+        predicted_lower_quantile = mixture_conditional_quantile[0]
+        predicted_upper_quantile = mixture_conditional_quantile[1]
       
-      mix.density <- function(j) {
-        
-        deg.vec <- 1:55
-        x.indv.cdf <-
-          sapply(deg.vec, 
-                 function(x, degree) {pbeta(x, degree, deg-degree+1)}, 
-                 x = (j-x.min)/(x.max-x.min))
-        quantile.numerator <- rep(0,k)
-        p.beta.sample <- rep(0, k)
-        for (ii in 1:k) {
-          quantile.numerator[ii] <- 
-            sum(weights.mle * kronecker(x.indv.cdf, y.beta.indv.sample[ii, ]))
-          p.beta.sample[ii] <- quantile.numerator[ii]/denominator.sample[ii]
-        }
-        p.beta <- mean(p.beta.sample)
-      }
-      sapply(x, mix.density)
-    }
-  
-    mixture.conditional.quantile <- function(q, x.min, x.max){ 
-      g <- function(x){ pbeta.conditional.density(x)-q }
-      root <- uniroot(g, interval=c(x.min, x.max) )$root
-      return(root) 
-    }
-    predicted.quantiles <- sapply(qtl, mixture.conditional.quantile,
-                                  x.min = Mass.min, x.max = Mass.max)
-    predicted.lower.quantile <- predicted.quantiles[1]
-    predicted.upper.quantile <- predicted.quantiles[2]
-    
-  } 
-        
-        
-    return predicted_mean,predicted_lower_quantile,predicted_upper_quantile
+    return predicted_mean,predicted_lower_quantile,predicted_upper_quantile    
+    #return 10**predicted_mean,10**predicted_lower_quantile,10**predicted_upper_quantile
             
 
+r_posterior = np.random.normal(5,0.5,10)
+print(predict_mass_given_radius(radius = r_posterior, r_sigma = np.repeat(None,10), posterior_sample = True))
     
-    
-    
+  
+print(predict_mass_given_radius(radius = 5, r_sigma = 0.1, posterior_sample = False))  
+print(predict_mass_given_radius(radius = 5, r_sigma = None, posterior_sample = False))  
+       
     
     

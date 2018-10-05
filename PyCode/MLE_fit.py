@@ -155,8 +155,8 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     # Variance 
     var_beta_indv = (deg_vec * (deg - deg_vec + 1) * (x_max - x_min)**2 / ((deg + 2)*(deg + 1)**2)) 
     var_beta = np.kron(var_beta_indv,y_beta_indv)
-    var_nominator = np.sum(w_hat * var_beta)
-    var = var_nominator / denominator
+    var_numerator = np.sum(w_hat * var_beta)
+    var = var_numerator / denominator
     
     # Quantile
     
@@ -166,12 +166,13 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
             
             x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
 
-            quantile_nominator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
-            p_beta = quantile_nominator / denominator
+            quantile_numerator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
+            p_beta = quantile_numerator / denominator
             
             return p_beta
 
         if np.size(x)>1:
+            print('x>1')
             return np.array([mix_density(i) for i in x])
         else:
             return mix_density(x)
@@ -189,6 +190,43 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
     
     return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
+
+def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, denominator_sample, y_beta_indv_sample,qtl = [0.16,0.84]):
+    '''   
+    Calculate the 16% and 84% quantiles using root function.
+    Mixture of the CDF of k conditional densities
+    '''
+    
+    deg_vec = np.arange(1,deg+1)  
+    def pbeta_conditional_density(x):
+        
+        def mix_density(j):
+            
+            x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
+            quantile_numerator = np.zeros(len(denominator_sample))
+            p_beta = np.zeros(len(denominator_sample))
+
+            for i in range(0,len(denominator_sample)):
+                quantile_numerator[i] = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv_sample[i]))
+                p_beta[i] = quantile_numerator[i] / denominator_sample[i]
+            
+            return np.mean(p_beta)
+
+        if np.size(x)>1:
+            print('x>1')
+            return np.array([mix_density(i) for i in x])
+        else:
+            return mix_density(x)
+            
+            
+    def conditional_quantile(q):
+        def g(x):
+            return pbeta_conditional_density(x) - q
+        return root(g,a = x_min, b = x_max)
+
+    quantile = [conditional_quantile(i) for i in qtl]
+    
+    return quantile
     
     
 ######################################
@@ -198,14 +236,14 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 #a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 
-def MLE_fit(data, bounds, deg, sigma = None, Log = False,
+def MLE_fit(data, bounds, deg, sigma, Log = False,
                     abs_tol = 1e-10, output_weights_only = False, location = None):
     '''
     INPUT:
         data: The first column contains the mass measurements and 
               the second column contains the radius measurements.
               Numpy Array
-        sigma: Measurement Errors for the Data. Default is None
+        sigma: Measurement Errors for the Data.
         bounds: Vector with 4 elements. Upper and lower bound for Mass, Upper and lower bound for Radius.
         deg: Degree used for Bernstein polynomials
         Log: If True, data is transformed into Log scale
@@ -235,9 +273,9 @@ def MLE_fit(data, bounds, deg, sigma = None, Log = False,
     M = data[:,0]
     R = data[:,1]
       
-    if sigma is not None:
-        sigma_M = sigma[:,0]
-        sigma_R = sigma[:,1]
+
+    sigma_M = sigma[:,0]
+    sigma_R = sigma[:,1]
         
     M_max = bounds[0]
     M_min = bounds[1]
