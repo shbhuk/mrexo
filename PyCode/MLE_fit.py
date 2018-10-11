@@ -349,7 +349,7 @@ def MLE_fit(data, bounds, deg, sigma, Log = False,
     #print('Using slsqp with bigger steps')
     #opt_result = fmin_l_bfgs_b(fn2, x0, bounds = bounds, iprint = 0, approx_grad = True)
     #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 1)
-    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 200,full_output = True, iprint = 1, epsilon = 1e-5)
+    opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 500,full_output = True, iprint = 1, epsilon = 1e-5)
     print('Optimization run finished at {}, with {} iterations. Exit Code = {}'.format(datetime.datetime.now(),opt_result[2],opt_result[3],opt_result[4]))
 
     print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))

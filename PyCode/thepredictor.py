@@ -22,6 +22,11 @@ qtl = [0.16,0.84]
 
 
 weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
+
+result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
+weights_mle = np.loadtxt(os.path.join(result_dir,'weights.txt'))
+
+
 degrees = int(np.sqrt(len(weights_mle)))
 '''
 a = MLE_fit.cond_density_quantile(y = np.log10(Radius), y_std = r_sigma, y_max = Radius_max, y_min = Radius_min,
@@ -103,11 +108,9 @@ def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False,
     return predicted_mean,predicted_lower_quantile,predicted_upper_quantile    
     #return 10**predicted_mean,10**predicted_lower_quantile,10**predicted_upper_quantile
             
-
+np.random.seed(0)
 r_posterior = np.random.normal(5,0.5,10)
-print(predict_mass_given_radius(radius = r_posterior, r_sigma = np.repeat(None,10), posterior_sample = True))
-    
-  
+print(predict_mass_given_radius(radius = r_posterior, r_sigma = np.repeat(None,10), posterior_sample = True))  
 print(predict_mass_given_radius(radius = 5, r_sigma = 0.1, posterior_sample = False))  
 print(predict_mass_given_radius(radius = 5, r_sigma = None, posterior_sample = False))  
        
