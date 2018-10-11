@@ -14,4 +14,4 @@ cd /storage/home/szk381/work/Py_mass_radius_working/PyCode         # change into
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working_open_parallel.py > running_logfile_open_parallel_full.txt
+python working_open_parallel.py > running_logfile_open_parallel20_200.txt
