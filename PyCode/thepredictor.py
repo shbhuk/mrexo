@@ -23,7 +23,8 @@ qtl = [0.16,0.84]
 
 weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
 
-result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
+result_dir = os.path.join(pwd,'Results','Bootstrap_open_parallel_200iter')
+#result_dir = r'C:\Users\szk381\Documents\GitHub\Py_mass_radius_working\PyCode\Results\Bootstrap_results_Apple_reduced100_bad'
 weights_mle = np.loadtxt(os.path.join(result_dir,'weights.txt'))
 
 
@@ -53,7 +54,7 @@ def predict_mass_given_radius(radius, r_sigma = None, posterior_sample = False,
 
     
     # read weights
-    weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
+    #weights_mle = Table.read(os.path.join(result_dir,'weights.mle.csv'))['#x']
     degrees = int(np.sqrt(len(weights_mle)))
     if islog == False:
         logRadius = np.log10(radius)
