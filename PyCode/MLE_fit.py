@@ -160,27 +160,27 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     
     # Quantile
     
+    def mix_density(j):
+    
+        x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
+    
+        quantile_numerator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
+        p_beta = quantile_numerator / denominator
+    
+        return p_beta
+    
     def pbeta_conditional_density(x):
         
-        def mix_density(j):
-            
-            x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
-
-            quantile_numerator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
-            p_beta = quantile_numerator / denominator
-            
-            return p_beta
-
         if np.size(x)>1:
             print('x>1')
             return np.array([mix_density(i) for i in x])
         else:
             return mix_density(x)
-            
-            
+
+                        
     def conditional_quantile(q):
         def g(x):
-            return pbeta_conditional_density(x) - q
+            return pbeta_conditional_density(x) - q  
         return root(g,a = x_min, b = x_max)
  
     quantile = [conditional_quantile(i) for i in qtl]
@@ -198,30 +198,31 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     '''
     
     deg_vec = np.arange(1,deg+1)  
+
+    def mix_density(j):
+        
+        x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
+        quantile_numerator = np.zeros(len(denominator_sample))
+        p_beta = np.zeros(len(denominator_sample))
+
+        for i in range(0,len(denominator_sample)):
+            quantile_numerator[i] = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv_sample[i]))
+            p_beta[i] = quantile_numerator[i] / denominator_sample[i]
+        
+        return np.mean(p_beta)
+
     def pbeta_conditional_density(x):
         
-        def mix_density(j):
-            
-            x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
-            quantile_numerator = np.zeros(len(denominator_sample))
-            p_beta = np.zeros(len(denominator_sample))
-
-            for i in range(0,len(denominator_sample)):
-                quantile_numerator[i] = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv_sample[i]))
-                p_beta[i] = quantile_numerator[i] / denominator_sample[i]
-            
-            return np.mean(p_beta)
-
         if np.size(x)>1:
             print('x>1')
             return np.array([mix_density(i) for i in x])
         else:
             return mix_density(x)
-            
-            
+     
+           
     def conditional_quantile(q):
         def g(x):
-            return pbeta_conditional_density(x) - q
+            return pbeta_conditional_density(x) - q   
         return root(g,a = x_min, b = x_max)
 
     quantile = [conditional_quantile(i) for i in qtl]
