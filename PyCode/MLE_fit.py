@@ -142,6 +142,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
         y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
     else: 
         y_beta_indv = np.array([integrate_function(data = y, data_sd = y_std, deg = d, degree = deg - d + 1, x_max = x_max, x_min = x_min) for d in deg_vec])        
+        print(y_beta_indv)
   
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
     denominator = np.sum(w_hat * y_beta_pdf) 
@@ -160,7 +161,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     
     # Quantile
     
-    def mix_density(j):
+    def pbeta_conditional_density(j):
     
         x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
     
@@ -169,14 +170,6 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     
         return p_beta
     
-    def pbeta_conditional_density(x):
-        
-        if np.size(x)>1:
-            print('x>1')
-            return np.array([mix_density(i) for i in x])
-        else:
-            return mix_density(x)
-
                         
     def conditional_quantile(q):
         def g(x):
@@ -199,7 +192,7 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     
     deg_vec = np.arange(1,deg+1)  
 
-    def mix_density(j):
+    def pbeta_conditional_density(j):
         
         x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a = d, b = deg - d + 1) for d in deg_vec])
         quantile_numerator = np.zeros(len(denominator_sample))
@@ -210,15 +203,6 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
             p_beta[i] = quantile_numerator[i] / denominator_sample[i]
         
         return np.mean(p_beta)
-
-    def pbeta_conditional_density(x):
-        
-        if np.size(x)>1:
-            print('x>1')
-            return np.array([mix_density(i) for i in x])
-        else:
-            return mix_density(x)
-     
            
     def conditional_quantile(q):
         def g(x):
