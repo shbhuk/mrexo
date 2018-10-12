@@ -1,255 +1,209 @@
-# By Bo Ning
-# Mar. 5. 2018
+rm(list = ls())
+setwd("~/Desktop/MR-relation/MR-predict/") # please change path before running the code
 
-## MRpredict: predict the Mass and Radius relationship
-#' @param data: the first column contains the mass measurements and 
-#'              the second column contains the radius measurements.
-#' @param sigma: measurement errors for the data, if no measuremnet error, 
-#'               it is NULL
-#' @param Mass.max: the upper bound for mass
-#' @param Mass.min: the lower bound for mass
-#' @param Radius.max: the upper bound for radius
-#' @param Radius.min: the upper bound for radius
-#' @param degree: the maximum degree used for cross-validation/AIC/BIC
-#' @param selected.deg: if input "cv": cross validation
-#'                      if input "aic": aic method
-#'                      if input "bic": bic method
-#'                      if input a number: default using that number and 
-#'                      skip the select process 
-#' @param log: is the data transformed into a log scale
-#' @param k.fold: number of fold used for cross validation, default is 10
-#' @param bootstrap: if using bootstrap to obtain confidence interval, 
-#'                   input TRUE
-#' @param num.boot: number of bootstrap replication
-#' @param store.output: store the output into csv files if TRUE
-#' @param cores: this program uses parallel computing for bootstrap,
-#'               default cores are 7
-
-MRpredict <- function(data, sigma, Mass.min = NULL, Mass.max = NULL,
-                      Radius.min = NULL, Radius.max = NULL, degree = 60, 
-                      log = FALSE, select.deg = 55, k.fold = 10,
-                      bootstrap = TRUE, num.boot = 100, store.output = FALSE,
-                      cores = 7) {
-  
-  # check if a package has been installed
-  pkgTest <- function(x)
-  {
-    if (!require(x,character.only = TRUE)) {
-      install.packages(x,dep=TRUE)
-      if(!require(x,character.only = TRUE)) stop("Package not found")
-    } 
-  }
-  pkgTest("Rsolnp")
-  pkgTest("parallel")
-  
-  # load function
-  library(Rsolnp)
-  
-  ###########################################################
-  Mass.obs <- data[, 1]  # mass
-  Radius.obs <- data[, 2] # radius
-  Mass.sigma <- sigma[, 1] # measurement errors for masses
-  Radius.sigma <- sigma[, 2] # measurement errors for radii
-  
-  ## Step 0: organize the dataset.
-  n <- length(Mass.obs) # num of obs.
-  if (length(Mass.obs) != length(Radius.obs)) {
-    warnings("The length of Mass and Radius must be the same!!!")
-  }
-  
-  # rename the variables
-  M.obs <- Mass.obs
-  R.obs <- Radius.obs
-  
-  if (is.null(Mass.sigma) == FALSE) {
-    if (length(Mass.sigma != n)) {
-      warnings("The length of Mass and Mass.sigma must be the same!!!")
-    }
-    M.sg <- Mass.sigma
-  } else {M.sg <- rep(0, n)}
-  
-  if (is.null(Radius.sigma) == FALSE) {
-    if (length(Radius.sigma != n)) {
-      warnings("The length of Mass and Mass.sigma must be the same!!!")
-    }
-    R.sg <- Radius.sigma
-  } else {R.sg <- rep(0, n)}
-  
-  if (is.null(Mass.min) == TRUE) {
-    M.min <- min(M.obs) - max(M.sg)/sqrt(n)
-  } else {M.min <- Mass.min}
-  
-  if (is.null(Mass.max) == TRUE) {
-    M.max <- max(M.obs) + max(M.sg)/sqrt(n)
-  } else {M.max <- Mass.max}
-  
-  if (is.null(Radius.min) == TRUE) {
-    R.min <- min(R.obs) - max(R.sg)/sqrt(n)
-  } else {R.min <- Radius.min}
-  
-  if (is.null(Radius.max) == TRUE) {
-    R.max <- max(R.obs) + max(R.sg)/sqrt(n)
-  } else {R.max <- Radius.max}
-  
-  bounds <- c(M.max, M.min, R.max, R.min)
-  
-  # load functions
-  source("MainFunctions/MLE.R")
-  source("MainFunctions/cross-validation.R")
-  
-  # organize dataset
-  data <- cbind(M.obs, R.obs) 
-  if (is.null(Mass.sigma) == FALSE) {
-    data.sg <- cbind(M.sg, R.sg)
-  }
-  
-  ###########################################################
-  ## Step 1: Select number of degree based on cross validation, aic or bic methods.
-  degree <- degree
-  k.fold <- k.fold
-  
-  degree.candidate <- seq(5, degree, by = 5)
-  deg.length <- length(degree.candidate)
-  
-  if (select.deg == "cv") {
-    
-    library(parallel)
-    
-    k.fold <- k.fold # number of fold for cross validation, default is 10
-    rand.gen <- sample(1:n, n) # randomly shuffle the dataset
-    lik.per.degree <- rep(NA, deg.length)
-    
-    cv.parallel.fn <- function(x) {
-      
-      i.fold <- x
-      if (i.fold < k.fold) {
-        split.interval <- ((i.fold-1)*floor(n/k.fold)+1):(i.fold*floor(n/k.fold))
-      } else {
-        split.interval <- ((i.fold-1)*floor(n/k.fold)+1):n
-      }
-      
-      data.train <- data[ -rand.gen[split.interval], ]
-      data.test <- data[ rand.gen[split.interval], ]
-      data.sg.train <- data.sg[ -rand.gen[split.interval], ]
-      data.sg.test <- data.sg[ rand.gen[split.interval], ]
-      like.pred <- 
-        cross.validation(data.train, data.sg.train, bounds, 
-                         data.test, data.sg.test, degree.candidate[i.degree],
-                         log = FALSE)
-      return(like.pred)
-    }
-    
-    for (i.degree in 1:deg.length) {
-
-      like.pred.vec <- rep(NA, k.fold)
-      for (i.fold in 1:k.fold) {
-
-        # creat indicator to separate dataset into training and testing datasets
-        if (i.fold < k.fold) {
-          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):(i.fold*floor(n/k.fold))
-        } else {
-          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):n
-        }
-
-        data.train <- data[ -rand.gen[split.interval], ]
-        data.test <- data[ rand.gen[split.interval], ]
-        data.sg.train <- data.sg[ -rand.gen[split.interval], ]
-        data.sg.test <- data.sg[ rand.gen[split.interval], ]
-        like.pred <-
-          cross.validation(data.train, data.sg.train, bounds,
-                           data.test, data.sg.test, degree.candidate[i.degree])
-        like.pred.vec[i.fold] <- like.pred
-
-      }
-      lik.per.degree[i.degree] <- sum(like.pred.vec)
-      cat("deg = ", degree.candidate[i.degree], "like.cv = ", lik.per.degree[i.degree], "\n")
-    }
-    
-  } else if (select.deg == "aic") {
-    
-    aic <- rep(NA, deg - 1)
-    for (d in 2:deg) {
-      MR.fit <- MLE.fit(data, bounds, data.sg, deg = d, output.density = F)
-      aic[d-1] <- MR.fit$aic
-    }
-    
-    deg.choose <- which(aic == min(aic)) 
-  } else if (select.deg == "bic") {
-    bic <- rep(NA, deg - 1)
-    for (d in 2:deg) {
-      MR.fit <- MLE.fit(data, bounds, data.sg, deg = d, output.density = F)
-      bic[d-1] <- MR.fit$bic
-    }
-    
-    deg.choose <- which(bic == min(bic)) 
+# gives product of norm and beta densities
+pdfnorm.beta <- function(x, x.obs, x.sd, x.max, x.min, shape1, shape2, log = TRUE) {
+  if (log == TRUE) {
+    norm.beta <- dnorm(x.obs, mean = 10^x, sd = x.sd) * 
+      dbeta((x-x.min)/(x.max-x.min), shape1, shape2)/(x.max - x.min)
   } else {
-    deg.choose <- select.deg
+    norm.beta <- dnorm(x.obs, mean = x, sd = x.sd) * 
+      dbeta((x-x.min)/(x.max-x.min), shape1, shape2)/(x.max - x.min)
   }
-  
-  ###########################################################
-  ## Step 2: Estimate the model
-  MR.MLE <- MLE.fit(data = data, bounds = bounds, sigma = data.sg, 
-                    deg = deg.choose, log = TRUE)
-  
-  if (bootstrap == TRUE) {
-    
-    # weights <- Mass.marg.boot <- Radius.marg.boot <- 
-    #   M.cond.R.boot.var <- M.cond.R.boot <- R.cond.M.boot <- list() 
-    pb  <- txtProgressBar(1, num.boot, style=3)
-    cat("\nStarting Bootstrap: \n")
-    
-    boot.parallel.fn <- function(rep) {
-      # setTxtProgressBar(pb, rep)
-      print(rep) 
-      
-      n.boot <- sample(1:n, replace = T)
-      data.boot <- data[n.boot, ]
-      data.sg.boot <- data.sg[n.boot, ]
-      MR.boot <- MLE.fit(data.boot, data.sg.boot, bounds, deg = deg.choose, log = log)
-    }
-    
-    library(parallel)
-    result <- mclapply(1:num.boot, boot.parallel.fn, mc.cores = cores)
-    
-    weights.boot <- Mass.marg.boot <- Radius.marg.boot <- 
-      M.cond.R.boot <- M.cond.R.var.boot <- R.cond.M.boot <- R.cond.M.var.boot <- 
-      M.cond.R.quantile.boot <- R.cond.M.quantile.boot <- NULL
-    
-    M.points <- result[[1]]$M.points
-    R.points <- result[[1]]$R.points
-    
-    for (i.boot in 1:num.boot) {
-      weights.boot <- cbind(weights.boot, result[[i.boot]]$weights)
-      Mass.marg.boot <- cbind(Mass.marg.boot, result[[i.boot]]$Mass.marg)
-      Radius.marg.boot <- cbind(Radius.marg.boot, result[[i.boot]]$Radius.marg)
-      M.cond.R.boot <- cbind(M.cond.R.boot, result[[i.boot]]$M.cond.R)
-      M.cond.R.var.boot <- cbind(M.cond.R.var.boot, result[[i.boot]]$M.cond.R.var)
-      M.cond.R.quantile.boot <- cbind(M.cond.R.quantile.boot, 
-                                      t(result[[i.boot]]$M.cond.R.quantile))
-      R.cond.M.boot <- cbind(R.cond.M.boot, result[[i.boot]]$R.cond.M)
-      R.cond.M.var.boot <- cbind(R.cond.M.var.boot, result[[i.boot]]$R.cond.M.var)
-      R.cond.M.quantile.boot <- cbind(R.cond.M.quantile.boot, 
-                                      t(result[[i.boot]]$R.cond.M.quantile))
-    }
-    
-    
-    if (store.output == TRUE) {
-      write.csv(M.points, "M.points.Rdata")
-      write.csv(R.points, "R.points.Rdata")
-      write.csv(Mass.marg.boot, "Mass.marg.boot.Rdata")
-      write.csv(Radius.marg.boot, "Radius.marg.boot.Rdata")
-      write.csv(M.cond.R.boot, "M.cond.R.boot.Rdata")
-      write.csv(R.cond.M.boot, "R.cond.M.boot.Rdata")
-      write.csv(M.cond.R.var.boot, "M.cond.R.var.boot.Rdata")
-      write.csv(M.cond.R.lower.boot, "M.cond.R.lower.boot.Rdata")
-      write.csv(M.cond.R.upper.boot, "M.cond.R.upper.boot.Rdata")
-      write.csv(R.cond.M.var.boot, "R.cond.M.var.boot.Rdata")
-      write.csv(R.cond.M.lower.boot, "R.cond.M.lower.boot.Rdata")
-      write.csv(R.cond.M.upper.boot, "R.cond.M.upper.boot.Rdata")
-    }
-  }
-  
-  return(list(Mass.marg.boot = Mass.marg.boot, Radius.marg.boot = Radius.marg.boot,
-              M.cond.R.boot = M.cond.R.boot, R.cond.M.boot = R.cond.M.boot,
-              M.cond.R.var.boot = M.cond.R.var.boot))
+  return(norm.beta)
 }
+
+## fn.for.integrate: integral x from a product of normal and beta density
+fn.for.integrate <- function(data, deg, degree, x.max, x.min,
+                              log = FALSE, abs.tol = 1e-10) {
+  integrate(pdfnorm.beta, lower = x.min, upper=x.max, x.obs = data[1], 
+            x.sd = data[2], x.max = x.max, x.min = x.min, shape1 = degree,
+            shape2 = deg-degree+1, log = log, abs.tol = abs.tol)$value
+}
+
+# calculate 16% and 84% quantiles of a conditional density
+conditonal.density <- function(y, y.sd = NULL, y.max, y.min, x.max, x.min, 
+                                  deg, w.hat, qtl = c(0.16, 0.84)) {
+  deg.vec <- 1:deg 
+  
+  # return conditional mean, variance, quantile, distribution
+  if (is.null(y.sd) == TRUE) {
+    y.stdardize <- (y-y.min)/(y.max-y.min)
+    y.beta.indv <- sapply(deg.vec, 
+                          function(data, degree) {dbeta(data, degree, deg-degree+1)},
+                          data = y.stdardize) / (y.max-y.min)
+  } else {
+    y.beta.indv <- sapply(deg.vec, 
+                          function(data, degree) 
+                          {fn.for.integrate(data, deg, degree, y.max, y.min)},
+                          data = c(y, y.sd))
+  }
+  y.beta.pdf <- kronecker(rep(1, deg), y.beta.indv)
+  denominator <- sum(w.hat * y.beta.pdf)
+  
+  ########## Mean ############
+  mean.beta.indv <- deg.vec/(deg+1)*(x.max-x.min)+x.min
+  mean.beta <- kronecker(mean.beta.indv, y.beta.indv)
+  mean.numerator <- sum(w.hat * mean.beta)
+  mean <- mean.numerator / denominator
+  
+    ########## Variance ###########
+    var.beta.indv <- deg.vec*(deg-deg.vec+1)/((deg+1)^2*(deg+2))*(x.max-x.min)^2
+    var.beta <- kronecker(var.beta.indv, y.beta.indv)
+    var.numerator <- sum(w.hat * var.beta)
+    var <- var.numerator / denominator
+    
+    ########### Quantile ###########
+    # Obtain cdf
+    pbeta.conditional.density <- function(x){ 
+      
+      mix.density <- function(j) {
+        
+        x.indv.cdf <-
+          sapply(deg.vec, 
+                 function(x, degree) {pbeta(x, degree, deg-degree+1)}, 
+                 x = (j-x.min)/(x.max-x.min))
+        quantile.numerator <- sum(w.hat * kronecker(x.indv.cdf, y.beta.indv))
+        
+        p.beta <- quantile.numerator/denominator
+        
+      }
+      
+      sapply(x, mix.density)
+    }
+    
+    conditional.quantile <- function(q){ 
+      g <- function(x){ pbeta.conditional.density(x)-q }
+      return( uniroot(g, interval=c(x.min, x.max) )$root ) 
+    }
+    
+    quantile <- sapply(qtl, conditional.quantile)
+    
+    return(list(mean = mean, var = var, quantile = quantile,
+                denominator = denominator, y.beta.indv))
+}
+
+
+predict.mass.given.radius <- 
+  function(Radius, R.sigma = NULL, posterior.sample = FALSE, qtl = c(0.16, 0.84)) {
+ 
+  # upper bounds and lower bounds used in the Bernstein polynomial model in log10 scale
+  Radius.min <- -0.3 
+  Radius.max <- 1.357509
+  Mass.min <- -1
+  Mass.max <- 3.809597 
+  
+  # read weights
+  weights.mle <- read.csv("weights.mle.csv")$x 
+  
+  # convert data into log scale
+  l.radius <- log10(Radius)
+  
+  # The following function can deal with two cases:
+  # Case I: if input data do not have measurement errors
+  # Case II: if the input data have measurement errors
+  if (posterior.sample == FALSE) {
+    # convert Radius in log scale
+    predicted.value <- 
+      conditonal.density(y = l.radius, y.sd = R.sigma, y.max = Radius.max, 
+                         y.min = Radius.min, x.max = Mass.max, 
+                         x.min = Mass.min, deg = 55, 
+                         w.hat = weights.mle, qtl = qtl)
+    predicted.mean <- predicted.value$mean
+    predicted.lower.quantile <- predicted.value$quantile[1]
+    predicted.upper.quantile <- predicted.value$quantile[2]
+    
+  } else if (posterior.sample == TRUE) {
+  
+  # Case III: if the input are posterior samples
+    
+    radius.sample <- log10(Radius)
+    deg <- 55
+    k <- length(radius.sample) # length of samples
+    mean.sample <- denominator.sample <- rep(0, k)
+    y.beta.indv.sample <- matrix(0, k, deg)
+    
+    # the model can be view as a mixture of k conditional densities for f(log m |log r), each has weight 1/k
+    # the mean of this mixture density is 1/k times sum of the mean of each conditional density
+    # the quantile is little bit hard to compute, and maynot avaible due to computational issues
+    
+    # calculate the mean
+    for (i in 1:k) {
+      results <- 
+        cond.density.estimation(
+          y = radius.sample[i], y.max = Radius.max, 
+          y.min = Radius.min, x.max = Mass.max, 
+          x.min = Mass.min, deg = 55, 
+          w.hat = weights.mle, qtl = quantile,
+          only.output.mean = TRUE
+        )
+      mean.sample[i] <- (results[1])
+      denominator.sample[i] <- results[2]
+      y.beta.indv.sample[i, ] <- results[3:57]
+    }
+    predicted.mean <- mean(mean.sample)
+    
+    # calculate the 16% and 84% quantiles using uniroot function
+    # mixture of the CDF of k conditional densities
+    pbeta.conditional.density <- function(x){ 
+      
+      mix.density <- function(j) {
+        
+        deg.vec <- 1:55
+        x.indv.cdf <-
+          sapply(deg.vec, 
+                 function(x, degree) {pbeta(x, degree, deg-degree+1)}, 
+                 x = (j-x.min)/(x.max-x.min))
+        quantile.numerator <- rep(0,k)
+        p.beta.sample <- rep(0, k)
+        for (ii in 1:k) {
+          quantile.numerator[ii] <- 
+            sum(weights.mle * kronecker(x.indv.cdf, y.beta.indv.sample[ii, ]))
+          p.beta.sample[ii] <- quantile.numerator[ii]/denominator.sample[ii]
+        }
+        p.beta <- mean(p.beta.sample)
+      }
+      sapply(x, mix.density)
+    }
+  
+    mixture.conditional.quantile <- function(q, x.min, x.max){ 
+      g <- function(x){ pbeta.conditional.density(x)-q }
+      root <- uniroot(g, interval=c(x.min, x.max) )$root
+      return(root) 
+    }
+    predicted.quantiles <- sapply(qtl, mixture.conditional.quantile,
+                                  x.min = Mass.min, x.max = Mass.max)
+    predicted.lower.quantile <- predicted.quantiles[1]
+    predicted.upper.quantile <- predicted.quantiles[2]
+    
+  } 
+  
+  # return
+  return(list(predicted.mean = predicted.mean, 
+              predicted.lower.quantile = predicted.lower.quantile,
+              predicted.upper.quantile = predicted.upper.quantile))
+  
+}
+
+##################### Examples ######################
+# observation without measurement error 
+Radius <- 5 # in the original scale, not log scale!!
+predict.result <- predict.mass.given.radius(Radius)
+print(predict.result) # print out result
+
+# observation with a measurement error
+Radius <- 5 # in the original scale, not log scale!!
+R.sigma <- 0.1
+predict.result <- predict.mass.given.radius(Radius, R.sigma = 0.1)
+print(predict.result) # print out result
+
+# input are posterior samples
+Radius.samples <- rnorm(100, 5, 0.5)   # in the original scale, not log scale!!
+predict.result <- 
+  predict.mass.given.radius(Radius = Radius.samples, R.sigma = 0.1, posterior.sample = TRUE)
+print(predict.result) # print out result
+
+# if want to change the 16% and 84% quantiles to 5% and 95% quantiles.
+Radius <- 5 # in the original scale, not log scale!!
+predict.result <- predict.mass.given.radius(Radius, qtl = c(0.05, 0.95))
+print(predict.result) # print out result
