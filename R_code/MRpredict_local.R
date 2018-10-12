@@ -43,8 +43,9 @@ conditonal.density <- function(y, y.sd = NULL, y.max, y.min, x.max, x.min,
                           function(data, degree) 
                           {fn.for.integrate(data, deg, degree, y.max, y.min)},
                           data = c(y, y.sd))
-    print(y.beta.indv)
+    
   }
+  #print(y.beta.indv)
   y.beta.pdf <- kronecker(rep(1, deg), y.beta.indv)
   denominator <- sum(w.hat * y.beta.pdf)
   
@@ -202,24 +203,24 @@ predict.mass.given.radius <-
   }
 
 ##################### Examples ######################
-# # observation without measurement error 
-# Radius <- 5 # in the original scale, not log scale!!
-# predict.result <- predict.mass.given.radius(Radius)
-# print(predict.result) # print out result
-
+ # observation without measurement error 
+Radius <- 5 # in the original scale, not log scale!!
+ predict.result <- predict.mass.given.radius(Radius)
+ print(predict.result) # print out result
 # observation with a measurement error
+ 
 Radius <- 5 # in the original scale, not log scale!!
 R.sigma <- 0.1
 predict.result <- predict.mass.given.radius(Radius, R.sigma = 0.1)
 print(predict.result) # print out result
 
-# # input are posterior samples
-# Radius.samples <- rnorm(100, 5, 0.5)   # in the original scale, not log scale!!
-# predict.result <- 
-#   predict.mass.given.radius(Radius = Radius.samples, R.sigma = 0.1, posterior.sample = TRUE)
-# print(predict.result) # print out result
-# 
-# # if want to change the 16% and 84% quantiles to 5% and 95% quantiles.
-# Radius <- 5 # in the original scale, not log scale!!
-# predict.result <- predict.mass.given.radius(Radius, qtl = c(0.05, 0.95))
-# print(predict.result) # print out result
+ # input are posterior samples
+ Radius.samples <- rnorm(100, 5, 0.5)   # in the original scale, not log scale!!
+ predict.result <- 
+ predict.mass.given.radius(Radius = Radius.samples, R.sigma = 0.1, posterior.sample = TRUE)
+ print(predict.result) # print out result
+ 
+ # if want to change the 16% and 84% quantiles to 5% and 95% quantiles.
+ Radius <- 5 # in the original scale, not log scale!!
+ predict.result <- predict.mass.given.radius(Radius, qtl = c(0.05, 0.95))
+ print(predict.result) # print out result
