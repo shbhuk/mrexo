@@ -74,10 +74,11 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
-
     
-    return quad(pdfnorm_beta, a = x_min, b = x_max,
+    a =  quad(pdfnorm_beta, a = x_min, b = x_max,
                  args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]
+    #print(shape1,shape2,a)                 
+    return a
        
 
 def marginal_density(x, x_max, x_min, deg, w_hat):
@@ -135,15 +136,13 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
     if type(y) == list:
         y = np.array(y)
-    
     deg_vec = np.arange(1,deg+1)  
     if y_std == None:
         y_std = (y - y_min)/(y_max - y_min)
         y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
     else: 
-        y_beta_indv = np.array([integrate_function(data = y, data_sd = y_std, deg = d, degree = deg - d + 1, x_max = x_max, x_min = x_min) for d in deg_vec])        
-        print(y_beta_indv)
-  
+        y_beta_indv = np.array([integrate_function(data = y, data_sd = y_std, deg = deg, degree = d, x_max = y_max, x_min = y_min) for d in deg_vec])  
+
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
     denominator = np.sum(w_hat * y_beta_pdf) 
         
