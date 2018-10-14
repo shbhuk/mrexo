@@ -13,6 +13,7 @@ from shutil import copyfile
 
 sys.path.append(os.path.dirname(__file__))
 from MLE_fit import MLE_fit
+from Cross_Validation import cross_validation
 
 
 t = Table.read(os.path.join(os.path.dirname(__file__),'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
@@ -56,7 +57,7 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(),location = os.path.dirname(__file__), abs_tol = 1e-10):
+            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
     INPUT:
@@ -80,6 +81,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
         num_boot: number of bootstrap replication. Default = 100
         store_output: store the output into csv files if True. Default = False
         cores: this program uses parallel computing for bootstrap. Default = 1
+        location : The location for the log file
         abs_tol : Defined for integration in MLE_fit()
       
     '''
@@ -91,9 +93,6 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
-       
-
-        
 
     
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
@@ -129,8 +128,87 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     degree_candidate = np.arange(5, degree, 5)
     deg_length = len(degree_candidate)
+    if select_deg == 'cv':
+        print('Do something')
         
-    if select_deg == 'aic' : 
+        rand_gen = np.random.choice(n, n, replace = False)
+        likelihood_per_degree = np.repeat(np.nan,deg_length)
+        
+        def cv_parallel_fn(x):
+            i_fold = x
+            if i_fold < k_fold:
+                split_interval = np.arange(((i_fold - 1) * np.int(np.floor(n/k_fold)+1)) , (i_fold * np.int(np.floor(n/k_fold)))+1)
+            else:
+                split_interval = np.arange(((i_fold - 1) * np.int(np.floor(n/k_fold)+1)), n+1)
+                
+            test_data = data[rand_gen[split_interval]]
+            train_data = np.setdiff1d(data,test_data)
+            
+            test_sigma = sigma[rand_gen[split_interval]]
+            train_sigma = np.setdiff1d(sigma,test_sigma)
+            
+            
+            like_pred = cross_validation(train_data = train_data, bounds = bounds, test_radius = test_data[:,1], test_mass = test_data[:,0], deg = 3, train_data_sg = train_sigma, 
+                            test_mass_sigma = test_sigma[:,0], test_radius_sigma = test_sigma[:,1], Log = Log, abs_tol = abs_tol, location = location)
+        '''
+          if (select.deg == "cv") {
+    
+    library(parallel)
+    
+    k.fold <- k.fold # number of fold for cross validation, default is 10
+    rand.gen <- sample(1:n, n) # randomly shuffle the dataset
+    lik.per.degree <- rep(NA, deg.length)
+    
+    cv.parallel.fn <- function(x) {
+      
+      i.fold <- x
+      if (i.fold < k.fold) {
+        split.interval <- ((i.fold-1)*floor(n/k.fold)+1):(i.fold*floor(n/k.fold))
+      } else {
+        split.interval <- ((i.fold-1)*floor(n/k.fold)+1):n
+      }
+      
+      data.train <- data[ -rand.gen[split.interval], ]
+      data.test <- data[ rand.gen[split.interval], ]
+      data.sg.train <- data.sg[ -rand.gen[split.interval], ]
+      data.sg.test <- data.sg[ rand.gen[split.interval], ]
+      like.pred <- 
+        cross.validation(data.train, data.sg.train, bounds, 
+                         data.test, data.sg.test, degree.candidate[i.degree],
+                         log = FALSE)
+      return(like.pred)
+    }
+    
+    for (i.degree in 1:deg.length) {
+
+      like.pred.vec <- rep(NA, k.fold)
+      for (i.fold in 1:k.fold) {
+
+        # creat indicator to separate dataset into training and testing datasets
+        if (i.fold < k.fold) {
+          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):(i.fold*floor(n/k.fold))
+        } else {
+          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):n
+        }
+
+        data.train <- data[ -rand.gen[split.interval], ]
+        data.test <- data[ rand.gen[split.interval], ]
+        data.sg.train <- data.sg[ -rand.gen[split.interval], ]
+        data.sg.test <- data.sg[ rand.gen[split.interval], ]
+        like.pred <-
+          cross.validation(data.train, data.sg.train, bounds,
+                           data.test, data.sg.test, degree.candidate[i.degree])
+        like.pred.vec[i.fold] <- like.pred
+
+      }
+      lik.per.degree[i.degree] <- sum(like.pred.vec)
+      cat("deg = ", degree.candidate[i.degree], "like.cv = ", lik.per.degree[i.degree], "\n")
+    }
+        '''
+            
+                
+                        
+    elif select_deg == 'aic' : 
         aic = np.array([MLE_fit(data = data, bounds = bounds, sigma = sigma, Log = Log, deg = d, abs_tol = abs_tol)['aic'] for d in range(2,degree)])
         deg_choose = np.nanmin(aic)
 

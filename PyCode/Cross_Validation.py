@@ -6,7 +6,7 @@ from astropy.table import Table
 import datetime,os
 import sys 
 sys.path.append(os.path.dirname(__file__))
-from MLE_fit import MLE_fit, find_indv_pdf, integrate_function
+from MLE_fit import MLE_fit, calc_C_matrix
   
   
 #' @param data.train: input training data
@@ -20,9 +20,13 @@ from MLE_fit import MLE_fit, find_indv_pdf, integrate_function
 #' @param abs.tol: tolerance number of computing
 
 
-def cross_validation(train_data, bounds, test_radius, test_mass, deg, train_data_sg = None, test_mass_sigma = None, test_radius_sigma = None, Log = False, abs_tol = 1e-10, location = os.path.dirname(__file__)):
+def cross_validation(train_Radius, train_Mass, test_Radius, test_Mass, Mass_bounds, Radius_bounds, deg,
+                        train_Radius_sigma = None, train_Mass_sigma = None,
+                        test_Radius_sigma = None, test_Mass_sigma = None,
+                        Log = False, abs_tol = 1e-10, location = os.path.dirname(__file__)):
     '''
     INPUT:
+        VERIFY PARAMETER DESCRIPTIONS.
         train_data = Input training data
         bounds = Vecotr containing four elements. Upper and lower bound for Mass. Upper and lower bound for Radius resp.
         test_radius, = Input radius data
@@ -36,39 +40,37 @@ def cross_validation(train_data, bounds, test_radius, test_mass, deg, train_data
         location : The location for the log file
     ''' 
     
-    if np.shape(test_radius_sigma) != np.shape(test_mass_sigma):
+    if np.shape(test_Radius_sigma) != np.shape(test_Mass_sigma):
         print('Insert error message here')
-    elif np.shape(test_radius) != np.shape(test_mass):
+    elif np.shape(test_Radius) != np.shape(test_Mass):
         print('Gibberish')
     
     # Fit MLE using training dataset
-    weights = MLE_fit(data = train_data, bounds = bounds, sigma = train_data_sg, Log = Log, deg = deg, abs_tol = abs_tol, location = location)
+
+    weights = MLE_fit(Mass = train_Mass, Radius = train_Radius, Mass_sigma = train_Mass_sigma, Radius_sigma = train_Radius_sigma, Mass_bounds = Mass_bounds,
+            Radius_bounds = Radius_bounds, deg = deg, Log = Log,abs_tol = abs_tol, location = location)
+
+    C_pdf = MLE_fit
     
-    size_test = np.size(test_radius)
+    size_test = np.size(test_Radius)
     
     # specify the bounds
-    M_max = bounds[1]
-    M_min = bounds[2]
-    R_max = bounds[3]
-    R_min = bounds[4]
+    M_max = Mass_bounds[0]
+    M_min = Mass_bounds[1]
+    R_max = Radius_bounds[0]
+    R_min = Radius_bounds[1]
     
     # calculate cdf and pdf of M and R for each term
     # the first and last term is set to 0 to avoid boundary effects
     # so we only need to calculate 2:(deg^2-1) terms
-    deg_vec = np.arange(1,deg+1) 
+
+    C_pdf = calc_C_matrix(size_test, deg, test_Mass, test_Mass_sigma, M_max, M_min, test_Radius, test_Radius_sigma, R_max, R_min, Log, abs_tol, location)
+    # Log of 0 throws weird errors
+    C_pdf[C_pdf == 0] = 1e-300  
     
-    if test_radius_sigma is None:
-        # PDF for Mass and Radius
-        M_indv_pdf = find_indv_pdf(test_mass,deg,deg_vec,M_max,M_min) 
-        R_indv_pdf = find_indv_pdf(test_radius,deg,deg_vec,R_max,R_min) 
-    else:
-        # PDF for Integrated beta density and normal density for Mass and Radius
-        M_indv_pdf = np.array([integrate_function(data = test_mass, data_sd = test_mass_sigma, deg = deg, degree = d, x_max = M_max, x_min = M_min) for d in deg_vec])        
-        R_indv_pdf = np.array([integrate_function(data = test_radius, data_sd = test_radius_sigma, deg = deg, degree = d, x_max = R_max, x_min = R_min) for d in deg_vec])  
-        
-        
-
-
+      
+    return np.sum(np.log(np.matmul(weights,C_pdf)))
+    
     
     
 

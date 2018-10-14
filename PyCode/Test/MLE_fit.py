@@ -37,19 +37,13 @@ Log = True
 '''
 
 '''
-y = np.log10(5)
-Radius_min = -0.3 
-Radius_max = 1.357509
-Mass_min = -1
-Mass_max = 3.809597 
-qtl = [0.16, 0.84]
-y_std = R_sigma
-y_max = Radius_max
-y_min = Radius_min
-x_max = Mass_max
-x_min = Mass_min
-deg = 55
-w_hat = weights_mle
+x_max = 5
+x_min = 0.01
+x = 0.1
+y = 0.17
+y_max = 11
+y_min = 0.03
+w_hat = 1
 '''
 #deg = 5
 
@@ -84,13 +78,13 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
                  args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]   
     
 
-def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10):
+def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None):
     
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
         x_beta_indv = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else: 
-        x_beta_indv = np.array([integrate_function(data = x, data_sd = x_std, deg = deg, degree = d, x_max = x_max, x_min = x_min, abs_tol = abs_tol) for d in deg_vec])  
+        x_beta_indv = np.array([integrate_function(data = x, data_sd = x_std, deg = deg, degree = d, x_max = x_max, x_min = x_min) for d in deg_vec])  
     
     return x_beta_indv
        
@@ -112,7 +106,7 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
     return marg_x
     
     
-def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol = 1e-10):
+def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat):
     '''
     Calculate the conditional density
     '''
@@ -124,20 +118,20 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol = 
     deg_vec = np.arange(1,deg+1)  
     
     # Return Conditional Mean, Variance, Quantile, Distribution
-    y_beta_indv = find_indv_pdf(y,deg,deg_vec,y_max,y_min, abs_tol = abs_tol) 
+    y_beta_indv = find_indv_pdf(y,deg,deg_vec,y_max,y_min) 
     y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
     
     denominator = np.sum(w_hat * y_beta_pdf)
     
     ########### Density ##########
-    density_indv_pdf = find_indv_pdf(x,deg,deg_vec,x_max,x_min, abs_tol = abs_tol) 
+    density_indv_pdf = find_indv_pdf(x,deg,deg_vec,x_max,x_min) 
     density_pdf = w_hat * np.kron(density_indv_pdf,y_beta_indv)
     
     density = density_pdf / denominator
     
     return density
     
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84], abs_tol = 1e-10):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84]):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
         
@@ -146,8 +140,8 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     if type(y) == list:
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)  
-    
-    y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol) 
+
+    y_beta_indv = find_indv_pdf(x = y,deg = deg,deg_vec = deg_vec,x_max = y_max,x_min = x_min,x_std = y_std) 
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
     denominator = np.sum(w_hat * y_beta_pdf) 
         
@@ -217,6 +211,13 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     
     return quantile
     
+    
+######################################
+##### Main function: MLE.fit #########
+######################################
+
+#a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
+
 
 def calc_CumulativePDF(n, deg, M, sigma_M, M_max, M_min, R, sigma_R, R_max, R_min, Log, abs_tol, location):
     '''
@@ -229,35 +230,28 @@ def calc_CumulativePDF(n, deg, M, sigma_M, M_max, M_min, R, sigma_R, R_max, R_mi
     
     if sigma_M is None:
         # pdf for Mass and Radius for each beta density
-        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, M_max, M_min, x_std = None, abs_tol = abs_tol) 
-        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, R_max, R_min, x_std = None, abs_tol = abs_tol) 
+        M_indv_pdf = find_indv_pdf(M,deg,deg_vec,M_max,M_min) 
+        R_indv_pdf = find_indv_pdf(R,deg,deg_vec,R_max,R_min) 
         
     else:        
-        M_indv_pdf = np.zeros((n, deg))
-        R_indv_pdf = np.zeros((n, deg))
-        C_pdf = np.zeros((n, deg**2))
+        M_indv_pdf = np.zeros((n,deg))
+        R_indv_pdf = np.zeros((n,deg))
+        C_pdf = np.zeros((n,deg**2))
         
         print('Started Integration at ',datetime.datetime.now())
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
 
         for i in range(0,n): 
-            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, sigma_M[i], abs_tol)  
-            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, sigma_R[i], abs_tol)
+            M_indv_pdf[i,:] = find_indv_pdf(M[i],deg,deg_vec,M_max,M_min,sigma_M[i])  
+            R_indv_pdf[i,:] = find_indv_pdf(R[i],deg,deg_vec,R_max,R_min,sigma_R[i])
                                   
             # put M.indv.pdf and R.indv.pdf into a big matrix
-            C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
+            C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
             
         C_pdf = C_pdf.T 
     
     return C_pdf
-
-    
-######################################
-##### Main function: MLE.fit #########
-######################################
-
-#a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 
 def MLE_fit(data, bounds, deg, sigma, Log = False,
