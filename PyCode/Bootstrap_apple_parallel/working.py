@@ -1,10 +1,6 @@
 #%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
 import numpy as np
-from scipy.stats import beta,norm
-from scipy.integrate import quad
-from scipy.optimize import brentq as root
 from astropy.table import Table
-from scipy.optimize import minimize, fmin_slsqp
 from multiprocessing import Pool,cpu_count
 import os
 import sys
@@ -56,7 +52,7 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, degree = 60, select_deg = 55,
-            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
+            Log = False, k_fold = 10, num_boot = 100, store_output = False, cores = cpu_count(),location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
     INPUT:
@@ -80,22 +76,18 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
         num_boot: number of bootstrap replication. Default = 100
         store_output: store the output into csv files if True. Default = False
         cores: this program uses parallel computing for bootstrap. Default = 1
-        location : The location for the log file
         abs_tol : Defined for integration in MLE_fit()
       
     '''
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
-
+    
     if not os.path.exists(location):
         os.mkdir(location)   
-    
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
-       
-
         
-
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Started run at {}\n'.format(starttime))
+    f.close()
     
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
@@ -153,7 +145,7 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-
+    f.close()
     
     weights = fullMLEresult['weights']
     aic = fullMLEresult['aic']
@@ -193,14 +185,8 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     inputs = ((data[n_boot], sigma[n_boot], bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
     
     print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
-
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
-
     pool = Pool(processes = cores)
-    results = list(pool.imap(bootsample_mle,inputs))
-
-    print('Finished bootstrap at {}'.format(datetime.datetime.now()))
+    results = pool.map(bootsample_mle,inputs)
     
     weights_boot = np.array([x['weights'] for x in results])
     aic_boot = np.array([x['aic'] for x in results])
@@ -239,22 +225,13 @@ def MLE_fit_bootstrap(data, sigma, Mass_max = None, Mass_min = None, Radius_max 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
        f.write('Ended run at {}\n'.format(endtime))
-
+    f.close()
                                         
     return results
             
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(data = data, sigma = sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 80,cores = 40,
-                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel40'))
-
-            
-            
-        
-        
-        
-        
-    
-    
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 10, Log = True, num_boot = 8,
+                        location = os.path.join(os.path.dirname(__file__),'Bootstrap_apple_parallel'))        
     

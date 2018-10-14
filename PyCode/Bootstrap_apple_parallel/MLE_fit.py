@@ -7,7 +7,7 @@ from scipy.optimize import brentq as root
 from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp, fmin_l_bfgs_b
 import datetime,os
-  
+import matplotlib.pyplot as plt    
     
 '''
 t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
@@ -46,7 +46,8 @@ y_min = 0.03
 w_hat = 1
 '''
 #deg = 5
-
+abs_tol = 1e-20
+Log = True
 
 
 
@@ -73,20 +74,11 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
-                   
-    return quad(pdfnorm_beta, a = x_min, b = x_max,
-                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]   
     
-
-def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None):
-    
-    if x_std == None:
-        x_std = (x - x_min)/(x_max - x_min)
-        x_beta_indv = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
-    else: 
-        x_beta_indv = np.array([integrate_function(data = x, data_sd = x_std, deg = deg, degree = d, x_max = x_max, x_min = x_min) for d in deg_vec])  
-    
-    return x_beta_indv
+    a =  quad(pdfnorm_beta, a = x_min, b = x_max,
+                 args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]
+    #print(shape1,shape2,a)                 
+    return a
        
 
 def marginal_density(x, x_max, x_min, deg, w_hat):
@@ -97,8 +89,10 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
     if type(x) == list:
         x = np.array(x)
     
+    x_std = (x - x_min)/(x_max - x_min)
     deg_vec = np.arange(1,deg+1)    
-    x_beta_indv = find_indv_pdf(x,deg,deg_vec,x_max,x_min) 
+    x_beta_indv = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
+    
     x_beta_pdf = np.kron(x_beta_indv, np.repeat(1,deg))
     
     marg_x = np.sum(w_hat * x_beta_pdf)
@@ -118,13 +112,16 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat):
     deg_vec = np.arange(1,deg+1)  
     
     # Return Conditional Mean, Variance, Quantile, Distribution
-    y_beta_indv = find_indv_pdf(y,deg,deg_vec,y_max,y_min) 
+    y_std = (y - y_min)/(y_max - y_min)
+    x_std = (x - x_min)/(x_max - x_min)
+    y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
     y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
     
     denominator = np.sum(w_hat * y_beta_pdf)
     
     ########### Density ##########
-    density_indv_pdf = find_indv_pdf(x,deg,deg_vec,x_max,x_min) 
+    
+    density_indv_pdf = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
     density_pdf = w_hat * np.kron(density_indv_pdf,y_beta_indv)
     
     density = density_pdf / denominator
@@ -140,8 +137,12 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     if type(y) == list:
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)  
+    if y_std == None:
+        y_std = (y - y_min)/(y_max - y_min)
+        y_beta_indv = np.array([beta.pdf(y_std, a = d, b = deg - d + 1)/(y_max - y_min) for d in deg_vec])
+    else: 
+        y_beta_indv = np.array([integrate_function(data = y, data_sd = y_std, deg = deg, degree = d, x_max = y_max, x_min = y_min) for d in deg_vec])  
 
-    y_beta_indv = find_indv_pdf(x = y,deg = deg,deg_vec = deg_vec,x_max = y_max,x_min = x_min,x_std = y_std) 
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
     denominator = np.sum(w_hat * y_beta_pdf) 
         
@@ -219,41 +220,6 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
 #a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 
-def calc_CumulativePDF(n, deg, M, sigma_M, M_max, M_min, R, sigma_R, R_max, R_min, Log, abs_tol, location):
-    '''
-    
-    
-    
-    '''
-    
-    deg_vec = np.arange(1,deg+1) 
-    
-    if sigma_M is None:
-        # pdf for Mass and Radius for each beta density
-        M_indv_pdf = find_indv_pdf(M,deg,deg_vec,M_max,M_min) 
-        R_indv_pdf = find_indv_pdf(R,deg,deg_vec,R_max,R_min) 
-        
-    else:        
-        M_indv_pdf = np.zeros((n,deg))
-        R_indv_pdf = np.zeros((n,deg))
-        C_pdf = np.zeros((n,deg**2))
-        
-        print('Started Integration at ',datetime.datetime.now())
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
-
-        for i in range(0,n): 
-            M_indv_pdf[i,:] = find_indv_pdf(M[i],deg,deg_vec,M_max,M_min,sigma_M[i])  
-            R_indv_pdf[i,:] = find_indv_pdf(R[i],deg,deg_vec,R_max,R_min,sigma_R[i])
-                                  
-            # put M.indv.pdf and R.indv.pdf into a big matrix
-            C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
-            
-        C_pdf = C_pdf.T 
-    
-    return C_pdf
-
-
 def MLE_fit(data, bounds, deg, sigma, Log = False,
                     abs_tol = 1e-10, output_weights_only = False, location = None):
     '''
@@ -300,14 +266,12 @@ def MLE_fit(data, bounds, deg, sigma, Log = False,
     R_max = bounds[2]
     R_min = bounds[3]
     
-    
-    '''
     deg_vec = np.arange(1,deg+1)     
     
     if sigma is None:
         # pdf for Mass and Radius for each beta density
-        M_indv_pdf = find_indv_pdf(M,deg,deg_vec,M_max,M_min) 
-        R_indv_pdf = find_indv_pdf(R,deg,deg_vec,R_max,R_min) 
+        M_indv_pdf = np.array([beta.pdf((M - M_min)/(M_max - M_min), a = d, b = deg - d+1)/(M_max - M_min) for d in deg_vec])
+        R_indv_pdf = np.array([beta.pdf((R - R_min)/(R_max - R_min), a = d, b = deg - d+1)/(R_max - R_min) for d in deg_vec])        
         
     else:        
         M_indv_pdf = np.zeros((n,deg))
@@ -335,9 +299,6 @@ def MLE_fit(data, bounds, deg, sigma, Log = False,
 
             
         C_pdf = C_pdf.T 
-    '''
-    
-    C_pdf = calc_CumulativePDF(n, deg, M, sigma_M, M_max, M_min, R, sigma_R, R_max, R_min, Log, abs_tol, location)
         
     print(np.shape(C_pdf))
     print('Finished Integration at ',datetime.datetime.now())
@@ -345,14 +306,8 @@ def MLE_fit(data, bounds, deg, sigma, Log = False,
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
 
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
-    '''
-    if return_Cpdf:
-        print('Exiting MLE_fit after integration. Returning C_pdf')
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('Exiting MLE_fit after integration. Returning C_pdf')
-        return C_pdf
-    '''
-        
+     
+  
     # Function input to optimizer            
     def fn1(w):
         # Log of 0 throws weird errors
