@@ -62,7 +62,7 @@ def bootsample_mle(inputs):
     
 
 def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, 
-                    degree_max = 60, select_deg = 55, Log = False, k_fold = 10, num_boot = 100, 
+                    degree_max = 6, select_deg = 55, Log = False, k_fold = 2, num_boot = 100, 
                     cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
@@ -104,7 +104,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
     
-    n = np.shape(Mass)
+    n = len(Mass)
 
 
     
@@ -135,39 +135,52 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     if select_deg == 'cv':
         print('Running cross validation to estimate the number of degrees of freedom for the weights') 
         rand_gen = np.random.choice(n, n, replace = False)
+        print('max value', np.max(rand_gen))
         likelihood_per_degree = np.repeat(np.nan,deg_length)
         
-        def cv_parallel_fn(i_fold, i_degree):
+        def cv_parallel_fn(i_fold, test_degree):
             
             if i_fold < k_fold:
-                split_interval = np.arange(((i_fold - 1) * np.int(np.floor(n/k_fold)+1)) , (i_fold * np.int(np.floor(n/k_fold)))+1)
+                split_interval = np.arange(((i_fold) * np.int(np.floor(n/k_fold)+1)) , ((i_fold+1) * np.int(np.floor(n/k_fold)))+1)
             else:
-                split_interval = np.arange(((i_fold - 1) * np.int(np.floor(n/k_fold)+1)), n+1)
+                split_interval = np.arange(((i_fold) * np.int(np.floor(n/k_fold)+1)), n+1)
+            print(split_interval)
             
-            test_Radius = Radius[rand_gen[split_interval]]
-            test_Mass = Mass[rand_gen[split_interval]]
-            test_Radius_sigma = Radius_sigma[rand_gen[split_interval]]
-            test_Mass_sigma = Mass_sigma[rand_gen[split_interval]]
                 
-            train_Radius = np.setdiff1d(Radius,test_Radius)
-            train_Mass = np.setdiff1d(Mass,test_Mass)
-            train_Radius_sigma = np.setdiff1d(Radius_sigma, test_Radius_sigma)
-            train_Mass_sigma = np.setdiff1d(Mass_sigma, test_Mass_sigma)
-
+            print('max value for split', np.max(rand_gen[split_interval]))    
+            mask = np.repeat(False, n)
+            mask[rand_gen[split_interval]] = True
+            invert_mask = np.invert(mask)
+            
+            test_Radius = Radius[mask]
+            test_Mass = Mass[mask]
+            test_Radius_sigma = Radius_sigma[mask]
+            test_Mass_sigma = Mass_sigma[mask]
+                
+            train_Radius = Radius[invert_mask]
+            train_Mass = Mass[invert_mask]
+            train_Radius_sigma = Radius_sigma[invert_mask]
+            train_Mass_sigma = Mass_sigma[invert_mask]
+            
             like_pred = cross_validation(train_Radius = train_Radius, train_Mass = train_Mass, test_Radius = test_Radius, test_Mass = test_Mass,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = i_degree,
+                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = test_degree,
                         train_Radius_sigma = train_Radius_sigma, train_Mass_sigma = train_Mass_sigma,
                         test_Radius_sigma = test_Radius_sigma, test_Mass_sigma = test_Mass_sigma,
                         Log = Log, abs_tol = abs_tol, location = location)
+            print('cv',like_pred)
             return like_pred
             
         
-        for i_degree in range(1,deg_length):
+        for i_degree in range(0,len(degree_candidate)):
             likelihood_pred_vec = np.repeat(np.nan,k_fold)
-            for i_fold in range(1,k_fold):
-                likelihood_pred_vec[i_fold] = cv_parallel_fn(i_fold,i_degree)
+            for i_fold in range(0,k_fold+1):
+                likelihood_pred_vec[i_fold] = cv_parallel_fn(i_fold,degree_candidate[i_degree])
             likelihood_per_degree[i_degree] = np.sum(likelihood_pred_vec)
-            print(i_degree,likelihood_per_degree[i_degree])
+        
+        print(likelihood_pred_vec)
+        deg_choose = degree_candidate[np.nanargmax(likelihood_per_degree)]
+
+        print('Finished CV') 
                 
         '''
 

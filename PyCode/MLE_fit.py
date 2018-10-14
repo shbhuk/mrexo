@@ -240,7 +240,6 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
         print('Started Integration at ',datetime.datetime.now())
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
-
         for i in range(0,n): 
             M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol)  
             R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol)
@@ -295,8 +294,8 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
         
     M_max = Mass_bounds[0]
     M_min = Mass_bounds[1]
-    R_max = Radius_bounds[2]
-    R_min = Radius_bounds[3]
+    R_max = Radius_bounds[0]
+    R_min = Radius_bounds[1]
     
     
     '''
@@ -338,7 +337,7 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, M_max = M_max, M_min = M_min,
                         R = Radius, Radius_sigma = Radius_sigma, R_max = R_max, R_min = R_min, Log = Log, abs_tol = abs_tol, location = location)
         
-    print(np.shape(C_pdf))
+
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))

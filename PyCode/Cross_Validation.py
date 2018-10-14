@@ -48,7 +48,7 @@ def cross_validation(train_Radius, train_Mass, test_Radius, test_Mass, Mass_boun
     # Fit MLE using training dataset
 
     weights = MLE_fit(Mass = train_Mass, Radius = train_Radius, Mass_sigma = train_Mass_sigma, Radius_sigma = train_Radius_sigma, Mass_bounds = Mass_bounds,
-            Radius_bounds = Radius_bounds, deg = deg, Log = Log,abs_tol = abs_tol, location = location)
+            Radius_bounds = Radius_bounds, deg = deg, Log = Log,abs_tol = abs_tol, location = location, output_weights_only = True)
 
     C_pdf = MLE_fit
     
