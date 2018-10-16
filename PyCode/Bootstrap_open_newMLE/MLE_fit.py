@@ -376,11 +376,11 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     #print('Using slsqp with bigger steps')
     #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 1)
     opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 500,full_output = True, iprint = 1, epsilon = 1e-5,acc = 1e-5)
-    print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),opt_result[2],opt_result[3],opt_result[4]))
+    print('Optimization run finished at {}, with {} iterations. Exit Code = {}'.format(datetime.datetime.now(),opt_result[2],opt_result[3],opt_result[4]))
 
+    print('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Optimization at {}\n\n\n'.format(datetime.datetime.now()))
-        f.write('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
 
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]

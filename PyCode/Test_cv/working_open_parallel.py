@@ -54,15 +54,39 @@ def bootsample_mle(inputs):
                     Mass_bounds = inputs[4], Radius_bounds = inputs[5],
                     Log = inputs[6], deg = inputs[7], abs_tol = inputs[8], location = inputs[9])
 
-    #MR_boot = MLE_fit(data = data_boot, Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, sigma = data_sigma, Log = Log, deg = deg_choose)
 
     return MR_boot
 
+def cv_parallel_fn(cv_input):
+    print(cv_input[0:2])
+    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, Log, abs_tol, location, Mass_bounds, Radius_bounds = cv_input
+    split_interval = indices_folded[i_fold]
+                    
+    mask = np.repeat(False, n)
+    mask[rand_gen[split_interval]] = True
+    invert_mask = np.invert(mask)
+    
+    test_Radius = Radius[mask]
+    test_Mass = Mass[mask]
+    test_Radius_sigma = Radius_sigma[mask]
+    test_Mass_sigma = Mass_sigma[mask]
+        
+    train_Radius = Radius[invert_mask]
+    train_Mass = Mass[invert_mask]
+    train_Radius_sigma = Radius_sigma[invert_mask]
+    train_Mass_sigma = Mass_sigma[invert_mask]
+    
+    like_pred = cross_validation(train_Radius = train_Radius, train_Mass = train_Mass, test_Radius = test_Radius, test_Mass = test_Mass,
+                Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = test_degree,
+                train_Radius_sigma = train_Radius_sigma, train_Mass_sigma = train_Mass_sigma,
+                test_Radius_sigma = test_Radius_sigma, test_Mass_sigma = test_Mass_sigma,
+                Log = Log, abs_tol = abs_tol, location = location)
+    return like_pred
 
     
 
 def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, 
-                    degree_max = 6, select_deg = 55, Log = False, k_fold = 2, num_boot = 100, 
+                    degree_max = 6, select_deg = 55, Log = False, k_fold = 10, num_boot = 100, 
                     cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
@@ -131,56 +155,34 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     ## Step 1: Select number of degree based on cross validation, aic or bic methods.
     
     degree_candidate = np.arange(5, degree_max, 5)
-    deg_length = len(degree_candidate)
     if select_deg == 'cv':
-        print('Running cross validation to estimate the number of degrees of freedom for the weights') 
+        print('Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)) 
         rand_gen = np.random.choice(n, n, replace = False)
-        print('max value', np.max(rand_gen))
-        likelihood_per_degree = np.repeat(np.nan,deg_length)
-        
-        def cv_parallel_fn(i_fold, test_degree):
-            
-            if i_fold < k_fold:
-                split_interval = np.arange(((i_fold) * np.int(np.floor(n/k_fold)+1)) , ((i_fold+1) * np.int(np.floor(n/k_fold)))+1)
-            else:
-                split_interval = np.arange(((i_fold) * np.int(np.floor(n/k_fold)+1)), n+1)
-            print(split_interval)
-            
-                
-            print('max value for split', np.max(rand_gen[split_interval]))    
-            mask = np.repeat(False, n)
-            mask[rand_gen[split_interval]] = True
-            invert_mask = np.invert(mask)
-            
-            test_Radius = Radius[mask]
-            test_Mass = Mass[mask]
-            test_Radius_sigma = Radius_sigma[mask]
-            test_Mass_sigma = Mass_sigma[mask]
-                
-            train_Radius = Radius[invert_mask]
-            train_Mass = Mass[invert_mask]
-            train_Radius_sigma = Radius_sigma[invert_mask]
-            train_Mass_sigma = Mass_sigma[invert_mask]
-            
-            like_pred = cross_validation(train_Radius = train_Radius, train_Mass = train_Mass, test_Radius = test_Radius, test_Mass = test_Mass,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = test_degree,
-                        train_Radius_sigma = train_Radius_sigma, train_Mass_sigma = train_Mass_sigma,
-                        test_Radius_sigma = test_Radius_sigma, test_Mass_sigma = test_Mass_sigma,
-                        Log = Log, abs_tol = abs_tol, location = location)
-            print('cv',like_pred)
-            return like_pred
-            
-        
-        for i_degree in range(0,len(degree_candidate)):
-            likelihood_pred_vec = np.repeat(np.nan,k_fold)
-            for i_fold in range(0,k_fold+1):
-                likelihood_pred_vec[i_fold] = cv_parallel_fn(i_fold,degree_candidate[i_degree])
-            likelihood_per_degree[i_degree] = np.sum(likelihood_pred_vec)
-        
-        print(likelihood_pred_vec)
-        deg_choose = degree_candidate[np.nanargmax(likelihood_per_degree)]
+        row_size = np.int(np.floor(n/k_fold))
+        a = np.arange(n)
+        indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
 
-        print('Finished CV') 
+        
+
+            
+        cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, 
+        Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
+    
+        pool = Pool(processes = cores)
+        # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+        cv_result = list(pool.imap(cv_parallel_fn,cv_input))
+        likelihood_matrix = np.split(np.array(cv_result) , k_fold)        
+        likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
+
+        print(likelihood_per_degree)
+        np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),likelihood_per_degree)
+        deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
+
+        
+
+        print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+        with open(os.path.join(location,'log_file.txt'),'a') as f:
+            f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})) 
                 
         '''
 
@@ -332,8 +334,8 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 0,
-                        location = os.path.join(os.path.dirname(__file__),'Test_cv'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 1, cores = 1,
+                        location = os.path.join(os.path.dirname(__file__),'test_cv'))
 
             
             
