@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Started for 55 degrees at 2018-10-14 16:27:58.675636, using 40 cores
 ======================================
 Started run at 2018-10-14 16:27:58.681486
@@ -309,3 +310,9 @@ Finished Optimization at 2018-10-15 05:21:41.040774
 Finished Optimization at 2018-10-15 08:25:10.035882
 
 
+=======
+Started for 55 degrees at 2018-10-15 18:52:56.748109, using 40 cores
+======================================
+Started run at 2018-10-15 18:52:56.767057
+Started Integration at 2018-10-15 18:52:56.771048
+>>>>>>> d119c05f3187fd25b7c66bef99489732533d1455

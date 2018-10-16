@@ -137,6 +137,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         rand_gen = np.random.choice(n, n, replace = False)
         print('max value', np.max(rand_gen))
         likelihood_per_degree = np.repeat(np.nan,deg_length)
+<<<<<<< HEAD
         
         def cv_parallel_fn(i_fold, test_degree):
             
@@ -147,6 +148,18 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             print(split_interval)
             
                 
+=======
+        row_size = np.int(np.floor(n/k_fold))
+        
+        def cv_parallel_fn(i_fold, test_degree):
+            
+            if i_fold < k_fold-1 :
+                split_interval = np.arange(i_fold*row_size,(i_fold+1)*row_size)
+            else:
+                split_interval = np.arange(i_fold*row_size, n+1)
+            print(split_interval)
+                          
+>>>>>>> d119c05f3187fd25b7c66bef99489732533d1455
             print('max value for split', np.max(rand_gen[split_interval]))    
             mask = np.repeat(False, n)
             mask[rand_gen[split_interval]] = True
