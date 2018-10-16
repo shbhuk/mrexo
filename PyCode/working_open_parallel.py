@@ -32,12 +32,7 @@ Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-#select_deg = 5
 
-#data = np.vstack((M_obs,R_obs)).T
-#sigma = np.vstack((M_sigma,R_sigma)).T
-
-#bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
 Log = True
 
 
@@ -46,7 +41,7 @@ def bootsample_mle(inputs):
     '''
     To bootstrap the data and run MLE
     Input:
-        dummy : Variable required for mapping for parallel processing
+        inputs : Variable required for mapping for parallel processing
     '''
 
     MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],  
@@ -58,7 +53,6 @@ def bootsample_mle(inputs):
     return MR_boot
 
 def cv_parallel_fn(cv_input):
-    print(cv_input[0:2])
     i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, Log, abs_tol, location, Mass_bounds, Radius_bounds = cv_input
     split_interval = indices_folded[i_fold]
                     
@@ -75,6 +69,9 @@ def cv_parallel_fn(cv_input):
     train_Mass = Mass[invert_mask]
     train_Radius_sigma = Radius_sigma[invert_mask]
     train_Mass_sigma = Mass_sigma[invert_mask]
+    
+    with open(os.path.join(location,'log_file.txt'),'a') as f:
+       f.write('Running cross validation for {} degree check and {} th-fold'.format(test_degree, i_fold))
     
     like_pred = cross_validation(train_Radius = train_Radius, train_Mass = train_Mass, test_Radius = test_Radius, test_Mass = test_Mass,
                 Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = test_degree,
@@ -162,9 +159,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         a = np.arange(n)
         indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
 
-        
-
-            
+  
         cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, 
         Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
     
