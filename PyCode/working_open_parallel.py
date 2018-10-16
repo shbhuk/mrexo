@@ -126,9 +126,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     copyfile(os.path.join(os.path.dirname(location),'MLE_fit.py'), os.path.join(location,'MLE_fit.py'))
     
     n = len(Mass)
-
-
-    
+  
     if len(Mass) != len(Radius):
         print('Length of Mass and Radius vectors must be the same')
     if len(Mass) != len(Mass_sigma) and (Mass_sigma is not None):
@@ -159,11 +157,11 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         a = np.arange(n)
         indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
 
-  
         cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, 
         Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
     
         pool = Pool(processes = cores)
+        
         # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
         cv_result = list(pool.imap(cv_parallel_fn,cv_input))
         likelihood_matrix = np.split(np.array(cv_result) , k_fold)        
