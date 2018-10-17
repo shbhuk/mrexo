@@ -98,7 +98,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         Mass_min: the lower bound for mass. Default = None
         Radius_max: the upper bound for radius. Default = None
         Radius_min: the upper bound for radius. Default = None
-        degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60
+        degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value is n/log10(n)
         select_deg: if input "cv": cross validation
                             if input "aic": aic method
                             if input "bic": bic method
@@ -176,38 +176,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})) 
-                
-        '''
-
-
-    for (i.degree in 1:deg.length) {
-
-      like.pred.vec <- rep(NA, k.fold)
-      for (i.fold in 1:k.fold) {
-
-        # creat indicator to separate dataset into training and testing datasets
-        if (i.fold < k.fold) {
-          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):(i.fold*floor(n/k.fold))
-        } else {
-          split.interval <- ((i.fold-1)*floor(n/k.fold)+1):n
-        }
-
-        data.train <- data[ -rand.gen[split.interval], ]
-        data.test <- data[ rand.gen[split.interval], ]
-        data.sg.train <- data.sg[ -rand.gen[split.interval], ]
-        data.sg.test <- data.sg[ rand.gen[split.interval], ]
-        like.pred <-
-          cross.validation(data.train, data.sg.train, bounds,
-                           data.test, data.sg.test, degree.candidate[i.degree])
-        like.pred.vec[i.fold] <- like.pred
-
-      }
-      lik.per.degree[i.degree] <- sum(like.pred.vec)
-      cat("deg = ", degree.candidate[i.degree], "like.cv = ", lik.per.degree[i.degree], "\n")
-    }
-        '''
-            
-                
+                          
                         
     elif select_deg == 'aic' : 
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma, 
