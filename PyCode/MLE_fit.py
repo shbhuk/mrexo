@@ -84,13 +84,13 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
                  args = (x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol)[0]   
     
 
-def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10):
+def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10, Log = True):
     
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
         x_beta_indv = np.array([beta.pdf(x_std, a = d, b = deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else: 
-        x_beta_indv = np.array([integrate_function(data = x, data_sd = x_std, deg = deg, degree = d, x_max = x_max, x_min = x_min, abs_tol = abs_tol) for d in deg_vec])  
+        x_beta_indv = np.array([integrate_function(data = x, data_sd = x_std, deg = deg, degree = d, x_max = x_max, x_min = x_min, abs_tol = abs_tol, Log = Log) for d in deg_vec])  
     
     return x_beta_indv
        
@@ -241,8 +241,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
         for i in range(0,n): 
-            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol)  
-            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol)
+            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol, Log = Log)  
+            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol, Log = Log)
                                   
             # put M.indv.pdf and R.indv.pdf into a big matrix
             C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
@@ -298,13 +298,14 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     R_min = Radius_bounds[1]
     
     
-    '''
-    deg_vec = np.arange(1,deg+1)     
     
-    if sigma is None:
+    
+ 
+    """    
+    if Mass_sigma is None:
         # pdf for Mass and Radius for each beta density
-        M_indv_pdf = find_indv_pdf(M,deg,deg_vec,M_max,M_min) 
-        R_indv_pdf = find_indv_pdf(R,deg,deg_vec,R_max,R_min) 
+        M_indv_pdf = np.array([beta.pdf((Mass - M_min)/(M_max - M_min), a = d, b = deg - d+1)/(M_max - M_min) for d in deg_vec])
+        R_indv_pdf = np.array([beta.pdf((Radius - R_min)/(R_max - R_min), a = d, b = deg - d+1)/(R_max - R_min) for d in deg_vec])        
         
     else:        
         M_indv_pdf = np.zeros((n,deg))
@@ -315,41 +316,45 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
 
-        for i in range(0,n):   
-                 
-            for d in deg_vec:
-                
+        for i in range(0,n):  
+            print(Mass[i],deg,deg_vec,M_max,M_min,Mass_sigma[i],Log)
+ 
+            M_indv_pdf[i,:] = find_indv_pdf(Mass[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol, Log)
+  
+            R_indv_pdf[i,:] = find_indv_pdf(Radius[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol, Log)
+            
+            '''                                  
+            for d in deg_vec:                
                 a = datetime.datetime.now()
+                
                 # pdf for Mass for integrated beta density and normal density
-                M_indv_pdf[i,d-1] = integrate_function(data = M[i], data_sd = Mass_sigma[i], 
+                M_indv_pdf[i,d-1] = integrate_function(data = Mass[i], data_sd = Mass_sigma[i], 
                                     deg = deg, degree = d , x_max = M_max, x_min = M_min, Log = Log, abs_tol = abs_tol)
                 # pdf for Radius for integrated beta density and normal density
-                R_indv_pdf[i,d-1] = integrate_function(data = R[i], data_sd = Radius_sigma[i], 
+                R_indv_pdf[i,d-1] = integrate_function(data = Radius[i], data_sd = Radius_sigma[i], 
                                     deg = deg, degree = d , x_max = R_max, x_min = R_min, Log = Log, abs_tol = abs_tol)
                 b = datetime.datetime.now()
             # put M.indv.pdf and R.indv.pdf into a big matrix
+            '''
+
             C_pdf[i,:] = np.kron(M_indv_pdf[i],R_indv_pdf[i])
 
             
         C_pdf = C_pdf.T 
-    '''
+    """
     
     C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, M_max = M_max, M_min = M_min,
                         R = Radius, Radius_sigma = Radius_sigma, R_max = R_max, R_min = R_min, Log = Log, abs_tol = abs_tol, location = location)
-        
+
+    print(np.shape(C_pdf))
+    np.savetxt('C_pdf.txt',C_pdf)
 
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
 
     print('Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density')
-    '''
-    if return_Cpdf:
-        print('Exiting MLE_fit after integration. Returning C_pdf')
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('Exiting MLE_fit after integration. Returning C_pdf')
-        return C_pdf
-    '''
+
         
     # Function input to optimizer            
     def fn1(w):

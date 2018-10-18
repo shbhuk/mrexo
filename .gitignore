@@ -10,3 +10,4 @@ docs/.*
 *.swk
 *.swl
 PyCode/working_imap.py
+*.pyc
