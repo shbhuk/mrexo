@@ -8,7 +8,7 @@ from astropy.table import Table
 from scipy.optimize import minimize, fmin_slsqp
 import datetime
     
-    
+'''   
 
 t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
 t = t.filled()
@@ -35,6 +35,7 @@ bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
 abs_tol = 1e-20
 Log = True
 
+'''
 
 
 def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log = True):
