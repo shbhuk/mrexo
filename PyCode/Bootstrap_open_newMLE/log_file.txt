@@ -204,3 +204,14 @@ Finished Optimization at 2018-10-17 06:52:39.846031
 
 Optimization terminated after 143 iterations. Exit Code = 0Optimization terminated successfully.
 
+Finished Optimization at 2018-10-18 03:18:53.642231
+
+
+Optimization terminated after 501 iterations. Exit Code = 9Iteration limit exceeded
+
+Ended run at 2018-10-18 03:19:14.132919
+Started for 55 degrees at 2018-10-18 05:29:47.991990, using 40 cores
+======================================
+Started run at 2018-10-18 05:29:47.998572
+Started Integration at 2018-10-18 05:29:47.999289
+Finished Integration at 2018-10-18 05:35:30.579177
