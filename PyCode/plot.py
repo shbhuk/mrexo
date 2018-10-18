@@ -110,7 +110,7 @@ for i in range(0,n_boot):
         density_M_50[j,i] = sum(MLE_fit.conditional_density(y = M_50, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
         density_M_100[j,i] = sum(MLE_fit.conditional_density(y = M_100, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
 
-density_M_1_quantile = mquantiles(density_M_1,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+density_M_1_quantile = mquantiles(density_M_1,prob = [0.16, 0.5, 0.84],axis = 1,alphap=1,betap=1).data
 density_M_10_quantile = mquantiles(density_M_10,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
 density_M_50_quantile = mquantiles(density_M_50,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
 density_M_100_quantile = mquantiles(density_M_100,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
@@ -122,8 +122,11 @@ ax2 = fig.add_subplot(1,1,1)
 M_1_ind = np.where((R_seq > -0.4) & (R_seq < 1.2))[0]
 M_10_ind = np.where((R_seq > -0.3) & (R_seq < 1.2))[0]
 
-ax2.plot(R_seq[M_1_ind],density_M_1_quantile[M_1_ind])
-ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
+lower = density_M_1_quantile[M_1_ind][:,0]
+upper = density_M_1_quantile[M_1_ind][:,2]
+
+ax2.plot(10**R_seq[M_1_ind],density_M_1_quantile[M_1_ind][:,1])
+ax2.fill_between(10**R_seq[M_1_ind],lower,upper,alpha = 0.5)
 ax2.plot(R_seq[M_10_ind],density_M_10_quantile[M_10_ind])
 ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
 
