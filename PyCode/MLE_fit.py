@@ -346,9 +346,13 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, M_max = M_max, M_min = M_min,
                         R = Radius, Radius_sigma = Radius_sigma, R_max = R_max, R_min = R_min, Log = Log, abs_tol = abs_tol, location = location)
 
+<<<<<<< HEAD
     print(np.shape(C_pdf))
 
     print('Finished Integration at ',datetime.datetime.now())
+=======
+        print('Finished Integration at ',datetime.datetime.now())
+>>>>>>> 9694deb9859396712ffc75f260515ba4e611211b
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
 

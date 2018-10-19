@@ -327,8 +327,13 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max, 
+<<<<<<< HEAD
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 40,  
                         location = os.path.join(os.path.dirname(__file__),'Test_Scott'))
+=======
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 20, cores = 20, 
+                        location = os.path.join(os.path.dirname(__file__),'Test_CV'))
+>>>>>>> 9694deb9859396712ffc75f260515ba4e611211b
 
             
             
