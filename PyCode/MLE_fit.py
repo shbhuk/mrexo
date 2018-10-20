@@ -147,7 +147,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)  
     
-    y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol) 
+    y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = False) 
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)  
     denominator = np.sum(w_hat * y_beta_pdf) 
         
@@ -229,8 +229,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
     
     if Mass_sigma is None:
         # pdf for Mass and Radius for each beta density
-        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, M_max, M_min, x_std = None, abs_tol = abs_tol) 
-        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, R_max, R_min, x_std = None, abs_tol = abs_tol) 
+        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, M_max, M_min, x_std = None, abs_tol = abs_tol, Log = Log) 
+        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, R_max, R_min, x_std = None, abs_tol = abs_tol, Log = Log) 
         
     else:        
         M_indv_pdf = np.zeros((n, deg))
