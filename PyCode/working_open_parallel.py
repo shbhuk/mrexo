@@ -32,9 +32,9 @@ Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-
+'''
 Log = True
-
+'''
 
 
 def bootsample_mle(inputs):
@@ -80,6 +80,61 @@ def cv_parallel_fn(cv_input):
                 Log = Log, abs_tol = abs_tol, location = location)
     return like_pred
 
+
+def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, Log = False, 
+                        degree_max = 60, k_fold = 10, degree_candidate = None, 
+                        cores = 1, location = os.path.dirname(__file__), abs_tol = 1e-10):
+    '''
+    Mass: Mass measurements
+    Radius : Radius measurements
+    Mass_sigma: measurement errors for the data, if no measuremnet error, 
+                it is NULL
+    Radius_sigma
+    Mass_max: the upper bound for mass. Default = None
+    Mass_min: the lower bound for mass. Default = None
+    Radius_max: the upper bound for radius. Default = None
+    Radius_min: the upper bound for radius. Default = None
+
+    Log: is the data transformed into a log scale if Log = True. Default = False
+    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
+    k_fold: number of fold used for cross validation. Default = 10
+    degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None. 
+                    If None, defaults to 
+    cores: this program uses parallel computing for bootstrap. Default = 1
+    location : The location for the log file
+    abs_tol : Defined for integration in MLE_fit()
+    
+    '''
+    if degree_candidate == None:
+        degree_candidate = np.arange(5, degree_max, 5, dtype = int)
+
+    n = len(Mass)
+    
+    print('Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)) 
+    rand_gen = np.random.choice(n, n, replace = False)
+    row_size = np.int(np.floor(n/k_fold))
+    a = np.arange(n)
+    indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
+
+    cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, 
+    Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
+
+    pool = Pool(processes = cores)
+    
+    # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+    cv_result = list(pool.imap(cv_parallel_fn,cv_input))
+    likelihood_matrix = np.split(np.array(cv_result) , k_fold)        
+    likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
+
+    print(likelihood_per_degree)
+    np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),likelihood_per_degree)
+    deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
+
+    print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+
+
+    return (deg_choose)
+
     
 
 def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None, 
@@ -98,7 +153,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         Mass_min: the lower bound for mass. Default = None
         Radius_max: the upper bound for radius. Default = None
         Radius_min: the upper bound for radius. Default = None
-        degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60
+        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
         select_deg: if input "cv": cross validation
                             if input "aic": aic method
                             if input "bic": bic method
@@ -146,34 +201,20 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     Mass_bounds = np.array([Mass_max,Mass_min])
     Radius_bounds = np.array([Radius_max,Radius_min])
 
+    if type(degree_max) != int:
+        degree_max = int(degree_max)
+
     ###########################################################
     ## Step 1: Select number of degree based on cross validation, aic or bic methods.
     
-    degree_candidate = np.arange(5, degree_max, 5)
     if select_deg == 'cv':
-        print('Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)) 
-        rand_gen = np.random.choice(n, n, replace = False)
-        row_size = np.int(np.floor(n/k_fold))
-        a = np.arange(n)
-        indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
-
-        cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, 
-        Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
-    
-        pool = Pool(processes = cores)
         
-        # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
-        cv_result = list(pool.imap(cv_parallel_fn,cv_input))
-        likelihood_matrix = np.split(np.array(cv_result) , k_fold)        
-        likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
-
-        print(likelihood_per_degree)
-        np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),likelihood_per_degree)
-        deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
+        deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
+                                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log,
+                                        degree_max = degree_max, k_fold = k_fold, cores = cores, location = location, abs_tol = abs_tol)
 
         
 
-        print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})) 
                    
@@ -198,7 +239,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             
     print('Running full dataset MLE before bootstrap')        
     fullMLEresult = MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = deg_choose, abs_tol = abs_tol, location = location)
+                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = int(deg_choose), abs_tol = abs_tol, location = location)
 
     
     with open(os.path.join(location,'log_file.txt'),'a') as f:
@@ -295,8 +336,8 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 5, Log = True, num_boot = 1, 
-                        location = os.path.join(os.path.dirname(__file__),'test_new'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 55, Log = True, num_boot = 60, cores = 40, 
+                        location = os.path.join(os.path.dirname(__file__),'Cross_validation40:'))
 
             
             
