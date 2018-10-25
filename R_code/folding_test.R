@@ -4,7 +4,7 @@ rand.gen <- sample(1:n, n)
 deg.length = 10
 rand.gen <- sample(1:n, n)
 
-for (i.degree in 2:3) {
+for (i.degree in 3:3) {
   
   like.pred.vec <- rep(NA, k.fold)
   for (i.fold in 1:k.fold) {
