@@ -384,7 +384,7 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
 
     with open(os.path.join(location,'log_file.txt'),'a') as f:
         f.write('Finished Optimization at {}'.format(datetime.datetime.now()))
-        f.write('Optimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
+        f.write('\nOptimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
 
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
