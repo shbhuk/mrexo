@@ -23,9 +23,9 @@ qtl = [0.16,0.84]
 
 weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
 
-result_dir = os.path.join(pwd,'Cross_validation60')
+result_dir = os.path.join(pwd,'Results','Bootstrap_new_60')
 #result_dir = r'C:\Users\szk381\Documents\GitHub\Py_mass_radius_working\PyCode\Results\Bootstrap_results_Apple_reduced100_bad'
-#weights_mle = np.loadtxt(os.path.join(result_dir,'weights.txt'))
+weights_mle = np.loadtxt(os.path.join(result_dir,'weights.txt'))
 
 
 

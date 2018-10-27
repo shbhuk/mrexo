@@ -107,11 +107,10 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     '''
     if degree_candidate == None:
         degree_candidate = np.arange(5, degree_max, 5, dtype = int)
-	degree_candidate = np.linspace(2, degree_max, 12, dtype = int)
 
     n = len(Mass)
     
-    print('\nRunning cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)) 
+    print('Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)) 
     rand_gen = np.random.choice(n, n, replace = False)
     row_size = np.int(np.floor(n/k_fold))
     a = np.arange(n)
@@ -131,7 +130,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),likelihood_per_degree)
     deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
 
-    print('\nFinished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+    print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
 
 
     return (deg_choose)
@@ -217,7 +216,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         
 
         with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('\nFinished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})) 
+            f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})) 
                    
     elif select_deg == 'aic' : 
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma, 
@@ -337,8 +336,8 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
             
 if __name__ == '__main__':           
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max, 
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 20, cores = 20, 
-                        location = os.path.join(os.path.dirname(__file__),'Cross_validation_20'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 100,  
+                        location = os.path.join(os.path.dirname(__file__),'Full_run_CV'))
 
             
             
