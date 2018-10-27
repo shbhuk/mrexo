@@ -107,7 +107,6 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     '''
     if degree_candidate == None:
         degree_candidate = np.arange(5, degree_max, 5, dtype = int)
-	degree_candidate = np.linspace(2, degree_max, 12, dtype = int)
 
     n = len(Mass)
     
