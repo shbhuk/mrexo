@@ -5,7 +5,7 @@ import os,sys
 from scipy.stats.mstats import mquantiles
 pwd = os.path.dirname(__file__)
 #sys.path.append(pwd)
-import MLE_fit 
+import MLE_fit
 import importlib
 importlib.reload(MLE_fit)
 
@@ -14,8 +14,11 @@ print(pwd)
 result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
 result_dir = os.path.join(pwd,'Bootstrap_cyberlamp_parallel_full2')
 result_dir = os.path.join(pwd,'Results','Bootstrap_cyberlamp_full_200iter')
+result_dir = os.path.join(pwd,'M_dwarfs_logtrue')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
+t = Table.read(os.path.join(pwd,'Cool_stars_20181027.csv'))
+
 t = t.filled()
 
 M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -73,17 +76,17 @@ lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,a
 
 
 
-fig = plt.figure()                                                               
+fig = plt.figure()
 ax1 = fig.add_subplot(1,1,1)
 
-ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3) 
+ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
 ax1.plot(R_points,M_cond_R) # Non parametric result
 ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha = 0.3, color = 'r') # Non parametric result
 ax1.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5) # Bootstrap result
 
 
 ax1.set_xlabel('log Radius (Earth Radii)')
-ax1.set_ylabel('log Mass (Earth Mass)') 
+ax1.set_ylabel('log Mass (Earth Mass)')
 ax1.set_title('Kepler data: Mass - radius relations')
 
 plt.show()
@@ -105,10 +108,10 @@ for i in range(0,n_boot):
     weights_t = np.transpose(np.reshape(weights_boot[i,:],newshape = [deg_choose,deg_choose])).flatten()
     print(i)
     for j in range(0,len(R_seq)):
-        density_M_1[j,i] = sum(MLE_fit.conditional_density(y = M_1, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
-        density_M_10[j,i] = sum(MLE_fit.conditional_density(y = M_10, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
-        density_M_50[j,i] = sum(MLE_fit.conditional_density(y = M_50, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
-        density_M_100[j,i] = sum(MLE_fit.conditional_density(y = M_100, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t)) 
+        density_M_1[j,i] = sum(MLE_fit.conditional_density(y = M_1, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
+        density_M_10[j,i] = sum(MLE_fit.conditional_density(y = M_10, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
+        density_M_50[j,i] = sum(MLE_fit.conditional_density(y = M_50, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
+        density_M_100[j,i] = sum(MLE_fit.conditional_density(y = M_100, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
 
 density_M_1_quantile = mquantiles(density_M_1,prob = [0.16, 0.5, 0.84],axis = 1,alphap=1,betap=1).data
 density_M_10_quantile = mquantiles(density_M_10,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
@@ -116,7 +119,7 @@ density_M_50_quantile = mquantiles(density_M_50,prob = [0.16, 0.5, 0.84],axis = 
 density_M_100_quantile = mquantiles(density_M_100,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
 
 
-fig = plt.figure()                                                               
+fig = plt.figure()
 ax2 = fig.add_subplot(1,1,1)
 
 M_1_ind = np.where((R_seq > -0.4) & (R_seq < 1.2))[0]

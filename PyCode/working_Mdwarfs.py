@@ -106,7 +106,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
     '''
     if degree_candidate == None:
-        degree_candidate = np.arange(5, degree_max+5, 5, dtype = int)
+        degree_candidate = np.linspace(5, degree_max, 12, dtype = int)
 
     n = len(Mass)
 
@@ -336,5 +336,5 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
 if __name__ == '__main__':
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 25, select_deg = 'cv', Log = True, num_boot = 60,
-                        location = os.path.join(os.path.dirname(__file__),'M_dwarfs_logtrue'))
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = True, num_boot = 60,
+                        location = os.path.join(os.path.dirname(__file__),'M_dwarfs_logtruev2'))
