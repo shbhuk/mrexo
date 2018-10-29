@@ -1,0 +1,2212 @@
+Started for cv degrees at 2018-10-27 22:00:06.351140, using 24 cores
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 30
+[ nan  nan  nan  nan  nan  nan  nan  nan  nan  nan  nan  nan]
+Finished CV. Picked set([5]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 20, 171548))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 31, 132075))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:31.588315, with 501 iterations. Exit Code = 9
+
+
+Running 60 bootstraps for the MLE code with degree = 5, using 24 threads.
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 280921))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 967882))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.771413, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 2, 450258))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 18, 89592))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:18.617000, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 270344))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 107609))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.923950, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 2, 857246))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 18, 394473))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:18.929794, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 264104))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 886583))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.834967, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 5, 142255))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 586204))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:20.308325, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 270990))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 52, 274628))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:53.235349, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 5, 346294))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 863770))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:20.396755, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 261498))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 50, 443166))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.254694, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 998295))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 895395))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:20.512581, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 270676))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 52, 3514))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.627571, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 3, 414801))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 20, 990860))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:21.664846, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 281814))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 577693))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:01.098956, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 12, 581257))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 26, 51830))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:26.571928, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 259754))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 52, 350630))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.826183, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 5, 241278))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 25, 765539))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:26.693982, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 281338))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 1, 69887))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:02.060092, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 11, 532290))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 25, 662908))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:26.445868, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 281243))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 1, 604458))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:02.276468, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 12, 383244))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 26, 947290))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:28.030968, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 299373))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 2, 949214))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:03.732385, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 13, 988237))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 28, 883771))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:29.536263, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 281533))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 876311))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:01.783575, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 14, 728252))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 28, 811330))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:29.375804, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 280805))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 49, 657399))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:50.125564, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 59, 392279))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 10, 781234))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:11.375398, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 721299))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 32, 770592))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:33.242511, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 286421))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 375744))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.130261, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 2, 81269))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 13, 222023))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:13.719074, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 21, 993267))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 34, 495174))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:34.963938, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 261359))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 49382))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.580510, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 59, 944273))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 10, 956673))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:11.788877, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 20, 129275))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 34, 493032))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:35.065833, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 269614))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 50, 962287))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.575298, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 68242))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 12, 227901))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:12.803117, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 23, 156237))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 36, 69633))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:36.533727, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 258129))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 50, 493081))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.466898, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 59, 993252))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 13, 170032))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:14.095971, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 22, 632271))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 36, 686185))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:37.157918, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 270005))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 226958))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.782861, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 683666))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 13, 269741))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:13.791675, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 22, 95242))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 36, 704139))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:37.174626, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 279538))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 910865))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.438736, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 901283))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 13, 560494))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            GradienNew MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 281698))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 52, 816688))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:53.794392, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 5, 22313))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 18, 841905))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:19.395792, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 27, 873255))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 40, 112896))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:40.579041, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 262394))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 360585))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.838125, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 0, 177266))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 12, 21546))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:12.576739, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 29, 15270))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 41, 380793))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:41.853699, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 264863))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 520680))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:52.454087, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 4, 125255))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 131528))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current fuNew MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 39, 263018))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 51, 159210))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:19:51.814097, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 4, 162247))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 19, 231718))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:20.195949, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 29, 626279))
+(25, 27)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 20, 42, 529596))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:20:42.996160, with 501 iterations. Exit Code = 9
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 397041))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 17, 503236))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:18.064928, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 26, 394620))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 28, 6238))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 41, 541795))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:42.276175, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 50, 639416))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 52, 253))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 22, 772423))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:36.743835, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 7, 761971))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 11, 839321))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 54, 786989))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:41.505055, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 37, 210351))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 43, 979349))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 33, 31354))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:00.128448, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 28, 986531))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 36, 563355))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 38, 544248))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:26.805239, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 21, 264030))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 414058))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 3, 409996))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:54.368199, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 27, 492047))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 30, 698347))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 24, 973145))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:07.765966, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 56, 562135))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 2, 419298))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 38, 395945))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:47.343920, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 12, 48170))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 15, 26310))
+(196, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 38, 769867))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:46.860101, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 12, 845254))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 404990))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 55, 53999))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:26.140824, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 4, 9774))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 9, 454327))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 29, 285709))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:04:30.311217, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 44, 556604))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 46, 440329))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 37, 492892))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:31.618946, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 11, 209927))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 16, 700306))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 36, 880459))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:37.929806, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 53, 147710))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 54, 739350))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 51, 775570))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:40.307238, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 24, 147571))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 412644))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 39, 960164))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:56.166649, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 23, 397052))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 26, 170257))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 38, 271767))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:38.893927, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 47, 797297))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 48, 947300))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 26, 460317))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:52.382521, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 24, 899334))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 29, 128329))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 19, 747398))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:14.237098, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 58, 884758))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 3, 820312))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 18, 17723))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:18.583531, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 28, 947731))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 29, 920311))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 9, 566397))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:18.431917, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 43, 334527))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 45, 807269))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 3, 672896))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:04.755110, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 16, 600830))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 17, 955332))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 5, 392758))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:51.586571, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 29, 560798))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 402456))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 42, 600984))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:10.786483, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 39, 210960))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 42, 753293))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 15, 319777))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:28.371940, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 54, 568187))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 58, 632251))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 34, 153039))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:43.155760, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 9, 434167))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 12, 376308))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 35, 8502))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:04:36.548063, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 55, 939062))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 58, 650293))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 59, 738558))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:01.952899, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 49, 568285))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 55, 124308))
+(25, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 4, 144015))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:04.893438, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 15, 250196))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 20, 617306))
+(256, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 48, 535907))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:02.582584, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 30, 931147))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 399654))
+(121, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 30, 353005))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:35.665390, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 54, 593933))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 56, 906291))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 37, 349418))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:01.666863, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 33, 231463))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 36, 209262))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 49, 544352))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:50.072465, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 59, 776017))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 0, 759298))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 39, 115843))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:54.498052, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 25, 235086))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 28, 127306))
+(121, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 58, 649307))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:05:01.823566, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 24, 503137))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 27, 857309))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 36, 974863))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:06.791721, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 52, 519445))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 406831))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 3, 396139))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:50.275602, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 58, 192881))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 4, 60264))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 45, 404108))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:58.847598, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 29, 626013))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 33, 40263))
+(324, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 59, 437871))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:29.047040, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 59, 525486))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 403281))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 8, 308658))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:50.587326, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 30, 813596))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 38, 744290))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 10, 811990))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:12.842543, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 33, 768004))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 35, 211319))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 32, 624117))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:22.632530, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 9, 657550))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 404211))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 52, 702855))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:39.106546, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 25, 939415))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 31, 8363))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 27, 68519))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:49.878587, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 36, 543224))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 41, 858313))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 26, 997666))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:07.515651, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 55, 828907))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 1, 620319))
+(49, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 12, 843160))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:14.432078, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 29, 98224))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 35, 931294))
+(400, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 8, 377826))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:53.294623, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 23, 863384))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 416436))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 1, 818388))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:04:48.519397, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 41, 256221))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 47, 752308))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 7, 493186))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:08.336811, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 24, 862596))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 26, 21311))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 14, 281468))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:42.923622, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 18, 139615))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 20, 738286))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 6, 786117))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:12:01.797055, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 36, 864569))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 410668))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 27, 719865))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:30.500489, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 46, 186240))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 47, 762254))
+(121, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 16, 56547))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:18.677400, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 39, 789856))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 41, 496283))
+(121, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 6, 885521))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:09.583442, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 28, 491981))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 31, 397298))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 38, 581807))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:11:52.901887, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 38, 113316))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 409550))
+(25, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 26, 879713))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 18527
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:27.896111, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 39, 11323))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 40, 431250))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 2, 691353))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:04.646673, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 33, 248626))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 36, 71275))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 1, 219317))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:02.707815, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 19, 431912))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 22, 237277))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 10, 355779))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:05:02.615996, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 47, 500978))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 53, 856281))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 20, 734899))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:22.399249, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 40, 892515))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 42, 329326))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 51, 854275))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:12:03.121446, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 44, 433320))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 411383))
+(121, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 40, 217874))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:45.471271, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 7, 39333))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 10, 477364))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 57, 513021))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:04:02.894066, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 37, 874541))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 43, 558333))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 23, 667677))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:05:41.461727, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 16, 483139))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 23, 226293))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 6, 438310))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:29.485722, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 0, 510158))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 4, 320291))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 26, 37474))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:12:13.941528, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 12, 51, 829292))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 401567))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 42, 896390))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:00.912265, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 26, 16868))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 31, 990281))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 56, 423340))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:58.063804, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 20, 756686))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 24, 94302))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 3, 353430))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:42.978030, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 25, 59664))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 34, 123265))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 9, 963875))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:26.994973, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 59, 729579))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 4, 122297))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 42, 467157))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:09.681111, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 39, 247069))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 42, 998299))
+(529, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 21, 250244))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:12:48.437359, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 13, 23, 542412))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 398755))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 41, 872206))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:44.949981, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 9, 816248))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 11, 628270))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 9, 88665))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:04:55.409785, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 44, 977488))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 48, 900300))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 7, 903153))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:08.963106, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 23, 742260))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 24, 994311))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 19, 42247))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:10.805820, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 49, 470206))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 52, 173307))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 17, 1986))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:18.656278, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 36, 691602))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 39, 287294))
+(625, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 39, 329060))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:13:09.995195, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 13, 47, 813289))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 400633))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 35, 690980))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:43.834059, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 8, 946557))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 12, 74306))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 8, 330773))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:06:26.071281, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 17, 495451))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 22, 534276))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 47, 342980))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:49.423882, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 8, 275690))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 10, 200310))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 15, 57495))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:13:15.353305, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 13, 56, 319034))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 413465))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 46, 528429))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:01:11.536053, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 39, 184191))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 41, 758265))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 14, 274111))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:21.850672, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 46, 639645))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 49, 374288))
+(81, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 11, 934800))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:03:13.712935, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 31, 780742))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 33, 557286))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 36, 276003))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:06.633843, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 58, 76294))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 3, 735312))
+(81, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 19, 729298))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 46583
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:21.545333, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 37, 628520))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 46, 253354))
+(625, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 28, 220388))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 319127
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:13:48.589477, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 14, 26, 666086))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 415589))
+(529, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 4, 786762))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 271031
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:41.996498, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 22, 296518))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 26, 345309))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 4, 14, 347638))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:05:01.314111, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 33, 367344))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 5, 37, 926292))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 51, 436837))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:14:24.704497, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 15, 9, 726658))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 406119))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 59, 259677))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:05:13.240110, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 6, 193844))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 14, 561302))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 6, 49, 749174))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:07:02.929139, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 36, 490076))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 7, 38, 284279))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 8, 17, 414350))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 168326
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:08:45.168560, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 41, 438899))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 9, 46, 601326))
+(729, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 2, 125908))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:14:46.218985, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 15, 26, 853364))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 409727))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 36, 986016))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:38.656220, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 53, 25351))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 54, 520251))
+(256, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 37, 57265))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 134258
+    New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 411210))
+(196, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 40, 629200))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 104198
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:49.395153, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 14, 447966))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 16, 987331))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 2, 22, 606836))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:10.488289, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 56, 233317))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 0, 65326))
+(729, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 48, 663257))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 371231
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:15:26.827127, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 16, 9, 573066))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 397717))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 21, 498600))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:22.531788, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 34, 436464))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 35, 903297))
+(49, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 52, 306537))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 30551
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:00:53.157233, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 6, 136107))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 7, 378271))
+(400, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 49, 835471))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 206402
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:02:31.483939, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 2, 209689))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 7, 702312))
+(324, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 3, 52, 860157))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            FunctiNew MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 0, 6, 418706))
+(900, 25)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 1, 14, 28155))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:09:03.637778, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 0, 382605))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 7, 278329))
+(121, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 10, 27, 244891))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 66623
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:10:32.140367, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 0, 250015))
+New MLE
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 9, 465300))
+(900, 18)
+('Finished Integration at ', datetime.datetime(2018, 10, 27, 22, 11, 57, 922055))
+Calculated the PDF for Mass and Radius for Integrated Beta and Normal Density
+Iteration limit exceeded    (Exit mode 9)
+            Current function value: nan
+            Iterations: 501
+            Function evaluations: 456902
+            Gradient evaluations: 501
+Optimization run finished at 2018-10-27 22:18:20.975964, with 501 iterations. Exit Code = 9
+
+
+('Started Integration at ', datetime.datetime(2018, 10, 27, 22, 19, 0, 980191))
+Finished bootstrap at 2018-10-27 22:20:50.894999
+0:20:44.590855
