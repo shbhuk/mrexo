@@ -1,0 +1,33 @@
+Started for cv degrees at 2018-10-29 22:22:52.133369, using 4 coresRunning cross validation for 5 degree check and 0 th-fold
+======================================
+Started run at 2018-10-29 22:22:55.567770
+Started Integration at 2018-10-29 22:22:55.584709
+Running cross validation for 7 degree check and 0 th-foldRunning cross validation for 9 degree check and 0 th-fold
+======================================
+Started run at 2018-10-29 22:22:55.738451
+Started Integration at 2018-10-29 22:22:55.756403
+Started Integration at 2018-10-29 22:22:55.775352
+Running cross validation for 11 degree check and 0 th-fold
+======================================
+Started run at 2018-10-29 22:22:55.941907
+Started Integration at 2018-10-29 22:22:55.948888
+Finished Integration at 2018-10-29 22:23:17.903764
+Finished Optimization at 2018-10-29 22:23:25.884692
+Optimization terminated after 2001 iterations. Exit Code = 9Iteration limit exceeded
+
+Finished Integration at 2018-10-29 22:23:27.522955
+Finished Integration at 2018-10-29 22:23:36.448485
+Finished Optimization at 2018-10-29 22:23:41.726970
+Optimization terminated after 2001 iterations. Exit Code = 9Iteration limit exceeded
+
+Finished Integration at 2018-10-29 22:23:48.313044
+Finished Optimization at 2018-10-29 22:24:00.261069
+Optimization terminated after 2001 iterations. Exit Code = 9Iteration limit exceeded
+
+Started Integration at 2018-10-29 22:24:05.281945
+Finished Optimization at 2018-10-29 22:24:26.731615
+Optimization terminated after 2001 iterations. Exit Code = 9Iteration limit exceeded
+
+Started Integration at 2018-10-29 22:24:34.914031
+Started Integration at 2018-10-29 22:25:20.972012
+Started Integration at 2018-10-29 22:26:08.156965
