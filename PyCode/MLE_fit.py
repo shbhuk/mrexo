@@ -240,9 +240,11 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
         C_pdf = np.zeros((n, deg**2))
 
         print('Started Integration at ',datetime.datetime.now())
+        #print(M_max, M_min, R_max, R_min)
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
         for i in range(0,n):
+            #print('\n Iter {}. Mass {}. Radius {}. Mass_sigma {}. Radius_sigma {}'.format(i, M[i], R[i], Mass_sigma[i], Radius_sigma[i]))
             M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol = abs_tol, Log = Log)
             R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol = abs_tol, Log = Log)
 

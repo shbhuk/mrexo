@@ -36,8 +36,8 @@ num_boot = 100
 
 Mass = M_obs
 Radius = R_obs
-Mass_sigma = M_sigma
-Radius_sigma = R_sigma
+Mass_sigma = np.array(M_sigma)
+Radius_sigma = np.array(R_sigma)
 Mass_max = Mass_max
 Mass_min = Mass_min
 Radius_max = Radius_max
@@ -346,10 +346,10 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
     return results
 
-
+'''
 if __name__ == '__main__':
 
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 35, select_deg = 'cv', Log = False, num_boot = 10,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = False, num_boot = 10, cores = 1,
                         location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-8)
-
+'''
