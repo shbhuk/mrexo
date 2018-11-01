@@ -144,6 +144,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
 
     print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+    print('++++++++++++++++++++++++++++++++++++++++++')
 
 
     return (deg_choose)
@@ -229,8 +230,9 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
 
         with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
-
+            f.write('Finished CV. Picked {} degrees by maximizing likelihood.\n+++++++++++++++++++++++++++++'.format({deg_choose}))
+            
+            
     elif select_deg == 'aic' :
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = d, abs_tol = abs_tol, location = location)['aic'] for d in range(2,degree_max)])
@@ -350,5 +352,5 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 if __name__ == '__main__':
 
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = False, num_boot = 10, cores = 1,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = False, num_boot = 30, 
                         location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-8)
