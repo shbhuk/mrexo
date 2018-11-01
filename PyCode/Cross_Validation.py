@@ -64,8 +64,8 @@ def cross_validation(train_Radius, train_Mass, test_Radius, test_Mass, Mass_boun
     # so we only need to calculate 2:(deg^2-1) terms
 
     C_pdf = calc_C_matrix(size_test, deg, test_Mass, test_Mass_sigma, M_max, M_min, test_Radius, test_Radius_sigma, R_max, R_min, Log, abs_tol, location)
-    # Log of 0 throws weird errors
-    C_pdf[C_pdf == 0] = 1e-300
+
+
 
 
     return np.sum(np.log(np.matmul(weights,C_pdf)))
