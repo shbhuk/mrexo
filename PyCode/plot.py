@@ -14,10 +14,10 @@ print(pwd)
 result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
 result_dir = os.path.join(pwd,'Bootstrap_cyberlamp_parallel_full2')
 result_dir = os.path.join(pwd,'Results','Bootstrap_cyberlamp_full_200iter')
-result_dir = os.path.join(pwd,'M_dwarfs_logtruev2')
+result_dir = os.path.join(pwd,'test')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
-t = Table.read(os.path.join(pwd,'Cool_stars_20181027.csv'))
+t = Table.read(os.path.join(pwd,'Cool_stars_20181031.csv'))
 
 t = t.filled()
 
