@@ -17,7 +17,7 @@ from MLE_fit import MLE_fit
 from Cross_Validation import cross_validation
 
 
-t = Table.read(os.path.join(os.path.dirname(__file__),'Cool_stars_20181027.csv'))
+t = Table.read(os.path.join(os.path.dirname(__file__),'Cool_stars_20181031.csv'))
 t = t.filled()
 
 M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -32,9 +32,22 @@ Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-'''
-Log = True
-'''
+
+
+Mass = M_obs
+Radius = R_obs
+Mass_sigma = np.array(M_sigma)
+Radius_sigma = np.array(R_sigma)
+Mass_max = Mass_max
+Mass_min = Mass_min
+Radius_max = Radius_max
+Radius_min = Radius_min
+degree_max = 30
+select_deg = 'cv'
+Log = False
+num_boot = 60
+location = os.path.join(os.path.dirname(__file__),'test')
+abs_tol = 1e-8
 
 
 def bootsample_mle(inputs):
@@ -96,7 +109,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     Radius_min: the upper bound for radius. Default = None
 
     Log: is the data transformed into a log scale if Log = True. Default = False
-    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
+    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
     k_fold: number of fold used for cross validation. Default = 10
     degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
                     If None, defaults to
@@ -138,7 +151,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
 
 def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
-                    degree_max = 60, select_deg = 55, Log = False, k_fold = 10, num_boot = 100,
+                    degree_max = 60, select_deg = 55, Log = False, k_fold = None, num_boot = 100,
                     cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
@@ -153,7 +166,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         Mass_min: the lower bound for mass. Default = None
         Radius_max: the upper bound for radius. Default = None
         Radius_min: the upper bound for radius. Default = None
-        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
+        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
         select_deg: if input "cv": cross validation
                             if input "aic": aic method
                             if input "bic": bic method
@@ -208,6 +221,14 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     ## Step 1: Select number of degree based on cross validation, aic or bic methods.
 
     if select_deg == 'cv':
+
+        if k_fold == None:
+            if n//10 > 5:
+                k_fold = 10
+            else:
+                k_fold = 5
+
+
 
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log,
@@ -333,8 +354,10 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
     return results
 
-
+'''
 if __name__ == '__main__':
+
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = False, num_boot = 60,
-                        location = os.path.join(os.path.dirname(__file__),'M_dwarfs_logtrue_v3'), abs_tol = 1e-8)
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = False, num_boot = 10, cores = 1,
+                        location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-8)
+'''
