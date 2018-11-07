@@ -139,7 +139,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
 
 def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
-                    degree_max = 60, select_deg = 55, Log = False, k_fold = 10, num_boot = 100,
+                    degree_max = 60, select_deg = 55, Log = False, k_fold = None, num_boot = 100,
                     cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
@@ -209,6 +209,12 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     ## Step 1: Select number of degree based on cross validation, aic or bic methods.
 
     if select_deg == 'cv':
+
+        if k_fold == None:
+            if n//10 > 5:
+                k_fold = 10
+            else:
+                k_fold = 5
 
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log,
@@ -338,4 +344,4 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 if __name__ == '__main__':
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
                         Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 100,
-                        location = os.path.join(os.path.dirname(__file__),'Full_run_CV'))
+                        location = os.path.join(os.path.dirname(__file__),'Full_run_CV1'))
