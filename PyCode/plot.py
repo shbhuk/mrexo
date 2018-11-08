@@ -14,7 +14,8 @@ print(pwd)
 result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
 result_dir = os.path.join(pwd,'Bootstrap_cyberlamp_parallel_full2')
 result_dir = os.path.join(pwd,'Results','M_dwarfs_logtrue')
-result_dir = os.path.join(pwd,'test')
+result_dir = os.path.join(pwd,'Mdwarf_CV_100boot')
+#result_dir = os.path.join(pwd,'test')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = Table.read(os.path.join(pwd,'Cool_stars_20181107.csv'))
@@ -65,6 +66,7 @@ R_cond_M_lower_boot = np.loadtxt(os.path.join(result_dir, 'R_cond_M_lower_boot.t
 
 n_boot = np.shape(weights_boot)[0]
 deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+#deg_choose = 5
 
 logMass = np.log10(M_obs)
 logRadius = np.log10(R_obs)
@@ -77,16 +79,17 @@ logMass_sigma = 0.434 * M_sigma/M_obs
 logRadius_sigma = 0.434 * R_sigma/R_obs
 
 lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
-
+#lower_boot, upper_boot = np.mean(M_cond_R_lower_boot, axis = 0), np.mean(M_cond_R_upper_boot, axis = 0)
 
 
 fig = plt.figure()
 ax1 = fig.add_subplot(1,1,1)
 
 ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
+#ax1.errorbar(x = R_obs, y = M_obs, xerr = R_sigma/R_obs, yerr = M_sigma/M_obs,fmt = 'k.',markersize = 2, elinewidth = 0.3)
 ax1.plot(R_points,M_cond_R) # Non parametric result
 ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha = 0.3, color = 'r') # Non parametric result
-#ax1.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5) # Bootstrap result
+ax1.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5) # Bootstrap result
 
 
 ax1.set_xlabel('log Radius (Earth Radii)')

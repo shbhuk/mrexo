@@ -29,7 +29,9 @@ R_obs = np.array(t['pl_rade'])
 # bounds for Mass and Radius
 Radius_min = -0.3
 Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
-Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
+Radius_max = np.log10(max(R_obs + R_sigma))
+#Radius_max = 1.4
+Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.01))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
 
@@ -360,6 +362,5 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 if __name__ == '__main__':
 
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 5, Log = False, num_boot = 5,
-                        location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-8)
-
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 25, select_deg = 'aic', Log = True, num_boot = 10,
+                        location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-10)
