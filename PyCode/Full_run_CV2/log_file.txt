@@ -1070,3 +1070,141 @@ Finished Optimization at 2018-11-08 09:27:37.473276
 Optimization terminated after 60 iterations. Exit Code = 0Optimization terminated successfully.
 
 Started Integration at 2018-11-08 09:28:03.007276
+Finished Optimization at 2018-11-08 13:12:55.932107
+Optimization terminated after 66 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-11-08 13:13:19.737901
+Finished Optimization at 2018-11-08 21:31:54.331714
+Optimization terminated after 263 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-11-08 21:32:16.026163
+Finished CV. Picked set([60]) degrees by maximizing likelihood.
++++++++++++++++++++++++++++++
+======================================
+Started run at 2018-11-08 21:32:58.555555
+Started Integration at 2018-11-08 21:32:58.556222
+Finished Integration at 2018-11-08 21:40:45.686878
+Finished Optimization at 2018-11-09 07:43:58.406193
+Optimization terminated after 73 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-11-09 07:44:22.625364
+Running 100 bootstraps for the MLE code with degree = 60, using 24 threads.
+======================================
+Started run at 2018-11-09 07:44:22.694756
+
+======================================
+Started run at 2018-11-09 07:44:22.695794
+Started Integration at 2018-11-09 07:44:22.697831
+Started Integration at 2018-11-09 07:44:22.697991
+
+======================================
+Started run at 2018-11-09 07:44:22.697711
+
+======================================
+Started run at 2018-11-09 07:44:22.696736
+
+======================================
+Started run at 2018-11-09 07:44:22.700641
+Started Integration at 2018-11-09 07:44:22.706254
+
+======================================
+Started run at 2018-11-09 07:44:22.699696
+
+======================================
+Started run at 2018-11-09 07:44:22.706354
+
+======================================
+Started run at 2018-11-09 07:44:22.705417
+
+======================================
+Started run at 2018-11-09 07:44:22.704443
+
+======================================
+Started run at 2018-11-09 07:44:22.701545
+
+======================================
+Started run at 2018-11-09 07:44:22.708324
+Started Integration at 2018-11-09 07:44:22.731279
+
+======================================
+Started run at 2018-11-09 07:44:22.703486
+
+======================================
+Started run at 2018-11-09 07:44:22.698656
+
+======================================
+Started run at 2018-11-09 07:44:22.712075
+
+======================================
+Started run at 2018-11-09 07:44:22.709271
+
+======================================
+Started run at 2018-11-09 07:44:22.710211
+
+======================================
+Started run at 2018-11-09 07:44:22.711156
+Started Integration at 2018-11-09 07:44:22.766265
+
+======================================
+Started run at 2018-11-09 07:44:22.707366
+
+======================================
+Started run at 2018-11-09 07:44:22.702537
+
+======================================
+Started run at 2018-11-09 07:44:22.714972
+
+======================================
+Started run at 2018-11-09 07:44:22.713064
+Started Integration at 2018-11-09 07:44:22.787275
+Started Integration at 2018-11-09 07:44:22.791259
+Started Integration at 2018-11-09 07:44:22.731282
+
+======================================
+Started run at 2018-11-09 07:44:22.716641
+
+======================================
+Started run at 2018-11-09 07:44:22.715874
+Started Integration at 2018-11-09 07:44:22.807257
+
+======================================
+Started run at 2018-11-09 07:44:22.713988
+Started Integration at 2018-11-09 07:44:22.766266
+Started Integration at 2018-11-09 07:44:22.775276
+Started Integration at 2018-11-09 07:44:22.791260
+Started Integration at 2018-11-09 07:44:22.827265
+Started Integration at 2018-11-09 07:44:22.791277
+Started Integration at 2018-11-09 07:44:22.791287
+Started Integration at 2018-11-09 07:44:22.803284
+Started Integration at 2018-11-09 07:44:22.831262
+Started Integration at 2018-11-09 07:44:22.835256
+Started Integration at 2018-11-09 07:44:22.835257
+Started Integration at 2018-11-09 07:44:22.853277
+Started Integration at 2018-11-09 07:44:22.835281
+Started Integration at 2018-11-09 07:44:22.862277
+Started Integration at 2018-11-09 07:44:22.835287
+Started Integration at 2018-11-09 07:44:22.853283
+Finished Integration at 2018-11-09 07:52:50.249243
+Finished Integration at 2018-11-09 07:53:28.539275
+Finished Integration at 2018-11-09 07:54:38.643281
+Finished Integration at 2018-11-09 07:54:57.474279
+Finished Integration at 2018-11-09 07:56:04.612280
+Finished Integration at 2018-11-09 07:56:37.679275
+Finished Integration at 2018-11-09 07:56:54.534285
+Finished Integration at 2018-11-09 07:57:32.481293
+Finished Integration at 2018-11-09 07:57:48.398319
+Finished Integration at 2018-11-09 07:57:49.193318
+Finished Integration at 2018-11-09 07:57:49.294288
+Finished Integration at 2018-11-09 07:57:57.090268
+Finished Integration at 2018-11-09 07:57:57.457273
+Finished Integration at 2018-11-09 07:58:01.372296
+Finished Integration at 2018-11-09 07:58:02.634294
+Finished Integration at 2018-11-09 07:58:06.709275
+Finished Integration at 2018-11-09 07:58:06.908284
+Finished Integration at 2018-11-09 07:58:08.614283
+Finished Integration at 2018-11-09 07:58:08.920331
+Finished Integration at 2018-11-09 07:58:12.117286
+Finished Integration at 2018-11-09 07:58:18.952312
+Finished Integration at 2018-11-09 07:58:31.165274
+Finished Integration at 2018-11-09 07:59:10.620290
+Finished Integration at 2018-11-09 07:59:12.352333
