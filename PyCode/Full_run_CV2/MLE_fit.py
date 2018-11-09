@@ -150,9 +150,6 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = False)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
     denominator = np.sum(w_hat * y_beta_pdf)
-    
-    if denominator == 0:
-        denominator = np.nan
 
     # Mean
     mean_beta_indv = (deg_vec * (x_max - x_min) / (deg + 1)) + x_min
@@ -339,6 +336,7 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
 
     bounds = [[0,1]]*deg**2
     x0 = np.repeat(1./(deg**2),deg**2)
+    #print('Using slsqp with bigger steps')
     #opt_result = fmin_slsqp(fn2, x0, bounds = bounds, iter = 1e3, full_output = True, iprint = 1)
     opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 500,full_output = True, iprint = 1, epsilon = 1e-5,acc = 1e-5)
     print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),opt_result[2],opt_result[3],opt_result[4]))

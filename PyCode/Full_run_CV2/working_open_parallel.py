@@ -17,7 +17,7 @@ from MLE_fit import MLE_fit
 from Cross_Validation import cross_validation
 
 
-t = Table.read(os.path.join(os.path.dirname(__file__),'Cool_stars_20181107.csv'))
+t = Table.read(os.path.join(os.path.dirname(__file__),'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 t = t.filled()
 
 M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -29,27 +29,12 @@ R_obs = np.array(t['pl_rade'])
 # bounds for Mass and Radius
 Radius_min = -0.3
 Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
-Radius_max = np.log10(max(R_obs + R_sigma))
-#Radius_max = 1.4
-Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.01))
+Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
 num_boot = 100
-
-
-Mass = M_obs
-Radius = R_obs
-Mass_sigma = np.array(M_sigma)
-Radius_sigma = np.array(R_sigma)
-Mass_max = Mass_max
-Mass_min = Mass_min
-Radius_max = Radius_max
-Radius_min = Radius_min
-degree_max = 30
-select_deg = 'cv'
-Log = False
-num_boot = 60
-location = os.path.join(os.path.dirname(__file__),'test')
-abs_tol = 1e-8
+'''
+Log = True
+'''
 
 
 def bootsample_mle(inputs):
@@ -111,7 +96,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     Radius_min: the upper bound for radius. Default = None
 
     Log: is the data transformed into a log scale if Log = True. Default = False
-    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
+    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
     k_fold: number of fold used for cross validation. Default = 10
     degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
                     If None, defaults to
@@ -142,10 +127,11 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
 
     print(likelihood_per_degree)
-    np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),np.array([degree_candidate,likelihood_per_degree]))
+    np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),likelihood_per_degree)
     deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
 
     print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
 
     return (deg_choose)
@@ -168,7 +154,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         Mass_min: the lower bound for mass. Default = None
         Radius_max: the upper bound for radius. Default = None
         Radius_min: the upper bound for radius. Default = None
-        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
+        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log10(n)
         select_deg: if input "cv": cross validation
                             if input "aic": aic method
                             if input "bic": bic method
@@ -182,8 +168,6 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         abs_tol : Defined for integration in MLE_fit()
 
     '''
-    
-   
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
 
@@ -231,8 +215,6 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
                 k_fold = 10
             else:
                 k_fold = 5
-            print('Picked {} k-folds'.format(k_fold))
-
 
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log,
@@ -241,7 +223,7 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
 
         with open(os.path.join(location,'log_file.txt'),'a') as f:
-            f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+            f.write('Finished CV. Picked {} degrees by maximizing likelihood.\n+++++++++++++++++++++++++++++'.format({deg_choose}))
 
     elif select_deg == 'aic' :
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
@@ -336,8 +318,8 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
     np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)
     np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot)
-    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)
-    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)
+    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
+    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot[0])
     np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
     np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
     np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
@@ -360,7 +342,6 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
 
 if __name__ == '__main__':
-
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 25, select_deg = 'aic', Log = True, num_boot = 10,
-                        location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-10)
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, select_deg = 'cv', Log = True, num_boot = 100,
+                        location = os.path.join(os.path.dirname(__file__),'Full_run_CV2'))
