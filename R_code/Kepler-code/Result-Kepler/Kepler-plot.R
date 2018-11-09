@@ -1,5 +1,7 @@
 rm(list = ls())
-setwd("~/Documents/Research/[2017Astro]NonparamM-R/code/Kepler-result/")
+#setwd("~/Documents/Research/[2017Astro]NonparamM-R/code/Kepler-result/")
+setwd('C:/Users/shbhu/Documents/Git/Py_mass_radius_working/R_code/Kepler-code/Result-Kepler')
+
 # setwd("~/Desktop/Kepler/")
 
 raw.data <- read.csv(file = "MR_Kepler_170605_noanalytTTV_noupplim.csv", skip = 49)
