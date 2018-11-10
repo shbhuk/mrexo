@@ -1,10 +1,6 @@
 #%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
 import numpy as np
-from scipy.stats import beta,norm
-from scipy.integrate import quad
-from scipy.optimize import brentq as root
 from astropy.table import Table
-from scipy.optimize import minimize, fmin_slsqp
 from multiprocessing import Pool,cpu_count
 import os
 import sys
@@ -169,13 +165,13 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
     '''
     starttime = datetime.datetime.now()
-    print('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
+    print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
     if not os.path.exists(location):
         os.mkdir(location)
 
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Started for {} degrees at {}, using {} cores'.format(select_deg, starttime, cores))
+       f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
 
     copyfile(os.path.join(os.path.dirname(location),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
@@ -308,10 +304,10 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
     inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
             Mass_bounds, Radius_bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
 
-    print('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
+    print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
     with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Running {} bootstraps for the MLE code with degree = {}, using {} threads.'.format(str(num_boot),str(deg_choose),str(cores)))
+       f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
     pool = Pool(processes = cores)
     results = list(pool.imap(bootsample_mle,inputs))

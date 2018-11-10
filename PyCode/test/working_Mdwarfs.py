@@ -1,10 +1,6 @@
 #%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
 import numpy as np
-from scipy.stats import beta,norm
-from scipy.integrate import quad
-from scipy.optimize import brentq as root
 from astropy.table import Table
-from scipy.optimize import minimize, fmin_slsqp
 from multiprocessing import Pool,cpu_count
 import os
 import sys
@@ -12,7 +8,6 @@ import datetime
 from shutil import copyfile
 
 sys.path.append(os.path.dirname(__file__))
-import importlib
 from MLE_fit import MLE_fit
 from Cross_Validation import cross_validation
 
@@ -380,5 +375,5 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 if __name__ == '__main__':
 
     a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 10, select_deg = 15, Log = True, num_boot = 10,
+                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 10, select_deg = 20, Log = True, num_boot = 10,
                         location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-10)
