@@ -40,7 +40,7 @@ Radius_min = Radius_min
 
 
 
-run_degrees = np.arange(16,30)
+run_degrees = np.arange(30,35)
 
 for d in run_degrees:
     if __name__ == '__main__':
