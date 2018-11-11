@@ -2304,3 +2304,11 @@ Running cross validation for 35 degree check and 8 th-fold
 Started run at 2018-11-11 13:02:37.836220
 Started Integration at 2018-11-11 13:02:37.884184
 Finished Integration at 2018-11-11 13:09:52.550200
+Finished Optimization at 2018-11-11 13:12:44.829265
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-11-11 13:13:04.797163
+Running cross validation for 40 degree check and 8 th-fold
+======================================
+Started run at 2018-11-11 13:13:43.122232
+Started Integration at 2018-11-11 13:13:43.170204

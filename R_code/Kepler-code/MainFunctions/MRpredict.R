@@ -94,8 +94,9 @@ MRpredict <- function(data, sigma, Mass.min = NULL, Mass.max = NULL,
   bounds <- c(M.max, M.min, R.max, R.min)
   
   # load functions
-  source("MainFunctions/MLE.R")
-  source("MainFunctions/cross-validation.R")
+
+  source("C:/Users/shbhu/Documents/Git/Py_mass_radius_working/R_code/Kepler-code/MainFunctions/MLE.R")
+  
   
   # organize dataset
   data <- cbind(M.obs, R.obs) 
