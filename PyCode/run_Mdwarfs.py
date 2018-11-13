@@ -40,13 +40,13 @@ Radius_min = Radius_min
 
 
 
-run_degrees = np.arange(30,35)
+run_degrees = np.arange(0,10)
 
 for d in run_degrees:
     if __name__ == '__main__':
         a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                            Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = int(d), Log = True, num_boot = 100,
-                            location = os.path.join(os.path.dirname(__file__),'M_dwarfs_degree_{}'.format(d)), abs_tol = 1e-10)
+                            Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 30, select_deg = 'cv', Log = True, num_boot = 100,
+                            location = os.path.join(os.path.dirname(__file__),'M_dwarfs_CV_{}'.format(d)), abs_tol = 1e-10)
                         
     
     
