@@ -13,8 +13,9 @@ print(pwd)
 
 result_dir = os.path.join(pwd,'Bootstrap_results_cluster50')
 result_dir = os.path.join(pwd,'Bootstrap_cyberlamp_parallel_full2')
-result_dir = os.path.join(pwd,'Results','M_dwarfs_logtrue')
-result_dir = os.path.join(pwd,'M_dwarfs_degree_34')
+#result_dir = os.path.join(pwd,'Results','M_dwarfs_logtrue')
+result_dir = os.path.join(pwd,'M_dwarfs_degree_11')
+#result_dir = os.path.join(pwd,'Full_run_CV1')
 #result_dir = os.path.join(pwd,'test')
 
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
@@ -94,7 +95,8 @@ ax1.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5) # Bootstrap result
 
 ax1.set_xlabel('log Radius (Earth Radii)')
 ax1.set_ylabel('log Mass (Earth Mass)')
-ax1.set_title('Mdwarf data: Mass - radius relations with degree {}'.format(deg_choose))
+#ax1.set_title('Mdwarf data: Mass - radius relations with degree {}'.format(deg_choose))
+ax1.set_title('Kepler data: Mass - radius relations with degree {}'.format(deg_choose))
 
 plt.show()
 
