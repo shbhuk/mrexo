@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "working_open_parallel.py", line 240, in <module>
-    location = os.path.join(os.path.dirname(__file__),'Bootstrap_open_parallel_imap'))
-  File "working_open_parallel.py", line 214, in MLE_fit_bootstrap
-    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot[0])
-IndexError: index 0 is out of bounds for axis 0 with size 0

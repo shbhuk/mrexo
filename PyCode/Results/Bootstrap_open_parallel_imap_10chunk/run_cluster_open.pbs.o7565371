@@ -1,8 +1,0 @@
-/opt/aci/sw/python/2.7.14_anaconda-5.0.1/lib/python2.7/site-packages/astropy/config/configuration.py:541: ConfigurationMissingWarning: Configuration defaults will be used due to IOError:5 on /storage/home/szk381/.astropy/config/astropy.cfg
-  warn(ConfigurationMissingWarning(msg))
-/storage/work/s/szk381/Py_mass_radius_working/PyCode/MLE_fit.py:153: RuntimeWarning: invalid value encountered in double_scalars
-  mean = mean_numerator / denominator
-/storage/work/s/szk381/Py_mass_radius_working/PyCode/MLE_fit.py:159: RuntimeWarning: invalid value encountered in double_scalars
-  var = var_nominator / denominator
-/storage/work/s/szk381/Py_mass_radius_working/PyCode/MLE_fit.py:170: RuntimeWarning: invalid value encountered in double_scalars
-  p_beta = quantile_nominator / denominator
