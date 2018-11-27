@@ -1,11 +1,8 @@
-#%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
-
 import numpy as np
 from scipy.stats import beta,norm
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
-from astropy.table import Table
-from scipy.optimize import minimize, fmin_slsqp
+from scipy.optimize import fmin_slsqp
 import datetime,os
 
 

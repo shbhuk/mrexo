@@ -1,14 +1,7 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from astropy.table import Table
-import os,sys
-from scipy.stats import beta
+import os
 
-from scipy.stats.mstats import mquantiles
-pwd = os.path.dirname(__file__)
-#sys.path.append(pwd)
-from mle_utils import cond_density_quantile
-import importlib
+from .mle_utils import cond_density_quantile
 
 
 

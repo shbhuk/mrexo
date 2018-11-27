@@ -1,13 +1,9 @@
 import numpy as np
-from scipy.stats import beta,norm
-from scipy.integrate import quad
-from scipy.optimize import brentq as root
-from astropy.table import Table
-import datetime,os
-import sys
-sys.path.append(os.path.dirname(__file__))
-from mle_utils import MLE_fit, calc_C_matrix
+import os
 from multiprocessing import Pool
+
+from .mle_utils import MLE_fit, calc_C_matrix
+
 
 
 
