@@ -5,53 +5,8 @@ from scipy.stats import beta,norm
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from astropy.table import Table
-from scipy.optimize import minimize, fmin_slsqp, fmin_l_bfgs_b
+from scipy.optimize import minimize, fmin_slsqp
 import datetime,os
-
-
-'''
-t = Table.read('MR_Kepler_170605_noanalytTTV_noupplim.csv')
-t = t.filled()
-
-M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
-R_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
-
-M_obs = np.array(t['pl_masse'])
-R_obs = np.array(t['pl_rade'])
-
-# bounds for Mass and Radius
-Radius_min = -0.3
-Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
-Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
-Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
-num_boot = 100
-#select_deg = 5
-
-data = np.vstack((M_obs,R_obs)).T
-sigma = np.vstack((M_sigma,R_sigma)).T
-
-bounds = np.array([Mass_max,Mass_min,Radius_max,Radius_min])
-Log = True
-#deg = 5
-
-'''
-
-'''
-y = np.log10(5)
-Radius_min = -0.3
-Radius_max = 1.357509
-Mass_min = -1
-Mass_max = 3.809597
-qtl = [0.16, 0.84]
-y_std = R_sigma
-y_max = Radius_max
-y_min = Radius_min
-x_max = Mass_max
-x_min = Mass_min
-deg = 55
-w_hat = weights_mle
-'''
-#deg = 5
 
 
 
@@ -150,7 +105,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
     y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = False)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
     denominator = np.sum(w_hat * y_beta_pdf)
-    
+
     if denominator == 0:
         denominator = np.nan
 
@@ -360,8 +315,13 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     Mass_marg = np.array([marginal_density(x = m, x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat) for m in M_seq])
     Radius_marg = np.array([marginal_density(x = r, x_max = R_max, x_min = R_min, deg = deg, w_hat = w_hat) for r in R_seq])
 
-    output = {'weights':w_hat,'aic':aic,'bic':bic,'M_points':M_seq,'R_points':R_seq,
-                  'Mass_marg':Mass_marg,'Radius_marg':Radius_marg}
+    output = {'weights':w_hat,
+            'aic':aic,
+            'bic':bic,
+            'M_points':M_seq,
+            'R_points':R_seq,
+            'Mass_marg':Mass_marg,
+            'Radius_marg':Radius_marg}
 
     # conditional densities with 16% and 84% quantile
 

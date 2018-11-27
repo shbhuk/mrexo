@@ -7,40 +7,13 @@ from scipy.stats import beta
 from scipy.stats.mstats import mquantiles
 pwd = os.path.dirname(__file__)
 #sys.path.append(pwd)
-import MLE_fit
+from mle_utils import cond_density_quantile
 import importlib
-importlib.reload(MLE_fit)
-
-'''
-Radius = 5
-Radius_sigma = 0.1
-Radius_min = -0.3
-Radius_max = 1.357
-Mass_min = -1
-Mass_max = 3.809
-qtl = [0.16,0.84]
-'''
-
-weights_mle = Table.read(os.path.join(pwd,'weights.mle.csv'))['#x']
-
-result_dir = os.path.join(pwd,'Cross_validation_20')
-#result_dir = os.path.join(pwd,'M_dwarfs_degree_22')
-#result_dir = os.path.join(pwd,'Full_run_CV3')
-weights_mle = np.loadtxt(os.path.join(result_dir,'weights.txt'))
 
 
 
-'''
-a = MLE_fit.cond_density_quantile(y = np.log10(Radius), y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
-                                                      x_max = Mass_max, x_min = Mass_min, deg = degrees,
-                                                      w_hat = weights_mle, qtl = qtl)
 
-'''
-
-#### MAKE RADIUS MAX AND MASS MAX NON Optional
-
-
-def predict_mass_given_radius(Radius, weights_mle, Radius_sigma = None, posterior_sample = False,
+def predict_m_given_r(Radius, weights_mle, Radius_sigma = None, posterior_sample = False,
                                 qtl = [0.16,0.84], islog = False,Radius_min = -0.3,
                                 Radius_max = 1.357,Mass_min = -1,Mass_max = 3.809):
     '''
@@ -64,7 +37,7 @@ def predict_mass_given_radius(Radius, weights_mle, Radius_sigma = None, posterio
 
 
     if posterior_sample == False:
-        predicted_value = MLE_fit.cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
+        predicted_value = cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
                                                       w_hat = weights_mle, qtl = qtl)
         predicted_mean = predicted_value[0]
@@ -86,7 +59,7 @@ def predict_mass_given_radius(Radius, weights_mle, Radius_sigma = None, posterio
         for i in range(0,n):
             qtl_check = np.random.random()
             print(qtl_check)
-            results = MLE_fit.cond_density_quantile(y = logRadius[i], y_std = Radius_sigma[i], y_max = Radius_max, y_min = Radius_min,
+            results = cond_density_quantile(y = logRadius[i], y_std = Radius_sigma[i], y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
                                                       w_hat = weights_mle, qtl = [qtl_check,0.5])
 
@@ -100,12 +73,3 @@ def predict_mass_given_radius(Radius, weights_mle, Radius_sigma = None, posterio
     else:
         #return outputs
         return [10**x for x in outputs]
-
-'''
-np.random.seed(0)
-r_posterior = np.random.normal(5,0.5,20)
-#print(predict_mass_given_radius(Radius = r_posterior, Radius_sigma = np.repeat(0.1,20), posterior_sample = True, weights_mle = weights_mle))
-print(predict_mass_given_radius(Radius = 5, Radius_sigma = 0.1, posterior_sample = False, islog = False, weights_mle = weights_mle))
-print(predict_mass_given_radius(Radius = 5., Radius_sigma = None, posterior_sample = False, islog = False, weights_mle = weights_mle))
-'''
-print(predict_mass_given_radius(Radius = 5., Radius_sigma = 0, posterior_sample = False, islog = True, weights_mle = weights_mle))

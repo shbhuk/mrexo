@@ -4,10 +4,6 @@ from astropy.table import Table
 import os,sys
 from scipy.stats.mstats import mquantiles
 pwd = os.path.dirname(__file__)
-#sys.path.append(pwd)
-import MLE_fit
-import importlib
-importlib.reload(MLE_fit)
 
 print(pwd)
 
@@ -23,6 +19,10 @@ t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 
 t = t.filled()
 
+
+
+
+
 M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
 R_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 
@@ -36,6 +36,10 @@ Radius_min = -0.3
 Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
 Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.1))
 Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
+
+
+def plot_mr_relation(Mass_sig):
+
 
 
 M_points = np.loadtxt(os.path.join(result_dir, 'M_points.txt'))
@@ -99,47 +103,3 @@ ax1.set_ylabel('log Mass (Earth Mass)')
 ax1.set_title('Kepler data: Mass - radius relations with degree {}'.format(deg_choose))
 
 plt.show()
-
-####################
-'''
-M_1 = np.log10(1)
-M_10 = np.log10(10)
-M_50 = np.log10(50)
-M_100 = np.log10(100)
-
-R_seq = np.linspace(Radius_min,Radius_max, 100)
-density_M_1 = np.zeros((100,n_boot))
-density_M_10 = np.zeros((100,n_boot))
-density_M_50 = np.zeros((100,n_boot))
-density_M_100 = np.zeros((100,n_boot))
-
-for i in range(0,n_boot):
-    weights_t = np.transpose(np.reshape(weights_boot[i,:],newshape = [deg_choose,deg_choose])).flatten()
-    print(i)
-    for j in range(0,len(R_seq)):
-        density_M_1[j,i] = sum(MLE_fit.conditional_density(y = M_1, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
-        density_M_10[j,i] = sum(MLE_fit.conditional_density(y = M_10, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
-        density_M_50[j,i] = sum(MLE_fit.conditional_density(y = M_50, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
-        density_M_100[j,i] = sum(MLE_fit.conditional_density(y = M_100, y_max = Mass_max, y_min = Mass_min, x = R_seq[j], x_max = Radius_max, x_min = Radius_min, deg = deg_choose, w_hat = weights_t))
-
-density_M_1_quantile = mquantiles(density_M_1,prob = [0.16, 0.5, 0.84],axis = 1,alphap=1,betap=1).data
-density_M_10_quantile = mquantiles(density_M_10,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
-density_M_50_quantile = mquantiles(density_M_50,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
-density_M_100_quantile = mquantiles(density_M_100,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
-
-
-fig = plt.figure()
-ax2 = fig.add_subplot(1,1,1)
-
-M_1_ind = np.where((R_seq > -0.4) & (R_seq < 1.2))[0]
-M_10_ind = np.where((R_seq > -0.3) & (R_seq < 1.2))[0]
-
-lower = density_M_1_quantile[M_1_ind][:,0]
-upper = density_M_1_quantile[M_1_ind][:,2]
-
-ax2.plot(10**R_seq[M_1_ind],density_M_1_quantile[M_1_ind][:,1])
-ax2.fill_between(10**R_seq[M_1_ind],lower,upper,alpha = 0.5)
-ax2.plot(R_seq[M_10_ind],density_M_10_quantile[M_10_ind])
-ax2.fill_between(R_points,lower_boot,upper_boot,alpha = 0.5)
-
-'''

@@ -8,146 +8,12 @@ import datetime
 from shutil import copyfile
 
 sys.path.append(os.path.dirname(__file__))
-from MLE_fit import MLE_fit
-from Cross_Validation import cross_validation
-
-
-t = Table.read(os.path.join(os.path.dirname(__file__),'Cool_stars_20181109.csv'))
-t = t.filled()
-'''
-M_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
-R_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
-
-M_obs = np.array(t['pl_masse'])
-R_obs = np.array(t['pl_rade'])
-
-# bounds for Mass and Radius
-Radius_min = -0.3
-Radius_max = np.log10(max(R_obs) + np.std(R_obs)/np.sqrt(len(R_obs)))
-Radius_max = np.log10(max(R_obs + R_sigma))
-#Radius_max = 1.4
-Mass_min = np.log10(max(min(M_obs) - np.std(M_obs)/np.sqrt(len(M_obs)), 0.01))
-Mass_max = np.log10(max(M_obs) + np.std(M_obs)/np.sqrt(len(M_obs)))
-num_boot = 100
-
-
-Mass = M_obs
-Radius = R_obs
-Mass_sigma = np.array(M_sigma)
-Radius_sigma = np.array(R_sigma)
-Mass_max = Mass_max
-Mass_min = Mass_min
-Radius_max = Radius_max
-Radius_min = Radius_min
-degree_max = 30
-#select_deg = 'cv'
-#Log = False
-#num_boot = 60
-#location = os.path.join(os.path.dirname(__file__),'test')
-#abs_tol = 1e-8
-'''
-
-def bootsample_mle(inputs):
-    '''
-    To bootstrap the data and run MLE
-    Input:
-        inputs : Variable required for mapping for parallel processing
-    '''
-
-    MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],
-                    Mass_sigma = inputs[2], Radius_sigma = inputs[3],
-                    Mass_bounds = inputs[4], Radius_bounds = inputs[5],
-                    Log = inputs[6], deg = inputs[7], abs_tol = inputs[8], location = inputs[9])
-
-
-    return MR_boot
-
-def cv_parallel_fn(cv_input):
-    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, Log, abs_tol, location, Mass_bounds, Radius_bounds = cv_input
-    split_interval = indices_folded[i_fold]
-
-    mask = np.repeat(False, n)
-    mask[rand_gen[split_interval]] = True
-    invert_mask = np.invert(mask)
-
-    test_Radius = Radius[mask]
-    test_Mass = Mass[mask]
-    test_Radius_sigma = Radius_sigma[mask]
-    test_Mass_sigma = Mass_sigma[mask]
-
-    train_Radius = Radius[invert_mask]
-    train_Mass = Mass[invert_mask]
-    train_Radius_sigma = Radius_sigma[invert_mask]
-    train_Mass_sigma = Mass_sigma[invert_mask]
-
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
-       f.write('Running cross validation for {} degree check and {} th-fold'.format(test_degree, i_fold))
-
-    like_pred = cross_validation(train_Radius = train_Radius, train_Mass = train_Mass, test_Radius = test_Radius, test_Mass = test_Mass,
-                Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = test_degree,
-                train_Radius_sigma = train_Radius_sigma, train_Mass_sigma = train_Mass_sigma,
-                test_Radius_sigma = test_Radius_sigma, test_Mass_sigma = test_Mass_sigma,
-                Log = Log, abs_tol = abs_tol, location = location)
-    return like_pred
-
-
-def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, Log = False,
-                        degree_max = 60, k_fold = 10, degree_candidate = None,
-                        cores = 1, location = os.path.dirname(__file__), abs_tol = 1e-10):
-    '''
-    Mass: Mass measurements
-    Radius : Radius measurements
-    Mass_sigma: measurement errors for the data, if no measuremnet error,
-                it is NULL
-    Radius_sigma
-    Mass_max: the upper bound for mass. Default = None
-    Mass_min: the lower bound for mass. Default = None
-    Radius_max: the upper bound for radius. Default = None
-    Radius_min: the upper bound for radius. Default = None
-
-    Log: is the data transformed into a log scale if Log = True. Default = False
-    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
-    k_fold: number of fold used for cross validation. Default = 10
-    degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
-                    If None, defaults to
-    cores: this program uses parallel computing for bootstrap. Default = 1
-    location : The location for the log file
-    abs_tol : Defined for integration in MLE_fit()
-
-    '''
-    if degree_candidate == None:
-        degree_candidate = np.linspace(5, degree_max, 12, dtype = int)
-
-    n = len(Mass)
-
-    print('Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max))
-    rand_gen = np.random.choice(n, n, replace = False)
-    row_size = np.int(np.floor(n/k_fold))
-    a = np.arange(n)
-    indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
-
-    cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
-    Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
-
-    pool = Pool(processes = cores)
-
-    # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
-    cv_result = list(pool.imap(cv_parallel_fn,cv_input))
-    likelihood_matrix = np.split(np.array(cv_result) , k_fold)
-    likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
-
-    print(likelihood_per_degree)
-    np.savetxt(os.path.join(location,'likelihood_per_degree.txt'),np.array([degree_candidate,likelihood_per_degree]))
-    deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
-
-    print('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
-
-
-    return (deg_choose)
+from mle_utils import MLE_fit
+from cross_validate import run_cross_validation
 
 
 
-def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
+def fit_mr_relation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
                     degree_max = 60, select_deg = 55, Log = False, k_fold = None, num_boot = 100,
                     cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
@@ -177,8 +43,8 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
         abs_tol : Defined for integration in MLE_fit()
 
     '''
-    
-   
+
+
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
@@ -372,10 +238,19 @@ def MLE_fit_bootstrap(Mass, Radius, Mass_sigma, Radius_sigma, Mass_max = None, M
 
     return results
 
-'''
-if __name__ == '__main__':
 
-    a = MLE_fit_bootstrap(Mass = M_obs, Radius = R_obs, Mass_sigma = M_sigma, Radius_sigma = R_sigma, Mass_max = Mass_max,
-                        Mass_min = Mass_min, Radius_max = Radius_max, Radius_min = Radius_min, degree_max = 10, select_deg = 20, Log = True, num_boot = 10,
-                        location = os.path.join(os.path.dirname(__file__),'test'), abs_tol = 1e-10)
-'''
+
+
+def bootsample_mle(inputs):
+    '''
+    To bootstrap the data and run MLE
+    Input:
+        inputs : Variable required for mapping for parallel processing
+    '''
+
+    MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],
+                    Mass_sigma = inputs[2], Radius_sigma = inputs[3],
+                    Mass_bounds = inputs[4], Radius_bounds = inputs[5],
+                    Log = inputs[6], deg = inputs[7], abs_tol = inputs[8], location = inputs[9])
+
+    return MR_boot
