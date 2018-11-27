@@ -1,4 +1,5 @@
 README.md
+setup.py
 mrexo/__init__.py
 mrexo/cross_validate.py
 mrexo/fit.py

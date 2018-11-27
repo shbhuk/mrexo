@@ -54,7 +54,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
 
 
     copyfile(os.path.join(os.path.dirname(__file__),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
-    #copyfile(os.path.join(os.path.dirname(location),'mle_utils.py'), os.path.join(location,'mle_utils.py'))
+    #copyfile(os.path.join(os.path.dirname(location),'mle_utils.py os.path.join(location,'mle_utils.py'))
 
     n = len(Mass)
 

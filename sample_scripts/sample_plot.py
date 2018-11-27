@@ -6,7 +6,10 @@ import numpy as np
 from mrexo import plot_mr_relation
 
 
-pwd = os.path.dirname(__file__)
+try :
+    pwd = os.path.dirname(__file__)
+except NameError:
+    pwd = ''
 
 t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 result_dir = os.path.join(pwd,'M_dwarfs_deg_11')

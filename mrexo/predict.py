@@ -6,7 +6,7 @@ from .mle_utils import cond_density_quantile
 
 
 
-def predict_m_given_r(Radius, weights_mle, Radius_sigma = None, posterior_sample = False,
+def predict_m_given_r(Radius, dataset = None, weights_mle = None, Radius_sigma = None, posterior_sample = False,
                                 qtl = [0.16,0.84], islog = False,Radius_min = -0.3,
                                 Radius_max = 1.357,Mass_min = -1,Mass_max = 3.809):
     '''
@@ -19,7 +19,15 @@ def predict_m_given_r(Radius, weights_mle, Radius_sigma = None, posterior_sample
         islog = Whether the radius given is in log scale or not. Default is False. The Radius_sigma is always in original units
         Radius, Mass = upper bounds and lower bounds used in the Bernstein polynomial model in log10 scale
     '''
-
+    
+    if weights_mle == None:
+        if dataset == 'mdwarf':
+            weights_mle = np.loadtxt(os.path.join(mdwarf_resultdir,'weights.txt'))
+        elif dataset == 'kepler':
+            weight_mle = np.loadtxt(os.path.join(kepler_resultdir,'weights.txt'))
+    
+        
+    
     degrees = int(np.sqrt(len(weights_mle)))
     print(degrees)
 

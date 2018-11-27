@@ -6,7 +6,6 @@ import os
 from scipy.stats.mstats import mquantiles
 
 
-
 def plot_mr_relation(Mass, Mass_sigma, Mass_min, Mass_max, Radius, Radius_sigma, Radius_min, Radius_max, result_dir):
 
 
