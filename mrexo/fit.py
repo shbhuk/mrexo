@@ -2,25 +2,25 @@
 import numpy as np
 from multiprocessing import Pool,cpu_count
 import os
-
+from astropy.table import Table
 import datetime
-from shutil import copyfile
+#from shutil import copyfile
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
 
 
 
-def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
-                    degree_max = 60, select_deg = 55, Log = False, k_fold = None, num_boot = 100,
-                    cores = cpu_count(), location = os.path.dirname(__file__), abs_tol = 1e-10):
+def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
+                    degree_max = 60, select_deg = 55, Log = True, k_fold = None, num_boot = 100,
+                    cores = cpu_count(), abs_tol = 1e-10):
     '''
     Predict the Mass and Radius relationship
     INPUT:
 
         Mass: Mass measurements
         Radius : Radius measurements
-        Mass_sigma: measurement errors for the data, if no measuremnet error,
+        Mass_sigma: measurement errors for the data, if no measurement error,
                     it is NULL
         Radius_sigma
         Mass_max: the upper bound for mass. Default = None
@@ -33,14 +33,18 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
                             if input "bic": bic method
                             if input a number: default using that number and
                             skip the select process
-        Log: is the data transformed into a log scale if Log = True. Default = False
+        Log: is the data transformed into a log scale if Log = True. Default = True
         k_fold: number of fold used for cross validation. Default = 10
         num_boot: number of bootstrap replication. Default = 100
         cores: this program uses parallel computing for bootstrap. Default = 1
-        location : The location for the log file
+        location : The location for the outputs
         abs_tol : Defined for integration in MLE_fit()
 
     '''
+    
+    input_location = os.path.join(location, 'input')
+    output_location = os.path.join(location, 'output')
+    aux_output_location = os.path.join(output_location, 'other_data_products')
 
 
     starttime = datetime.datetime.now()
@@ -48,12 +52,21 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
 
     if not os.path.exists(location):
         os.mkdir(location)
-
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    if not os.path.exists(output_location):
+        os.mkdir(output_location)
+    if not os.path.exists(aux_output_location):
+        os.mkdir(aux_output_location)
+    if not os.path.exists(input_location):
+        os.mkdir(input_location)
+        
+    t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
+    t.write(os.path.join(input_location, 'MR_inputs.csv'))
+        
+    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
 
-    copyfile(os.path.join(os.path.dirname(__file__),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
+    #copyfile(os.path.join(os.path.dirname(__file__),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
     #copyfile(os.path.join(os.path.dirname(location),'mle_utils.py os.path.join(location,'mle_utils.py'))
 
     n = len(Mass)
@@ -66,16 +79,16 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
         print('Length of Radius and Radius sigma vectors must be the same')
 
     if Mass_min is None:
-        Mass_min = np.min(Mass) - np.max(Mass_sigma)/np.sqrt(n)
+        Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))             
     if Mass_max is None:
-        Mass_max = np.max(Mass) + np.max(Mass_sigma)/np.sqrt(n)
+        Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        Radius_min = np.min(Radius) - np.max(Radius_sigma)/np.sqrt(n)
+        Radius_min = np.log10(max(min(Radius - Radius_sigma), -0.3)) 
     if Radius_max is None:
-        Radius_max = np.max(Radius) + np.max(Radius_sigma)/np.sqrt(n)
+        Radius_max = np.log10(max(Radius + Radius_sigma))
 
-    Mass_bounds = np.array([Mass_max,Mass_min])
-    Radius_bounds = np.array([Radius_max,Radius_min])
+    Mass_bounds = np.array([Mass_min, Mass_max])
+    Radius_bounds = np.array([Radius_min, Radius_max])
 
     if type(degree_max) != int:
         degree_max = int(degree_max)
@@ -95,39 +108,39 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
 
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log,
-                                        degree_max = degree_max, k_fold = k_fold, cores = cores, location = location, abs_tol = abs_tol)
+                                        degree_max = degree_max, k_fold = k_fold, cores = cores, location = aux_output_location, abs_tol = abs_tol)
 
 
 
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
+        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
             f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
 
     elif select_deg == 'aic' :
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = d, abs_tol = abs_tol, location = location)['aic'] for d in degree_candidates])
+                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = d, abs_tol = abs_tol, location = aux_output_location)['aic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(aic)]
 
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
+        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
             f.write('Finished AIC check. Picked {} degrees by minimizing AIC'.format({deg_choose}))
 
         print('Finished AIC check. Picked {} degrees by minimizing AIC'.format({deg_choose}))
-        np.savetxt(os.path.join(location,'AIC_degreechoose.txt'),np.array([degree_candidates,aic]))
+        np.savetxt(os.path.join(aux_output_location,'AIC_degreechoose.txt'),np.array([degree_candidates,aic]))
 
 
     elif select_deg == 'bic':
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         bic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = d, abs_tol = abs_tol, location = location)['bic'] for d in degree_candidates])
+                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = d, abs_tol = abs_tol, location = aux_output_location)['bic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(bic)]
 
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
+        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
             f.write('Finished BIC check. Picked {} degrees by minimizing BIC'.format({deg_choose}))
 
         print('Finished BIC check. Picked {} degrees by minimizing BIC'.format({deg_choose}))
-        np.savetxt(os.path.join(location,'BIC_degreechoose.txt'),np.array([degree_candidates,bic]))
+        np.savetxt(os.path.join(aux_output_location,'BIC_degreechoose.txt'),np.array([degree_candidates,bic]))
 
 
     elif isinstance(select_deg, (int,float)):
@@ -142,10 +155,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
 
     print('Running full dataset MLE before bootstrap')
     fullMLEresult = MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = int(deg_choose), abs_tol = abs_tol, location = location)
+                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, Log = Log, deg = int(deg_choose), abs_tol = abs_tol, location = aux_output_location)
 
 
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
 
 
@@ -165,29 +178,32 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
     Radius_marg = fullMLEresult['Radius_marg']
     Mass_marg = fullMLEresult['Mass_marg']
 
-    np.savetxt(os.path.join(location,'weights.txt'),weights)
-    np.savetxt(os.path.join(location,'aic.txt'),[aic])
-    np.savetxt(os.path.join(location,'bic.txt'),[bic])
-    np.savetxt(os.path.join(location,'M_points.txt'),M_points)
-    np.savetxt(os.path.join(location,'R_points.txt'),R_points)
-    np.savetxt(os.path.join(location,'M_cond_R.txt'),M_cond_R)
-    np.savetxt(os.path.join(location,'M_cond_R_var.txt'),M_cond_R_var)
-    np.savetxt(os.path.join(location,'M_cond_R_lower.txt'),M_cond_R_lower)
-    np.savetxt(os.path.join(location,'M_cond_R_upper.txt'),M_cond_R_upper)
-    np.savetxt(os.path.join(location,'R_cond_M.txt'),R_cond_M)
-    np.savetxt(os.path.join(location,'R_cond_M_var.txt'),R_cond_M_var)
-    np.savetxt(os.path.join(location,'R_cond_M_lower.txt'),R_cond_M_lower)
-    np.savetxt(os.path.join(location,'R_cond_M_upper.txt'),R_cond_M_upper)
-    np.savetxt(os.path.join(location,'Radius_marg.txt'),Radius_marg)
-    np.savetxt(os.path.join(location,'Mass_marg.txt'),Mass_marg)
+    np.savetxt(os.path.join(output_location,'weights.txt'),weights)
+    np.savetxt(os.path.join(aux_output_location,'aic.txt'),[aic])
+    np.savetxt(os.path.join(aux_output_location,'bic.txt'),[bic])
+    np.savetxt(os.path.join(output_location,'M_points.txt'),M_points)
+    np.savetxt(os.path.join(output_location,'R_points.txt'),R_points)
+    np.savetxt(os.path.join(output_location,'M_cond_R.txt'),M_cond_R)
+    np.savetxt(os.path.join(aux_output_location,'M_cond_R_var.txt'),M_cond_R_var)
+    np.savetxt(os.path.join(output_location,'M_cond_R_lower.txt'),M_cond_R_lower)
+    np.savetxt(os.path.join(output_location,'M_cond_R_upper.txt'),M_cond_R_upper)
+    np.savetxt(os.path.join(output_location,'R_cond_M.txt'),R_cond_M)
+    np.savetxt(os.path.join(aux_output_location,'R_cond_M_var.txt'),R_cond_M_var)
+    np.savetxt(os.path.join(output_location,'R_cond_M_lower.txt'),R_cond_M_lower)
+    np.savetxt(os.path.join(output_location,'R_cond_M_upper.txt'),R_cond_M_upper)
+    np.savetxt(os.path.join(aux_output_location,'Radius_marg.txt'),Radius_marg)
+    np.savetxt(os.path.join(aux_output_location,'Mass_marg.txt'),Mass_marg)
+    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds)
+    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds)
+
 
     n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
     inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
-            Mass_bounds, Radius_bounds, Log, deg_choose, abs_tol, location) for n_boot in n_boot_iter)
+            Mass_bounds, Radius_bounds, Log, deg_choose, abs_tol, aux_output_location) for n_boot in n_boot_iter)
 
     print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
     pool = Pool(processes = cores)
@@ -211,26 +227,26 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, Mass_max = None, Mas
     Radius_marg_boot = np.array([x['Radius_marg'] for x in results])
     Mass_marg_boot = np.array([x['Mass_marg'] for x in results])
 
-    np.savetxt(os.path.join(location,'weights_boot.txt'),weights_boot)
-    np.savetxt(os.path.join(location,'aic_boot.txt'),aic_boot)
-    np.savetxt(os.path.join(location,'bic_boot.txt'),bic_boot)
-    np.savetxt(os.path.join(location,'M_points_boot.txt'),M_points_boot)
-    np.savetxt(os.path.join(location,'R_points_boot.txt'),R_points_boot)
-    np.savetxt(os.path.join(location,'M_cond_R_boot.txt'),M_cond_R_boot)
-    np.savetxt(os.path.join(location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
-    np.savetxt(os.path.join(location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
-    np.savetxt(os.path.join(location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot)
-    np.savetxt(os.path.join(location,'R_cond_M_boot.txt'),R_cond_M_boot)
-    np.savetxt(os.path.join(location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot)
-    np.savetxt(os.path.join(location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot)
-    np.savetxt(os.path.join(location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot)
-    np.savetxt(os.path.join(location,'Radius_marg_boot.txt'),Radius_marg_boot)
-    np.savetxt(os.path.join(location,'Mass_marg_boot.txt'),Mass_marg_boot)
+    np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot)
+    np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot)
+    np.savetxt(os.path.join(aux_output_location,'bic_boot.txt'),bic_boot)
+    np.savetxt(os.path.join(aux_output_location,'M_points_boot.txt'),M_points_boot)
+    np.savetxt(os.path.join(aux_output_location,'R_points_boot.txt'),R_points_boot)
+    np.savetxt(os.path.join(output_location,'M_cond_R_boot.txt'),M_cond_R_boot)
+    np.savetxt(os.path.join(aux_output_location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot)
+    np.savetxt(os.path.join(aux_output_location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot)
+    np.savetxt(os.path.join(aux_output_location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot)
+    np.savetxt(os.path.join(output_location,'R_cond_M_boot.txt'),R_cond_M_boot)
+    np.savetxt(os.path.join(aux_output_location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot)
+    np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot)
+    np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot)
+    np.savetxt(os.path.join(aux_output_location,'Radius_marg_boot.txt'),Radius_marg_boot)
+    np.savetxt(os.path.join(aux_output_location,'Mass_marg_boot.txt'),Mass_marg_boot)
 
     endtime = datetime.datetime.now()
     print(endtime - starttime)
 
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Ended run at {}\n'.format(endtime))
 
 

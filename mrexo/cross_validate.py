@@ -103,16 +103,16 @@ def cv_parallelize(cv_input):
     size_test = np.size(test_Radius)
 
     # specify the bounds
-    M_max = Mass_bounds[0]
-    M_min = Mass_bounds[1]
-    R_max = Radius_bounds[0]
-    R_min = Radius_bounds[1]
+    Mass_max = Mass_bounds[1]
+    Mass_min = Mass_bounds[0]
+    Radius_max = Radius_bounds[1]
+    Radius_min = Radius_bounds[0]
 
     # calculate cdf and pdf of M and R for each term
     # the first and last term is set to 0 to avoid boundary effects
     # so we only need to calculate 2:(deg^2-1) terms
 
-    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, M_max, M_min, test_Radius, test_Radius_sigma, R_max, R_min, Log, abs_tol, location)
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min, Log, abs_tol, location)
 
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
 

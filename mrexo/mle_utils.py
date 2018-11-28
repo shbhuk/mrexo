@@ -173,7 +173,7 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     return quantile
 
 
-def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R_min, Log, abs_tol, location):
+def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, Log, abs_tol, location):
     '''
 
 
@@ -185,8 +185,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
     if Mass_sigma is None:
         # pdf for Mass and Radius for each beta density
         C_pdf = np.zeros((n, deg**2))
-        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, M_max, M_min, x_std = None, abs_tol = abs_tol, Log = Log)
-        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, R_max, R_min, x_std = None, abs_tol = abs_tol, Log = Log)
+        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, Mass_max, Mass_min, x_std = None, abs_tol = abs_tol, Log = Log)
+        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, Radius_max, Radius_min, x_std = None, abs_tol = abs_tol, Log = Log)
         C_pdf = np.kron(M_indv_pdf, R_indv_pdf)
 
     else:
@@ -195,13 +195,13 @@ def calc_C_matrix(n, deg, M, Mass_sigma, M_max, M_min, R, Radius_sigma, R_max, R
         C_pdf = np.zeros((n, deg**2))
 
         print('Started Integration at ',datetime.datetime.now())
-        #print(M_max, M_min, R_max, R_min)
+        #print(Mass_max, Mass_min, Radius_max, Radius_min)
         with open(os.path.join(location,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
         for i in range(0,n):
             #print('\n Iter {}. Mass {}. Radius {}. Mass_sigma {}. Radius_sigma {}'.format(i, M[i], R[i], Mass_sigma[i], Radius_sigma[i]))
-            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, M_max, M_min, Mass_sigma[i], abs_tol = abs_tol, Log = Log)
-            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, R_max, R_min, Radius_sigma[i], abs_tol = abs_tol, Log = Log)
+            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol = abs_tol, Log = Log)
+            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol = abs_tol, Log = Log)
 
             # put M.indv.pdf and R.indv.pdf into a big matrix
             C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
@@ -255,13 +255,13 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     n = np.shape(Mass)[0]
 
 
-    M_max = Mass_bounds[0]
-    M_min = Mass_bounds[1]
-    R_max = Radius_bounds[0]
-    R_min = Radius_bounds[1]
+    Mass_max = Mass_bounds[1]
+    Mass_min = Mass_bounds[0]
+    Radius_max = Radius_bounds[1]
+    Radius_min = Radius_bounds[0]
 
-    C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, M_max = M_max, M_min = M_min,
-                        R = Radius, Radius_sigma = Radius_sigma, R_max = R_max, R_min = R_min, Log = Log, abs_tol = abs_tol, location = location)
+    C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, Mass_max = Mass_max, Mass_min = Mass_min,
+                        R = Radius, Radius_sigma = Radius_sigma, Radius_max = Radius_max, Radius_min = Radius_min, Log = Log, abs_tol = abs_tol, location = location)
 
     print(np.shape(C_pdf))
 
@@ -307,10 +307,10 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
 
 
     # marginal densities
-    M_seq = np.linspace(M_min,M_max,100)
-    R_seq = np.linspace(R_min,R_max,100)
-    Mass_marg = np.array([marginal_density(x = m, x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat) for m in M_seq])
-    Radius_marg = np.array([marginal_density(x = r, x_max = R_max, x_min = R_min, deg = deg, w_hat = w_hat) for r in R_seq])
+    M_seq = np.linspace(Mass_min,Mass_max,100)
+    R_seq = np.linspace(Radius_min,Radius_max,100)
+    Mass_marg = np.array([marginal_density(x = m, x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat) for m in M_seq])
+    Radius_marg = np.array([marginal_density(x = r, x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = w_hat) for r in R_seq])
 
     output = {'weights':w_hat,
             'aic':aic,
@@ -322,16 +322,16 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
 
     # conditional densities with 16% and 84% quantile
 
-    M_cond_R = np.array([cond_density_quantile(y = r, y_max = R_max, y_min = R_min,
-                        x_max = M_max, x_min = M_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
+    M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
+                        x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
 
 
     M_cond_R_mean = M_cond_R[:,0]
     M_cond_R_var = M_cond_R[:,1]
     M_cond_R_quantile = M_cond_R[:,2:4]
 
-    R_cond_M = np.array([cond_density_quantile(y = m, y_max = M_max, y_min = M_min,
-                        x_max = R_max, x_min = R_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
+    R_cond_M = np.array([cond_density_quantile(y = m, y_max = Mass_max, y_min = Mass_min,
+                        x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
     R_cond_M_mean = R_cond_M[:,0]
     R_cond_M_var = R_cond_M[:,1]
     R_cond_M_quantile = R_cond_M[:,2:4]

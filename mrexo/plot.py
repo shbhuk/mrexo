@@ -4,18 +4,34 @@ from matplotlib.lines import Line2D
 import numpy as np
 import os
 from scipy.stats.mstats import mquantiles
+from astropy.table import Table
 
 
-def plot_mr_relation(Mass, Mass_sigma, Mass_min, Mass_max, Radius, Radius_sigma, Radius_min, Radius_max, result_dir):
+def plot_mr_relation(result_dir):
 
 
-    R_points = np.loadtxt(os.path.join(result_dir, 'R_points.txt'))
-    M_cond_R = np.loadtxt(os.path.join(result_dir, 'M_cond_R.txt'))
-    M_cond_R_upper = np.loadtxt(os.path.join(result_dir, 'M_cond_R_upper.txt'))
-    M_cond_R_lower = np.loadtxt(os.path.join(result_dir, 'M_cond_R_lower.txt'))
+    input_location = os.path.join(result_dir, 'input')
+    output_location = os.path.join(result_dir, 'output')
 
-    weights_boot = np.loadtxt(os.path.join(result_dir, 'weights_boot.txt'))
-    M_cond_R_boot = np.loadtxt(os.path.join(result_dir, 'M_cond_R_boot.txt'))
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+    
+    t = Table.read(os.path.join(input_location, 'MR_inputs.csv'))
+    Mass = t['pl_masse']
+    Mass_sigma = t['pl_masseerr1']
+    Radius = t['pl_rade']
+    Radius_sigma = t['pl_radeerr1']
+
+
+
+    R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
+    M_cond_R = np.loadtxt(os.path.join(output_location, 'M_cond_R.txt'))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, 'M_cond_R_upper.txt'))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, 'M_cond_R_lower.txt'))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, 'weights_boot.txt'))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
 
     n_boot = np.shape(weights_boot)[0]
     deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
