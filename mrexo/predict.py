@@ -5,9 +5,8 @@ from .mle_utils import cond_density_quantile
 
 pwd = os.path.dirname(__file__)
 
-def predict_m_given_r(Radius, dataset = 'mdwarf', weights_mle = None, Radius_sigma = None, posterior_sample = False,
-                                qtl = [0.16,0.84], islog = False,Radius_min = -0.3,
-                                Radius_max = 1.357,Mass_min = -1,Mass_max = 3.809):
+def predict_m_given_r(Radius,  Radius_sigma = None, dataset = 'mdwarf', result_dir = None, 
+                      posterior_sample = False, qtl = [0.16,0.84], islog = False):
     '''
     INPUT:
         Radius = The radius for which Mass is being predicted. [Earth Radii]
@@ -22,15 +21,23 @@ def predict_m_given_r(Radius, dataset = 'mdwarf', weights_mle = None, Radius_sig
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
 
-    if weights_mle == None:
+    if result_dir == None:
         if dataset == 'mdwarf':
-            weights_mle = np.loadtxt(os.path.join(mdwarf_resultdir,'output','weights.txt'))
+            result_dir = mdwarf_resultdir
         elif dataset == 'kepler':
-            weight_mle = np.loadtxt(os.path.join(kepler_resultdir,'output','weights.txt'))
+            result_dir = kepler_resultdir
+    
+    print(result_dir)
 
+    input_location = os.path.join(result_dir, 'input')
+    output_location = os.path.join(result_dir, 'output')
 
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+    weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
     degrees = int(np.sqrt(len(weights_mle)))
+
     print(degrees)
 
     if islog == False:

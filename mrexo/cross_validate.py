@@ -7,7 +7,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 
 
 
-def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, Log = False,
+def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, 
                         degree_max = 60, k_fold = 10, degree_candidate = None,
                         cores = 1, location = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
@@ -21,7 +21,6 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     Radius_max: the upper bound for radius. Default = None
     Radius_min: the upper bound for radius. Default = None
 
-    Log: is the data transformed into a log scale if Log = True. Default = False
     degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
     k_fold: number of fold used for cross validation. Default = 10
     degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
@@ -43,7 +42,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
 
     cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
-    Log, abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
+     abs_tol, location, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
 
     pool = Pool(processes = cores)
 
@@ -77,7 +76,7 @@ def cv_parallelize(cv_input):
     abs_tol = Absolute tolerance
     location : The location for the log file
     '''
-    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, Log, abs_tol, location, Mass_bounds, Radius_bounds = cv_input
+    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, location, Mass_bounds, Radius_bounds = cv_input
     split_interval = indices_folded[i_fold]
 
     mask = np.repeat(False, n)
@@ -98,7 +97,7 @@ def cv_parallelize(cv_input):
        f.write('Running cross validation for {} degree check and {} th-fold'.format(test_degree, i_fold))
 
     weights = MLE_fit(Mass = train_Mass, Radius = train_Radius, Mass_sigma = train_Mass_sigma, Radius_sigma = train_Radius_sigma, Mass_bounds = Mass_bounds,
-            Radius_bounds = Radius_bounds, deg = test_degree, Log = Log,abs_tol = abs_tol, location = location, output_weights_only = True)
+            Radius_bounds = Radius_bounds, deg = test_degree, abs_tol = abs_tol, location = location, output_weights_only = True)
 
     size_test = np.size(test_Radius)
 
@@ -112,7 +111,7 @@ def cv_parallelize(cv_input):
     # the first and last term is set to 0 to avoid boundary effects
     # so we only need to calculate 2:(deg^2-1) terms
 
-    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min, Log, abs_tol, location)
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, location)
 
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
 

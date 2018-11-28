@@ -20,7 +20,7 @@ def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log = True):
 
     return norm_beta
 
-def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, abs_tol = 1e-10):
+def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = True, abs_tol = 1e-10):
     '''
     Integrate the product of the normal and beta distribution
     Comment about absolute tolerance ............................ (data set specific)
@@ -56,7 +56,7 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
         x = np.array(x)
 
     deg_vec = np.arange(1,deg+1)
-    x_beta_indv = find_indv_pdf(x,deg,deg_vec,x_max,x_min)
+    x_beta_indv = find_indv_pdf(x,deg, deg_vec, x_max, x_min)
     x_beta_pdf = np.kron(x_beta_indv, np.repeat(1,deg))
 
     marg_x = np.sum(w_hat * x_beta_pdf)
@@ -99,7 +99,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)
 
-    y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = False)
+    y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = True)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
     denominator = np.sum(w_hat * y_beta_pdf)
 
@@ -173,7 +173,7 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     return quantile
 
 
-def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, Log, abs_tol, location):
+def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, abs_tol, location, Log = True):
     '''
 
 
@@ -222,7 +222,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 #a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
-            deg, Log = False,abs_tol = 1e-10, output_weights_only = False, location = None):
+            deg, Log = True, abs_tol = 1e-10, output_weights_only = False, location = None):
     '''
     INPUT:
         Mass: Mass measurements

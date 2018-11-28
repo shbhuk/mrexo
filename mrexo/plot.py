@@ -14,8 +14,7 @@ def plot_mr_relation(result_dir):
     output_location = os.path.join(result_dir, 'output')
 
 
-    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
-    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+
     
     t = Table.read(os.path.join(input_location, 'MR_inputs.csv'))
     Mass = t['pl_masse']
@@ -23,7 +22,8 @@ def plot_mr_relation(result_dir):
     Radius = t['pl_rade']
     Radius_sigma = t['pl_radeerr1']
 
-
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
 
     R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
     M_cond_R = np.loadtxt(os.path.join(output_location, 'M_cond_R.txt'))
