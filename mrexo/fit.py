@@ -11,46 +11,76 @@ from .cross_validate import run_cross_validation
 
 
 
-def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max = None, Mass_min = None, Radius_max = None, Radius_min = None,
-                    degree_max = 60, select_deg = 55, k_fold = None, num_boot = 100,
-                    cores = cpu_count(), abs_tol = 1e-10):
+def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path, 
+                    Mass_min = None, Mass_max = None, Radius_min = None, Radius_max = None, 
+                    select_deg = 55, degree_max = None, k_fold = None, num_boot = 100,
+                    cores = 1, abs_tol = 1e-10):
     '''
-    Predict the Mass and Radius relationship
-    INPUT:
+    Fit a mass and radius relationship using a non parametric approach with beta densities
 
-        Mass: Mass measurements
-        Radius : Radius measurements
-        Mass_sigma: measurement errors for the data, if no measurement error,
-                    it is NULL
-        Radius_sigma
-        Mass_max: the upper bound for mass. Default = None
-        Mass_min: the lower bound for mass. Default = None
-        Radius_max: the upper bound for radius. Default = None
-        Radius_min: the upper bound for radius. Default = None
-        degree_max: INTEGER the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
-        select_deg: if input "cv": cross validation
-                            if input "aic": aic method
-                            if input "bic": bic method
-                            if input a number: default using that number and
-                            skip the select process
-        k_fold: number of fold used for cross validation. Default = 10
-        num_boot: number of bootstrap replication. Default = 100
-        cores: this program uses parallel computing for bootstrap. Default = 1
-        location : The location for the outputs
-        abs_tol : Defined for integration in MLE_fit()
+    INPUT:
+        Mass: Numpy array of mass measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        save_path: Folder name (+path) to save results in. Eg. save_path = '~/mrexo_working/trial_result'
+        Mass_min: Lower bound for mass. Default = None. If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))  
+        Mass_max: Upper bound for mass. Default = None. If None, uses: np.log10(max(Mass + Mass_sigma))     
+        Radius_min: Lower bound for radius. Default = None. If None, uses: np.log10(max(min(Radius - Radius_sigma), -0.3)) 
+        Radius_max: Upper bound for radius. Default = None. If None, uses: np.log10(max(Radius + Radius_sigma))
+
+        select_deg: The number of degrees for the beta densities.
+                            if select_deg =  "cv": Use cross validation to find the optimal number of  degrees.
+                            if select_deg =  "aic": Use AIC minimization to find the optimal number of degrees.
+                            if select_deg =  "bic": Use BIC minimization to find the optimal number of degrees.
+                            if select_deg =  INTEGER: Use that number and skip the 
+                                             optimization process to find the number of degrees.
+                            NOTE: Use AIC or BIC optimization only for large (> 200) sample sizes.
+        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
+                    Default = None. If None, uses: n/np.log10(n), where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default = None. 
+                If None, uses: 10 folds for n > 60, 5 folds otherwise. Eg. k_fold = 12
+        num_boot: Number of bootstraps to perform. Default = 100. num_boot must be greater than 1. 
+        cores: Number of cores for parallel processing. This is used in the
+                bootstrap and the cross validation. Default = 1. 
+                To use all the cores in the CPU, cores = cpu_count() (from multiprocessing import cpu_count)         
+        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                Default : 1e-10
+                    
+    OUTPUT:
+        initialfit_result : Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
+                            The keys in the dictionary are - 
+                            weights : 
+                            
+    'weights'    aic = initialfit_result['aic']
+    bic = initialfit_result['bic']
+    M_points =  initialfit_result['M_points']
+    R_points = initialfit_result['R_points']
+    M_cond_R = initialfit_result['M_cond_R']
+    M_cond_R_var = initialfit_result['M_cond_R_var']
+    M_cond_R_lower = initialfit_result['M_cond_R_quantile'][:,0]
+    M_cond_R_upper = initialfit_result['M_cond_R_quantile'][:,1]
+    R_cond_M = initialfit_result['R_cond_M']
+    R_cond_M_var = initialfit_result['R_cond_M_var']
+    R_cond_M_lower = initialfit_result['R_cond_M_quantile'][:,0]
+    R_cond_M_upper = initialfit_result['R_cond_M_quantile'][:,1]
+    Radius_marg = initialfit_result['Radius_marg']
+    Mass_marg = initialfit_result['Mass_marg']
+        
+        
 
     '''
     
-    input_location = os.path.join(location, 'input')
-    output_location = os.path.join(location, 'output')
+    input_location = os.path.join(save_path, 'input')
+    output_location = os.path.join(save_path, 'output')
     aux_output_location = os.path.join(output_location, 'other_data_products')
 
 
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
-    if not os.path.exists(location):
-        os.mkdir(location)
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
     if not os.path.exists(output_location):
         os.mkdir(output_location)
     if not os.path.exists(aux_output_location):
@@ -85,6 +115,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
         Radius_min = np.log10(max(min(Radius - Radius_sigma), -0.3)) 
     if Radius_max is None:
         Radius_max = np.log10(max(Radius + Radius_sigma))
+        
+    if degree_max == None:
+        degree_max = int(n/np.log10(n))
+        
 
     Mass_bounds = np.array([Mass_min, Mass_max])
     Radius_bounds = np.array([Radius_min, Radius_max])
@@ -107,7 +141,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
 
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds,
-                                        degree_max = degree_max, k_fold = k_fold, cores = cores, location = aux_output_location, abs_tol = abs_tol)
+                                        degree_max = degree_max, k_fold = k_fold, cores = cores, save_path = aux_output_location, abs_tol = abs_tol)
 
 
 
@@ -117,7 +151,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
     elif select_deg == 'aic' :
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, location = aux_output_location)['aic'] for d in degree_candidates])
+                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, save_path = aux_output_location)['aic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(aic)]
 
@@ -131,7 +165,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
     elif select_deg == 'bic':
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         bic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, location = aux_output_location)['bic'] for d in degree_candidates])
+                        Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, save_path = aux_output_location)['bic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(bic)]
 
@@ -153,29 +187,29 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
     ## Step 2: Estimate the model
 
     print('Running full dataset MLE before bootstrap')
-    fullMLEresult = MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
-                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds,  deg = int(deg_choose), abs_tol = abs_tol, location = aux_output_location)
+    initialfit_result = MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
+                            Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds,  deg = int(deg_choose), abs_tol = abs_tol, save_path = aux_output_location)
 
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
 
 
-    weights = fullMLEresult['weights']
-    aic = fullMLEresult['aic']
-    bic = fullMLEresult['bic']
-    M_points =  fullMLEresult['M_points']
-    R_points = fullMLEresult['R_points']
-    M_cond_R = fullMLEresult['M_cond_R']
-    M_cond_R_var = fullMLEresult['M_cond_R_var']
-    M_cond_R_lower = fullMLEresult['M_cond_R_quantile'][:,0]
-    M_cond_R_upper = fullMLEresult['M_cond_R_quantile'][:,1]
-    R_cond_M = fullMLEresult['R_cond_M']
-    R_cond_M_var = fullMLEresult['R_cond_M_var']
-    R_cond_M_lower = fullMLEresult['R_cond_M_quantile'][:,0]
-    R_cond_M_upper = fullMLEresult['R_cond_M_quantile'][:,1]
-    Radius_marg = fullMLEresult['Radius_marg']
-    Mass_marg = fullMLEresult['Mass_marg']
+    weights = initialfit_result['weights']
+    aic = initialfit_result['aic']
+    bic = initialfit_result['bic']
+    M_points =  initialfit_result['M_points']
+    R_points = initialfit_result['R_points']
+    M_cond_R = initialfit_result['M_cond_R']
+    M_cond_R_var = initialfit_result['M_cond_R_var']
+    M_cond_R_lower = initialfit_result['M_cond_R_quantile'][:,0]
+    M_cond_R_upper = initialfit_result['M_cond_R_quantile'][:,1]
+    R_cond_M = initialfit_result['R_cond_M']
+    R_cond_M_var = initialfit_result['R_cond_M_var']
+    R_cond_M_lower = initialfit_result['R_cond_M_quantile'][:,0]
+    R_cond_M_upper = initialfit_result['R_cond_M_quantile'][:,1]
+    Radius_marg = initialfit_result['Radius_marg']
+    Mass_marg = initialfit_result['Mass_marg']
 
     np.savetxt(os.path.join(output_location,'weights.txt'),weights, comments = '#', header = 'Weights for Beta densities from initial fitting w/o bootstrap')
     np.savetxt(os.path.join(aux_output_location,'aic.txt'),[aic], comments = '#', header = 'Akaike Information Criterion from initial fitting w/o bootstrap')
@@ -195,62 +229,65 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, location, Mass_max =
     np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments = '#', header = 'Minimum mass and maximum mass used for initial fitting w/o bootstrap')
     np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments = '#', header = 'Marginalized radius distribution from initial fitting w/o bootstrap')
 
-
-    n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
-    inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
-            Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location) for n_boot in n_boot_iter)
-
-    print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
-
-    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-       f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
-
-    pool = Pool(processes = cores)
-    bootstrap_results = list(pool.imap(bootsample_mle,inputs))
-
-    print('Finished bootstrap at {}'.format(datetime.datetime.now()))
-
-    weights_boot = np.array([x['weights'] for x in bootstrap_results])
-    aic_boot = np.array([x['aic'] for x in bootstrap_results])
-    bic_boot = np.array([x['bic'] for x in bootstrap_results])
-    M_points_boot =  np.array([x['M_points'] for x in bootstrap_results])
-    R_points_boot = np.array([x['R_points'] for x in bootstrap_results])
-    M_cond_R_boot = np.array([x['M_cond_R'] for x in bootstrap_results])
-    M_cond_R_var_boot = np.array([x['M_cond_R_var'] for x in bootstrap_results])
-    M_cond_R_lower_boot = np.array([x['M_cond_R_quantile'][:,0] for x in bootstrap_results])
-    M_cond_R_upper_boot = np.array([x['M_cond_R_quantile'][:,1] for x in bootstrap_results])
-    R_cond_M_boot = np.array([x['R_cond_M'] for x in bootstrap_results])
-    R_cond_M_var_boot = np.array([x['R_cond_M_var'] for x in bootstrap_results])
-    R_cond_M_lower_boot = np.array([x['R_cond_M_quantile'][:,0] for x in bootstrap_results])
-    R_cond_M_upper_boot = np.array([x['R_cond_M_quantile'][:,1] for x in bootstrap_results])
-    Radius_marg_boot = np.array([x['Radius_marg'] for x in bootstrap_results])
-    Mass_marg_boot = np.array([x['Mass_marg'] for x in bootstrap_results])
-
-    np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot, comments = '#', header = 'Weights for Beta densities from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot, comments = '#', header = 'Akaike Information Criterion from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'bic_boot.txt'),bic_boot, comments = '#', header = 'Bayesian Information Criterion from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'M_points_boot.txt'),M_points_boot, comments = '#', header = 'Sequence of mass points for bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'R_points_boot.txt'),R_points_boot, comments = '#', header = 'Sequence of radius points for bootstrap run')
-    np.savetxt(os.path.join(output_location,'M_cond_R_boot.txt'),M_cond_R_boot, comments = '#', header = 'Conditional distribution of mass given radius from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot, comments = '#', header = 'Variance for the Conditional distribution of mass given radius from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of mass given radius from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of mass given radius from bootstrap run')
-    np.savetxt(os.path.join(output_location,'R_cond_M_boot.txt'),R_cond_M_boot, comments = '#', header = 'Conditional distribution of radius given mass from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot, comments = '#', header = 'Variance for the Conditional distribution of radius given mass from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of radius given mass from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of radius given mass from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'Radius_marg_boot.txt'),Radius_marg_boot, comments = '#', header = 'Marginalized radius distribution from bootstrap run')
-    np.savetxt(os.path.join(aux_output_location,'Mass_marg_boot.txt'),Mass_marg_boot, comments = '#', header = 'Marginalized mass distribution from bootstrap run')
-
-    endtime = datetime.datetime.now()
-    print(endtime - starttime)
-
-    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-       f.write('Ended run at {}\n'.format(endtime))
-
-
-    return bootstrap_results
-
+    if num_boot == 0:
+        print('Bootstrap not run since num_boot = 0')
+        return initialfit_result
+    else:
+        n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
+        inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
+                Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location) for n_boot in n_boot_iter)
+    
+        print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
+    
+        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
+            f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
+    
+        pool = Pool(processes = cores)
+        bootstrap_results = list(pool.imap(bootsample_mle,inputs))
+    
+        print('Finished bootstrap at {}'.format(datetime.datetime.now()))
+    
+        weights_boot = np.array([x['weights'] for x in bootstrap_results])
+        aic_boot = np.array([x['aic'] for x in bootstrap_results])
+        bic_boot = np.array([x['bic'] for x in bootstrap_results])
+        M_points_boot =  np.array([x['M_points'] for x in bootstrap_results])
+        R_points_boot = np.array([x['R_points'] for x in bootstrap_results])
+        M_cond_R_boot = np.array([x['M_cond_R'] for x in bootstrap_results])
+        M_cond_R_var_boot = np.array([x['M_cond_R_var'] for x in bootstrap_results])
+        M_cond_R_lower_boot = np.array([x['M_cond_R_quantile'][:,0] for x in bootstrap_results])
+        M_cond_R_upper_boot = np.array([x['M_cond_R_quantile'][:,1] for x in bootstrap_results])
+        R_cond_M_boot = np.array([x['R_cond_M'] for x in bootstrap_results])
+        R_cond_M_var_boot = np.array([x['R_cond_M_var'] for x in bootstrap_results])
+        R_cond_M_lower_boot = np.array([x['R_cond_M_quantile'][:,0] for x in bootstrap_results])
+        R_cond_M_upper_boot = np.array([x['R_cond_M_quantile'][:,1] for x in bootstrap_results])
+        Radius_marg_boot = np.array([x['Radius_marg'] for x in bootstrap_results])
+        Mass_marg_boot = np.array([x['Mass_marg'] for x in bootstrap_results])
+    
+        np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot, comments = '#', header = 'Weights for Beta densities from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot, comments = '#', header = 'Akaike Information Criterion from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'bic_boot.txt'),bic_boot, comments = '#', header = 'Bayesian Information Criterion from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'M_points_boot.txt'),M_points_boot, comments = '#', header = 'Sequence of mass points for bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'R_points_boot.txt'),R_points_boot, comments = '#', header = 'Sequence of radius points for bootstrap run')
+        np.savetxt(os.path.join(output_location,'M_cond_R_boot.txt'),M_cond_R_boot, comments = '#', header = 'Conditional distribution of mass given radius from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot, comments = '#', header = 'Variance for the Conditional distribution of mass given radius from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of mass given radius from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of mass given radius from bootstrap run')
+        np.savetxt(os.path.join(output_location,'R_cond_M_boot.txt'),R_cond_M_boot, comments = '#', header = 'Conditional distribution of radius given mass from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot, comments = '#', header = 'Variance for the Conditional distribution of radius given mass from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of radius given mass from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of radius given mass from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'Radius_marg_boot.txt'),Radius_marg_boot, comments = '#', header = 'Marginalized radius distribution from bootstrap run')
+        np.savetxt(os.path.join(aux_output_location,'Mass_marg_boot.txt'),Mass_marg_boot, comments = '#', header = 'Marginalized mass distribution from bootstrap run')
+    
+        endtime = datetime.datetime.now()
+        print(endtime - starttime)
+    
+        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
+        f.write('Ended run at {}\n'.format(endtime))
+    
+    
+        return initialfit_result, bootstrap_results
+    
 
 
 
@@ -264,6 +301,6 @@ def bootsample_mle(inputs):
     MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],
                     Mass_sigma = inputs[2], Radius_sigma = inputs[3],
                     Mass_bounds = inputs[4], Radius_bounds = inputs[5],
-                    deg = inputs[6], abs_tol = inputs[7], location = inputs[9])
+                    deg = inputs[6], abs_tol = inputs[7], save_path = inputs[9])
 
     return MR_boot

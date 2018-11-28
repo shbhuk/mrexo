@@ -173,7 +173,7 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     return quantile
 
 
-def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, abs_tol, location, Log = True):
+def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, abs_tol, save_path, Log = True):
     '''
 
 
@@ -196,7 +196,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 
         print('Started Integration at ',datetime.datetime.now())
         #print(Mass_max, Mass_min, Radius_max, Radius_min)
-        with open(os.path.join(location,'log_file.txt'),'a') as f:
+        with open(os.path.join(save_path,'log_file.txt'),'a') as f:
             f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
         for i in range(0,n):
             #print('\n Iter {}. Mass {}. Radius {}. Mass_sigma {}. Radius_sigma {}'.format(i, M[i], R[i], Mass_sigma[i], Radius_sigma[i]))
@@ -222,7 +222,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 #a = MLE_fit(data = data, bounds = bounds, deg = 55, sigma = sigma, output_weights_only = False, Log = True)
 
 def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
-            deg, Log = True, abs_tol = 1e-10, output_weights_only = False, location = None):
+            deg, Log = True, abs_tol = 1e-10, output_weights_only = False, save_path = None):
     '''
     INPUT:
         Mass: Mass measurements
@@ -236,15 +236,15 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
         abs_tol: Precision used to calculate integral
         output_weights_only: If True, only output the estimated weights from
         the Bernstein polynomials. Else, output the conditional densities
-        location : For logging
+        save_path : For logging
 
     '''
 
     print('New MLE')
     starttime = datetime.datetime.now()
-    if location is None:
-        location = os.path.dirname(__file__)
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    if save_path is None:
+        save_path = os.path.dirname(__file__)
+    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
        f.write('\n======================================\n')
        f.write('Started run at {}\n'.format(starttime))
 
@@ -261,12 +261,12 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     Radius_min = Radius_bounds[0]
 
     C_pdf = calc_C_matrix(n = n, deg = deg, M = Mass, Mass_sigma = Mass_sigma, Mass_max = Mass_max, Mass_min = Mass_min,
-                        R = Radius, Radius_sigma = Radius_sigma, Radius_max = Radius_max, Radius_min = Radius_min, Log = Log, abs_tol = abs_tol, location = location)
+                        R = Radius, Radius_sigma = Radius_sigma, Radius_max = Radius_max, Radius_min = Radius_min, Log = Log, abs_tol = abs_tol, save_path = save_path)
 
     print(np.shape(C_pdf))
 
     print('Finished Integration at ',datetime.datetime.now())
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
 
 
@@ -294,7 +294,7 @@ def MLE_fit(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
     opt_result = fmin_slsqp(fn1, x0, bounds = bounds, f_eqcons = eqn, iter = 500,full_output = True, iprint = 1, epsilon = 1e-5,acc = 1e-5)
     print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),opt_result[2],opt_result[3],opt_result[4]))
 
-    with open(os.path.join(location,'log_file.txt'),'a') as f:
+    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
         f.write('Finished Optimization at {}'.format(datetime.datetime.now()))
         f.write('\nOptimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
 

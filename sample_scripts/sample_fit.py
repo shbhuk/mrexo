@@ -1,6 +1,7 @@
 import os
 from astropy.table import Table
 import numpy as np
+from multiprocessing import cpu_count
 
 from mrexo import fit_mr_relation
 
@@ -30,12 +31,11 @@ select_deg = 'cv'
 
 
 # Directory to store results in 
-result_dir = os.path.join(pwd,'M_dwarfs_deg_{}'.format(select_deg))
+result_dir = os.path.join(pwd,'Dummy'.format(select_deg))
 
 
 if __name__ == '__main__':
-    a = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma, 
+    a = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                         Radius = Radius, Radius_sigma = Radius_sigma,
-                        degree_max = 30, select_deg = select_deg, 
-                        num_boot = num_boot,
-                        location = result_dir, abs_tol = 1e-10)
+                        save_path = result_dir, select_deg = 1, 
+                        num_boot = 2, cores = cpu_count())
