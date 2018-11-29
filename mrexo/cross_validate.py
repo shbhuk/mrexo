@@ -7,7 +7,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 
 
 
-def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, 
+def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
                         degree_max = 60, k_fold = 10, degree_candidate = None,
                         cores = 1, save_path = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
@@ -111,7 +111,7 @@ def cv_parallelize(cv_input):
     # the first and last term is set to 0 to avoid boundary effects
     # so we only need to calculate 2:(deg^2-1) terms
 
-    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path)
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log = True)
 
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
 

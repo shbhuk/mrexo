@@ -5,32 +5,32 @@ from .mle_utils import cond_density_quantile
 
 pwd = os.path.dirname(__file__)
 
-def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset = 'mdwarf', 
+def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset = 'mdwarf',
                       posterior_sample = False, qtl = [0.16,0.84], islog = False):
     '''
-    Predict mass from given radius. 
+    Predict mass from given radius.
     Given radius can be a single measurement, with or without error, or can also be a posterior distribution of radii.
 
     INPUT:
         Radius: Numpy array of radius measurements.
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. Default : None
-        
-        result_dir: The directory where the results of the fit are stored. Default is None. 
+
+        result_dir: The directory where the results of the fit are stored. Default is None.
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
                 and then dataset = 'mdwarf', or dataset = 'kepler'
-                 
+
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
         posterior_sample: If the input radii is a posterior sample, posterior_sample = True, else False.
                 Default = False
-        qtl = 2 element array or list with the quantile values that will be returned. 
+        qtl = 2 element array or list with the quantile values that will be returned.
                 Default is 0.16 and 0.84. qtl = [0.16,0.84]
         islog = Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
     OUTPUT:
-        outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior), 
+        outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
 
     EXAMPLE:
@@ -39,7 +39,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
         from mrexo import predict_m_given_r
         import os
         import numpy as np
-        
+
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
 
@@ -47,7 +47,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
         predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = 0.1, result_dir = None, dataset = 'mdwarf', posterior_sample = False, islog = True)
-          
+
     '''
 
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
@@ -58,7 +58,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             result_dir = mdwarf_resultdir
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
-    
+
     print(result_dir)
 
     input_location = os.path.join(result_dir, 'input')
@@ -85,6 +85,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
+        print(np.sum(predicted_value[4]))
 
         outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
 
@@ -117,32 +118,32 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
 
 
-def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'mdwarf', 
+def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'mdwarf',
                       posterior_sample = False, qtl = [0.16,0.84], islog = False):
     '''
-    Predict radius from given mass. 
+    Predict radius from given mass.
     Given mass can be a single measurement, with or without error, or can also be a posterior distribution of mass.
 
     INPUT:
         Mass: Numpy array of mass measurements.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. Default : None
-        
-        result_dir: The directory where the results of the fit are stored. Default is None. 
+
+        result_dir: The directory where the results of the fit are stored. Default is None.
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
                 and then dataset = 'mdwarf', or dataset = 'kepler'
-                 
+
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
         posterior_sample: If the input mass is a posterior sample, posterior_sample = True, else False.
                 Default = False
-        qtl = 2 element array or list with the quantile values that will be returned. 
+        qtl = 2 element array or list with the quantile values that will be returned.
                 Default is 0.16 and 0.84. qtl = [0.16,0.84]
         islog = Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
     OUTPUT:
-        outputs: Tuple with the predicted radius (or distribution of radii if input is a posterior), 
+        outputs: Tuple with the predicted radius (or distribution of radii if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
 
     EXAMPLE:
@@ -151,7 +152,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
         from mrexo import predict_m_given_r
         import os
         import numpy as np
-        
+
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
 
@@ -159,7 +160,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
         predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = 0.1, result_dir = None, dataset = 'mdwarf', posterior_sample = False, islog = True)
-          
+
     '''
 
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
@@ -170,7 +171,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
             result_dir = mdwarf_resultdir
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
-    
+
     print(result_dir)
 
     input_location = os.path.join(result_dir, 'input')
