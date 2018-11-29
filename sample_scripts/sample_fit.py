@@ -5,10 +5,10 @@ from multiprocessing import cpu_count
 
 from mrexo import fit_mr_relation
 
-try :
-    pwd = os.path.dirname(__file__)
-except NameError:
-    pwd = ''
+
+pwd = os.path.dirname(__file__)
+
+#pwd = '~/mrexo_working/'
 
 t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 
@@ -20,22 +20,11 @@ Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
-
-# Number of bootstraps to run for
-num_boot = 50
-
-# The degrees for the Bernstein polynomials
-select_deg = 11
-
-select_deg = 'cv'
-
-
 # Directory to store results in 
-result_dir = os.path.join(pwd,'Dummy'.format(select_deg))
+result_dir = os.path.join(pwd,'Results_deg_10')
 
 
-if __name__ == '__main__':
-    a = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
-                        Radius = Radius, Radius_sigma = Radius_sigma,
-                        save_path = result_dir, select_deg = 1, 
-                        num_boot = 2, cores = cpu_count())
+initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
+                                        Radius = Radius, Radius_sigma = Radius_sigma,
+                                        save_path = result_dir, select_deg = 2, 
+                                        num_boot = 2, cores = cpu_count())

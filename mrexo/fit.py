@@ -8,7 +8,7 @@ import datetime
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
-
+from .utils import save_dictionary
 
 
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path, 
@@ -18,7 +18,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     '''
     Fit a mass and radius relationship using a non parametric approach with beta densities
 
-    INPUT:
+    INPUTS:
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
@@ -47,28 +47,64 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-10
                     
-    OUTPUT:
+    OUTPUTS:
         initialfit_result : Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
                             The keys in the dictionary are - 
-                            weights : 
+                            'weights' : Weights for Beta densities from initial fitting w/o bootstrap.
+                            'aic' : Akaike Information Criterion from initial fitting w/o bootstrap.
+                            'bic' : Bayesian Information Criterion from initial fitting w/o bootstrap.
+                            'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
+                            'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
+                            'M_cond_R' : Conditional distribution of mass given radius from initial fitting w/o bootstrap.
+                            'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from initial fitting w/o bootstrap.
+                            'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from initial fitting w/o bootstrap.
+                            'R_cond_M' : Conditional distribution of radius given mass from initial fitting w/o bootstrap.
+                            'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
+                            'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
+                            'Radius_marg' : Marginalized radius distribution from initial fitting w/o bootstrap.
+                            'Mass_marg' : Marginalized mass distribution from initial fitting w/o bootstrap.
+        if num_boot > 2:
+        bootstrap_results : Output dictionary from bootstrap run using Maximum Likelihood Estimation.
+                            'weights' : Weights for Beta densities from bootstrap run.
+                            'aic' : Akaike Information Criterion from bootstrap run.
+                            'bic' : Bayesian Information Criterion from bootstrap run.
+                            'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
+                            'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
+                            'M_cond_R' : Conditional distribution of mass given radius from bootstrap run.
+                            'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from bootstrap run.
+                            'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from bootstrap run.
+                            'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
+                            'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
+                            'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
+                            'Radius_marg' : Marginalized radius distribution from bootstrap run.
+                            'Mass_marg' : Marginalized mass distribution from bootstrap run.
                             
-    'weights'    aic = initialfit_result['aic']
-    bic = initialfit_result['bic']
-    M_points =  initialfit_result['M_points']
-    R_points = initialfit_result['R_points']
-    M_cond_R = initialfit_result['M_cond_R']
-    M_cond_R_var = initialfit_result['M_cond_R_var']
-    M_cond_R_lower = initialfit_result['M_cond_R_quantile'][:,0]
-    M_cond_R_upper = initialfit_result['M_cond_R_quantile'][:,1]
-    R_cond_M = initialfit_result['R_cond_M']
-    R_cond_M_var = initialfit_result['R_cond_M_var']
-    R_cond_M_lower = initialfit_result['R_cond_M_quantile'][:,0]
-    R_cond_M_upper = initialfit_result['R_cond_M_quantile'][:,1]
-    Radius_marg = initialfit_result['Radius_marg']
-    Mass_marg = initialfit_result['Mass_marg']
-        
-        
-
+        EXAMPLE:
+            # Example to fit a Mass Radius relationship with 2 CPU cores, using 12 degrees, and 50 bootstraps.
+            import os
+            from astropy.table import Table
+            import numpy as np
+            from mrexo import fit_mr_relation
+            
+            pwd = '~/mrexo_working/'
+            
+            t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
+            
+            # Symmetrical errorbars
+            Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
+            Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
+            
+            # In Earth units
+            Mass = np.array(t['pl_masse'])
+            Radius = np.array(t['pl_rade'])
+            
+            # Directory to store results in 
+            result_dir = os.path.join(pwd,'Results_deg_12')
+            
+            initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
+                                                    Radius = Radius, Radius_sigma = Radius_sigma,
+                                                    save_path = result_dir, select_deg = 12, 
+                                                    num_boot = 50, cores = 2)
     '''
     
     input_location = os.path.join(save_path, 'input')
@@ -194,41 +230,12 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
 
-
-    weights = initialfit_result['weights']
-    aic = initialfit_result['aic']
-    bic = initialfit_result['bic']
-    M_points =  initialfit_result['M_points']
-    R_points = initialfit_result['R_points']
-    M_cond_R = initialfit_result['M_cond_R']
-    M_cond_R_var = initialfit_result['M_cond_R_var']
-    M_cond_R_lower = initialfit_result['M_cond_R_quantile'][:,0]
-    M_cond_R_upper = initialfit_result['M_cond_R_quantile'][:,1]
-    R_cond_M = initialfit_result['R_cond_M']
-    R_cond_M_var = initialfit_result['R_cond_M_var']
-    R_cond_M_lower = initialfit_result['R_cond_M_quantile'][:,0]
-    R_cond_M_upper = initialfit_result['R_cond_M_quantile'][:,1]
-    Radius_marg = initialfit_result['Radius_marg']
-    Mass_marg = initialfit_result['Mass_marg']
-
-    np.savetxt(os.path.join(output_location,'weights.txt'),weights, comments = '#', header = 'Weights for Beta densities from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'aic.txt'),[aic], comments = '#', header = 'Akaike Information Criterion from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'bic.txt'),[bic], comments = '#', header = 'Bayesian Information Criterion from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'M_points.txt'),M_points, comments = '#', header = 'Sequence of mass points for initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'R_points.txt'),R_points, comments = '#', header = 'Sequence of radius points for initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'M_cond_R.txt'),M_cond_R, comments = '#', header = 'Conditional distribution of mass given radius from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'M_cond_R_var.txt'),M_cond_R_var, comments = '#', header = 'Variance for the Conditional distribution of mass given radius from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'M_cond_R_lower.txt'),M_cond_R_lower, comments = '#', header = 'Lower limit for the Conditional distribution of mass given radius from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'M_cond_R_upper.txt'),M_cond_R_upper, comments = '#', header = 'Upper limit for the Conditional distribution of mass given radius from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'R_cond_M.txt'),R_cond_M, comments = '#', header = 'Conditional distribution of radius given mass from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'R_cond_M_var.txt'),R_cond_M_var, comments = '#', header = 'Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'R_cond_M_lower.txt'),R_cond_M_lower, comments = '#', header = 'Lower limit for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(output_location,'R_cond_M_upper.txt'),R_cond_M_upper, comments = '#', header = 'Upper limit for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'Radius_marg.txt'),Radius_marg, comments = '#', header = 'Marginalized radius distribution from initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(aux_output_location,'Mass_marg.txt'),Mass_marg, comments = '#', header = 'Marginalized mass distribution from initial fitting w/o bootstrap')
     np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments = '#', header = 'Minimum mass and maximum mass used for initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments = '#', header = 'Marginalized radius distribution from initial fitting w/o bootstrap')
+    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments = '#', header = 'Minimum radius and maximum radius used for initial fitting w/o bootstrap')
 
+    save_dictionary(dictionary = initialfit_result, output_location = output_location, bootstrap = False)
+
+    ################# Run Bootstrap #################
     if num_boot == 0:
         print('Bootstrap not run since num_boot = 0')
         return initialfit_result
@@ -244,57 +251,26 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     
         pool = Pool(processes = cores)
         bootstrap_results = list(pool.imap(bootsample_mle,inputs))
+
+        save_dictionary(dictionary = bootstrap_results, output_location = output_location, bootstrap = True)
+
     
         print('Finished bootstrap at {}'.format(datetime.datetime.now()))
-    
-        weights_boot = np.array([x['weights'] for x in bootstrap_results])
-        aic_boot = np.array([x['aic'] for x in bootstrap_results])
-        bic_boot = np.array([x['bic'] for x in bootstrap_results])
-        M_points_boot =  np.array([x['M_points'] for x in bootstrap_results])
-        R_points_boot = np.array([x['R_points'] for x in bootstrap_results])
-        M_cond_R_boot = np.array([x['M_cond_R'] for x in bootstrap_results])
-        M_cond_R_var_boot = np.array([x['M_cond_R_var'] for x in bootstrap_results])
-        M_cond_R_lower_boot = np.array([x['M_cond_R_quantile'][:,0] for x in bootstrap_results])
-        M_cond_R_upper_boot = np.array([x['M_cond_R_quantile'][:,1] for x in bootstrap_results])
-        R_cond_M_boot = np.array([x['R_cond_M'] for x in bootstrap_results])
-        R_cond_M_var_boot = np.array([x['R_cond_M_var'] for x in bootstrap_results])
-        R_cond_M_lower_boot = np.array([x['R_cond_M_quantile'][:,0] for x in bootstrap_results])
-        R_cond_M_upper_boot = np.array([x['R_cond_M_quantile'][:,1] for x in bootstrap_results])
-        Radius_marg_boot = np.array([x['Radius_marg'] for x in bootstrap_results])
-        Mass_marg_boot = np.array([x['Mass_marg'] for x in bootstrap_results])
-    
-        np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot, comments = '#', header = 'Weights for Beta densities from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot, comments = '#', header = 'Akaike Information Criterion from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'bic_boot.txt'),bic_boot, comments = '#', header = 'Bayesian Information Criterion from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'M_points_boot.txt'),M_points_boot, comments = '#', header = 'Sequence of mass points for bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'R_points_boot.txt'),R_points_boot, comments = '#', header = 'Sequence of radius points for bootstrap run')
-        np.savetxt(os.path.join(output_location,'M_cond_R_boot.txt'),M_cond_R_boot, comments = '#', header = 'Conditional distribution of mass given radius from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'M_cond_R_var_boot.txt'),M_cond_R_var_boot, comments = '#', header = 'Variance for the Conditional distribution of mass given radius from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'M_cond_R_lower_boot.txt'),M_cond_R_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of mass given radius from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'M_cond_R_upper_boot.txt'),M_cond_R_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of mass given radius from bootstrap run')
-        np.savetxt(os.path.join(output_location,'R_cond_M_boot.txt'),R_cond_M_boot, comments = '#', header = 'Conditional distribution of radius given mass from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot, comments = '#', header = 'Variance for the Conditional distribution of radius given mass from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot, comments = '#', header = 'Lower limit for the Conditional distribution of radius given mass from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of radius given mass from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'Radius_marg_boot.txt'),Radius_marg_boot, comments = '#', header = 'Marginalized radius distribution from bootstrap run')
-        np.savetxt(os.path.join(aux_output_location,'Mass_marg_boot.txt'),Mass_marg_boot, comments = '#', header = 'Marginalized mass distribution from bootstrap run')
     
         endtime = datetime.datetime.now()
         print(endtime - starttime)
     
         with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-        f.write('Ended run at {}\n'.format(endtime))
+            f.write('Ended run at {}\n'.format(endtime))
     
     
         return initialfit_result, bootstrap_results
-    
-
-
+ 
 
 def bootsample_mle(inputs):
     '''
     To bootstrap the data and run MLE
-    Input:
+    INPUTS:
         inputs : Variable required for mapping for parallel processing
     '''
 
