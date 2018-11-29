@@ -23,7 +23,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
-        save_path: Folder name (+path) to save results in. Eg. save_path = '~/mrexo_working/trial_result'
+        save_path: Folder name (+path) to save results in.
+                   Eg. save_path = '~/mrexo_working/trial_result' will create the 'trial_result' results folder in mrexo_working
         Mass_min: Lower bound for mass. Default = None. If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))  
         Mass_max: Upper bound for mass. Default = None. If None, uses: np.log10(max(Mass + Mass_sigma))     
         Radius_min: Lower bound for radius. Default = None. If None, uses: np.log10(max(min(Radius - Radius_sigma), -0.3)) 
@@ -271,7 +272,18 @@ def bootsample_mle(inputs):
     '''
     To bootstrap the data and run MLE
     INPUTS:
-        inputs : Variable required for mapping for parallel processing
+        inputs : Variable required for mapping for parallel processing.
+        inputs is a tuple with the following components : 
+                    Mass: Numpy array of mass measurements. In LINEAR SCALE.
+                    Radius: Numpy array of radius measurements. In LINEAR SCALE.
+                    Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+                    Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+                    Mass_bounds: Bounds for the mass.
+                    Radius_bounds: Bounds for the radius.
+                    deg: Degree chosen for the beta densities.
+                    abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                             Default : 1e-10   
+                    save_path: Folder name (+path) to save results in. Eg. save_path = '~/mrexo_working/trial_result'
     '''
 
     MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],

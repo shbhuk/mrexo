@@ -6,6 +6,7 @@ mrexo/fit.py
 mrexo/mle_utils.py
 mrexo/plot.py
 mrexo/predict.py
+mrexo/utils.py
 mrexo.egg-info/PKG-INFO
 mrexo.egg-info/SOURCES.txt
 mrexo.egg-info/dependency_links.txt
