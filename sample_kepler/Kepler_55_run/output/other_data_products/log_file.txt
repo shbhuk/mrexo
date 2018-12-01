@@ -286,3 +286,258 @@ Finished Integration at 2018-11-30 17:00:16.483000
 Finished Integration at 2018-11-30 17:00:39.030000
 Finished Integration at 2018-11-30 17:01:40.266000
 Finished Integration at 2018-11-30 17:08:29.466000
+Finished Optimization at 2018-12-01 05:39:28.458000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 05:40:14.189000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 05:40:16.526000, using 20 core/s
+======================================
+Started run at 2018-12-01 05:40:16.625000
+Started Integration at 2018-12-01 05:40:16.641000
+Finished Integration at 2018-12-01 05:56:45.711000
+Finished Optimization at 2018-12-01 05:59:27.857000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:00:15.038000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:00:17.216000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:00:17.325000
+Started Integration at 2018-12-01 06:00:17.325000
+Finished Optimization at 2018-12-01 06:00:46.431000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:01:35.216000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:01:37.480000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:01:37.594000
+Started Integration at 2018-12-01 06:01:37.594000
+Finished Optimization at 2018-12-01 06:03:50.261000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:04:37.457000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:04:39.652000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:04:39.746000
+Started Integration at 2018-12-01 06:04:39.762000
+Finished Optimization at 2018-12-01 06:04:59.081000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:05:48.471000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:05:50.587000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:05:50.665000
+Started Integration at 2018-12-01 06:05:50.681000
+Finished Integration at 2018-12-01 06:16:16.214000
+Finished Integration at 2018-12-01 06:18:52.355000
+Finished Integration at 2018-12-01 06:21:10.030000
+Finished Integration at 2018-12-01 06:22:43.539000
+Finished Optimization at 2018-12-01 06:23:49.865000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:24:38.896000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:24:41.531000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:24:41.624000
+Started Integration at 2018-12-01 06:24:41.624000
+Finished Optimization at 2018-12-01 06:39:37.934000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:40:25.679000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:40:28.173000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:40:28.252000
+Started Integration at 2018-12-01 06:40:28.267000
+Finished Integration at 2018-12-01 06:42:16.076000
+Finished Optimization at 2018-12-01 06:42:34.504000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:43:24.023000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:43:26.295000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:43:26.404000
+Started Integration at 2018-12-01 06:43:26.420000
+Finished Optimization at 2018-12-01 06:50:30.809000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:51:21.929000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:51:24.328000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:51:24.421000
+Started Integration at 2018-12-01 06:51:24.437000
+Finished Optimization at 2018-12-01 06:54:25.824000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 06:55:15.780000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:55:18.550000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:55:18.631000
+Started Integration at 2018-12-01 06:55:18.631000
+Finished Optimization at 2018-12-01 06:57:31.895000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-01 06:57:39.564000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-01 06:57:57.815000
+Finished full dataset MLE run at 2018-12-01 06:58:21.523000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:58:24.095000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:58:24.171000
+Started Integration at 2018-12-01 06:58:24.187000
+Finished full dataset MLE run at 2018-12-01 06:58:28.721000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 06:58:31.293000, using 20 core/s
+======================================
+Started run at 2018-12-01 06:58:31.393000
+Started Integration at 2018-12-01 06:58:31.408000
+Finished Integration at 2018-12-01 06:59:52.750000
+Finished Optimization at 2018-12-01 07:05:53.242000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:06:43.765000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:06:45.899000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:06:45.977000
+Started Integration at 2018-12-01 07:06:45.993000
+Finished Integration at 2018-12-01 07:08:13.439000
+Finished Integration at 2018-12-01 07:12:37.118000
+Finished Integration at 2018-12-01 07:15:06.776000
+Finished Integration at 2018-12-01 07:15:20.358000
+Finished Optimization at 2018-12-01 07:16:38.895000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:17:31.313000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:17:33.586000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:17:33.688000
+Started Integration at 2018-12-01 07:17:33.703000
+Finished Integration at 2018-12-01 07:24:12.656000
+Finished Optimization at 2018-12-01 07:26:32.066000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:27:21.974000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:27:24.381000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:27:24.437000
+Started Integration at 2018-12-01 07:27:24.452000
+Finished Optimization at 2018-12-01 07:27:28.601000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-01 07:27:53.022000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:28:18.594000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:28:20.806000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:28:20.884000
+Started Integration at 2018-12-01 07:28:20.899000
+Finished full dataset MLE run at 2018-12-01 07:28:46.020000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:28:48.340000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:28:48.419000
+Started Integration at 2018-12-01 07:28:48.419000
+Finished Optimization at 2018-12-01 07:29:57.033000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:30:48.363000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:30:50.581000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:30:50.675000
+Started Integration at 2018-12-01 07:30:50.690000
+Finished Integration at 2018-12-01 07:34:32.616000
+Finished Optimization at 2018-12-01 07:40:22.663000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:41:14.607000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:41:16.819000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:41:16.897000
+Started Integration at 2018-12-01 07:41:16.913000
+Finished Optimization at 2018-12-01 07:41:45.215000
+Optimization terminated after 46 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-01 07:42:36.690000
+Running 20 bootstraps for the MLE code with degree = 55, using 20 thread/s.Started for 55 degrees at 2018-12-01 07:42:38.871000, using 20 core/s
+======================================
+Started run at 2018-12-01 07:42:38.980000
+Started Integration at 2018-12-01 07:42:38.996000
+Finished Integration at 2018-12-01 07:44:01.943000
+Finished Integration at 2018-12-01 07:45:24.467000
+Finished Integration at 2018-12-01 07:46:14.767000
+Finished Integration at 2018-12-01 07:48:08.871000
+Finished Integration at 2018-12-01 07:58:12.593000
+Finished Integration at 2018-12-01 07:59:31.232000
+Started for 55 degrees at 2018-12-01 10:17:29.392000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.376000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:28.984000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.262000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.608000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.767000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.891000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.820000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:30.379000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:29.139000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:30.086000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:30.317000, using 20 core/sStarted for 55 degrees at 2018-12-01 10:17:30.208000, using 20 core/s
+======================================
+Started run at 2018-12-01 10:17:52.718000
+
+======================================
+Started run at 2018-12-01 10:17:52.720000
+
+======================================
+Started run at 2018-12-01 10:17:52.722000
+
+======================================
+Started run at 2018-12-01 10:17:52.727000
+
+======================================
+Started run at 2018-12-01 10:17:52.730000
+
+======================================
+Started run at 2018-12-01 10:17:52.731000
+
+======================================
+Started run at 2018-12-01 10:17:52.732000
+
+======================================
+Started run at 2018-12-01 10:17:52.734000
+Started Integration at 2018-12-01 10:17:52.739000
+Started Integration at 2018-12-01 10:17:52.739000
+Started Integration at 2018-12-01 10:17:52.740000
+Started Integration at 2018-12-01 10:17:52.740000
+
+======================================
+Started run at 2018-12-01 10:17:52.743000
+Started Integration at 2018-12-01 10:17:52.746000
+Started Integration at 2018-12-01 10:17:52.747000
+Started Integration at 2018-12-01 10:17:52.748000
+
+======================================
+Started run at 2018-12-01 10:17:52.748000
+
+======================================
+Started run at 2018-12-01 10:17:52.750000
+
+======================================
+Started run at 2018-12-01 10:17:52.750000
+Started Integration at 2018-12-01 10:17:52.752000
+
+======================================
+Started run at 2018-12-01 10:17:52.759000
+
+======================================
+Started run at 2018-12-01 10:17:52.760000
+Started Integration at 2018-12-01 10:17:52.761000
+Started Integration at 2018-12-01 10:17:52.762000
+Started Integration at 2018-12-01 10:17:52.762000
+
+======================================
+Started run at 2018-12-01 10:17:52.765000
+
+======================================
+Started run at 2018-12-01 10:17:52.768000
+
+======================================
+Started run at 2018-12-01 10:17:52.770000
+
+======================================
+Started run at 2018-12-01 10:17:52.771000
+Started Integration at 2018-12-01 10:17:52.773000
+Started Integration at 2018-12-01 10:17:52.774000
+Started Integration at 2018-12-01 10:17:52.775000
+Started Integration at 2018-12-01 10:17:52.783000
+Started Integration at 2018-12-01 10:17:52.783000
+Started Integration at 2018-12-01 10:17:52.784000
+Started for 55 degrees at 2018-12-01 10:18:45.005000, using 20 core/s
+======================================
+Started run at 2018-12-01 10:18:45.085000
+Started Integration at 2018-12-01 10:18:45.093000
