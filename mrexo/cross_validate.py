@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import os
 from multiprocessing import Pool
@@ -11,23 +12,38 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
                         degree_max = 60, k_fold = 10, degree_candidate = None,
                         cores = 1, save_path = os.path.dirname(__file__), abs_tol = 1e-10):
     '''
-    Mass: Mass measurements
-    Radius : Radius measurements
-    Mass_sigma: measurement errors for the data, if no measuremnet error,
-                it is NULL
-    Radius_sigma
-    Mass_max: the upper bound for mass. Default = None
-    Mass_min: the lower bound for mass. Default = None
-    Radius_max: the upper bound for radius. Default = None
-    Radius_min: the upper bound for radius. Default = None
+    We use 10-fold cross validation to choose the optimal number of degrees from the candidate values.
+    To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
+    sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , 10) and use the remaining k-1 subsets of data
+    to estimate the parameters. Doing this for each Ds in turn results in 10 estimated sets of weights, w_s based
+    all observations i /∈ Ds. We plug in each w_s along with the corresponding data that was used to estimate
+    each set of weights to obtain an estimated value for the log-likelihood.
 
-    degree_max: the maximum degree used for cross-validation/AIC/BIC. Default = 60. Suggested value = n/log(n)
-    k_fold: number of fold used for cross validation. Default = 10
-    degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
-                    If None, defaults to
-    cores: this program uses parallel computing for bootstrap. Default = 1
-    save_path : The save_path for the log file
-    abs_tol : Defined for integration in MLE_fit()
+    This log likelihood is maximized to pick the optimum number of degrees.
+
+
+    INPUTS:
+        Mass: Numpy array of mass measurements. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Mass_bounds: Bounds for the mass. Log10
+        Radius_bounds: Bounds for the radius. Log10
+        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
+                    Default = None. If None, uses: n/np.log10(n), where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default = None.
+                If None, uses: 10 folds for n > 60, 5 folds otherwise. Eg. k_fold = 12
+        degree_candidate : Integer vector containing degrees to run cross validation check for. Default is None.
+                    If None, defaults to 12 values between 5 and degree_max.
+        cores: Number of cores for parallel processing. This is used in the
+                bootstrap and the cross validation. Default = 1.
+                To use all the cores in the CPU, cores = cpu_count() (from multiprocessing import cpu_count)
+        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                Default : 1e-10
+        cores: this program uses parallel computing for bootstrap. Default = 1
+        save_path: Location of folder within results for auxiliary output files
+    OUTPUT:
+        deg_choose - The optimum degree chosen by cross validation and MLE
 
     '''
     if degree_candidate == None:
@@ -41,17 +57,19 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     a = np.arange(n)
     indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
 
+    ## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+    # Iterator input to parallelize
     cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
      abs_tol, save_path, Mass_bounds, Radius_bounds) for i in range(k_fold)for j in degree_candidate)
 
+    # Run cross validation in parallel
     pool = Pool(processes = cores)
-
-    # Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
     cv_result = list(pool.imap(cv_parallelize,cv_input))
+
+    # Find the log-likelihood for each degree candidatea
     likelihood_matrix = np.split(np.array(cv_result) , k_fold)
     likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
 
-    print(likelihood_per_degree)
     np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'),np.array([degree_candidate,likelihood_per_degree]))
     deg_choose = degree_candidate[np.argmax(likelihood_per_degree)]
 
@@ -63,18 +81,26 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 def cv_parallelize(cv_input):
 
     '''
-    Function to run in parallel the cross validation routine.
-    train_data = Input training data
-    bounds = Vector containing four elements. Upper and lower bound for Mass. Upper and lower bound for Radius resp.
-    test_radius, = Input radius data
-    test_mass, = Input mass data
-    deg = Degree used in Bernstein Polynomials
-    train_data_sg = Input training data measurement errors
-    test_radius_sigma = Input test radius measurement errors
-    test_mass_sigma = Input test mass measurement errors
-    Log = Whether the data is in log units
-    abs_tol = Absolute tolerance
-    save_path : The save_path for the log file
+    Serves as input finction for parallelizing.
+    INPUTS:
+        cv_input : Tuple with following components -
+        i_fold : i out of k-th fold being run.
+        test_degree: The degree candidate that is being tested for.
+        indices_folded: The indices for the i-th fold.
+        n: Number of total data points.
+        rand_gen:
+        Mass: Numpy array of mass measurements. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                Default : 1e-10
+        save_path: Location of folder within results for auxiliary output files
+        Mass_bounds: Bounds for the mass. Log10
+        Radius_bounds: Bounds for the radius. Log10
+    OUTPUT:
+        like_pred : Predicted log likelihood for the i-th dataset and test_degree
+
     '''
     i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds = cv_input
     split_interval = indices_folded[i_fold]
@@ -83,6 +109,7 @@ def cv_parallelize(cv_input):
     mask[rand_gen[split_interval]] = True
     invert_mask = np.invert(mask)
 
+    # Test dataset - sth subset.
     test_Radius = Radius[mask]
     test_Mass = Mass[mask]
     test_Radius_sigma = Radius_sigma[mask]
@@ -101,16 +128,13 @@ def cv_parallelize(cv_input):
 
     size_test = np.size(test_Radius)
 
-    # specify the bounds
+    # Specify the bounds
     Mass_max = Mass_bounds[1]
     Mass_min = Mass_bounds[0]
     Radius_max = Radius_bounds[1]
     Radius_min = Radius_bounds[0]
 
     # calculate cdf and pdf of M and R for each term
-    # the first and last term is set to 0 to avoid boundary effects
-    # so we only need to calculate 2:(deg^2-1) terms
-
     C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log = True)
 
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))

@@ -31,8 +31,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-10
         output_weights_only: If True, only output the estimated weights, else will also output dictionary with keys shown below.
-        save_path: Folder name (+path) to save results in.
-                   Eg. save_path = '~/mrexo_working/trial_result' will create the 'trial_result' results folder in mrexo_working
+        save_path: Location of folder within results for auxiliary output files
 
     OUTPUT:
         If output_weights_only == True,
@@ -114,49 +113,50 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
 
-    # Calculate AIC and BIC
-    aic = n_log_lik*2 + 2*(deg**2 - 1)
-    bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
-
-    # Marginal Densities
-    M_seq = np.linspace(Mass_min,Mass_max,100)
-    R_seq = np.linspace(Radius_min,Radius_max,100)
-    Mass_marg = np.array([marginal_density(x = m, x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat) for m in M_seq])
-    Radius_marg = np.array([marginal_density(x = r, x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = w_hat) for r in R_seq])
-
-    output = {'weights':w_hat,
-            'aic':aic,
-            'bic':bic,
-            'M_points':M_seq,
-            'R_points':R_seq,
-            'Mass_marg':Mass_marg,
-            'Radius_marg':Radius_marg}
-
-    # Conditional Densities with 16% and 84% quantile
-    M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
-                        x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
-
-
-    M_cond_R_mean = M_cond_R[:,0]
-    M_cond_R_var = M_cond_R[:,1]
-    M_cond_R_quantile = M_cond_R[:,2:4]
-
-    R_cond_M = np.array([cond_density_quantile(y = m, y_max = Mass_max, y_min = Mass_min,
-                        x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
-    R_cond_M_mean = R_cond_M[:,0]
-    R_cond_M_var = R_cond_M[:,1]
-    R_cond_M_quantile = R_cond_M[:,2:4]
-
-    output['M_cond_R'] = M_cond_R_mean
-    output['M_cond_R_var'] = M_cond_R_var
-    output['M_cond_R_quantile'] = M_cond_R_quantile
-    output['R_cond_M'] = R_cond_M_mean
-    output['R_cond_M_var'] = R_cond_M_var
-    output['R_cond_M_quantile'] = R_cond_M_quantile
-
     if output_weights_only == True:
         return w_hat
+
     else:
+        # Calculate AIC and BIC
+        aic = n_log_lik*2 + 2*(deg**2 - 1)
+        bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
+
+        # Marginal Densities
+        M_seq = np.linspace(Mass_min,Mass_max,100)
+        R_seq = np.linspace(Radius_min,Radius_max,100)
+        Mass_marg = np.array([marginal_density(x = m, x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat) for m in M_seq])
+        Radius_marg = np.array([marginal_density(x = r, x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = w_hat) for r in R_seq])
+
+        output = {'weights':w_hat,
+                'aic':aic,
+                'bic':bic,
+                'M_points':M_seq,
+                'R_points':R_seq,
+                'Mass_marg':Mass_marg,
+                'Radius_marg':Radius_marg}
+
+        # Conditional Densities with 16% and 84% quantile
+        M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
+                            x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
+
+        # Output everything as dictionary
+        M_cond_R_mean = M_cond_R[:,0]
+        M_cond_R_var = M_cond_R[:,1]
+        M_cond_R_quantile = M_cond_R[:,2:4]
+
+        R_cond_M = np.array([cond_density_quantile(y = m, y_max = Mass_max, y_min = Mass_min,
+                            x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
+        R_cond_M_mean = R_cond_M[:,0]
+        R_cond_M_var = R_cond_M[:,1]
+        R_cond_M_quantile = R_cond_M[:,2:4]
+
+        output['M_cond_R'] = M_cond_R_mean
+        output['M_cond_R_var'] = M_cond_R_var
+        output['M_cond_R_quantile'] = M_cond_R_quantile
+        output['R_cond_M'] = R_cond_M_mean
+        output['R_cond_M_var'] = R_cond_M_var
+        output['R_cond_M_quantile'] = R_cond_M_quantile
+
         return output
 
 
@@ -174,18 +174,15 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
         Radius_max, Radius_min : Maximum and minimum value for radius. Log10
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-10
-        save_path: Folder name (+path) to save results in.
-            Eg. save_path = '~/mrexo_working/trial_result' will create the 'trial_result' results folder in mrexo_working
+        save_path: Location of folder within results for auxiliary output files
         Log: If True, data is transformed into Log scale. Default = True, since
             fitting function always converts data to log scale.
 
 
 
     OUTPUTS:
-        C_pdf : Matrix explained in Ning et al. Equation 8.
-
-
-
+        C_pdf : Matrix explained in Ning et al. Equation 8. Product of (integrals of (product of normal and beta
+                distributions)) for mass and radius.
 
     '''
 
@@ -285,7 +282,7 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
 
     return marg_x
 
-
+"""
 def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol = 1e-10):
     '''
     Calculate the conditional density
@@ -310,6 +307,7 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol = 
     density = density_pdf / denominator
 
     return density
+"""
 
 def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84], abs_tol = 1e-10):
     '''
@@ -365,6 +363,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
     return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
 
+"""
 def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, denominator_sample, y_beta_indv_sample,qtl = [0.16,0.84]):
     '''
     Calculate the 16% and 84% quantiles using root function.
@@ -393,3 +392,5 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
     quantile = [conditional_quantile(i) for i in qtl]
 
     return quantile
+
+"""

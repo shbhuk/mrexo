@@ -126,7 +126,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         os.mkdir(input_location)
 
     t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
-    t.write(os.path.join(input_location, 'MR_inputs.csv'))
+    t.write(os.path.join(input_location, 'MR_inputs.csv'), overwrite = True)
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
