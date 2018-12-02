@@ -85,7 +85,6 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
-        print(np.sum(predicted_value[4]))
 
         outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
 

@@ -37,6 +37,9 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
 
 
 def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10, Log = True):
+    '''
+    Find the individual Probability Density Function for a variable.
+    '''
 
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)

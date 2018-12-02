@@ -11,6 +11,6 @@ try :
 except NameError:
     pwd = ''
 
-result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
+result_dir = os.path.join(pwd,'M_dwarfs_cv')
 
 plot_mr_relation(result_dir = result_dir)
