@@ -108,13 +108,13 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                                                     num_boot = 50, cores = 2)
     '''
 
+    starttime = datetime.datetime.now()
+    print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
+
+    # Create subdirectories for results
     input_location = os.path.join(save_path, 'input')
     output_location = os.path.join(save_path, 'output')
     aux_output_location = os.path.join(output_location, 'other_data_products')
-
-
-    starttime = datetime.datetime.now()
-    print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
     if not os.path.exists(save_path):
         os.mkdir(save_path)
@@ -130,10 +130,6 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
-
-
-    #copyfile(os.path.join(os.path.dirname(__file__),os.path.basename(__file__)), os.path.join(location,os.path.basename(__file__)))
-    #copyfile(os.path.join(os.path.dirname(location),'mle_utils.py os.path.join(location,'mle_utils.py'))
 
     n = len(Mass)
 
@@ -156,7 +152,6 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if degree_max == None:
         degree_max = int(n/np.log10(n))
 
-
     Mass_bounds = np.array([Mass_min, Mass_max])
     Radius_bounds = np.array([Radius_min, Radius_max])
 
@@ -164,10 +159,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         degree_max = int(degree_max)
 
     ###########################################################
-    ## Step 1: Select number of degree based on cross validation, aic or bic methods.
+    ## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
 
     if select_deg == 'cv':
-
+        # Use the CV method with training and test dataset to maximize log likelihood.
         if k_fold == None:
             if n//10 > 5:
                 k_fold = 10
@@ -175,17 +170,15 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                 k_fold = 5
             print('Picked {} k-folds'.format(k_fold))
 
-
         deg_choose = run_cross_validation(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds,
                                         degree_max = degree_max, k_fold = k_fold, cores = cores, save_path = aux_output_location, abs_tol = abs_tol)
-
-
 
         with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
             f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
 
     elif select_deg == 'aic' :
+        # Minimize the AIC
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         aic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, save_path = aux_output_location)['aic'] for d in degree_candidates])
@@ -200,6 +193,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 
     elif select_deg == 'bic':
+        # Minimize the BIC
         degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
         bic = np.array([MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                         Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds, deg = d, abs_tol = abs_tol, save_path = aux_output_location)['bic'] for d in degree_candidates])
@@ -214,19 +208,19 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 
     elif isinstance(select_deg, (int,float)):
+        # Use user defined value
         deg_choose = select_deg
 
     else :
-        print('Error: Incorrect input for select_deg')
+        print('Error: Incorrect input for select_deg. Please read docstring for valid inputs.')
         return 0
 
     ###########################################################
-    ## Step 2: Estimate the model
+    ## Step 2: Estimate the full model without bootstrap
 
     print('Running full dataset MLE before bootstrap')
     initialfit_result = MLE_fit(Mass = Mass, Radius = Radius, Mass_sigma = Mass_sigma, Radius_sigma = Radius_sigma,
                             Mass_bounds = Mass_bounds, Radius_bounds = Radius_bounds,  deg = int(deg_choose), abs_tol = abs_tol, save_path = aux_output_location)
-
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
@@ -236,11 +230,13 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     save_dictionary(dictionary = initialfit_result, output_location = output_location, bootstrap = False)
 
-    ################# Run Bootstrap #################
+    ###########################################################
+    ## Step 3: Run Bootstrap
     if num_boot == 0:
         print('Bootstrap not run since num_boot = 0')
         return initialfit_result
     else:
+        # Generate iterator for using multiprocessing Pool.imap
         n_boot_iter = (np.random.choice(n, n, replace = True) for i in range(num_boot))
         inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
                 Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location) for n_boot in n_boot_iter)
@@ -250,11 +246,11 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
             f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
+        # Parallelize the bootstraps
         pool = Pool(processes = cores)
         bootstrap_results = list(pool.imap(bootsample_mle,inputs))
 
         save_dictionary(dictionary = bootstrap_results, output_location = output_location, bootstrap = True)
-
 
         print('Finished bootstrap at {}'.format(datetime.datetime.now()))
 
@@ -270,7 +266,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 def bootsample_mle(inputs):
     '''
-    To bootstrap the data and run MLE
+    To bootstrap the data and run MLE. Serves as input to the parallelizing function.
     INPUTS:
         inputs : Variable required for mapping for parallel processing.
         inputs is a tuple with the following components :
@@ -284,6 +280,21 @@ def bootsample_mle(inputs):
                     abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                              Default : 1e-10
                     save_path: Folder name (+path) to save results in. Eg. save_path = '~/mrexo_working/trial_result'
+    OUTPUTS:
+        MR_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -
+                'weights' : Weights for Beta densities from bootstrap run.
+                'aic' : Akaike Information Criterion from bootstrap run.
+                'bic' : Bayesian Information Criterion from bootstrap run.
+                'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
+                'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
+                'M_cond_R' : Conditional distribution of mass given radius from bootstrap run.
+                'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from bootstrap run.
+                'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from bootstrap run.
+                'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
+                'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
+                'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
+                'Radius_marg' : Marginalized radius distribution from bootstrap run.
+                'Mass_marg' : Marginalized mass distribution from bootstrap run.
     '''
 
     MR_boot = MLE_fit(Mass = inputs[0], Radius = inputs[1],

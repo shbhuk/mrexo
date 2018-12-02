@@ -50,6 +50,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
     '''
 
+    # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
 
@@ -64,6 +65,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
+    # Load the results from the directory
     Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
@@ -72,12 +74,13 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
     print(degrees)
 
+    # Convert the radius measurement to log scale.
     if islog == False:
         logRadius = np.log10(Radius)
     else:
         logRadius = Radius
 
-
+    # Check if single measurement or posterior distribution.
     if posterior_sample == False:
         predicted_value = cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
@@ -162,6 +165,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
     '''
 
+    # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
 
@@ -176,6 +180,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
+    # Load the results from the directory
     Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
@@ -184,12 +189,13 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
     print(degrees)
 
+    # Convert the mass measurement to log scale.
     if islog == False:
         logMass = np.log10(Mass)
     else:
         logMass = Mass
 
-
+    # Check if single measurement or posterior distribution.
     if posterior_sample == False:
         predicted_value = cond_density_quantile(y = logMass, y_std = Mass_sigma, y_max = Mass_max, y_min = Mass_min,
                                                       x_max = Radius_max, x_min = Radius_min, deg = degrees,
