@@ -12,6 +12,7 @@ except NameError:
     pwd = ''
 
 result_dir = os.path.join(pwd,'Results_deg_11')
+result_dir = os.path.join(pwd,'M_dwarfs_11')
 #result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_run"
 #weights_mle = np.loadtxt(os.path.join(result_dir,'output','weights.txt'))
 

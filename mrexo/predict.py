@@ -130,7 +130,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
         Mass: Numpy array of mass measurements.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. Default : None
 
-        result_dir: The directory where the results of the fit are stored. Default is None.
+        result_dir: The directory from where the results of the fit are read in. Default is None.
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
