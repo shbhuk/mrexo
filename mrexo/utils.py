@@ -1,15 +1,13 @@
 import numpy as np 
 import os 
 
-
 def save_dictionary(dictionary, output_location, bootstrap = False):
     '''
     Save the keys in the dictionary as separate data .txt files.
+
     INPUTS:
-        dictionary : The dictionary from which the keys are extracted
-        The keys are :
-                    dictionary : Output dictionary from fitting without bootstrap using Maximum Likelihood Estimation.
-                            The keys in the dictionary are - 
+        dictionary : Output dictionary from fitting without bootstrap using Maximum Likelihood Estimation.
+                     The keys in the dictionary are:
                             'weights' : Weights for Beta densities.
                             'aic' : Akaike Information Criterion.
                             'bic' : Bayesian Information Criterion.
@@ -28,13 +26,10 @@ def save_dictionary(dictionary, output_location, bootstrap = False):
         
     OUTPUTS:
         Returns nothing. Saves the contents of the dictionary
-    
     '''
-
     aux_output_location = os.path.join(output_location, 'other_data_products')
 
     if bootstrap == False:
-        
         weights = dictionary['weights']
         aic = dictionary['aic']
         bic = dictionary['bic']
@@ -68,7 +63,6 @@ def save_dictionary(dictionary, output_location, bootstrap = False):
         np.savetxt(os.path.join(aux_output_location,'Mass_marg.txt'),Mass_marg, comments = '#', header = 'Marginalized mass distribution from initial fitting w/o bootstrap')
         
     else:
-        
         weights_boot = np.array([x['weights'] for x in dictionary])
         aic_boot = np.array([x['aic'] for x in dictionary])
         bic_boot = np.array([x['bic'] for x in dictionary])
@@ -100,6 +94,3 @@ def save_dictionary(dictionary, output_location, bootstrap = False):
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments = '#', header = 'Upper limit for the Conditional distribution of radius given mass from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'Radius_marg_boot.txt'),Radius_marg_boot, comments = '#', header = 'Marginalized radius distribution from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'Mass_marg_boot.txt'),Mass_marg_boot, comments = '#', header = 'Marginalized mass distribution from bootstrap run')
-    
-
-
