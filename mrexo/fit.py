@@ -225,8 +225,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
 
-    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments = '#', header = 'Minimum mass and maximum mass used for initial fitting w/o bootstrap')
-    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments = '#', header = 'Minimum radius and maximum radius used for initial fitting w/o bootstrap')
+    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments = '#', header = 'Minimum mass and maximum mass (log10)')
+    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments = '#', header = 'Minimum radius and maximum radius (log10)')
 
     save_dictionary(dictionary = initialfit_result, output_location = output_location, bootstrap = False)
 
