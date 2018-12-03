@@ -14,6 +14,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     '''
     Perform maximum likelihood estimation to find the weights for the beta density basis functions.
     Also, use those weights to calculate the conditional density distributions.
+    Ning et al. 2018 Sec 2.2, Eq 9.
 
     INPUT:
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
@@ -159,6 +160,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     '''
     Integrate the product of the normal and beta distributions for mass and radius and then take the Kronecker product.
 
+    Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
+
     INPUTS:
         n: Number of data points
         deg: Degree used for beta densities
@@ -216,6 +219,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log = True):
     '''
     Product of normal and beta distribution
+
+    Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
     if Log == True:
         norm_beta = norm.pdf(x_obs, loc = 10**x, scale = x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a = shape1, b = shape2)/(x_max - x_min)
@@ -226,7 +231,9 @@ def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log = True):
 
 def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, abs_tol = 1e-10):
     '''
-    Integrate the product of the normal and beta distribution
+    Integrate the product of the normal and beta distribution.
+
+    Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
     x_obs = data
     x_sd = data_sd
@@ -240,7 +247,11 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log = False, ab
 
 def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10, Log = True):
     '''
-    Find the individual probability Density Function for a variable.
+    Find the individual probability density Function for a variable.
+    When the data has uncertainty, the joint distribution is modelled using a
+    convolution of beta and normal distributions.
+
+    Refer to Ning et al. 2018 Sec 2.2, Eq 7 & 8.
     '''
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
@@ -254,6 +265,8 @@ def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std = None, abs_tol = 1e-10, Log =
 def marginal_density(x, x_max, x_min, deg, w_hat):
     '''
     Calculate the marginal density
+
+    Refer to Ning et al. 2018 Sec 2.2, Eq 10
     '''
     if type(x) == list:
         x = np.array(x)
@@ -296,6 +309,8 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol = 
 def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = None, qtl = [0.16,0.84], abs_tol = 1e-10):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
+
+    Refer to Ning et al. 2018 Sec 2.2, Eq 10
     '''
     if type(y) == list:
         y = np.array(y)
@@ -303,6 +318,8 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
     y_beta_indv = find_indv_pdf(x = y, deg = deg, deg_vec = deg_vec, x_max = y_max, x_min = y_min, x_std = y_std, abs_tol = abs_tol, Log = False)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
+
+    # Equation 10b Ning et al 2018
     denominator = np.sum(w_hat * y_beta_pdf)
 
     if denominator == 0:
