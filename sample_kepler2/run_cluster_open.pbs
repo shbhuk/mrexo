@@ -9,9 +9,9 @@
 
 #module purge             # If uncommented, clears out any modules loaded by default
 module load python/2.7.14-anaconda5.0.1          # If uncommented, would load the module git, etc.
-
-cd /storage/home/szk381/work/mrexo/sample_kepler         # change into same directory as job was submitted from
+source activate pyvenv
+cd /storage/home/szk381/work/mrexo/sample_kepler2         # change into same directory as job was submitted from
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working_open_parallel.py > kepler_run_CV.txt
+python sample_kepler.py > kepler_run_CV.txt
