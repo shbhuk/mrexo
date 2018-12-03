@@ -14,4 +14,4 @@ cd /storage/home/szk381/work/mrexo/sample_kepler         # change into same dire
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python working_open_parallel.py > kepler_run_CV.txt
+python sample_kepler> kepler_run_CV.txt
