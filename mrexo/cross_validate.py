@@ -12,8 +12,10 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
     sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , k) and use the remaining k-1 subsets of data
     to estimate the weights of the beta densities (w_s). Repeating this for each s-th subset Ds results in k estimated sets of weights (w_s).
-    We plug in each weight (w_s) along with the corresponding data, to obtain an estimated value for the log-likelihood. 
+    We plug in each weight (w_s) along with the corresponding data, to obtain an estimated value for the log-likelihood.
     This log likelihood is maximized to pick the optimum number of degrees.
+
+    Refer to Ning et al. 2018 Sec 2.2
 
     INPUTS:
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
@@ -27,7 +29,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
         k_fold: If using cross validation method, use k_fold (integer) number of folds. Default = None.
                 If None, uses:
                   - 10 folds for n > 60, where n is the length of the Mass and Radius arrays.
-                  - Uses 5 folds otherwise. 
+                  - Uses 5 folds otherwise.
         degree_candidates: Integer vector containing degrees to run cross validation check for. Default is None.
                     If None, defaults to 12 values between 5 and degree_max.
         cores: Number of cores for parallel processing. This is used in the

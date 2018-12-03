@@ -19,10 +19,18 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in 
+<<<<<<< HEAD
 result_dir = os.path.join(pwd,'Kepler_55_cluster')
+=======
+result_dir = os.path.join(pwd,'Kepler_55_open')
+>>>>>>> b6936f024c163b6604547b14ccdebfa7d88d7e2c
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                             Radius = Radius, Radius_sigma = Radius_sigma,
                                             save_path = result_dir, select_deg = 55, 
+<<<<<<< HEAD
                                             num_boot = 40, cores = cpu_count())
+=======
+                                            num_boot = 100, cores = 20)
+>>>>>>> b6936f024c163b6604547b14ccdebfa7d88d7e2c

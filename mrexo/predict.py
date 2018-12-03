@@ -151,17 +151,12 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
     EXAMPLE:
         #Below example predicts the radius for a mass of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
 
-        from mrexo import predict_m_given_r
+        from mrexo import predict_r_given_m
         import os
         import numpy as np
 
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = None, result_dir = result_dir, posterior_sample = False, islog = True)
-
-        #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = 0.1, result_dir = None, dataset = 'mdwarf', posterior_sample = False, islog = True)
 
     '''
 
