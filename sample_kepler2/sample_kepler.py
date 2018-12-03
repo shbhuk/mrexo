@@ -18,19 +18,18 @@ Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
+Mass_min = -1
+Mass_max = 3.80957
+Radius_min = -0.3
+Radius_max = 1.357509 
+
 # Directory to store results in 
-<<<<<<< HEAD
-result_dir = os.path.join(pwd,'Kepler_55_cluster')
-=======
-result_dir = os.path.join(pwd,'Kepler_55_open')
->>>>>>> b6936f024c163b6604547b14ccdebfa7d88d7e2c
+result_dir = os.path.join(pwd,'Kepler_55_open_corrected')
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                             Radius = Radius, Radius_sigma = Radius_sigma,
+                                            Mass_min = Mass_min, Mass_max = Mass_max,
+                                            Radius_min = Radius_min, Radius_max = Radius_max,
                                             save_path = result_dir, select_deg = 55, 
-<<<<<<< HEAD
-                                            num_boot = 40, cores = cpu_count())
-=======
-                                            num_boot = 100, cores = 20)
->>>>>>> b6936f024c163b6604547b14ccdebfa7d88d7e2c
+                                            num_boot = 50, cores = 20)
