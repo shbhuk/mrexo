@@ -1,0 +1,16 @@
+Started for 55 degrees at 2018-12-02 19:49:27.814563, using 24 core/s
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 2, 19, 49, 27, 854622))
+(3025, 127)
+('Finished Integration at ', datetime.datetime(2018, 12, 2, 19, 57, 31, 239760))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 987.519963288
+            Iterations: 69
+            Function evaluations: 209249
+            Gradient evaluations: 69
+Optimization run finished at 2018-12-02 23:35:04.607855, with 69 iterations. Exit Code = 0
+
+
+Running 40 bootstraps for the MLE code with degree = 55, using 24 thread/s.

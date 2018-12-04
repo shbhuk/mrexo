@@ -24,12 +24,12 @@ Radius_min = -0.3
 Radius_max = 1.357509 
 
 # Directory to store results in 
-result_dir = os.path.join(pwd,'Kepler_55_open_corrected')
+result_dir = os.path.join(pwd,'Kepler_CV_boot50')
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                             Radius = Radius, Radius_sigma = Radius_sigma,
                                             Mass_min = Mass_min, Mass_max = Mass_max,
                                             Radius_min = Radius_min, Radius_max = Radius_max,
-                                            save_path = result_dir, select_deg = 55, 
-                                            num_boot = 50, cores = 20)
+                                            save_path = result_dir, select_deg = 'cv', 
+                                            num_boot = 50, cores = cpu_count())
