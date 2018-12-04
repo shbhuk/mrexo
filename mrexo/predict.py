@@ -52,7 +52,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
     # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
-    kepler_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
+    kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
         if dataset == 'mdwarf':
