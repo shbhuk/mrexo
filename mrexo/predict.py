@@ -49,6 +49,8 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
         predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = 0.1, result_dir = None, dataset = 'mdwarf', posterior_sample = False, islog = True)
 
     '''
+    
+    dataset = dataset.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
