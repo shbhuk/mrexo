@@ -161,10 +161,12 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
 
     '''
+    
+    dataset = dataset.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
-    kepler_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
+    kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
         if dataset == 'mdwarf':
@@ -196,7 +198,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
     if posterior_sample == False:
         predicted_value = cond_density_quantile(y = logMass, y_std = Mass_sigma, y_max = Mass_max, y_min = Mass_min,
                                                       x_max = Radius_max, x_min = Radius_min, deg = degrees,
-                                                      w_hat = weights_mle, qtl = qtl)
+                                                      w_hat = np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl = qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
@@ -218,7 +220,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
             print(qtl_check)
             results = cond_density_quantile(y = logMass[i], y_std = Mass_sigma[i], y_max = Mass_max, y_min = Mass_min,
                                                       x_max = Radius_max, x_min = Radius_min, deg = degrees,
-                                                      w_hat = weights_mle, qtl = [qtl_check,0.5])
+                                                      w_hat = np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl = [qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]

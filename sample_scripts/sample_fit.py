@@ -21,10 +21,12 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_13')
+result_dir = os.path.join(pwd,'M_dwarfs_cv')
 
 if __name__ == '__main__':
-    initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
-                                            Radius = Radius, Radius_sigma = Radius_sigma,
-                                            save_path = result_dir, select_deg = 13,
-                                            num_boot = 10, cores = 2)
+    for i in range(3,10):
+        initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
+                                                Radius = Radius, Radius_sigma = Radius_sigma,
+                                                save_path = os.path.join(pwd,'M_dwarfs_cv{}'.format(i)), select_deg = 'cv',
+                                                num_boot = 50, cores = cpu_count()-2)
+

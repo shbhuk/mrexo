@@ -355,8 +355,6 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std = Non
 
     quantile = [conditional_quantile(i) for i in qtl]
 
-    #print(mean,var,quantile,denominator,y_beta_indv)
-
     return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
 
 """
