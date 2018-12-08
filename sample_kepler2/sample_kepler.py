@@ -14,8 +14,8 @@ t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2 * 0
 Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2 * 0
 
-Mass_sigma = None
-Radius_sigma = None
+Mass_sigma = np.repeat(None, len(Mass_sigma))
+Radius_sigma = np.repeat(None, len(Mass_sigma))
 
 
 # In Earth units
