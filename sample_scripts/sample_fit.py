@@ -10,7 +10,7 @@ pwd = os.path.dirname(__file__)
 
 #pwd = '~/mrexo_working/'
 
-t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
+t = Table.read(os.path.join(pwd,'Cool_stars_20181208_exc_upperlim.csv'))
 
 # Symmetrical errorbars
 Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -29,4 +29,3 @@ if __name__ == '__main__':
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
                                                 save_path = os.path.join(pwd,'M_dwarfs_cv{}'.format(i)), select_deg = 'cv',
                                                 num_boot = 50, cores = cpu_count()-2)
-
