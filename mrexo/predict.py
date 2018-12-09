@@ -1,5 +1,6 @@
 import numpy as np
 import os
+from scipy.stats.mstats import mquantiles
 
 from .mle_utils import cond_density_quantile
 from .plot import plot_r_given_m_relation, plot_m_given_r_relation
@@ -74,6 +75,16 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
+    R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, 'M_cond_R_upper.txt'))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, 'M_cond_R_lower.txt'))
+
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
+    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+
+    exception_radii = R_points[(M_cond_R_upper < upper_boot) | (M_cond_R_lower > lower_boot)]
+    print(exception_radii)
+
     degrees = int(np.sqrt(len(weights_mle)))
 
     print(degrees)
@@ -86,6 +97,10 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
+        if logRadius < np.log10(1.3):
+            Mass_iron = mass_100_percent_iron_planet(logRadius)
+            #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
+
         predicted_value = cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
                                                       w_hat = weights_mle, qtl = qtl)
@@ -108,6 +123,10 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
 
     elif posterior_sample == True:
+        print(np.min(logRadius))
+        if np.min(logRadius) < np.log10(1.3):
+            Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
+            #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
 
         n = np.size(Radius)
         mean_sample = np.zeros(n)
@@ -119,7 +138,6 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
         for i in range(0,n):
             qtl_check = np.random.random()
-            print(qtl_check)
             results = cond_density_quantile(y = logRadius[i], y_std = Radius_sigma[i], y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
                                                       w_hat = weights_mle, qtl = [qtl_check,0.5])
@@ -209,6 +227,17 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
+    M_points = np.loadtxt(os.path.join(output_location, 'M_points.txt'))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, 'R_cond_M_upper.txt'))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, 'R_cond_M_lower.txt'))
+
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
+    lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+
+    exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
+
+    print(exception_masses)
+
     degrees = int(np.sqrt(len(weights_mle)))
 
     print(degrees)
@@ -277,3 +306,18 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
         return outputs
     else:
         return [10**x for x in outputs]
+
+
+def mass_100_percent_iron_planet(logRadius):
+    '''
+    This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
+
+    INPUT:
+        logRadius : Radius of the planet in log10 units
+    OUTPUT:
+        logMass: Mass in log10 units for a 100% iron planet of given radius
+    '''
+
+    Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
+    print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
+    return Mass_iron

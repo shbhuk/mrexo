@@ -22,4 +22,4 @@ a=1
 #c = predict_r_given_m(Mass = b[0], Mass_sigma = None, posterior_sample = False, islog = True, dataset = 'kepler', showplot = True)
 #print(predict_m_given_r(Radius = 1., Radius_sigma = 0.1, posterior_sample = False, islog = True, dataset = 'Kepler'))
 
-b = predict_m_given_r(Radius = np.linspace(1.,1.2,10), Radius_sigma = np.repeat(0.1,10), posterior_sample = True, islog = True, dataset = 'kepler', showplot = True)
+b = predict_m_given_r(Radius = np.linspace(1.,1.2,10), Radius_sigma = np.repeat(0.1,10), posterior_sample = True, islog = False, dataset = 'mdwarf', showplot = True)
