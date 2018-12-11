@@ -22,7 +22,7 @@ def plot_m_given_r_relation(result_dir):
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'Results_deg_12')
 
-        plot_mr_relation(result_dir)
+        plot_m_given_r_relation(result_dir)
 
     '''
 
@@ -56,22 +56,22 @@ def plot_m_given_r_relation(result_dir):
     logMass_sigma = 0.434 * Mass_sigma/Mass
     logRadius_sigma = 0.434 * Radius_sigma/Radius
 
-    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
-    ax1.plot(R_points,M_cond_R,  color = 'darkblue', lw = 2) # Full dataset run
-    ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha = 0.3, color = 'r') # Full dataset run
-    ax1.fill_between(R_points,lower_boot,upper_boot,alpha = 0.3, color = 'b') # Bootstrap result
+    ax1.plot(R_points,M_cond_R,  color = 'maroon', lw = 2) # Full dataset run
+    ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha = 0.3, color = 'lightsalmon') # Full dataset run
+    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha = 0.3, color = 'r') # Bootstrap result
 
+    mr_mean_line = Line2D([0], [0], color='maroon', lw = 2,label = 'Mean of conditional distribution of M given R from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of M given R from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of M given R from bootstrap')
 
-
-    mean_line = Line2D([0], [0], color='darkblue', lw = 2,label = 'Mean of conditional distribution of M given R from full dataset run')
-    red_patch = mpatches.Patch(color='r', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of M given R from full dataset run  ')
-    blue_patch = mpatches.Patch(color='b', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of M given R from bootstrap')
-    handles = [mean_line, red_patch, blue_patch]
+    handles = [mr_mean_line, mr_full, mr_boot]
 
     plt.legend(handles = handles)
 
@@ -100,10 +100,9 @@ def plot_r_given_m_relation(result_dir):
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'Results_deg_12')
 
-        plot_mr_relation(result_dir)
+        plot_r_given_m_relation(result_dir)
 
     '''
-
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
@@ -135,31 +134,117 @@ def plot_r_given_m_relation(result_dir):
     logMass_sigma = 0.434 * Mass_sigma/Mass
     logRadius_sigma = 0.434 * Radius_sigma/Radius
 
-    lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
-
-    ax1.errorbar(y = logRadius, x = logMass, yerr = logRadius_sigma, xerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
-    ax1.plot(M_points,R_cond_M,  color = 'darkblue', lw = 2) # Full dataset run
-    ax1.fill_between(M_points,R_cond_M_lower,R_cond_M_upper,alpha = 0.3, color = 'r') # Full dataset run
-    ax1.fill_between(M_points,lower_boot,upper_boot,alpha = 0.3, color = 'b') # Bootstrap result
-
+    ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
+    ax1.plot(R_cond_M, M_points,  color = 'midnightblue', lw = 2) # Full dataset run
+    ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha = 0.3, color = 'cornflowerblue') # Full dataset run
+    ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha = 0.3, color = 'b') # Bootstrap result
 
 
-    mean_line = Line2D([0], [0], color='darkblue', lw = 2,label = 'Mean of conditional distribution of R given M from full dataset run')
-    red_patch = mpatches.Patch(color='r', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of R given M from full dataset run  ')
-    blue_patch = mpatches.Patch(color='b', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of R given M from bootstrap')
-    handles = [mean_line, red_patch, blue_patch]
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw = 2,label = 'Mean of conditional distribution of R given M from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of R given M from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of R given M from bootstrap')
+    handles = [rm_mean_line, rm_full, rm_boot]
 
     plt.legend(handles = handles)
-
-
-    ax1.set_ylabel('log Radius (Earth Radii)')
-    ax1.set_xlabel('log Mass (Earth Mass)')
+    ax1.set_xlabel('log Radius (Earth Radii)')
+    ax1.set_ylabel('log Mass (Earth Mass)')
     ax1.set_title('Conditional relationship of radius given mass with degree {}'.format(deg_choose))
 
     plt.show()
+
+    return ax1, handles
+
+def plot_mr_and_rm(result_dir):
+    '''
+    Use to plot the conditional relationship of radius given mass, as well as and mass given radius (log scale) .
+    INPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = '~/mrexo_working/trial_result'
+
+    EXAMPLE:
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = '~/mrexo_working/'
+        result_dir = os.path.join(pwd,'Results_deg_12')
+
+        plot_mr_and_rm(result_dir)
+
+    '''
+
+    input_location = os.path.join(result_dir, 'input')
+    output_location = os.path.join(result_dir, 'output')
+
+    t = Table.read(os.path.join(input_location, 'MR_inputs.csv'))
+    Mass = t['pl_masse']
+    Mass_sigma = t['pl_masseerr1']
+    Radius = t['pl_rade']
+    Radius_sigma = t['pl_radeerr1']
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+
+    R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
+    M_points = np.loadtxt(os.path.join(output_location, 'M_points.txt'))
+
+    M_cond_R = np.loadtxt(os.path.join(output_location, 'M_cond_R.txt'))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, 'M_cond_R_upper.txt'))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, 'M_cond_R_lower.txt'))
+    R_cond_M = np.loadtxt(os.path.join(output_location, 'R_cond_M.txt'))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, 'R_cond_M_upper.txt'))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, 'R_cond_M_lower.txt'))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, 'weights_boot.txt'))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+    logMass = np.log10(Mass)
+    logRadius = np.log10(Radius)
+    logMass_sigma = 0.434 * Mass_sigma/Mass
+    logRadius_sigma = 0.434 * Radius_sigma/Radius
+
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(x = logRadius, y = logMass, xerr = logRadius_sigma, yerr = logMass_sigma,fmt = 'k.',markersize = 2, elinewidth = 0.3)
+
+    ax1.plot(R_points,M_cond_R,  color = 'maroon', lw = 2) # Full dataset run
+    ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha = 0.3, color = 'lightsalmon') # Full dataset run
+    ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha = 0.3, color = 'r') # Bootstrap result
+
+    ax1.plot(R_cond_M, M_points,  color = 'midnightblue', lw = 2) # Full dataset run
+    ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha = 0.3, color = 'cornflowerblue') # Full dataset run
+    ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha = 0.3, color = 'b') # Bootstrap result
+
+    mr_mean_line = Line2D([0], [0], color='maroon', lw = 2,label = 'Mean of conditional distribution of M given R from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of M given R from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of M given R from bootstrap')
+
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw = 2,label = 'Mean of conditional distribution of R given M from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha = 0.3,  label=r'16%-84% quantile of conditional distribution of R given M from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha = 0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of R given M from bootstrap')
+
+    handles = [mr_mean_line, mr_full, mr_boot, rm_mean_line, rm_full, rm_boot]
+
+    plt.legend(handles = handles)
+
+    ax1.set_xlabel('log Radius (Earth Radii)')
+    ax1.set_ylabel('log Mass (Earth Mass)')
+    ax1.set_title('Conditional relationships of mass and radius {}'.format(deg_choose))
+    plt.show()
+
+
 
     return ax1, handles

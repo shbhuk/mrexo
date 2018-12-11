@@ -6,6 +6,7 @@ from .mle_utils import cond_density_quantile
 from .plot import plot_r_given_m_relation, plot_m_given_r_relation
 
 pwd = os.path.dirname(__file__)
+np.warnings.filterwarnings('ignore')
 
 def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset = 'mdwarf',
                       posterior_sample = False, qtl = [0.16,0.84], islog = False, showplot = False):
@@ -83,7 +84,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
     exception_radii = R_points[(M_cond_R_upper < upper_boot) | (M_cond_R_lower > lower_boot)]
-    print(exception_radii)
+    #print(exception_radii)
 
     degrees = int(np.sqrt(len(weights_mle)))
 
@@ -98,8 +99,10 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
         if logRadius < np.log10(1.3):
-            Mass_iron = mass_100_percent_iron_planet(logRadius)
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
+            Mass_iron = mass_100_percent_iron_planet(logRadius)
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
+
 
         predicted_value = cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
                                                       x_max = Mass_max, x_min = Mass_min, deg = degrees,
@@ -118,15 +121,20 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             ax.errorbar(x = logRadius, y = predicted_mean, xerr = Radius_sigma,
                         yerr = [[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
                         fmt = 'r.',markersize = 3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
+            handles.append(Line2D([0], [0], color='k',  label = '100% Iron planet'))
             plt.legend(handles = handles)
+            plt.ylim(Mass_min, Mass_max)
 
 
     elif posterior_sample == True:
-        print(np.min(logRadius))
+
         if np.min(logRadius) < np.log10(1.3):
-            Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
+            Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), 10**Mass_iron))
+
 
         n = np.size(Radius)
         mean_sample = np.zeros(n)
@@ -145,17 +153,23 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
 
-        outputs = [random_quantile]
+        outputs = random_quantile
 
 
         if showplot == True:
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
+            r_q =  mquantiles(logRadius, prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+            m_q = mquantiles(outputs ,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+
             ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-            ax.errorbar(x = logRadius, y = random_quantile, xerr = Radius_sigma, fmt = 'r.',markersize = 3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            ax.errorbar(x = r_q[1], y = m_q[1], xerr = r_q[1] - r_q[0],  yerr = m_q[1] - m_q[0], fmt = 'r.',markersize = 3)
+            ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
+            handles.append(Line2D([0], [0], color='k',  label = '100% Iron planet'))
             plt.legend(handles = handles)
+            plt.ylim(Mass_min, Mass_max)
 
     if islog:
         return outputs
@@ -236,8 +250,6 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
     exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
 
-    print(exception_masses)
-
     degrees = int(np.sqrt(len(weights_mle)))
 
     print(degrees)
@@ -297,10 +309,14 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
+            r_q =  mquantiles(logMass, prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+            m_q = mquantiles(outputs ,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+
             ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-            ax.errorbar(x = logMass, y = random_quantile, xerr = Mass_sigma, fmt = 'r.',markersize = 3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            ax.errorbar(y = r_q[1], x = m_q[1], yerr = r_q[1] - r_q[0],  xerr = m_q[1] - m_q[0], fmt = 'r.',markersize = 3)
+            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
             plt.legend(handles = handles)
+            plt.ylim(Radius_min, Radius_max)
 
     if islog:
         return outputs
@@ -319,5 +335,4 @@ def mass_100_percent_iron_planet(logRadius):
     '''
 
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
-    print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
     return Mass_iron
