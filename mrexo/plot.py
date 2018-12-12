@@ -81,6 +81,8 @@ def plot_m_given_r_relation(result_dir):
     ax1.set_title('Conditional relationship of mass given radius with degree {}'.format(deg_choose))
 
     plt.show()
+    plt.ylim(Mass_min, Mass_max)
+    plt.xlim(Radius_min, Radius_max)
 
     return ax1, handles
 
@@ -139,10 +141,10 @@ def plot_r_given_m_relation(result_dir):
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
-    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
-    ax1.plot(R_cond_M, M_points,  color='midnightblue', lw=2) # Full dataset run
-    ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
-    ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
+    ax1.errorbar(y=logRadius, x=logMass, yerr=logRadius_sigma, xerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
+    ax1.plot(M_points, R_cond_M,  color='midnightblue', lw=2) # Full dataset run
+    ax1.fill_between(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
+    ax1.fill_between(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
 
     rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of conditional distribution of R given M from full dataset run')
@@ -151,11 +153,13 @@ def plot_r_given_m_relation(result_dir):
     handles = [rm_mean_line, rm_full, rm_boot]
 
     plt.legend(handles=handles)
-    ax1.set_xlabel('log Radius (Earth Radii)')
-    ax1.set_ylabel('log Mass (Earth Mass)')
+    ax1.set_ylabel('log Radius (Earth Radii)')
+    ax1.set_xlabel('log Mass (Earth Mass)')
     ax1.set_title('Conditional relationship of radius given mass with degree {}'.format(deg_choose))
 
     plt.show()
+    plt.xlim(Mass_min, Mass_max)
+    plt.ylim(Radius_min, Radius_max)
 
     return ax1, handles
 
@@ -244,6 +248,8 @@ def plot_mr_and_rm(result_dir):
     ax1.set_ylabel('log Mass (Earth Mass)')
     ax1.set_title('Degrees {}. No. of data points = {}'.format(deg_choose, len(logRadius)))
     plt.show()
+    plt.ylim(Mass_min, Mass_max)
+    plt.xlim(Radius_min, Radius_max)
 
 
 

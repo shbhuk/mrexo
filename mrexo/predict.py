@@ -118,14 +118,15 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             from matplotlib.lines import Line2D
 
             ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+            plt.hlines(predicted_mean, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(logRadius, Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(x=logRadius, y=predicted_mean, xerr=Radius_sigma,
                         yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt='r.',markersize=3)
+                        fmt='o', color = 'green')
             ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
             plt.legend(handles=handles)
-            plt.ylim(Mass_min, Mass_max)
 
 
     elif posterior_sample == True:
@@ -164,12 +165,14 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
             ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-            ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='r.',markersize=3)
+            plt.hlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(r_q[1], Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
+            ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='o', color = 'green')
             ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
             plt.legend(handles=handles)
-            plt.ylim(Mass_min, Mass_max)
+
 
     if islog:
         return outputs
@@ -279,9 +282,12 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             ax, handles = plot_r_given_m_relation(result_dir=result_dir)
             ax.errorbar(x=logMass, y=predicted_mean, xerr=Mass_sigma,
                         yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt='r.',markersize=3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+                        fmt='o', color = 'green')
+            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
+            plt.hlines(predicted_mean, Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(logMass, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.legend(handles=handles)
+
 
 
     elif posterior_sample == True:
@@ -298,25 +304,32 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
                                                       x_max=Radius_max, x_min=Radius_min, deg=degrees,
-                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5])
+                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5], abs_tol = 1e-6)
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
 
-        outputs = [mean_sample,random_quantile]
+        outputs = random_quantile
 
         if showplot == True:
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            r_q =  mquantiles(logMass, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
-            m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            m_q =  mquantiles(logMass, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            r_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+
+            print(r_q)
+            print(m_q)
 
             ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-            ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0], fmt='r.',markersize=3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0],
+                        fmt='o', color = 'green')
+            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
+            plt.hlines(r_q[1], Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.legend(handles=handles)
-            plt.ylim(Radius_min, Radius_max)
+
+
 
     if islog:
         return outputs
