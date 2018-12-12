@@ -8,8 +8,8 @@ from .plot import plot_r_given_m_relation, plot_m_given_r_relation
 pwd = os.path.dirname(__file__)
 np.warnings.filterwarnings('ignore')
 
-def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset = 'mdwarf',
-                      posterior_sample = False, qtl = [0.16,0.84], islog = False, showplot = False):
+def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwarf',
+                      posterior_sample=False, qtl=[0.16,0.84], islog=False, showplot=False):
     '''
     Predict mass from given radius.
     Given radius can be a single measurement, with or without error, or can also be a posterior distribution of radii.
@@ -22,17 +22,17 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
-                and then dataset = 'mdwarf', or dataset = 'kepler'
+                and then dataset='mdwarf', or dataset='kepler'
 
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
-        posterior_sample: If the input radii is a posterior sample, posterior_sample = True, else False.
-                Default = False
-        qtl = 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl = [0.16,0.84]
-        islog = Whether the radius given is in log scale or not.
+        posterior_sample: If the input radii is a posterior sample, posterior_sample=True, else False.
+                Default=False
+        qtl: 2 element array or list with the quantile values that will be returned.
+                Default is 0.16 and 0.84. qtl=[0.16,0.84]
+        islog: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
-        showplot = Boolean. Default = False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
+        showplo: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
     OUTPUT:
         outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
@@ -47,10 +47,10 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
 
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = None, result_dir = result_dir, posterior_sample = False, islog = True)
+        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=None, result_dir=result_dir, posterior_sample=False, islog=True)
 
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius = 1, Radius_sigma = 0.1, result_dir = None, dataset = 'mdwarf', posterior_sample = False, islog = True)
+        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=0.1, result_dir=None, dataset='mdwarf', posterior_sample=False, islog=True)
 
     '''
 
@@ -81,7 +81,7 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
     M_cond_R_lower = np.loadtxt(os.path.join(output_location, 'M_cond_R_lower.txt'))
 
     M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
-    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     exception_radii = R_points[(M_cond_R_upper < upper_boot) | (M_cond_R_lower > lower_boot)]
     #print(exception_radii)
@@ -104,9 +104,9 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
 
 
-        predicted_value = cond_density_quantile(y = logRadius, y_std = Radius_sigma, y_max = Radius_max, y_min = Radius_min,
-                                                      x_max = Mass_max, x_min = Mass_min, deg = degrees,
-                                                      w_hat = weights_mle, qtl = qtl)
+        predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degrees,
+                                                      w_hat=weights_mle, qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
@@ -117,14 +117,14 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-            ax.errorbar(x = logRadius, y = predicted_mean, xerr = Radius_sigma,
-                        yerr = [[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt = 'r.',markersize = 3)
+            ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+            ax.errorbar(x=logRadius, y=predicted_mean, xerr=Radius_sigma,
+                        yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
+                        fmt='r.',markersize=3)
             ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
-            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
-            handles.append(Line2D([0], [0], color='k',  label = '100% Iron planet'))
-            plt.legend(handles = handles)
+            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
+            plt.legend(handles=handles)
             plt.ylim(Mass_min, Mass_max)
 
 
@@ -146,9 +146,9 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
         for i in range(0,n):
             qtl_check = np.random.random()
-            results = cond_density_quantile(y = logRadius[i], y_std = Radius_sigma[i], y_max = Radius_max, y_min = Radius_min,
-                                                      x_max = Mass_max, x_min = Mass_min, deg = degrees,
-                                                      w_hat = weights_mle, qtl = [qtl_check,0.5])
+            results = cond_density_quantile(y=logRadius[i], y_std=Radius_sigma[i], y_max=Radius_max, y_min=Radius_min,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degrees,
+                                                      w_hat=weights_mle, qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
@@ -160,15 +160,15 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            r_q =  mquantiles(logRadius, prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
-            m_q = mquantiles(outputs ,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+            r_q =  mquantiles(logRadius, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
-            ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-            ax.errorbar(x = r_q[1], y = m_q[1], xerr = r_q[1] - r_q[0],  yerr = m_q[1] - m_q[0], fmt = 'r.',markersize = 3)
+            ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+            ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='r.',markersize=3)
             ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
-            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
-            handles.append(Line2D([0], [0], color='k',  label = '100% Iron planet'))
-            plt.legend(handles = handles)
+            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
+            plt.legend(handles=handles)
             plt.ylim(Mass_min, Mass_max)
 
     if islog:
@@ -178,8 +178,8 @@ def predict_m_given_r(Radius,  Radius_sigma = None, result_dir = None, dataset =
 
 
 
-def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'mdwarf',
-                      posterior_sample = False, qtl = [0.16,0.84], islog = False, showplot = False):
+def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
+                      posterior_sample=False, qtl=[0.16,0.84], islog=False, showplot=False):
     '''
     Predict radius from given mass.
     Given mass can be a single measurement, with or without error, or can also be a posterior distribution of mass.
@@ -192,17 +192,17 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
-                and then dataset = 'mdwarf', or dataset = 'kepler'
+                and then dataset='mdwarf', or dataset='kepler'
 
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
-        posterior_sample: If the input mass is a posterior sample, posterior_sample = True, else False.
-                Default = False
-        qtl = 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl = [0.16,0.84]
-        islog = Whether the radius given is in log scale or not.
+        posterior_sample: If the input mass is a posterior sample, posterior_sample=True, else False.
+                Default=False
+        qtl: 2 element array or list with the quantile values that will be returned.
+                Default is 0.16 and 0.84. qtl=[0.16,0.84]
+        islog: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
-        showplot = Boolean. Default = False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
+        showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
     OUTPUT:
         outputs: Tuple with the predicted radius (or distribution of radii if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
@@ -246,7 +246,7 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
     R_cond_M_lower = np.loadtxt(os.path.join(output_location, 'R_cond_M_lower.txt'))
 
     R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
-    lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob = [0.16, 0.84],axis = 0,alphap=1,betap=1).data
+    lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
 
@@ -262,9 +262,9 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
-        predicted_value = cond_density_quantile(y = logMass, y_std = Mass_sigma, y_max = Mass_max, y_min = Mass_min,
-                                                      x_max = Radius_max, x_min = Radius_min, deg = degrees,
-                                                      w_hat = np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl = qtl)
+        predicted_value = cond_density_quantile(y=logMass, y_std=Mass_sigma, y_max=Mass_max, y_min=Mass_min,
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degrees,
+                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
@@ -276,12 +276,12 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-            ax.errorbar(x = logMass, y = predicted_mean, xerr = Mass_sigma,
-                        yerr = [[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt = 'r.',markersize = 3)
+            ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            ax.errorbar(x=logMass, y=predicted_mean, xerr=Mass_sigma,
+                        yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
+                        fmt='r.',markersize=3)
             handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
-            plt.legend(handles = handles)
+            plt.legend(handles=handles)
 
 
     elif posterior_sample == True:
@@ -296,9 +296,9 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
 
         for i in range(0,n):
             qtl_check = np.random.random()
-            results = cond_density_quantile(y = logMass[i], y_std = Mass_sigma[i], y_max = Mass_max, y_min = Mass_min,
-                                                      x_max = Radius_max, x_min = Radius_min, deg = degrees,
-                                                      w_hat = np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl = [qtl_check,0.5])
+            results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degrees,
+                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
@@ -309,13 +309,13 @@ def predict_r_given_m(Mass,  Mass_sigma = None, result_dir = None, dataset = 'md
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            r_q =  mquantiles(logMass, prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
-            m_q = mquantiles(outputs ,prob = [0.16, 0.5, 0.84],axis = 0,alphap=1,betap=1).data
+            r_q =  mquantiles(logMass, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
-            ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-            ax.errorbar(y = r_q[1], x = m_q[1], yerr = r_q[1] - r_q[0],  xerr = m_q[1] - m_q[0], fmt = 'r.',markersize = 3)
-            handles.append(Line2D([0], [0], color='r', marker='o',  label = 'Predicted value'))
-            plt.legend(handles = handles)
+            ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0], fmt='r.',markersize=3)
+            handles.append(Line2D([0], [0], color='r', marker='o',  label='Predicted value'))
+            plt.legend(handles=handles)
             plt.ylim(Radius_min, Radius_max)
 
     if islog:

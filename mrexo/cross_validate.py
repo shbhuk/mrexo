@@ -5,8 +5,8 @@ from multiprocessing import Pool
 from .mle_utils import MLE_fit, calc_C_matrix
 
 def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
-                        degree_max = 60, k_fold = 10, degree_candidates = None,
-                        cores = 1, save_path = os.path.dirname(__file__), abs_tol = 1e-10):
+                        degree_max=60, k_fold=10, degree_candidates=None,
+                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-10):
     '''
     We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
     To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
@@ -25,19 +25,19 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
         Mass_bounds: Bounds for the mass. Log10
         Radius_bounds: Bounds for the radius. Log10
         degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
-                    Default = None. If None, uses: n/np.log10(n), where n is the number of data points.
-        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default = None.
+                    Default=None. If None, uses: n/np.log10(n), where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default=None.
                 If None, uses:
                   - 10 folds for n > 60, where n is the length of the Mass and Radius arrays.
                   - Uses 5 folds otherwise.
         degree_candidates: Integer vector containing degrees to run cross validation check for. Default is None.
                     If None, defaults to 12 values between 5 and degree_max.
         cores: Number of cores for parallel processing. This is used in the
-                bootstrap and the cross validation. Default = 1.
-                To use all the cores in the CPU, cores = cpu_count() (from multiprocessing import cpu_count)
+                bootstrap and the cross validation. Default=1.
+                To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-10
-        cores: this program uses parallel computing for bootstrap. Default = 1
+        cores: this program uses parallel computing for bootstrap. Default=1
         save_path: Location of folder within results for auxiliary output files
 
     OUTPUTS:
@@ -65,7 +65,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
     # Find the log-likelihood for each degree candidatea
     likelihood_matrix = np.split(np.array(cv_result) , k_fold)
-    likelihood_per_degree = np.sum(likelihood_matrix, axis = 0)
+    likelihood_per_degree = np.sum(likelihood_matrix, axis=0)
 
     # Save likelihood file
     np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'),np.array([degree_candidates,likelihood_per_degree]))
@@ -123,8 +123,8 @@ def cv_parallelize(cv_input):
        f.write('Running cross validation for {} degree check and {} th-fold'.format(test_degree, i_fold))
 
     # Calculate the optimum weights using MLE for a given input test_degree
-    weights = MLE_fit(Mass = train_Mass, Radius = train_Radius, Mass_sigma = train_Mass_sigma, Radius_sigma = train_Radius_sigma, Mass_bounds = Mass_bounds,
-            Radius_bounds = Radius_bounds, deg = test_degree, abs_tol = abs_tol, save_path = save_path, output_weights_only = True)
+    weights = MLE_fit(Mass=train_Mass, Radius=train_Radius, Mass_sigma=train_Mass_sigma, Radius_sigma=train_Radius_sigma, Mass_bounds=Mass_bounds,
+            Radius_bounds=Radius_bounds, deg=test_degree, abs_tol=abs_tol, save_path=save_path, output_weights_only=True)
 
     size_test = np.size(test_Radius)
 
@@ -135,7 +135,7 @@ def cv_parallelize(cv_input):
     Radius_min = Radius_bounds[0]
 
     # Integrate the product of the normal and beta distribution for mass and radius and then take the Kronecker product
-    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log = True)
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log=True)
 
     # Calculate the final loglikelihood
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
