@@ -10,7 +10,7 @@ import datetime,os
 ########################################
 
 def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
-            deg, Log=True, abs_tol=1e-10, output_weights_only=False, save_path=None):
+            deg, Log=True, abs_tol=1e-8, output_weights_only=False, save_path=None):
     '''
     Perform maximum likelihood estimation to find the weights for the beta density basis functions.
     Also, use those weights to calculate the conditional density distributions.
@@ -27,7 +27,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         Log: If True, data is transformed into Log scale. Default=True, since the
             fitting function always converts data to log scale.
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                Default : 1e-10
+                Default : 1e-8
         output_weights_only: If True, only output the estimated weights, else will also output dictionary with keys shown below.
         save_path: Location of folder within results for auxiliary output files.
 
@@ -172,7 +172,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
         Radius_max, Radius_min : Maximum and minimum value for radius. Log10
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                Default : 1e-10
+                Default : 1e-8
         save_path: Location of folder within results for auxiliary output files
         Log: If True, data is transformed into Log scale. Default=True, since
             fitting function always converts data to log scale.
@@ -223,13 +223,13 @@ def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log=True):
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
     if Log == True:
-        norm_beta=norm.pdf(x_obs, loc=10**x, scale=x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = norm.pdf(x_obs, loc=10**x, scale=x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     else:
         norm_beta = norm.pdf(x_obs, loc=x, scale=x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
 
     return norm_beta
 
-def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_tol=1e-10):
+def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
     '''
     Integrate the product of the normal and beta distribution.
 
@@ -241,11 +241,13 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_
     shape2 = deg - degree + 1
     Log = Log
 
-    return quad(pdfnorm_beta, a=x_min, b=x_max,
-                 args=(x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs=abs_tol)[0]
+    integration_product = quad(pdfnorm_beta, a=x_min, b=x_max,
+                          args=(x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+                         
+    return integration_product[0]
 
 
-def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-10, Log=True):
+def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
     '''
     Find the individual probability density Function for a variable.
     When the data has uncertainty, the joint distribution is modelled using a
@@ -253,6 +255,7 @@ def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-10, Log=True)
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 7 & 8.
     '''
+
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
         x_beta_indv = np.array([beta.pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
@@ -280,7 +283,7 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
     return marg_x
 
 """
-def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol=1e-10):
+def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol=1e-8):
     '''
     Calculate the conditional density
     '''
@@ -306,7 +309,7 @@ def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol=1e
     return density
 """
 
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-10):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
@@ -315,7 +318,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None,
     if type(y) == list:
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)
-
+    
     y_beta_indv = find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
 
@@ -351,7 +354,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None,
     def conditional_quantile(q):
         def g(x):
             return pbeta_conditional_density(x) - q
-        return root(g,a=x_min, b=x_max)
+        return root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
 
     quantile = [conditional_quantile(i) for i in qtl]
 

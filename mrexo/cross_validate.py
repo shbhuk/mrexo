@@ -6,7 +6,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 
 def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
                         degree_max=60, k_fold=10, degree_candidates=None,
-                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-10):
+                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8):
     '''
     We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
     To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
@@ -36,7 +36,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
                 bootstrap and the cross validation. Default=1.
                 To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                Default : 1e-10
+                Default : 1e-8
         cores: this program uses parallel computing for bootstrap. Default=1
         save_path: Location of folder within results for auxiliary output files
 
@@ -92,7 +92,7 @@ def cv_parallelize(cv_input):
             Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
             Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
             abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                    Default : 1e-10
+                    Default : 1e-8
             save_path: Location of folder within results for auxiliary output files
             Mass_bounds: Bounds for the mass. Log10
             Radius_bounds: Bounds for the radius. Log10

@@ -14,7 +14,7 @@ from .utils import save_dictionary
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
                     select_deg=55, degree_max=None, k_fold=None, num_boot=100,
-                    cores=1, abs_tol=1e-10):
+                    cores=1, abs_tol=1e-8):
     '''
     Fit a mass and radius relationship using a non parametric approach with beta densities
 
@@ -46,7 +46,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                 bootstrap and the cross validation. Default=1.
                 To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                Default : 1e-10
+                Default : 1e-8
 
     OUTPUTS:
         initialfit_result : Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
@@ -278,7 +278,7 @@ def bootsample_mle(inputs):
                     Radius_bounds: Bounds for the radius.
                     deg: Degree chosen for the beta densities.
                     abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                             Default : 1e-10
+                             Default : 1e-8
                     save_path: Folder name (+path) to save results in. Eg. save_path='~/mrexo_working/trial_result'
     OUTPUTS:
         MR_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -

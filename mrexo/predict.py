@@ -304,7 +304,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
                                                       x_max=Radius_max, x_min=Radius_min, deg=degrees,
-                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5], abs_tol = 1e-6)
+                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
