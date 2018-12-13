@@ -10,7 +10,8 @@ import datetime,os
 ########################################
 
 def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
-            deg, Log=True, abs_tol=1e-8, output_weights_only=False, save_path=None):
+            deg, Log=True, abs_tol=1e-8, output_weights_only=False,
+            save_path=None, calc_joint_dist = False):
     '''
     Perform maximum likelihood estimation to find the weights for the beta density basis functions.
     Also, use those weights to calculate the conditional density distributions.
@@ -30,6 +31,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                 Default : 1e-8
         output_weights_only: If True, only output the estimated weights, else will also output dictionary with keys shown below.
         save_path: Location of folder within results for auxiliary output files.
+        calc_joint_dist: If True, will calculate and output the joint distribution of mass and radius.
 
     OUTPUT:
         If output_weights_only == True,
@@ -49,8 +51,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                 'R_cond_M' : Conditional distribution of radius given mass.
                 'R_cond_M_var' : Variance for the Conditional distribution of radius given mass.
                 'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass.
-                'Radius_marg' : Marginalized radius distribution.
-                'Mass_marg' : Marginalized mass distribution.
+
+
+                if calc_joint_dist == True:
+                'joint_dist' : Joint distribution of mass AND radius.
     EXAMPLE:
             result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                             Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location)
@@ -118,19 +122,14 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         aic = n_log_lik*2 + 2*(deg**2 - 1)
         bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
 
-        # Marginal Densities
         M_seq = np.linspace(Mass_min,Mass_max,100)
         R_seq = np.linspace(Radius_min,Radius_max,100)
-        Mass_marg = np.array([marginal_density(x = m, x_max=Mass_max, x_min=Mass_min, deg=deg, w_hat=w_hat) for m in M_seq])
-        Radius_marg = np.array([marginal_density(x=r, x_max=Radius_max, x_min=Radius_min, deg=deg, w_hat=w_hat) for r in R_seq])
 
         output = {'weights': w_hat,
                   'aic': aic,
                   'bic': bic,
                   'M_points': M_seq,
-                  'R_points': R_seq,
-                  'Mass_marg': Mass_marg,
-                  'Radius_marg': Radius_marg}
+                  'R_points': R_seq}
 
         # Conditional Densities with 16% and 84% quantile
         M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
@@ -152,6 +151,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         output['R_cond_M'] = R_cond_M_mean
         output['R_cond_M_var'] = R_cond_M_var
         output['R_cond_M_quantile'] = R_cond_M_quantile
+
+        if calc_joint_dist == True:
+            joint_dist = calculate_joint_distribution(R_seq, Radius_min, Radius_max, M_seq, Mass_min, Mass_max, w_hat, abs_tol)
+            output['joint_dist'] = joint_dist
 
         return output
 
@@ -243,7 +246,7 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_
 
     integration_product = quad(pdfnorm_beta, a=x_min, b=x_max,
                           args=(x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
-                         
+
     return integration_product[0]
 
 
@@ -282,33 +285,6 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
 
     return marg_x
 
-"""
-def conditional_density(y, y_max, y_min, x, x_max, x_min, deg, w_hat, abs_tol=1e-8):
-    '''
-    Calculate the conditional density
-    '''
-    if type(x) == list:
-        x=np.array(x)
-    if type(y) == list:
-        y = np.array(y)
-
-    deg_vec = np.arange(1,deg+1)
-
-    # Return Conditional Mean, Variance, Quantile, Distribution
-    y_beta_indv = find_indv_pdf(y,deg,deg_vec,y_max,y_min, abs_tol=abs_tol)
-    y_beta_pdf = np.kron(y_beta_indv, np.repeat(1,deg))
-
-    denominator = np.sum(w_hat * y_beta_pdf)
-
-    ########### Density ##########
-    density_indv_pdf = find_indv_pdf(x,deg,deg_vec,x_max,x_min, abs_tol=abs_tol)
-    density_pdf = w_hat * np.kron(density_indv_pdf,y_beta_indv)
-
-    density = density_pdf / denominator
-
-    return density
-"""
-
 def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
@@ -318,7 +294,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None,
     if type(y) == list:
         y = np.array(y)
     deg_vec = np.arange(1,deg+1)
-    
+
     y_beta_indv = find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
     y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
 
@@ -360,37 +336,23 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None,
 
     return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
 
-"""
-def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, denominator_sample, y_beta_indv_sample,qtl=[0.16,0.84]):
+def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mass_min, Mass_max, weights, abs_tol):
     '''
-    Calculate the 16% and 84% quantiles using root function.
-    Mixture of the CDF of k conditional densities
+    Calculcate the joint distribution of mass and radius : f(m,r|w,d,d')
+    Refer to Ning et al. 2018 Sec 2.1, Eq 7
     '''
 
+    deg = int(np.sqrt(len(weights)))
     deg_vec = np.arange(1,deg+1)
 
-    def pbeta_conditional_density(j):
+    joint = np.zeros((len(R_points), len(M_points)))
 
-        x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a=d, b=deg - d + 1) for d in deg_vec])
-        quantile_numerator = np.zeros(len(denominator_sample))
-        p_beta = np.zeros(len(denominator_sample))
+    for i in range(len(R_points)):
+        for j in range(len(M_points)):
+                    r_beta_indv = find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=None, abs_tol=abs_tol, Log=False)
+                    m_beta_indv = find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=None, abs_tol=abs_tol, Log=False)
 
-        for i in range(0,len(denominator_sample)):
-            quantile_numerator[i] = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv_sample[i]))
-            p_beta[i] = quantile_numerator[i] / denominator_sample[i]
+                    intermediate = np.matmul(np.reshape(weights,(deg,deg)),np.matrix(r_beta_indv).T)
+                    joint[i,j] = np.matmul(np.matrix(m_beta_indv), intermediate)
 
-        return np.mean(p_beta)
-
-    def conditional_quantile(q):
-        def g(x):
-            return pbeta_conditional_density(x) - q
-        return root(g,a=x_min, b=x_max)
-
-    quantile = [conditional_quantile(i) for i in qtl]
-
-    return quantile
-
-"""
-
-def calculate_joint_distribution():
-    return 1
+    return joint.T

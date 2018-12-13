@@ -62,8 +62,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             'R_cond_M' : Conditional distribution of radius given mass from initial fitting w/o bootstrap.
                             'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
                             'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
-                            'Radius_marg' : Marginalized radius distribution from initial fitting w/o bootstrap.
-                            'Mass_marg' : Marginalized mass distribution from initial fitting w/o bootstrap.
+                            'joint_dist' : Joint distribution of mass AND radius.
+
+
         if num_boot > 2:
         bootstrap_results : Output dictionary from bootstrap run using Maximum Likelihood Estimation.
                             'weights' : Weights for Beta densities from bootstrap run.
@@ -77,8 +78,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
                             'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
                             'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
-                            'Radius_marg' : Marginalized radius distribution from bootstrap run.
-                            'Mass_marg' : Marginalized mass distribution from bootstrap run.
+
 
         EXAMPLE:
             # Example to fit a Mass Radius relationship with 2 CPU cores, using 12 degrees, and 50 bootstraps.
@@ -220,7 +220,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     print('Running full dataset MLE before bootstrap')
     initialfit_result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location)
+                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location,
+                            calc_joint_dist = True)
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
