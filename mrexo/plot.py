@@ -81,8 +81,8 @@ def plot_m_given_r_relation(result_dir):
     ax1.set_title('Conditional relationship of mass given radius with degree {}'.format(deg_choose))
 
     plt.show()
-    plt.ylim(Mass_min, Mass_max)
-    plt.xlim(Radius_min, Radius_max)
+    #plt.ylim(Mass_min + 0.3, Mass_max - 0.3)
+    plt.xlim(Radius_min + 0.5, Radius_max - 0.5)
 
     return ax1, handles
 
@@ -158,8 +158,8 @@ def plot_r_given_m_relation(result_dir):
     ax1.set_title('Conditional relationship of radius given mass with degree {}'.format(deg_choose))
 
     plt.show()
-    plt.xlim(Mass_min, Mass_max)
-    plt.ylim(Radius_min, Radius_max)
+    plt.ylim(Mass_min, Mass_max - 0.5)
+    plt.xlim(Radius_min + 0.5, Radius_max - 0.5)
 
     return ax1, handles
 
@@ -248,8 +248,8 @@ def plot_mr_and_rm(result_dir):
     ax1.set_ylabel('log Mass (Earth Mass)')
     ax1.set_title('Degrees {}. No. of data points = {}'.format(deg_choose, len(logRadius)))
     plt.show()
-    plt.ylim(Mass_min, Mass_max)
-    plt.xlim(Radius_min, Radius_max)
+    plt.ylim(Mass_min, Mass_max - 0.5)
+    plt.xlim(Radius_min + 0.5, Radius_max - 0.5)
 
     return ax1, handles
 
@@ -306,5 +306,4 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
 
     plt.show()
 
-
-    print(Radius_min, Radius_max, Mass_min, Mass_max)
+    return ax1
