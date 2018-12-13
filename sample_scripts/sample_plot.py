@@ -15,6 +15,8 @@ result_dir = "C:/Users/shbhu/Box Sync/M_dwarves/straight_line_simulation/simulat
 
 result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
 
+result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg{}".format(14)
+
 for i in range(10,21):
     i = 14
     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
