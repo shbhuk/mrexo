@@ -111,3 +111,177 @@ Started Integration at 2018-12-12 23:33:07.888239
 ======================================
 Started run at 2018-12-12 23:33:20.712768
 Started Integration at 2018-12-12 23:33:20.723738
+Started for 17 degrees at 2018-12-12 23:41:07.379000, using 22 core/s
+======================================
+Started run at 2018-12-12 23:41:07.401000
+Started Integration at 2018-12-12 23:41:07.408000
+Finished Integration at 2018-12-12 23:41:42.810000
+Finished Optimization at 2018-12-12 23:41:47.495000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-12 23:42:35.082000
+Running 20 bootstraps for the MLE code with degree = 17, using 22 thread/s.
+======================================
+Started run at 2018-12-12 23:42:37.203000
+
+======================================
+Started run at 2018-12-12 23:42:37.206000
+Started Integration at 2018-12-12 23:42:37.217000
+Started Integration at 2018-12-12 23:42:37.217000
+
+======================================
+Started run at 2018-12-12 23:42:37.222000
+Started Integration at 2018-12-12 23:42:37.236000
+
+======================================
+Started run at 2018-12-12 23:42:37.247000
+Started Integration at 2018-12-12 23:42:37.259000
+
+======================================
+Started run at 2018-12-12 23:42:37.277000
+Started Integration at 2018-12-12 23:42:37.286000
+
+======================================
+Started run at 2018-12-12 23:42:37.352000
+
+======================================
+Started run at 2018-12-12 23:42:37.362000
+Started Integration at 2018-12-12 23:42:37.365000
+
+======================================
+Started run at 2018-12-12 23:42:37.366000
+Started Integration at 2018-12-12 23:42:37.373000
+Started Integration at 2018-12-12 23:42:37.374000
+
+======================================
+Started run at 2018-12-12 23:42:37.393000
+Started Integration at 2018-12-12 23:42:37.404000
+
+======================================
+Started run at 2018-12-12 23:42:37.433000
+Started Integration at 2018-12-12 23:42:37.444000
+
+======================================
+Started run at 2018-12-12 23:42:37.571000
+Started Integration at 2018-12-12 23:42:37.582000
+
+======================================
+Started run at 2018-12-12 23:42:37.662000
+Started Integration at 2018-12-12 23:42:37.674000
+
+======================================
+Started run at 2018-12-12 23:42:37.764000
+Started Integration at 2018-12-12 23:42:37.776000
+
+======================================
+Started run at 2018-12-12 23:42:37.776000
+
+======================================
+Started run at 2018-12-12 23:42:37.786000
+Started Integration at 2018-12-12 23:42:37.788000
+Started Integration at 2018-12-12 23:42:37.798000
+
+======================================
+Started run at 2018-12-12 23:42:37.799000
+Started Integration at 2018-12-12 23:42:37.813000
+
+======================================
+Started run at 2018-12-12 23:42:37.839000
+
+======================================
+Started run at 2018-12-12 23:42:37.840000
+Started Integration at 2018-12-12 23:42:37.853000
+Started Integration at 2018-12-12 23:42:37.854000
+
+======================================
+Started run at 2018-12-12 23:42:37.905000
+
+======================================
+Started run at 2018-12-12 23:42:37.918000
+Started Integration at 2018-12-12 23:42:37.919000
+Started Integration at 2018-12-12 23:42:37.931000
+Finished Integration at 2018-12-12 23:43:37.014000
+Finished Integration at 2018-12-12 23:43:39.065000
+Finished Integration at 2018-12-12 23:43:39.260000
+Finished Integration at 2018-12-12 23:43:40.351000
+Finished Optimization at 2018-12-12 23:43:41.312000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:41.622000
+Finished Optimization at 2018-12-12 23:43:41.762000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:42.394000
+Finished Integration at 2018-12-12 23:43:42.468000
+Finished Optimization at 2018-12-12 23:43:42.480000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:42.522000
+Finished Optimization at 2018-12-12 23:43:42.762000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:42.991000
+Finished Integration at 2018-12-12 23:43:43.069000
+Finished Optimization at 2018-12-12 23:43:43.279000
+Optimization terminated after 5 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:43.336000
+Finished Integration at 2018-12-12 23:43:43.372000
+Finished Integration at 2018-12-12 23:43:43.752000
+Finished Optimization at 2018-12-12 23:43:44.055000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:44.197000
+Finished Integration at 2018-12-12 23:43:44.221000
+Finished Integration at 2018-12-12 23:43:44.952000
+Finished Integration at 2018-12-12 23:43:45.188000
+Finished Optimization at 2018-12-12 23:43:45.292000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:45.426000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:45.505000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:45.516000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:45.576000
+Finished Optimization at 2018-12-12 23:43:45.726000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:45.857000
+Finished Optimization at 2018-12-12 23:43:46.391000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:47.637000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-12 23:43:47.750000
+Finished Optimization at 2018-12-12 23:43:47.943000
+Optimization terminated after 30 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:48.906000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:48.932000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:49.001000
+Optimization terminated after 25 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:49.240000
+Optimization terminated after 36 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:49.804000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-12 23:43:49.939000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Ended run at 2018-12-12 23:44:00.941000
+Started for 17 degrees at 2018-12-13 08:57:38.241000, using 22 core/s
+======================================
+Started run at 2018-12-13 08:57:38.265000
+Started Integration at 2018-12-13 08:57:38.272000

@@ -1,0 +1,950 @@
+Started for cv degrees at 2018-12-13 09:02:14.038000, using 22 core/sRunning cross validation for 5 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.035000
+Started Integration at 2018-12-13 09:02:16.043000
+Running cross validation for 6 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.057000
+Started Integration at 2018-12-13 09:02:16.066000
+Running cross validation for 7 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.082000
+Running cross validation for 8 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.088000
+Started Integration at 2018-12-13 09:02:16.091000
+Started Integration at 2018-12-13 09:02:16.099000
+Running cross validation for 9 degree check and 0 th-foldRunning cross validation for 10 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.213000
+
+======================================
+Started run at 2018-12-13 09:02:16.214000
+Started Integration at 2018-12-13 09:02:16.217000
+Running cross validation for 11 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.221000
+Started Integration at 2018-12-13 09:02:16.224000
+Started Integration at 2018-12-13 09:02:16.230000
+Running cross validation for 12 degree check and 0 th-foldRunning cross validation for 13 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.237000
+
+======================================
+Started run at 2018-12-13 09:02:16.237000
+Started Integration at 2018-12-13 09:02:16.247000
+Started Integration at 2018-12-13 09:02:16.248000
+Running cross validation for 14 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.331000
+Started Integration at 2018-12-13 09:02:16.341000
+Running cross validation for 15 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.381000
+Started Integration at 2018-12-13 09:02:16.389000
+Running cross validation for 17 degree check and 0 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.429000
+Started Integration at 2018-12-13 09:02:16.437000
+Running cross validation for 5 degree check and 1 th-foldRunning cross validation for 6 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.492000
+
+======================================
+Started run at 2018-12-13 09:02:16.493000
+Started Integration at 2018-12-13 09:02:16.502000
+Started Integration at 2018-12-13 09:02:16.503000
+Running cross validation for 7 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.567000
+Started Integration at 2018-12-13 09:02:16.575000
+Running cross validation for 8 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.613000
+Started Integration at 2018-12-13 09:02:16.623000
+Running cross validation for 9 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.665000
+Started Integration at 2018-12-13 09:02:16.674000
+Running cross validation for 10 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.703000
+Started Integration at 2018-12-13 09:02:16.711000
+Running cross validation for 11 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.744000
+Started Integration at 2018-12-13 09:02:16.752000
+Running cross validation for 12 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.770000
+Started Integration at 2018-12-13 09:02:16.778000
+Running cross validation for 13 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.785000
+Started Integration at 2018-12-13 09:02:16.793000
+Running cross validation for 14 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:16.881000
+Started Integration at 2018-12-13 09:02:16.889000
+Finished Integration at 2018-12-13 09:02:38.046000
+Finished Optimization at 2018-12-13 09:02:38.073000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:38.083000
+Finished Integration at 2018-12-13 09:02:39.009000
+Finished Optimization at 2018-12-13 09:02:39.035000
+Optimization terminated after 6 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:39.045000
+Finished Integration at 2018-12-13 09:02:41.408000
+Finished Optimization at 2018-12-13 09:02:41.443000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:41.452000
+Running cross validation for 15 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:43.024000
+Started Integration at 2018-12-13 09:02:43.034000
+Running cross validation for 17 degree check and 1 th-fold
+======================================
+Started run at 2018-12-13 09:02:43.335000
+Started Integration at 2018-12-13 09:02:43.343000
+Finished Integration at 2018-12-13 09:02:43.651000
+Finished Optimization at 2018-12-13 09:02:43.670000
+Optimization terminated after 4 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:43.679000
+Finished Integration at 2018-12-13 09:02:46.552000
+Finished Optimization at 2018-12-13 09:02:46.593000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:46.603000
+Running cross validation for 5 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:47.345000
+Started Integration at 2018-12-13 09:02:47.352000
+Finished Integration at 2018-12-13 09:02:47.638000
+Finished Optimization at 2018-12-13 09:02:47.684000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:47.694000
+Running cross validation for 6 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:48.509000
+Started Integration at 2018-12-13 09:02:48.518000
+Finished Integration at 2018-12-13 09:02:50.230000
+Finished Optimization at 2018-12-13 09:02:50.320000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:50.343000
+Finished Integration at 2018-12-13 09:02:52.263000
+Finished Optimization at 2018-12-13 09:02:52.326000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:52.337000
+Running cross validation for 7 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:53.446000
+Started Integration at 2018-12-13 09:02:53.454000
+Running cross validation for 8 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:53.643000
+Started Integration at 2018-12-13 09:02:53.654000
+Finished Integration at 2018-12-13 09:02:54.345000
+Finished Optimization at 2018-12-13 09:02:54.449000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:54.460000
+Finished Integration at 2018-12-13 09:02:56.105000
+Finished Optimization at 2018-12-13 09:02:56.185000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:56.197000
+Finished Integration at 2018-12-13 09:02:58.226000
+Finished Optimization at 2018-12-13 09:02:58.393000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:02:58.403000
+Running cross validation for 9 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:58.496000
+Started Integration at 2018-12-13 09:02:58.507000
+Running cross validation for 10 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:02:58.759000
+Started Integration at 2018-12-13 09:02:58.770000
+Finished Integration at 2018-12-13 09:03:00.056000
+Finished Optimization at 2018-12-13 09:03:00.239000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:00.266000
+Finished Integration at 2018-12-13 09:03:02.680000
+Finished Optimization at 2018-12-13 09:03:03.016000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:03.029000
+Running cross validation for 11 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:03.299000
+Started Integration at 2018-12-13 09:03:03.310000
+Running cross validation for 12 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:03.404000
+Started Integration at 2018-12-13 09:03:03.415000
+Finished Integration at 2018-12-13 09:03:04.647000
+Finished Optimization at 2018-12-13 09:03:04.887000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:04.899000
+Finished Integration at 2018-12-13 09:03:05.552000
+Finished Optimization at 2018-12-13 09:03:06.045000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:06.057000
+Running cross validation for 13 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:08.108000
+Started Integration at 2018-12-13 09:03:08.118000
+Running cross validation for 14 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:08.267000
+Started Integration at 2018-12-13 09:03:08.294000
+Finished Integration at 2018-12-13 09:03:08.457000
+Finished Integration at 2018-12-13 09:03:09.413000
+Finished Optimization at 2018-12-13 09:03:09.558000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:09.570000
+Finished Optimization at 2018-12-13 09:03:09.713000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:09.720000
+Finished Integration at 2018-12-13 09:03:09.842000
+Finished Optimization at 2018-12-13 09:03:09.869000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:09.880000
+Finished Integration at 2018-12-13 09:03:11.477000
+Finished Optimization at 2018-12-13 09:03:12.252000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:12.281000
+Finished Integration at 2018-12-13 09:03:12.646000
+Running cross validation for 15 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:13.531000
+Started Integration at 2018-12-13 09:03:13.543000
+Finished Optimization at 2018-12-13 09:03:14.060000
+Optimization terminated after 21 iterations. Exit Code = 0Optimization terminated successfully.
+
+Running cross validation for 17 degree check and 2 th-fold
+======================================
+Started run at 2018-12-13 09:03:14.073000
+Started Integration at 2018-12-13 09:03:14.089000
+Started Integration at 2018-12-13 09:03:14.094000
+Running cross validation for 5 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:14.175000
+Started Integration at 2018-12-13 09:03:14.186000
+Finished Integration at 2018-12-13 09:03:15.141000
+Finished Optimization at 2018-12-13 09:03:15.187000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:15.199000
+Finished Integration at 2018-12-13 09:03:16.663000
+Finished Integration at 2018-12-13 09:03:17.305000
+Running cross validation for 6 degree check and 3 th-foldFinished Optimization at 2018-12-13 09:03:17.836000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:03:17.844000
+Started Integration at 2018-12-13 09:03:17.848000
+Started Integration at 2018-12-13 09:03:17.858000
+Finished Optimization at 2018-12-13 09:03:18.220000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:18.239000
+Running cross validation for 7 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:18.966000
+Started Integration at 2018-12-13 09:03:18.977000
+Running cross validation for 8 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:20.332000
+Started Integration at 2018-12-13 09:03:20.376000
+Running cross validation for 9 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:22.571000
+Started Integration at 2018-12-13 09:03:22.595000
+Running cross validation for 10 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:22.678000
+Started Integration at 2018-12-13 09:03:22.689000
+Finished Integration at 2018-12-13 09:03:24.436000
+Finished Integration at 2018-12-13 09:03:25.049000
+Finished Optimization at 2018-12-13 09:03:25.094000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:25.106000
+Finished Optimization at 2018-12-13 09:03:27.547000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:27.559000
+Running cross validation for 11 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:27.756000
+Started Integration at 2018-12-13 09:03:27.766000
+Running cross validation for 12 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:29.016000
+Started Integration at 2018-12-13 09:03:29.046000
+Finished Integration at 2018-12-13 09:03:29.761000
+Finished Optimization at 2018-12-13 09:03:29.834000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:29.845000
+Running cross validation for 13 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:30.813000
+Started Integration at 2018-12-13 09:03:30.824000
+Running cross validation for 14 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:32.580000
+Started Integration at 2018-12-13 09:03:32.599000
+Running cross validation for 15 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:36.630000
+Started Integration at 2018-12-13 09:03:36.640000
+Finished Integration at 2018-12-13 09:03:36.947000
+Finished Optimization at 2018-12-13 09:03:36.975000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:36.985000
+Finished Integration at 2018-12-13 09:03:38.980000
+Finished Optimization at 2018-12-13 09:03:39.089000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:39.101000
+Running cross validation for 17 degree check and 3 th-fold
+======================================
+Started run at 2018-12-13 09:03:41.592000
+Started Integration at 2018-12-13 09:03:41.605000
+Finished Integration at 2018-12-13 09:03:44.006000
+Running cross validation for 5 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:03:44.203000
+Started Integration at 2018-12-13 09:03:44.221000
+Finished Optimization at 2018-12-13 09:03:44.247000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:44.325000
+Finished Integration at 2018-12-13 09:03:44.887000
+Finished Optimization at 2018-12-13 09:03:44.942000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:44.975000
+Running cross validation for 6 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:03:46.682000
+Started Integration at 2018-12-13 09:03:46.693000
+Finished Integration at 2018-12-13 09:03:47.969000
+Finished Optimization at 2018-12-13 09:03:49.670000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:49.680000
+Running cross validation for 7 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:03:50.441000
+Started Integration at 2018-12-13 09:03:50.452000
+Finished Integration at 2018-12-13 09:03:50.659000
+Finished Optimization at 2018-12-13 09:03:50.708000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:50.718000
+Finished Integration at 2018-12-13 09:03:52.352000
+Running cross validation for 8 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:03:52.535000
+Started Integration at 2018-12-13 09:03:52.546000
+Finished Optimization at 2018-12-13 09:03:52.694000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:52.705000
+Finished Integration at 2018-12-13 09:03:55.998000
+Finished Optimization at 2018-12-13 09:03:56.062000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:03:56.069000
+Finished Integration at 2018-12-13 09:03:56.470000
+Finished Integration at 2018-12-13 09:03:56.880000
+Running cross validation for 9 degree check and 4 th-foldFinished Optimization at 2018-12-13 09:03:56.918000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:03:56.918000
+Started Integration at 2018-12-13 09:03:56.921000
+Started Integration at 2018-12-13 09:03:56.929000
+Running cross validation for 10 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:00.661000
+Started Integration at 2018-12-13 09:04:00.672000
+Finished Optimization at 2018-12-13 09:04:01.395000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:01.405000
+Running cross validation for 11 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:01.621000
+Started Integration at 2018-12-13 09:04:01.635000
+Finished Integration at 2018-12-13 09:04:02.428000
+Finished Integration at 2018-12-13 09:04:02.432000
+Finished Optimization at 2018-12-13 09:04:02.460000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:02.476000
+Finished Optimization at 2018-12-13 09:04:02.541000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:02.558000
+Running cross validation for 12 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:03.034000
+Started Integration at 2018-12-13 09:04:03.048000
+Finished Integration at 2018-12-13 09:04:04.786000
+Finished Optimization at 2018-12-13 09:04:05.930000
+Optimization terminated after 25 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:05.946000
+Running cross validation for 13 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:06.307000
+Started Integration at 2018-12-13 09:04:06.321000
+Finished Integration at 2018-12-13 09:04:06.537000
+Finished Optimization at 2018-12-13 09:04:06.711000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:06.734000
+Finished Integration at 2018-12-13 09:04:08.382000
+Finished Optimization at 2018-12-13 09:04:08.423000
+Optimization terminated after 8 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:08.435000
+Finished Integration at 2018-12-13 09:04:09.754000
+Running cross validation for 14 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:10.502000
+Started Integration at 2018-12-13 09:04:10.516000
+Finished Optimization at 2018-12-13 09:04:11.011000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:11.024000
+Running cross validation for 15 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:11.257000
+Started Integration at 2018-12-13 09:04:11.277000
+Running cross validation for 17 degree check and 4 th-fold
+======================================
+Started run at 2018-12-13 09:04:14.175000
+Started Integration at 2018-12-13 09:04:14.189000
+Finished Integration at 2018-12-13 09:04:14.504000
+Finished Integration at 2018-12-13 09:04:14.754000
+Finished Optimization at 2018-12-13 09:04:14.803000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:04:14.812000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:14.817000
+Started Integration at 2018-12-13 09:04:14.818000
+Finished Integration at 2018-12-13 09:04:17.503000
+Finished Optimization at 2018-12-13 09:04:18.563000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:18.578000
+Finished Integration at 2018-12-13 09:04:19.582000
+Finished Integration at 2018-12-13 09:04:19.984000
+Finished Optimization at 2018-12-13 09:04:20.053000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:20.064000
+Finished Optimization at 2018-12-13 09:04:20.071000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:20.079000
+Finished Integration at 2018-12-13 09:04:23.734000
+Finished Optimization at 2018-12-13 09:04:24.694000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:24.709000
+Finished Integration at 2018-12-13 09:04:25.419000
+Finished Integration at 2018-12-13 09:04:26.329000
+Finished Optimization at 2018-12-13 09:04:26.449000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:26.464000
+Finished Integration at 2018-12-13 09:04:26.982000
+Finished Optimization at 2018-12-13 09:04:27.684000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:27.694000
+Finished Optimization at 2018-12-13 09:04:28.042000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:28.052000
+Finished Integration at 2018-12-13 09:04:29.994000
+Finished Optimization at 2018-12-13 09:04:30.229000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:30.245000
+Finished Integration at 2018-12-13 09:04:32.461000
+Finished Integration at 2018-12-13 09:04:32.492000
+Finished Optimization at 2018-12-13 09:04:32.758000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:32.768000
+Finished Optimization at 2018-12-13 09:04:34.355000
+Optimization terminated after 28 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:34.366000
+Finished Integration at 2018-12-13 09:04:35.556000
+Finished Optimization at 2018-12-13 09:04:35.910000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:35.920000
+Finished Integration at 2018-12-13 09:04:37.751000
+Finished Optimization at 2018-12-13 09:04:38.537000
+Optimization terminated after 26 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:38.547000
+Finished Integration at 2018-12-13 09:04:38.931000
+Finished Optimization at 2018-12-13 09:04:40.694000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:40.704000
+Finished Integration at 2018-12-13 09:04:43.270000
+Finished Optimization at 2018-12-13 09:04:44.518000
+Optimization terminated after 29 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:44.527000
+Finished Integration at 2018-12-13 09:04:45.682000
+Finished Optimization at 2018-12-13 09:04:46.544000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:46.553000
+Finished Integration at 2018-12-13 09:04:48.857000
+Finished Optimization at 2018-12-13 09:04:50.549000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2018-12-13 09:04:50.560000
+Finished CV. Picked set([17]) degrees by maximizing likelihood
+======================================
+Started run at 2018-12-13 09:05:04.722000
+Started Integration at 2018-12-13 09:05:04.732000
+Finished Integration at 2018-12-13 09:05:45.313000
+Finished Optimization at 2018-12-13 09:05:51.602000
+Optimization terminated after 50 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2018-12-13 09:06:38.724000
+Running 50 bootstraps for the MLE code with degree = 17, using 22 thread/s.
+======================================
+Started run at 2018-12-13 09:06:40.887000
+Started Integration at 2018-12-13 09:06:40.917000
+
+======================================
+Started run at 2018-12-13 09:06:40.931000
+Started Integration at 2018-12-13 09:06:40.936000
+
+======================================
+Started run at 2018-12-13 09:06:40.945000
+
+======================================
+Started run at 2018-12-13 09:06:40.949000
+Started Integration at 2018-12-13 09:06:40.957000
+Started Integration at 2018-12-13 09:06:40.957000
+
+======================================
+Started run at 2018-12-13 09:06:40.965000
+Started Integration at 2018-12-13 09:06:40.978000
+
+======================================
+Started run at 2018-12-13 09:06:40.983000
+
+======================================
+Started run at 2018-12-13 09:06:40.990000
+
+======================================
+Started run at 2018-12-13 09:06:40.991000
+
+======================================
+Started run at 2018-12-13 09:06:40.997000
+Started Integration at 2018-12-13 09:06:41.004000
+Started Integration at 2018-12-13 09:06:41.005000
+Started Integration at 2018-12-13 09:06:41.006000
+Started Integration at 2018-12-13 09:06:41.009000
+
+======================================
+Started run at 2018-12-13 09:06:41.044000
+Started Integration at 2018-12-13 09:06:41.064000
+
+======================================
+Started run at 2018-12-13 09:06:41.069000
+Started Integration at 2018-12-13 09:06:41.080000
+
+======================================
+Started run at 2018-12-13 09:06:41.086000
+Started Integration at 2018-12-13 09:06:41.102000
+
+======================================
+Started run at 2018-12-13 09:06:41.160000
+Started Integration at 2018-12-13 09:06:41.179000
+
+======================================
+Started run at 2018-12-13 09:06:41.189000
+
+======================================
+Started run at 2018-12-13 09:06:41.197000
+Started Integration at 2018-12-13 09:06:41.198000
+Started Integration at 2018-12-13 09:06:41.227000
+
+======================================
+Started run at 2018-12-13 09:06:41.247000
+Started Integration at 2018-12-13 09:06:41.262000
+
+======================================
+Started run at 2018-12-13 09:06:41.282000
+Started Integration at 2018-12-13 09:06:41.289000
+
+======================================
+Started run at 2018-12-13 09:06:41.312000
+
+======================================
+Started run at 2018-12-13 09:06:41.314000
+
+======================================
+Started run at 2018-12-13 09:06:41.322000
+
+======================================
+Started run at 2018-12-13 09:06:41.329000
+Started Integration at 2018-12-13 09:06:41.330000
+Started Integration at 2018-12-13 09:06:41.331000
+Started Integration at 2018-12-13 09:06:41.331000
+
+======================================
+Started run at 2018-12-13 09:06:41.332000
+Started Integration at 2018-12-13 09:06:41.344000
+Started Integration at 2018-12-13 09:06:41.345000
+Finished Integration at 2018-12-13 09:08:00.309000
+Finished Integration at 2018-12-13 09:08:00.672000
+Finished Integration at 2018-12-13 09:08:01.154000
+Finished Integration at 2018-12-13 09:08:01.370000
+Finished Integration at 2018-12-13 09:08:01.683000
+Finished Optimization at 2018-12-13 09:08:02.268000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:02.409000
+Finished Integration at 2018-12-13 09:08:02.544000
+Finished Integration at 2018-12-13 09:08:02.649000
+Finished Optimization at 2018-12-13 09:08:02.757000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:03.222000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:03.565000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:03.579000
+Finished Optimization at 2018-12-13 09:08:03.758000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:03.972000
+Finished Optimization at 2018-12-13 09:08:04.277000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:04.355000
+Finished Integration at 2018-12-13 09:08:04.714000
+Finished Integration at 2018-12-13 09:08:04.959000
+Finished Integration at 2018-12-13 09:08:05.303000
+Finished Integration at 2018-12-13 09:08:05.533000
+Finished Integration at 2018-12-13 09:08:05.627000
+Finished Optimization at 2018-12-13 09:08:05.770000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:05.838000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:05.997000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:06.027000
+Finished Integration at 2018-12-13 09:08:06.062000
+Finished Integration at 2018-12-13 09:08:06.365000
+Finished Optimization at 2018-12-13 09:08:07.372000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:07.869000
+Finished Optimization at 2018-12-13 09:08:08.062000
+Optimization terminated after 28 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:08.096000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:08.140000
+Finished Optimization at 2018-12-13 09:08:08.276000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:08.731000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:08.855000
+Optimization terminated after 31 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:09.103000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:09.235000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:08:09.292000
+Finished Optimization at 2018-12-13 09:08:10.680000
+Optimization terminated after 27 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:10.839000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:11.411000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:11.499000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:08:13.313000
+Optimization terminated after 21 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:08:17.550000
+Started Integration at 2018-12-13 09:08:17.569000
+
+======================================
+Started run at 2018-12-13 09:08:17.647000
+Started Integration at 2018-12-13 09:08:17.663000
+
+======================================
+Started run at 2018-12-13 09:08:17.915000
+Started Integration at 2018-12-13 09:08:17.935000
+
+======================================
+Started run at 2018-12-13 09:08:18.226000
+Started Integration at 2018-12-13 09:08:18.243000
+
+======================================
+Started run at 2018-12-13 09:08:18.848000
+Started Integration at 2018-12-13 09:08:18.866000
+
+======================================
+Started run at 2018-12-13 09:08:19.708000
+Started Integration at 2018-12-13 09:08:19.725000
+
+======================================
+Started run at 2018-12-13 09:08:20.767000
+Started Integration at 2018-12-13 09:08:20.780000
+
+======================================
+Started run at 2018-12-13 09:08:20.902000
+
+======================================
+Started run at 2018-12-13 09:08:20.905000
+Started Integration at 2018-12-13 09:08:20.921000
+Started Integration at 2018-12-13 09:08:20.921000
+
+======================================
+Started run at 2018-12-13 09:08:22.797000
+Started Integration at 2018-12-13 09:08:22.816000
+
+======================================
+Started run at 2018-12-13 09:08:22.882000
+Started Integration at 2018-12-13 09:08:22.900000
+
+======================================
+Started run at 2018-12-13 09:08:23.079000
+Started Integration at 2018-12-13 09:08:23.098000
+
+======================================
+Started run at 2018-12-13 09:08:23.157000
+Started Integration at 2018-12-13 09:08:23.175000
+
+======================================
+Started run at 2018-12-13 09:08:23.297000
+Started Integration at 2018-12-13 09:08:23.315000
+
+======================================
+Started run at 2018-12-13 09:08:23.512000
+Started Integration at 2018-12-13 09:08:23.531000
+
+======================================
+Started run at 2018-12-13 09:08:23.909000
+Started Integration at 2018-12-13 09:08:23.923000
+
+======================================
+Started run at 2018-12-13 09:08:25.194000
+Started Integration at 2018-12-13 09:08:25.213000
+
+======================================
+Started run at 2018-12-13 09:08:25.786000
+Started Integration at 2018-12-13 09:08:25.805000
+
+======================================
+Started run at 2018-12-13 09:08:25.963000
+
+======================================
+Started run at 2018-12-13 09:08:25.979000
+Started Integration at 2018-12-13 09:08:25.983000
+Started Integration at 2018-12-13 09:08:25.984000
+
+======================================
+Started run at 2018-12-13 09:08:27.379000
+Started Integration at 2018-12-13 09:08:27.396000
+
+======================================
+Started run at 2018-12-13 09:08:28.846000
+Started Integration at 2018-12-13 09:08:28.865000
+Finished Integration at 2018-12-13 09:09:37.416000
+Finished Integration at 2018-12-13 09:09:37.603000
+Finished Integration at 2018-12-13 09:09:38.070000
+Finished Optimization at 2018-12-13 09:09:39.670000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:39.762000
+Finished Optimization at 2018-12-13 09:09:39.901000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:40.779000
+Finished Integration at 2018-12-13 09:09:42.244000
+Finished Optimization at 2018-12-13 09:09:42.537000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:42.648000
+Finished Integration at 2018-12-13 09:09:42.998000
+Finished Optimization at 2018-12-13 09:09:43.412000
+Optimization terminated after 28 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:43.469000
+Finished Integration at 2018-12-13 09:09:43.981000
+Finished Integration at 2018-12-13 09:09:44.382000
+Finished Optimization at 2018-12-13 09:09:44.390000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:44.419000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:44.485000
+Finished Optimization at 2018-12-13 09:09:45.037000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:46.498000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:47.387000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:47.571000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:47.646000
+Finished Integration at 2018-12-13 09:09:48.160000
+Finished Integration at 2018-12-13 09:09:48.238000
+Finished Optimization at 2018-12-13 09:09:48.839000
+Optimization terminated after 23 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:48.911000
+Finished Integration at 2018-12-13 09:09:49.103000
+Finished Optimization at 2018-12-13 09:09:49.474000
+Optimization terminated after 7 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:49.476000
+Finished Integration at 2018-12-13 09:09:49.534000
+Finished Optimization at 2018-12-13 09:09:50.417000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:50.838000
+Finished Optimization at 2018-12-13 09:09:51.244000
+Optimization terminated after 35 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:51.448000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:51.622000
+Finished Optimization at 2018-12-13 09:09:51.838000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:52.360000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:09:52.808000
+Finished Optimization at 2018-12-13 09:09:53.179000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:53.444000
+Optimization terminated after 10 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:09:53.798000
+Started Integration at 2018-12-13 09:09:53.815000
+Finished Optimization at 2018-12-13 09:09:53.923000
+Optimization terminated after 28 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:09:54.335000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:09:54.492000
+Started Integration at 2018-12-13 09:09:54.511000
+Finished Optimization at 2018-12-13 09:09:55.398000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2018-12-13 09:09:57.588000
+Started Integration at 2018-12-13 09:09:57.606000
+
+======================================
+Started run at 2018-12-13 09:09:58.261000
+Started Integration at 2018-12-13 09:09:58.278000
+
+======================================
+Started run at 2018-12-13 09:09:58.718000
+Started Integration at 2018-12-13 09:09:58.732000
+
+======================================
+Started run at 2018-12-13 09:09:58.871000
+Started Integration at 2018-12-13 09:09:58.888000
+Finished Integration at 2018-12-13 09:10:38.034000
+Finished Integration at 2018-12-13 09:10:39.367000
+Finished Optimization at 2018-12-13 09:10:40.481000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:10:40.670000
+Optimization terminated after 9 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:10:41.214000
+Finished Integration at 2018-12-13 09:10:42.794000
+Finished Optimization at 2018-12-13 09:10:43.794000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:10:44.225000
+Optimization terminated after 12 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2018-12-13 09:10:44.833000
+Finished Integration at 2018-12-13 09:10:46.545000
+Finished Optimization at 2018-12-13 09:10:48.910000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2018-12-13 09:10:50.273000
+Optimization terminated after 38 iterations. Exit Code = 0Optimization terminated successfully.
+
+Ended run at 2018-12-13 09:10:57.862000
