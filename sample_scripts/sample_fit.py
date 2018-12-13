@@ -24,12 +24,8 @@ Radius = np.array(t['pl_rade'])
 result_dir = os.path.join(pwd,'M_dwarfs_cv')
 
 if __name__ == '__main__':
-
-
     for i in range(0,10):
-        initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, Mass_sigma=Mass_sigma,
-                                                Radius=Radius, Radius_sigma=Radius_sigma,
-                                                save_path=os.path.join(pwd,'M_dwarfs_cv{}'.format(i)), select_deg='cv',
-                                                num_boot=50, cores=cpu_count()-2)
-        break
-
+        initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
+                                                Radius = Radius, Radius_sigma = Radius_sigma,
+                                                save_path = os.path.join(pwd,'M_dwarfs_cv{}'.format(i)), select_deg = 'cv',
+                                                num_boot = 50, cores = cpu_count()-2)

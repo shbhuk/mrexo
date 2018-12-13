@@ -141,13 +141,13 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print('Length of Radius and Radius sigma vectors must be the same')
 
     if Mass_min is None:
-        Mass_min = np.log10(min(min(Mass - Mass_sigma), 0.01))
+        Mass_min = np.log10(min(min(Mass - Mass_sigma), 0.01)) - 0.5
     if Mass_max is None:
-        Mass_max = np.log10(max(Mass + Mass_sigma))
+        Mass_max = np.log10(max(Mass + Mass_sigma)) + 0.5
     if Radius_min is None:
-        Radius_min = max(np.log10(min(Radius - Radius_sigma)), -0.3)
+        Radius_min = min(np.log10(min(Radius - Radius_sigma)), -0.3) - 0.5
     if Radius_max is None:
-        Radius_max = np.log10(max(Radius + Radius_sigma))
+        Radius_max = np.log10(max(Radius + Radius_sigma)) + 0.5
 
     if degree_max == None:
         degree_max = int(n/np.log10(n))
