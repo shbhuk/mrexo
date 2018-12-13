@@ -86,9 +86,9 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     exception_radii = R_points[(M_cond_R_upper < upper_boot) | (M_cond_R_lower > lower_boot)]
     #print(exception_radii)
 
-    degrees = int(np.sqrt(len(weights_mle)))
+    degree = int(np.sqrt(len(weights_mle)))
 
-    print(degrees)
+    print(degree)
 
     # Convert the radius measurement to log scale.
     if islog == False:
@@ -105,7 +105,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
 
 
         predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degrees,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degree,
                                                       w_hat=weights_mle, qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
@@ -148,7 +148,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         for i in range(0,n):
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logRadius[i], y_std=Radius_sigma[i], y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degrees,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degree,
                                                       w_hat=weights_mle, qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
@@ -253,9 +253,9 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
 
     exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
 
-    degrees = int(np.sqrt(len(weights_mle)))
+    degree = int(np.sqrt(len(weights_mle)))
 
-    print(degrees)
+    print(degree)
 
     # Convert the mass measurement to log scale.
     if islog == False:
@@ -266,8 +266,8 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
         predicted_value = cond_density_quantile(y=logMass, y_std=Mass_sigma, y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degrees,
-                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=qtl)
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degree,
+                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
         predicted_upper_quantile = predicted_value[3]
@@ -303,8 +303,8 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         for i in range(0,n):
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degrees,
-                                                      w_hat=np.reshape(weights_mle,(degrees,degrees)).T.flatten(), qtl=[qtl_check,0.5])
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degree,
+                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
