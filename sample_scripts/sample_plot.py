@@ -13,7 +13,7 @@ except NameError:
 result_dir = os.path.join(pwd,'M_dwarfs_deg15')
 result_dir = "C:/Users/shbhu/Box Sync/M_dwarves/straight_line_simulation/simulation_50_points"
 
-result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_kepler2/Kepler_55_open_corrected"
+#result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_kepler2/Kepler_55_open_corrected"
 
 for i in range(10,21):
     i = 14

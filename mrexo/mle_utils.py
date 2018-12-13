@@ -393,4 +393,4 @@ def mixture_conditional_density_qtl(y_max, y_min, x_max, x_min, deg, w_hat, deno
 """
 
 def calculate_joint_distribution():
-    
+    return 1
