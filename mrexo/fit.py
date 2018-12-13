@@ -143,20 +143,20 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if Mass_min is None:
         Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))
     if Mass_max is None:
-        Mass_max = np.log10(max(Mass + Mass_sigma)) + 0.5
+        Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        Radius_min = min(np.log10(min(Radius - Radius_sigma)), -0.3) - 0.5
+        Radius_min = min(np.log10(min(Radius - Radius_sigma)), -0.3)
     if Radius_max is None:
-        Radius_max = np.log10(max(Radius + Radius_sigma)) + 0.5
+        Radius_max = np.log10(max(Radius + Radius_sigma))
 
     if degree_max == None:
         degree_max = int(n/np.log10(n))
+    else:
+        degree_max = int(degree_max)
 
     Mass_bounds = np.array([Mass_min, Mass_max])
     Radius_bounds = np.array([Radius_min, Radius_max])
 
-    if type(degree_max) != int:
-        degree_max = int(degree_max)
 
     ###########################################################
     ## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.

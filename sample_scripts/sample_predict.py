@@ -11,14 +11,17 @@ try :
 except NameError:
     pwd = ''
 
-result_dir = os.path.join(pwd,'Results_deg_11')
-result_dir = os.path.join(pwd,'M_dwarfs_11')
+
+
 result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
 
 i = 0
 
 result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_cv{}".format(i)
+result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_reduced_tol{}".format(17)
+#result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/Smaller_boundaries/M_dwarfs_deg{}".format(i)
 
+#result_dir = os.path.join(pwd,'Results_deg_11')
 #result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_kepler2/Kepler_55_cluster"
 
 #weights_mle = np.loadtxt(os.path.join(result_dir,'output','weights.txt'))
