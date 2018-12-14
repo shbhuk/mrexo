@@ -11,8 +11,8 @@
 module load python/2.7.14-anaconda5.0.1          # If uncommented, would load the module git, etc.
 source activate pyvenv
 
-cd /storage/home/szk381/work/mrexo/sample_kepler2         # change into same directory as job was submitted from
+cd /storage/home/szk381/work/mrexo/sample_scripts         # change into same directory as job was submitted from
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python sample_kepler.py> kepler_run_55_error.txt
+python sample_fit_cluster_bootstrap.py> mdwarf_run_17_10000boot.txt
