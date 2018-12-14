@@ -58,4 +58,4 @@ for i in sim_sizes:
         initialfit_result, bootstrap_results = fit_mr_relation(Mass = sim_mass, Mass_sigma = sim_mass_error,
                                                 Radius = sim_radius, Radius_sigma = sim_radius_error,
                                                 save_path = os.path.join(result_dir,'simulation_{}_points'.format(data_size)), select_deg = 'cv',
-                                                num_boot = 50, cores = cpu_count()-2)
+                                                num_boot = 30, cores = cpu_count()-2)
