@@ -15,10 +15,9 @@ except NameError:
 
 result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
 
-i = 0
+i = 4
 
-result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_cv{}".format(i)
-result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_reduced_tol{}".format(17)
+#result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_reduced_tol{}".format(17)
 #result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/Smaller_boundaries/M_dwarfs_deg{}".format(i)
 
 #result_dir = os.path.join(pwd,'Results_deg_11')
@@ -27,9 +26,11 @@ result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_red
 #weights_mle = np.loadtxt(os.path.join(result_dir,'output','weights.txt'))
 #print(predict_m_given_r(Radius=np.log10(5), Radius_sigma=None, posterior_sample=False, islog=True, dataset='kepler', showplot=False))
 
+for i in range(10,18):
 
-a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
-print(a)
+    result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
+    a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
+    print(a)
 #c = predict_r_given_m(Mass=np.log10(1), Mass_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
 
 #b = predict_m_given_r(Radius=1, Radius_sigma=0.1, posterior_sample=False, islog=True, dataset='mdwarf', showplot=True)

@@ -301,8 +301,11 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
 
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
-    im = ax1.imshow(np.log10(joint.T), cmap='coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
+    im = ax1.imshow(np.log(joint), extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
     plt.colorbar(im)
+
+    plt.ylim(Mass_min, Mass_max)
+    plt.xlim(Radius_min, Radius_max)
 
     plt.show()
 
