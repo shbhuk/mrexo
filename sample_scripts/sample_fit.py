@@ -20,18 +20,21 @@ Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
+
+
+
 # Directory to store results in
 result_dir = os.path.join(pwd,'M_dwarfs_cv')
 
 if __name__ == '__main__':
-        '''
+
         initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_deg_reduced_tol{}'.format(17)), select_deg = 17,
-                                                num_boot = 5, cores = cpu_count()-2, abs_tol = 1e-6)
+                                                save_path = os.path.join(pwd,'M_dwarfs_deg_increase_bounds2{}'.format(17)), select_deg = 17,
+                                                num_boot = 2, cores = cpu_count()-2)
 
-    '''
-        for i in range(18,20):
+        '''
+        for i in range(10,20):
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
                                                 save_path = os.path.join(pwd,'M_dwarfs_deg{}'.format(i)), select_deg = i,
@@ -41,3 +44,4 @@ if __name__ == '__main__':
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
                                                 save_path = os.path.join(pwd,'M_dwarfs_cv{}'.format(i-10)), select_deg = 'cv',
                                                 num_boot = 50, cores = cpu_count()-2)
+        '''

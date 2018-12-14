@@ -14,15 +14,18 @@ result_dir = os.path.join(pwd,'M_dwarfs_deg15')
 result_dir = "C:/Users/shbhu/Box Sync/M_dwarves/straight_line_simulation/simulation_50_points"
 
 result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
+result_dir = "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation"
 
-#result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg{}".format(14)
+
 
 for i in range(10,20):
-    result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
+    i = 17
+    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/simulation_{}_points".format(20)
+    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
+    ax, handles = plot_m_given_r_relation(result_dir = result_dir)
+    # ax, handles = plot_m_given_r_relation(result_dir = result_dir)
+    #ax, handles = plot_mr_and_rm(result_dir=result_dir)
 
-    #ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-    #ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-    ax, handles = plot_mr_and_rm(result_dir=result_dir)
 
-    #ax = plot_joint_mr_distribution(result_dir, include_conditionals = True)
-    
+    ax = plot_joint_mr_distribution(result_dir, include_conditionals = True)
+    break

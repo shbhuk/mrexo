@@ -26,11 +26,12 @@ i = 4
 #weights_mle = np.loadtxt(os.path.join(result_dir,'output','weights.txt'))
 #print(predict_m_given_r(Radius=np.log10(5), Radius_sigma=None, posterior_sample=False, islog=True, dataset='kepler', showplot=False))
 
-for i in range(10,18):
+for i in range(17,18):
 
-    result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
+    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
     a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
     print(a)
+    break
 #c = predict_r_given_m(Mass=np.log10(1), Mass_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
 
 #b = predict_m_given_r(Radius=1, Radius_sigma=0.1, posterior_sample=False, islog=True, dataset='mdwarf', showplot=True)

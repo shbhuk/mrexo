@@ -67,17 +67,17 @@ def plot_m_given_r_relation(result_dir):
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
 
-    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of conditional distribution of M given R from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'16%-84% quantile of conditional distribution of M given R from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of M given R from bootstrap')
+    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(M|R) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'16%-84% quantile of f(M|R) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'16%-84% quantile of the MEAN of the f(M|R) from bootstrap')
 
     handles = [mr_mean_line, mr_full, mr_boot]
 
     plt.legend(handles = handles)
 
 
-    ax1.set_xlabel('log Radius (Earth Radii)')
-    ax1.set_ylabel('log Mass (Earth Mass)')
+    ax1.set_xlabel('log Radius ($R_{\oplus}$)')
+    ax1.set_ylabel('log Mass ($M_{\oplus}$)')
     ax1.set_title('Conditional relationship of mass given radius with degree {}'.format(deg_choose))
 
     plt.show()
@@ -147,14 +147,14 @@ def plot_r_given_m_relation(result_dir):
     ax1.fill_between(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
 
-    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of conditional distribution of R given M from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'16%-84% quantile of conditional distribution of R given M from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of R given M from bootstrap')
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(R|M) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'16%-84% quantile of f(R|M) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'16%-84% quantile of the MEAN of the f(R|M) from bootstrap')
     handles = [rm_mean_line, rm_full, rm_boot]
 
     plt.legend(handles=handles)
-    ax1.set_ylabel('log Radius (Earth Radii)')
-    ax1.set_xlabel('log Mass (Earth Mass)')
+    ax1.set_ylabel('log Radius ($R_{\oplus}$)')
+    ax1.set_xlabel('log Mass ($M_{\oplus}$)')
     ax1.set_title('Conditional relationship of radius given mass with degree {}'.format(deg_choose))
 
     plt.show()
@@ -232,20 +232,20 @@ def plot_mr_and_rm(result_dir):
     ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
     ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
-    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of conditional distribution of M given R from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'16%-84% quantile of conditional distribution of M given R from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of M given R from bootstrap')
+    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(M|R) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'16%-84% quantile of f(M|R) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'16%-84% quantile of the MEAN of the f(M|R) from bootstrap')
 
-    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of conditional distribution of R given M from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'16%-84% quantile of conditional distribution of R given M from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'16%-84% quantile of the MEAN of the conditional distribution of R given M from bootstrap')
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(R|M) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'16%-84% quantile of f(R|M) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'16%-84% quantile of the MEAN of the f(R|M) from bootstrap')
 
     handles = [mr_mean_line, mr_full, mr_boot, rm_mean_line, rm_full, rm_boot]
 
     plt.legend(handles=handles)
 
-    ax1.set_xlabel('log Radius (Earth Radii)')
-    ax1.set_ylabel('log Mass (Earth Mass)')
+    ax1.set_xlabel('log Radius ($R_{\oplus}$)')
+    ax1.set_ylabel('log Mass ($M_{\oplus}$)')
     ax1.set_title('Degrees {}. No. of data points = {}'.format(deg_choose, len(logRadius)))
     plt.show()
     plt.ylim(Mass_min, Mass_max)
@@ -301,7 +301,7 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
 
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
-    im = ax1.imshow(np.log(joint), extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
+    im = ax1.imshow(joint, cmap = 'coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
     plt.colorbar(im)
 
     plt.ylim(Mass_min, Mass_max)
