@@ -150,7 +150,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
     if degree_max == None:
-        degree_max = int(n/np.log10(n))
+        degree_max = int(n/np.log10(n)) + 5
     else:
         degree_max = int(degree_max)
 
