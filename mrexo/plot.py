@@ -78,13 +78,13 @@ def plot_m_given_r_relation(result_dir):
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)')
     ax1.set_ylabel('log Mass ($M_{\oplus}$)')
-    ax1.set_title('Conditional relationship of mass given radius with degree {}'.format(deg_choose))
+    ax1.set_title('f(M|R) with degree {}'.format(deg_choose))
 
     plt.show()
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
 
-    return ax1, handles
+    return fig, ax1, handles
 
 
 def plot_r_given_m_relation(result_dir):
@@ -155,13 +155,13 @@ def plot_r_given_m_relation(result_dir):
     plt.legend(handles=handles)
     ax1.set_ylabel('log Radius ($R_{\oplus}$)')
     ax1.set_xlabel('log Mass ($M_{\oplus}$)')
-    ax1.set_title('Conditional relationship of radius given mass with degree {}'.format(deg_choose))
+    ax1.set_title('f(R|M) with degree {}'.format(deg_choose))
 
     plt.show()
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
 
-    return ax1, handles
+    return fig, ax1, handles
 
 def plot_mr_and_rm(result_dir):
     '''
@@ -251,7 +251,7 @@ def plot_mr_and_rm(result_dir):
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
 
-    return ax1, handles
+    return fig, ax1, handles
 
 
 def plot_joint_mr_distribution(result_dir, include_conditionals):
@@ -293,7 +293,7 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     joint = np.loadtxt(os.path.join(output_location,'joint_distribution.txt'))
 
     if include_conditionals == True:
-        ax1, handles = plot_mr_and_rm(result_dir)
+        fig, ax1, handles = plot_mr_and_rm(result_dir)
     else:
         fig = plt.figure()
         ax1 = fig.add_subplot(1,1,1)
@@ -302,10 +302,16 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
     im = ax1.imshow(joint, cmap = 'coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
-    plt.colorbar(im)
+    cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)])
+    cbar.ax.set_yticklabels(['Min', 'Max']) 
+    #plt.colorbar(im)
+
 
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
+
+    plt.xlabel('log Radius ($R_{\oplus}$)')
+    plt.ylabel('log Mass ($M_{\oplus}$)')
 
     plt.show()
 
