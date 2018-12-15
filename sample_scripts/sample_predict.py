@@ -28,7 +28,7 @@ i = 4
 
 for i in range(17,18):
 
-    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg{}".format(i)
+    result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
     a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
     print(a)
     break

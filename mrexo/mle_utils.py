@@ -99,13 +99,17 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         return a
 
     # Define a list of lists of bounds
-    bounds = [[0,1]]*deg**2
+    bounds = [[0,1]]*(deg-2)**2
     # Initial value for weights
-    x0 = np.repeat(1./(deg**2),deg**2)
+    x0 = np.repeat(1./(deg**2),(deg-2)**2)
 
     # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
     opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=500, full_output=True, iprint=1, epsilon=1e-5, acc=1e-5)
     print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(), opt_result[2], opt_result[3], opt_result[4]))
+
+
+
+
 
     with open(os.path.join(save_path,'log_file.txt'),'a') as f:
         f.write('Finished Optimization at {}'.format(datetime.datetime.now()))
@@ -113,6 +117,13 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
     w_hat = opt_result[0]
     n_log_lik = opt_result[1]
+
+    w_sq = np.reshape(w_hat,[deg-2,deg-2])
+    w_sq_padded = np.zeros((deg,deg))
+    w_sq_padded[1:-1,1:-1] = w_sq
+    w_hat = w_sq_padded.flatten()
+
+
 
     if output_weights_only == True:
         return w_hat
@@ -130,17 +141,19 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                   'bic': bic,
                   'M_points': M_seq,
                   'R_points': R_seq}
-
+    
+        deg_vec = np.arange(1,deg+1)
+    
         # Conditional Densities with 16% and 84% quantile
         M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
-                            x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
+                            x_max = Mass_max, x_min = Mass_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])
 
         # Output everything as dictionary
         M_cond_R_mean = M_cond_R[:,0]
         M_cond_R_var = M_cond_R[:,1]
         M_cond_R_quantile = M_cond_R[:,2:4]
         R_cond_M = np.array([cond_density_quantile(y = m, y_max=Mass_max, y_min=Mass_min,
-                            x_max=Radius_max, x_min=Radius_min, deg=deg, w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
+                            x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec, w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
         R_cond_M_mean = R_cond_M[:,0]
         R_cond_M_var = R_cond_M[:,1]
         R_cond_M_quantile = R_cond_M[:,2:4]
@@ -184,19 +197,19 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
         C_pdf : Matrix explained in Ning et al. Equation 8. Product of (integrals of (product of normal and beta
                 distributions)) for mass and radius.
     '''
-    deg_vec = np.arange(1,deg+1)
+    deg_vec = np.arange(2,deg)
 
     if Mass_sigma is None:
         # pdf for Mass and Radius for each beta density
-        C_pdf = np.zeros((n, deg**2))
+        C_pdf = np.zeros((n, (deg-2)**2))
         M_indv_pdf = find_indv_pdf(M, deg, deg_vec, Mass_max, Mass_min, x_std=None, abs_tol=abs_tol, Log=Log)
         R_indv_pdf = find_indv_pdf(R, deg, deg_vec, Radius_max, Radius_min, x_std=None, abs_tol=abs_tol, Log=Log)
         C_pdf = np.kron(M_indv_pdf, R_indv_pdf)
 
     else:
-        M_indv_pdf = np.zeros((n, deg))
-        R_indv_pdf = np.zeros((n, deg))
-        C_pdf = np.zeros((n, deg**2))
+        M_indv_pdf = np.zeros((n, deg-2))
+        R_indv_pdf = np.zeros((n, deg-2))
+        C_pdf = np.zeros((n, (deg-2)**2))
 
         print('Started Integration at ',datetime.datetime.now())
         with open(os.path.join(save_path,'log_file.txt'),'a') as f:
@@ -215,7 +228,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     # Log of 0 throws weird errors
     C_pdf[C_pdf == 0] = 1e-300
     C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
-
+    print(np.shape(C_pdf))
     return C_pdf
 
 
@@ -285,7 +298,7 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
 
     return marg_x
 
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
@@ -293,10 +306,9 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, w_hat, y_std=None,
     '''
     if type(y) == list:
         y = np.array(y)
-    deg_vec = np.arange(1,deg+1)
 
     y_beta_indv = find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
-    y_beta_pdf = np.kron(np.repeat(1,deg),y_beta_indv)
+    y_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),y_beta_indv)
 
     # Equation 10b Ning et al 2018
     denominator = np.sum(w_hat * y_beta_pdf)

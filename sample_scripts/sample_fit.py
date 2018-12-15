@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
         initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_deg_cancel_boundary_poly{}'.format(17)), select_deg = 17,
+                                                save_path = os.path.join(pwd,'M_dwarfs_deg_cancel_boundary_poly17'), select_deg = 17,
                                                 num_boot = 20, cores = cpu_count()-2)
 
         '''
