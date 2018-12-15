@@ -30,8 +30,8 @@ if __name__ == '__main__':
 
         initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'dummy'), select_deg = 'cv',
-                                                num_boot = 2, cores = cpu_count())
+                                                save_path = os.path.join(pwd,'M_dwarfs_CV_trimmed'), select_deg = 'cv',
+                                                num_boot = 200, cores = cpu_count())
 
         '''
         for i in range(10,20):
