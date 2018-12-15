@@ -13,17 +13,14 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     '''
     Predict mass from given radius.
     Given radius can be a single measurement, with or without error, or can also be a posterior distribution of radii.
-
     INPUT:
         Radius: Numpy array of radius measurements.
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. Default : None
-
         result_dir: The directory where the results of the fit are stored. Default is None.
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
                 and then dataset='mdwarf', or dataset='kepler'
-
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
         posterior_sample: If the input radii is a posterior sample, posterior_sample=True, else False.
@@ -32,26 +29,20 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
                 Default is 0.16 and 0.84. qtl=[0.16,0.84]
         islog: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
-        showplo: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
+        showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
     OUTPUT:
         outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
-
     EXAMPLE:
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
-
         from mrexo import predict_m_given_r
         import os
         import numpy as np
-
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-
         predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=None, result_dir=result_dir, posterior_sample=False, islog=True)
-
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
         predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=0.1, result_dir=None, dataset='mdwarf', posterior_sample=False, islog=True)
-
     '''
 
     dataset = dataset.replace(' ', '').replace('-', '').lower()
@@ -87,6 +78,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     #print(exception_radii)
 
     degree = int(np.sqrt(len(weights_mle)))
+    deg_vec = np.arange(1,degree+1)
 
     print(degree)
 
@@ -105,7 +97,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
 
 
         predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degree,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
@@ -117,7 +109,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+            fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
             plt.hlines(predicted_mean, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(logRadius, Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(x=logRadius, y=predicted_mean, xerr=Radius_sigma,
@@ -148,7 +140,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         for i in range(0,n):
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logRadius[i], y_std=Radius_sigma[i], y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degree,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
@@ -164,7 +156,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             r_q =  mquantiles(logRadius, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
             m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
-            ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+            fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
             plt.hlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(r_q[1], Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='o', color = 'green')
@@ -186,17 +178,14 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     '''
     Predict radius from given mass.
     Given mass can be a single measurement, with or without error, or can also be a posterior distribution of mass.
-
     INPUT:
         Mass: Numpy array of mass measurements.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. Default : None
-
         result_dir: The directory from where the results of the fit are read in. Default is None.
                 If None, then will either use M-dwarf or Kepler fits (supplied with package).
         dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
                 To run the M-dwarf or Kepler set, define result_dir as None,
                 and then dataset='mdwarf', or dataset='kepler'
-
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
         posterior_sample: If the input mass is a posterior sample, posterior_sample=True, else False.
@@ -209,17 +198,13 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     OUTPUT:
         outputs: Tuple with the predicted radius (or distribution of radii if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
-
     EXAMPLE:
         #Below example predicts the radius for a mass of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
-
         from mrexo import predict_r_given_m
         import os
         import numpy as np
-
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-
     '''
 
     dataset = dataset.replace(' ', '').replace('-', '').lower()
@@ -254,6 +239,8 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
 
     degree = int(np.sqrt(len(weights_mle)))
+    deg_vec = np.arange(1,degree+1)
+
 
     print(degree)
 
@@ -266,7 +253,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
         predicted_value = cond_density_quantile(y=logMass, y_std=Mass_sigma, y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degree,
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=qtl)
         predicted_mean = predicted_value[0]
         predicted_lower_quantile = predicted_value[2]
@@ -279,7 +266,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
             ax.errorbar(x=logMass, y=predicted_mean, xerr=Mass_sigma,
                         yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
                         fmt='o', color = 'green')
@@ -303,9 +290,8 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         for i in range(0,n):
             qtl_check = np.random.random()
             results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degree,
-                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=[qtl_check,0.5],
-                                                      parallelize=2)
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
+                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
             random_quantile[i] = results[2]
@@ -322,7 +308,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             print(r_q)
             print(m_q)
 
-            ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
             ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0],
                         fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
@@ -341,7 +327,6 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
 def mass_100_percent_iron_planet(logRadius):
     '''
     This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
-
     INPUT:
         logRadius : Radius of the planet in log10 units
     OUTPUT:

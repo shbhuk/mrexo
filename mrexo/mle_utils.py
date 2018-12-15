@@ -115,10 +115,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         f.write('Finished Optimization at {}'.format(datetime.datetime.now()))
         f.write('\nOptimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
 
-    w_hat = opt_result[0]
+    unpadded_weight = opt_result[0]
     n_log_lik = opt_result[1]
 
-    w_sq = np.reshape(w_hat,[deg-2,deg-2])
+    w_sq = np.reshape(unpadded_weight,[deg-2,deg-2])
     w_sq_padded = np.zeros((deg,deg))
     w_sq_padded[1:-1,1:-1] = w_sq
     w_hat = w_sq_padded.flatten()
@@ -126,7 +126,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
 
     if output_weights_only == True:
-        return w_hat
+        return unpadded_weight
 
     else:
         # Calculate AIC and BIC
@@ -141,9 +141,9 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                   'bic': bic,
                   'M_points': M_seq,
                   'R_points': R_seq}
-    
+
         deg_vec = np.arange(1,deg+1)
-    
+
         # Conditional Densities with 16% and 84% quantile
         M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
                             x_max = Mass_max, x_min = Mass_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.16,0.84])[0:4] for r in R_seq])

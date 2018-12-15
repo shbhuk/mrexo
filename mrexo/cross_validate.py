@@ -134,6 +134,8 @@ def cv_parallelize(cv_input):
     Radius_max = Radius_bounds[1]
     Radius_min = Radius_bounds[0]
 
+    print(size_test, len(Mass_bounds))
+
     # Integrate the product of the normal and beta distribution for mass and radius and then take the Kronecker product
     C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log=True)
 

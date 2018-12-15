@@ -23,7 +23,7 @@ for i in range(10,20):
     result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/simulation_{}_points".format(20)
     result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
     result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
-    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_500_bootstraps"
+    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_trimmed"
     fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
     # ax, handles = plot_m_given_r_relation(result_dir = result_dir)
     #ax, handles = plot_mr_and_rm(result_dir=result_dir)
