@@ -26,10 +26,10 @@ Radius_min = -0.3
 Radius_max = 1.357509 
 
 # Directory to store results in 
-result_dir = os.path.join(pwd,'Kepler_larger_bounds_2')
+result_dir = os.path.join(pwd,'Kepler_wo_boundary')
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, Mass_sigma=Mass_sigma,
                                             Radius=Radius, Radius_sigma=Radius_sigma,
                                             save_path=result_dir, select_deg=55, 
-                                            num_boot=50, cores=cpu_count())
+                                            num_boot=40, cores=cpu_count())
