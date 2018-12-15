@@ -28,7 +28,7 @@ i = 4
 
 for i in range(17,18):
 
-    result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
+    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
     a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
     print(a)
     break
@@ -44,4 +44,4 @@ C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17
 '''
 
 #print(predict_r_given_m(Mass=np.linspace(1.,1.2,3), Mass_sigma=np.repeat(0.1,3), posterior_sample=True, islog=True, dataset='kepler', showplot=False))
-#b = predict_m_given_r(Radius=np.linspace(1.,1.2,10), Radius_sigma=np.repeat(0.1,10), posterior_sample=True, islog=False, dataset='mdwarf', showplot=True)
+#b = predict_m_given_r(Radius=np.linspace(1.,1.2,10), Radius_sigma=np.repeat(None,10), posterior_sample=True, islog=False, dataset='mdwarf', showplot=True)
