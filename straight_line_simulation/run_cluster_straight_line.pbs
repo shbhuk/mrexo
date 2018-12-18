@@ -15,4 +15,4 @@ cd /storage/home/szk381/work/mrexo/straight_line_simulation         # change int
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python fit_line_mdwarf.py > sim_run_open.txt
+python fit_line_mdwarf.py > sim_run_straight.txt
