@@ -19,6 +19,7 @@ directory = "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation"
 
 
 sim_sizes = [20,50,100, 200]
+sim_sizes = [50]
 intrinsic_disp = [0, 0.1,0.5,1]
 
 

@@ -77,16 +77,17 @@ for i in sim_sizes:
     for j in intrinsic_disp:
         data_size = i
 
-        sim_radius_init = np.linspace(np.log10(R_min),np.log10(R_max), data_size)
-        sim_mass_init = slope*sim_radius_init + intercept
+        log_sim_radius_init = np.linspace(np.log10(R_min),np.log10(R_max), data_size)
+        log_sim_mass_init = slope*log_sim_radius_init + intercept
 
-        sim_radius_error = sim_radius_init - 1
-        sim_mass_error = sim_mass_init - 1
+        lin_sim_radius_error = 10**log_sim_radius_init * 0.1
+        lin_sim_mass_error = 10**log_sim_mass_init * 0.1
 
-        sim_mass_intrinsic = sim_mass_init + np.random.normal(0, np.abs(sim_mass_error))
-        sim_radius = sim_radius_init + np.random.normal(0, np.abs(sim_radius_error))
+        lin_sim_mass_intrinsic = 10**log_sim_mass_init + np.random.normal(0, np.abs(lin_sim_mass_error))
+        lin_sim_radius = 10**log_sim_radius_init + np.random.normal(0, np.abs(lin_sim_radius_error))
 
-        sim_mass = sim_mass_intrinsic + np.random.normal(0, j, data_size)
+        log_sim_mass = np.log10(lin_sim_mass_intrinsic) + np.random.normal(0, j, data_size)
+
 
         # Directory to store results in
         result_dir = os.path.join(pwd)
@@ -95,13 +96,16 @@ for i in sim_sizes:
 
         #print(min(10**sim_radius - 10**sim_radius_error))
 
-        #plt.errorbar(x=sim_radius, y=sim_mass, xerr=sim_radius_error, yerr=sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
-        #plt.plot(10**sim_radius_init, 10**sim_mass_init, '.')
-        #plt.errorbar(x=10**sim_radius, y=10**sim_mass, xerr=10**sim_radius_error, yerr=10**sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
+        # plt.errorbar(x=10**log_sim_radius_init, y=10**log_sim_mass_init, xerr=lin_sim_radius_error, yerr=lin_sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
+        # plt.errorbar(x=lin_sim_radius, y=lin_sim_mass_intrinsic, xerr=lin_sim_radius_error, yerr=lin_sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
+        # plt.errorbar(x=lin_sim_radius, y=10**log_sim_mass, xerr=lin_sim_radius_error, yerr=lin_sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
+
+        # plt.plot(10**sim_radius_init, 10**sim_mass_init, '.')
+        # plt.errorbar(x=10**sim_radius, y=10**sim_mass, xerr=10**sim_radius_error, yerr=10**sim_mass_error, fmt='k.',markersize=2, elinewidth=0.3)
 
 
         if __name__ == '__main__':
-            initialfit_result, bootstrap_results = fit_mr_relation(Mass = 10**sim_mass, Mass_sigma = 10**sim_mass_error,
-                                                    Radius = 10**sim_radius, Radius_sigma = 10**sim_radius_error,
+            initialfit_result, bootstrap_results = fit_mr_relation(Mass=10**log_sim_mass, Mass_sigma = lin_sim_mass_error,
+                                                    Radius = lin_sim_radius, Radius_sigma = lin_sim_radius_error,
                                                     save_path = os.path.join(result_dir,'Simulation_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
                                                     num_boot = cpu_count()*2, cores = cpu_count())

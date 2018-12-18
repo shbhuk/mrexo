@@ -61,7 +61,7 @@ def plot_m_given_r_relation(result_dir):
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
-    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
+    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
     ax1.plot(R_points,M_cond_R,  color='maroon', lw=2) # Full dataset run
     ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha=0.3, color='lightsalmon') # Full dataset run
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
@@ -141,7 +141,7 @@ def plot_r_given_m_relation(result_dir):
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
-    ax1.errorbar(y=logRadius, x=logMass, yerr=logRadius_sigma, xerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
+    ax1.errorbar(y=logRadius, x=logMass, yerr=logRadius_sigma, xerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
     ax1.plot(M_points, R_cond_M,  color='midnightblue', lw=2) # Full dataset run
     ax1.fill_between(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
     ax1.fill_between(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
@@ -224,7 +224,7 @@ def plot_mr_and_rm(result_dir):
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
 
-    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
+    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
 
     ax1.plot(R_points,M_cond_R,  color='maroon', lw=2) # Full dataset run
     ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha=0.3, color='lightsalmon') # Full dataset run
@@ -302,7 +302,7 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
 
 
 
-    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=2, elinewidth=0.3)
+    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
     im = ax1.imshow(joint, cmap = 'coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
     cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)])
     cbar.ax.set_yticklabels(['Min', 'Max'])
