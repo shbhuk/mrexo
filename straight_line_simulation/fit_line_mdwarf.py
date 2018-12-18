@@ -68,7 +68,7 @@ R_min = np.min(Radius)*1
 R_max = np.max(Radius)*1
 
 
-sim_sizes = [20,50,100, 200]
+sim_sizes = [200]
 intrinsic_disp = [0, 0.1,0.5,1]
 
 
