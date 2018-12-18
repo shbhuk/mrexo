@@ -104,4 +104,4 @@ for i in sim_sizes:
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = 10**sim_mass, Mass_sigma = 10**sim_mass_error,
                                                     Radius = 10**sim_radius, Radius_sigma = 10**sim_radius_error,
                                                     save_path = os.path.join(result_dir,'Simulation_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
-                                                    num_boot = 50, cores = cpu_count()-2)
+                                                    num_boot = cpu_count()*2, cores = cpu_count())
