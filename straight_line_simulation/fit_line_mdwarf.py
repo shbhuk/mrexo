@@ -74,7 +74,6 @@ intrinsic_disp = [0, 0.1,0.5,1]
 
 
 for i in sim_sizes:
-    i = 20
     for j in intrinsic_disp:
         data_size = i
 

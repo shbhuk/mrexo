@@ -1,0 +1,114 @@
+Simulation_20pts_0disp
+Started for cv degrees at 2018-12-18 00:12:33.984974, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 20
+Finished CV. Picked set([5]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 0, 13, 47, 227867))
+(9, 20)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 0, 13, 51, 955583))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 228.296887887
+            Iterations: 14
+            Function evaluations: 157
+            Gradient evaluations: 14
+Optimization run finished at 2018-12-18 00:13:51.960799, with 14 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 5, using 24 thread/s.
+Finished bootstrap at 2018-12-18 00:14:26.141164
+0:01:52.156214
+Simulation_20pts_0.1disp
+Started for cv degrees at 2018-12-18 00:14:26.141926, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 20
+Finished CV. Picked set([6]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 0, 15, 37, 172311))
+(16, 20)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 0, 15, 44, 106588))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 832.094825691
+            Iterations: 23
+            Function evaluations: 423
+            Gradient evaluations: 23
+Optimization run finished at 2018-12-18 00:15:44.119390, with 23 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 6, using 24 thread/s.
+Finished bootstrap at 2018-12-18 00:16:27.968925
+0:02:01.827025
+Simulation_20pts_0.5disp
+Started for cv degrees at 2018-12-18 00:16:27.970180, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 20
+Finished CV. Picked set([20]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 0, 17, 44, 662300))
+(324, 20)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 0, 18, 13, 674576))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 2314.69694713
+            Iterations: 16
+            Function evaluations: 5222
+            Gradient evaluations: 16
+Optimization run finished at 2018-12-18 00:18:16.757279, with 16 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 20, using 24 thread/s.
+Finished bootstrap at 2018-12-18 00:21:03.736838
+0:04:35.766684
+Simulation_20pts_1disp
+Started for cv degrees at 2018-12-18 00:21:03.738178, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 20
+Finished CV. Picked set([6]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 0, 22, 11, 310914))
+(16, 20)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 0, 22, 18, 460071))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 1087.98607544
+            Iterations: 44
+            Function evaluations: 808
+            Gradient evaluations: 44
+Optimization run finished at 2018-12-18 00:22:18.486747, with 44 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 6, using 24 thread/s.
+Finished bootstrap at 2018-12-18 00:23:00.945833
+0:01:57.207682
+Simulation_50pts_0disp
+Started for cv degrees at 2018-12-18 00:23:00.947257, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 34
+Finished CV. Picked set([12]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 0, 37, 15, 577481))
+(100, 50)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 0, 38, 3, 494456))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 2764.21696877
+            Iterations: 22
+            Function evaluations: 2268
+            Gradient evaluations: 22
+Optimization run finished at 2018-12-18 00:38:03.686086, with 22 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 12, using 24 thread/s.
+Finished bootstrap at 2018-12-18 00:41:03.937540
+0:18:02.990307
+Simulation_50pts_0.1disp
+Started for cv degrees at 2018-12-18 00:41:03.939054, using 24 core/s
+Picked 5 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 34
