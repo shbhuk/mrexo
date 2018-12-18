@@ -6,13 +6,14 @@ import matplotlib.pyplot as plt
 from multiprocessing import cpu_count
 
 from mrexo import fit_mr_relation
+from scipy.odr import Model, RealData, ODR
 
 
 pwd = os.path.dirname(__file__)
 
 #pwd = '~/mrexo_working/'
 
-t = Table.read(os.path.join(pwd,'Cool_stars_20181211_exc_upperlim.csv'))
+t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
 
 # Symmetrical errorbars
 Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -26,6 +27,34 @@ logMass = np.log10(Mass)
 logRadius = np.log10(Radius)
 logMass_sigma = 0.434 * Mass_sigma/Mass
 logRadius_sigma = 0.434 * Radius_sigma/Radius
+
+p = np.poly1d(np.polyfit(logRadius, logMass, 1))
+
+
+
+
+
+def f(B, x):
+    '''Linear function y = m*x + b'''
+    # B is a vector of the parameters.
+    # x is an array of the current x values.
+    # x is in the same format as the x passed to Data or RealData.
+    #
+    # Return an array in the same format as y passed to Data or RealData.
+    return B[0]*x + B[1]
+
+linear = Model(f)
+data = RealData(logRadius, logMass, logMass_sigma, logRadius_sigma)
+
+# Set up ODR with the model and data.
+odr = ODR(data, linear, beta0=[0., 1.])
+
+# Run the regression.
+out = odr.run()
+slope = out.beta[0]
+intercept = out.beta[1]
+
+
 '''
 plt.plot(logRadius,logMass, '.')
 plt.show()
@@ -33,29 +62,41 @@ plt.show()
 
 '''
 
-p = np.poly1d(np.polyfit(logRadius, logMass, 1))
+
 
 R_min = np.min(Radius)*1
 R_max = np.max(Radius)*1
 
 
-sim_sizes = [10,20,40,50,60,80,100]
+sim_sizes = [20,50,100, 200]
+intrinsic_disp = [0, 0.1,0.5,1]
+
+
 
 for i in sim_sizes:
-    data_size = i
+    for j in intrinsic_disp:
+        data_size = i
 
-    sim_radius = np.linspace(np.log10(R_min),np.log10(R_max), data_size)
-    sim_mass = 10**p(sim_radius)
-    sim_radius = 10**sim_radius
-    sim_radius_error = 0.1 * sim_radius
-    sim_mass_error = 0.1 * sim_mass
-    
+        sim_radius = np.linspace(np.log10(R_min),np.log10(R_max), data_size)
+        sim_mass = slope*sim_radius + intercept
 
-    # Directory to store results in
-    result_dir = os.path.join(pwd)
-    
-    if __name__ == '__main__':
-        initialfit_result, bootstrap_results = fit_mr_relation(Mass = sim_mass, Mass_sigma = sim_mass_error,
-                                                Radius = sim_radius, Radius_sigma = sim_radius_error,
-                                                save_path = os.path.join(result_dir,'simulation_{}_points'.format(data_size)), select_deg = 'cv',
-                                                num_boot = 30, cores = cpu_count()-2)
+        sim_radius_error = 0.1 * sim_radius
+        sim_mass_error = 0.1 * sim_mass
+
+        sim_mass += np.random.normal(0, np.abs(sim_mass_error))
+        sim_radius += np.random.normal(0, np.abs(sim_radius_error))
+
+        sim_mass += np.random.normal(0, j, data_size)
+
+        # Directory to store results in
+        result_dir = os.path.join(pwd)
+
+        print('Simulation_{}pts_{}disp'.format(data_size, j))
+
+
+
+        if __name__ == '__main__':
+            initialfit_result, bootstrap_results = fit_mr_relation(Mass = sim_mass, Mass_sigma = sim_mass_error,
+                                                    Radius = sim_radius, Radius_sigma = sim_radius_error,
+                                                    save_path = os.path.join(result_dir,'Simulation_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
+                                                    num_boot = 50, cores = cpu_count()-2)
