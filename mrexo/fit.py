@@ -125,9 +125,6 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if not os.path.exists(input_location):
         os.mkdir(input_location)
 
-    t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
-    t.write(os.path.join(input_location, 'MR_inputs.csv'), overwrite=True)
-
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
@@ -145,7 +142,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if Mass_max is None:
         Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        Radius_min = min(np.log10(min(Radius - Radius_sigma)), -0.3)
+        Radius_min = min(np.log10(np.abs(min(Radius - Radius_sigma))), -0.3)
     if Radius_max is None:
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
@@ -157,6 +154,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     Mass_bounds = np.array([Mass_min, Mass_max])
     Radius_bounds = np.array([Radius_min, Radius_max])
 
+    t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
+    t.write(os.path.join(input_location, 'MR_inputs.csv'), overwrite=True)
+    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments='#', header='Minimum mass and maximum mass (log10)')
+    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments='#', header='Minimum radius and maximum radius (log10)')
 
     ###########################################################
     ## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
@@ -225,9 +226,6 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-
-    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments='#', header='Minimum mass and maximum mass (log10)')
-    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments='#', header='Minimum radius and maximum radius (log10)')
 
     save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
