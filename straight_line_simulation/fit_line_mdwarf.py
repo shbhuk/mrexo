@@ -74,14 +74,15 @@ intrinsic_disp = [0, 0.1,0.5,1]
 
 
 for i in sim_sizes:
+    i = 20
     for j in intrinsic_disp:
         data_size = i
 
         sim_radius_init = np.linspace(np.log10(R_min),np.log10(R_max), data_size)
         sim_mass_init = slope*sim_radius_init + intercept
 
-        sim_radius_error = sim_radius_init * 0.1
-        sim_mass_error = sim_mass_init * 0.1
+        sim_radius_error = sim_radius_init - 1
+        sim_mass_error = sim_mass_init - 1
 
         sim_mass_intrinsic = sim_mass_init + np.random.normal(0, np.abs(sim_mass_error))
         sim_radius = sim_radius_init + np.random.normal(0, np.abs(sim_radius_error))

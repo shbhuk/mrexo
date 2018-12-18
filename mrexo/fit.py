@@ -142,7 +142,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if Mass_max is None:
         Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        Radius_min = min(np.log10(np.abs(min(Radius - Radius_sigma))), -0.3)
+        Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.3)
     if Radius_max is None:
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
@@ -153,6 +153,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     Mass_bounds = np.array([Mass_min, Mass_max])
     Radius_bounds = np.array([Radius_min, Radius_max])
+
+    if any(np.isnan([Radius, Radius_sigma, Radius_bounds, Mass, Mass_sigma, Mass_bounds])):
+        print("#####\n ERROR: NaN value present in input measurements or bounds\n#####")
+        return 0
 
     t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
     t.write(os.path.join(input_location, 'MR_inputs.csv'), overwrite=True)

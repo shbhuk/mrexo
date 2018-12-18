@@ -31,7 +31,7 @@ for i in sim_sizes:
         fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
         ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
 
-        break
+
     break
 
 
