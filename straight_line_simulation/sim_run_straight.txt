@@ -178,3 +178,41 @@ Simulation_100pts_0disp
 Started for cv degrees at 2018-12-18 03:23:59.375736, using 24 core/s
 Picked 10 k-folds
 Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 55
+Finished CV. Picked set([55]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 18, 10, 9, 18, 536015))
+(2809, 100)
+('Finished Integration at ', datetime.datetime(2018, 12, 18, 10, 15, 20, 37941))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 507.896286001
+            Iterations: 36
+            Function evaluations: 101282
+            Gradient evaluations: 36
+Optimization run finished at 2018-12-18 12:01:57.518691, with 36 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 55, using 24 thread/s.
+Finished bootstrap at 2018-12-19 04:03:06.836371
+1 day, 0:39:07.460671
+Simulation_100pts_0.1disp
+Started for cv degrees at 2018-12-19 04:03:06.837855, using 24 core/s
+Picked 10 k-folds
+Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 55
+Finished CV. Picked set([55]) degrees by maximizing likelihood
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2018, 12, 19, 10, 56, 17, 99220))
+(2809, 100)
+('Finished Integration at ', datetime.datetime(2018, 12, 19, 11, 2, 30, 317335))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 518.31985152
+            Iterations: 36
+            Function evaluations: 101280
+            Gradient evaluations: 36
+Optimization run finished at 2018-12-19 12:55:41.825581, with 36 iterations. Exit Code = 0
+
+
+Running 48 bootstraps for the MLE code with degree = 55, using 24 thread/s.
