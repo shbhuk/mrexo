@@ -120,7 +120,7 @@ def cv_parallelize(cv_input):
     train_Mass_sigma = Mass_sigma[invert_mask]
 
     with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-       f.write('Running cross validation for {} degree check and {} th-fold'.format(test_degree, i_fold))
+       f.write('Running cross validation for {} degree check and {} th-fold\n'.format(test_degree, i_fold))
 
     # Calculate the optimum weights using MLE for a given input test_degree
     weights = MLE_fit(Mass=train_Mass, Radius=train_Radius, Mass_sigma=train_Mass_sigma, Radius_sigma=train_Radius_sigma, Mass_bounds=Mass_bounds,
