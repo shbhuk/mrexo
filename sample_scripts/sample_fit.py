@@ -28,20 +28,14 @@ result_dir = os.path.join(pwd,'M_dwarfs_cv')
 
 if __name__ == '__main__':
 
-        initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
-                                                Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_CV_trimmed'), select_deg = 'cv',
-                                                num_boot = 200, cores = cpu_count())
 
-        '''
         for i in range(10,20):
-            initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
-                                                Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_deg{}'.format(i)), select_deg = i,
-                                                num_boot = 50, cores = cpu_count()-2)
+            # initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
+                                                # Radius = Radius, Radius_sigma = Radius_sigma,
+                                                # save_path = os.path.join(pwd,'M_dwarfs_deg{}'.format(i)), select_deg = i,
+                                                # num_boot = 50, cores = cpu_count()-2)
 
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
                                                 save_path = os.path.join(pwd,'M_dwarfs_cv{}'.format(i-10)), select_deg = 'cv',
-                                                num_boot = 50, cores = cpu_count()-2)
-        '''
+                                                num_boot = 100, cores = cpu_count()-2)
