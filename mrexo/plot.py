@@ -58,7 +58,7 @@ def plot_m_given_r_relation(result_dir):
 
     mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(8.5,6))
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -67,9 +67,9 @@ def plot_m_given_r_relation(result_dir):
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
 
-    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(M|R) from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(M|R) from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the MEAN of the f(M|R) from bootstrap')
+    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(m|r) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m|r) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the MEAN of the f(m|r) from bootstrap')
 
     handles = [mr_mean_line, mr_full, mr_boot]
 
@@ -78,7 +78,7 @@ def plot_m_given_r_relation(result_dir):
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)')
     ax1.set_ylabel('log Mass ($M_{\oplus}$)')
-    ax1.set_title('f(M|R) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title('f(m|r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
 
     plt.show()
     plt.ylim(Mass_min, Mass_max)
@@ -138,7 +138,7 @@ def plot_r_given_m_relation(result_dir):
 
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(8.5,6))
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(y=logRadius, x=logMass, yerr=logRadius_sigma, xerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -147,16 +147,16 @@ def plot_r_given_m_relation(result_dir):
     ax1.fill_between(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
 
-    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(R|M) from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(R|M) from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEAN of the f(R|M) from bootstrap')
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(r|m) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r|m) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEAN of the f(r|m) from bootstrap')
     handles = [rm_mean_line, rm_full, rm_boot]
 
     plt.legend(handles=handles)
     ax1.set_ylabel('log Radius ($R_{\oplus}$)')
     ax1.set_xlabel('log Mass ($M_{\oplus}$)')
 
-    ax1.set_title('f(R|M) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title('f(r|m) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
 
 
     plt.show()
@@ -221,7 +221,7 @@ def plot_mr_and_rm(result_dir):
     mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(8.5,6))
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -234,13 +234,13 @@ def plot_mr_and_rm(result_dir):
     ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
     ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
-    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(M|R) from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(M|R) from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the MEAN of the f(M|R) from bootstrap')
+    mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(m|r) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m|r) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the MEAN of the f(m|r) from bootstrap')
 
-    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(R|M) from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(R|M) from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEAN of the f(R|M) from bootstrap')
+    rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(r|m) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r|m) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEAN of the f(r|m) from bootstrap')
 
     handles = [mr_mean_line, mr_full, mr_boot, rm_mean_line, rm_full, rm_boot]
 
@@ -297,7 +297,7 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     if include_conditionals == True:
         fig, ax1, handles = plot_mr_and_rm(result_dir)
     else:
-        fig = plt.figure()
+        fig = plt.figure(figsize=(8.5,6))
         ax1 = fig.add_subplot(1,1,1)
 
 
