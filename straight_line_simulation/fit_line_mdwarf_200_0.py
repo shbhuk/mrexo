@@ -69,7 +69,7 @@ R_max = np.max(Radius)*1
 
 
 sim_sizes = [20,50,100]
-sim_sizes = [100]
+sim_sizes = [200]
 intrinsic_disp = [0.,0.1,0.5,1.0]
 intrinsic_disp = [0.]
 
