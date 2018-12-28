@@ -68,9 +68,10 @@ R_min = np.min(Radius)*1
 R_max = np.max(Radius)*1
 
 
-sim_sizes = [200]
+sim_sizes = [20,50,100]
+#sim_sizes = [10]
 intrinsic_disp = [0.,0.1,0.5,1.0]
-
+#intrinsic_disp = [1.0]
 
 
 for i in sim_sizes:
@@ -81,12 +82,14 @@ for i in sim_sizes:
         log_sim_mass_init = slope*log_sim_radius_init + intercept
 
         lin_sim_radius_error = 10**log_sim_radius_init * 0.1
-        lin_sim_mass_error = 10**log_sim_mass_init * 0.1
-
-        lin_sim_mass_intrinsic = 10**log_sim_mass_init + np.random.normal(0, np.abs(lin_sim_mass_error))
         lin_sim_radius = 10**log_sim_radius_init + np.random.normal(0, np.abs(lin_sim_radius_error))
 
-        log_sim_mass = np.log10(lin_sim_mass_intrinsic) + np.random.normal(0, j, data_size)
+        # lin_sim_mass_intrinsic = 10**log_sim_mass_init + np.random.normal(0, np.abs(lin_sim_mass_error))
+        log_sim_mass_intrinsic = log_sim_mass_init + np.random.normal(0, j, data_size)
+
+        lin_sim_mass_error = 10**log_sim_mass_intrinsic * 0.1
+
+        log_sim_mass = np.log10(10**log_sim_mass_intrinsic + np.random.normal(0, np.abs(lin_sim_mass_error)))
 
 
         # Directory to store results in
@@ -107,5 +110,5 @@ for i in sim_sizes:
         if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_mr_relation(Mass=10**log_sim_mass, Mass_sigma = lin_sim_mass_error,
                                                     Radius = lin_sim_radius, Radius_sigma = lin_sim_radius_error,
-                                                    save_path = os.path.join(result_dir,'Simulation_cyber_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
-                                                    num_boot = 30, cores = cpu_count())
+                                                    save_path = os.path.join(result_dir,'Simulation_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
+                                                    num_boot = cpu_count(), cores = cpu_count())
