@@ -20,9 +20,9 @@ directory = "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation"
 
 
 sim_sizes = [20,50,100, 200]
-sim_sizes = [10]
-intrinsic_disp = [0, 0.1,0.5,1]
-intrinsic_disp = [1.0]
+#sim_sizes = [10]
+intrinsic_disp = [0.0, 0.1,0.5,1.0]
+#intrinsic_disp = [1.0]
 
 
 
@@ -38,7 +38,7 @@ for i in sim_sizes:
 
         ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
         ax.set_title('{} points ,{}*log M dispersion'.format(i,j))
-        #plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp_jointdist.png'.format(i, j)))
+        plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp_jointdist.png'.format(i, j)))
 
 
 
