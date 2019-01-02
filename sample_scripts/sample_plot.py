@@ -28,18 +28,19 @@ intrinsic_disp = [0.0, 0.1,0.5,1.0]
 
 for i in sim_sizes:
     for j in intrinsic_disp:
-
+        print(i,j)
         result_dir = os.path.join(directory, 'Simulation_{}pts_{}disp'.format(i, j))
 
-        fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-        ax.set_title('{} points ,{}*log M dispersion'.format(i,j))
+        fig, ax, handles = plot_mr_and_rm(result_dir = result_dir)
+        ax.set_title('{} points, {}*log M dispersion'.format(i,j))
 
         plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp.png'.format(i, j)))
+        plt.close()
 
         ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
-        ax.set_title('{} points ,{}*log M dispersion'.format(i,j))
+        ax.set_title('{} points, {}*log M dispersion'.format(i,j))
         plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp_jointdist.png'.format(i, j)))
-
+        plt.close()
 
 
 
