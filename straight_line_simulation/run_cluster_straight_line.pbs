@@ -1,6 +1,6 @@
 #PBS -A cyberlamp              # Specifies job should use our allocation
 #PBS -l nodes=2:ppn=20     # requests your job to be allocated 1 processor core
-#PBS -l walltime=80:00:00 # specifies a maximum run time in format of hh:mm:ss
+#PBS -l walltime=144:00:00 # specifies a maximum run time in format of hh:mm:ss
 #PBS -l pmem=4gb          # this requests 1GB of memory per process
 #PBS -j oe                # combine the stdout and stderr into one file
 #PBS -m abe               # tells PBS to send an email on abort, begin and/or exit
@@ -15,4 +15,4 @@ cd /storage/home/szk381/work/mrexo/straight_line_simulation         # change int
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python fit_line_mdwarf.py > sim_run_straight_open.txt
+python fit_line_mdwarf.py > sim_run_straight_cyber.txt

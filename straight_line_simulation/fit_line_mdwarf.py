@@ -70,7 +70,7 @@ R_max = np.max(Radius)*1
 
 sim_sizes = [200]
 intrinsic_disp = [0.,0.1,0.5,1.0]
-intrinsic_disp = [0.1]
+intrinsic_disp = [1]
 
 
 for i in sim_sizes:
@@ -110,4 +110,4 @@ for i in sim_sizes:
             initialfit_result, bootstrap_results = fit_mr_relation(Mass=10**log_sim_mass, Mass_sigma = lin_sim_mass_error,
                                                     Radius = lin_sim_radius, Radius_sigma = lin_sim_radius_error,
                                                     save_path = os.path.join(result_dir,'Simulation_{}pts_{}disp'.format(data_size, j)), select_deg = 'cv',
-                                                    num_boot = cpu_count(), cores = cpu_count())
+                                                    num_boot = cpu_count() - 2, cores = cpu_count())
