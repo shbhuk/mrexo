@@ -35,3 +35,7 @@ for r in query_radius:
 
     plt.plot(M_points[:-1], pdf_interp)
     plt.fill_between(M_points[:-1], lower_boot,upper_boot,alpha=0.3)
+    plt.text(np.median(pdf_interp),0.5 'Radius = {}'.format(r), size = 20)
+
+plt.ylim(0,1)
+plt.show()
