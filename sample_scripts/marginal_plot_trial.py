@@ -9,13 +9,12 @@ from astropy.table import Table
 
 import sys
 
-sys.path.append(r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo')
-from predict import find_mass_probability_distribution_function
+from mrexo.predict import find_mass_probability_distribution_function
 
 query_radius = [1]
 
 
-result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg17_final"
+result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_final"
 
 input_location = os.path.join(result_dir, 'input')
 output_location = os.path.join(result_dir, 'output')

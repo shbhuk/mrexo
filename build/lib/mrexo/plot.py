@@ -337,15 +337,15 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     plt.show()
 
     return ax1
-
-
+    
+    
 def plot_mass_pdf(result_dir,query_radius):
     '''
-
-
-
+    
+    
+    
     '''
-
+    
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
@@ -362,6 +362,13 @@ def plot_mass_pdf(result_dir,query_radius):
 
     for r in query_radius:
         pdf_interp, lower_boot, upper_boot = find_mass_probability_distribution_function(r, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points)
-
+    
         plt.plot(M_points[:-1], pdf_interp)
         plt.fill_between(M_points[:-1], lower_boot,upper_boot,alpha=0.3)
+        
+    
+    
+  
+
+
+    
