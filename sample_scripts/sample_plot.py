@@ -25,19 +25,21 @@ intrinsic_disp = [0.0,0.1,0.5]
 #intrinsic_disp = [1.0]
 
 plt.close()
-
-for i in sim_sizes:
-    for j in intrinsic_disp:
-        print(i,j)
-        result_dir = os.path.join(directory, 'Simulation_{}pts_{}disp'.format(i, j))
-
-        fig, ax, handles = plot_mr_and_rm(result_dir = result_dir)
-        ax.set_title('{} points, {}*log M dispersion'.format(i,j))
-        ax.legend().set_visible(False)
-
-
-        plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp.png'.format(i, j)))
-        # plt.close()
+#
+# for i in sim_sizes:
+#     for j in intrinsic_disp:
+#         print(i,j)
+#         result_dir = os.path.join(directory, 'Simulation_{}pts_{}disp'.format(i, j))
+#
+#         fig, ax, handles = plot_mr_and_rm(result_dir = result_dir)
+#         ax.set_title('{} points, {}*log M dispersion'.format(i,j))
+#         # ax.legend().set_visible(False)
+#         break
+#     break
+#
+#
+#         # plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp.png'.format(i, j)))
+#         # plt.close()
 #
 #         ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
 #         ax.set_title('{} points, {}*log M dispersion'.format(i,j))
@@ -50,17 +52,20 @@ for i in sim_sizes:
 
 
 
-# for i in range(0,9):
-#
-#     # result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/Simulation_{}_points".format(20)
-#     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
-#     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
-#     result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_cv{}".format(i)
-#     result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\sample_kepler2\Kepler_wo_boundary"
-#     fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-#     fig, ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-#     fig, ax, handles = plot_mr_and_rm(result_dir=result_dir)
-#
-#     _ = plot_mr_and_rm(result_dir)
-#     # ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
-#     break
+for i in range(0,9):
+
+    # result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/Simulation_{}_points".format(20)
+    #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
+    #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
+    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_final"
+    # result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\sample_kepler2\Kepler_wo_boundary"
+    # fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
+    # fig, ax, handles = plot_r_given_m_relation(result_dir = result_dir)
+    fig, ax, handles = plot_mr_and_rm(result_dir=result_dir)
+    ax.set_title('M dwarf conditional distributions')
+
+    _ = plot_mr_and_rm(result_dir)
+    ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
+    ax.set_title('M dwarf joint distributions')
+    plt.show()
+    break

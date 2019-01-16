@@ -227,7 +227,7 @@ def plot_mr_and_rm(result_dir):
     mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    fig = plt.figure(figsize=(8.5,6))
+    fig = plt.figure(figsize=(8.5,6.5))
     plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
@@ -258,7 +258,7 @@ def plot_mr_and_rm(result_dir):
     ax1.set_xlabel('log Radius ($R_{\oplus}$)', fontsize = 20)
     ax1.set_ylabel('log Mass ($M_{\oplus}$)', fontsize = 20)
     ax1.set_title('Degrees {}. No. of data points = {}'.format(deg_choose, len(logRadius)))
-    
+
     plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
@@ -310,13 +310,13 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     if include_conditionals == True:
         fig, ax1, handles = plot_mr_and_rm(result_dir)
     else:
-        fig = plt.figure(figsize=(8.5,6))
+        fig = plt.figure(figsize=(8.5,6.5))
         ax1 = fig.add_subplot(1,1,1)
 
     plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
-    
+
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
     ax1.tick_params(which = 'both',  labeltop = False, top = False, labelright = False, right = False, labelsize = 22)
 

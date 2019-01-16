@@ -48,7 +48,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     dataset = dataset.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
-    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
+    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181214')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
@@ -210,7 +210,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     dataset = dataset.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
-    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181109')
+    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181214')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
