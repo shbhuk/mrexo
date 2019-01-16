@@ -348,6 +348,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
 
     return mean, var, quantile, denominator, y_beta_indv
 
+
 def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mass_min, Mass_max, weights, abs_tol):
     '''
     Calculcate the joint distribution of mass and radius : f(m,r|w,d,d')

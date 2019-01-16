@@ -1,6 +1,7 @@
 import numpy as np
 import os
 from scipy.stats.mstats import mquantiles
+from scipy.interpolate import interp1d
 
 from .mle_utils import cond_density_quantile
 from .plot import plot_r_given_m_relation, plot_m_given_r_relation
@@ -333,3 +334,36 @@ def mass_100_percent_iron_planet(logRadius):
 
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
+
+def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points):
+    '''
+    
+    '''  
+    n_quantiles = 200
+    qtl = np.linspace(0,1.0, n_quantiles)
+
+    results = cond_density_quantile(y=np.log10(R_check), y_std=None, y_max=Radius_max, y_min=Radius_min,
+                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
+                                                      w_hat=weights_mle, qtl=qtl)                                                      
+
+    interpolated_qtls = interp1d(results[2], qtl)(M_points)
+
+    # Conditional_plot. PDF is derivative of CDF
+    pdf_interp = np.diff(interpolated_qtls) / np.diff(M_points)
+   
+    n_boot = np.shape(weights_boot)[0]
+    n_boot = 10
+    pdf_boots = np.zeros((n_boot, len(M_points) - 1))
+    
+    for i in range(0, n_boot):
+        weight = weights_boot[i,:]
+        results_boot = cond_density_quantile(y=np.log10(R_check), y_std=None, y_max=Radius_max, y_min=Radius_min,
+                                                        x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
+                                                        w_hat=weight, qtl=qtl)
+        interpolated_qtls = interp1d(results_boot[2], qtl)(M_points)
+        pdf_boots[i] = np.diff(interpolated_qtls) / np.diff(M_points)
+        print(i)
+        
+    lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+    
+    return pdf_interp, lower_boot, upper_boot

@@ -4,7 +4,6 @@ from multiprocessing import Pool,cpu_count
 import os
 from astropy.table import Table
 import datetime
-#from shutil import copyfile
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
