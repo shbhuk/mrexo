@@ -6,8 +6,6 @@ import os
 from scipy.stats.mstats import mquantiles
 from astropy.table import Table
 
-from .predict import find_mass_probability_distribution_function
-
 
 def plot_m_given_r_relation(result_dir):
     '''
@@ -345,6 +343,7 @@ def plot_mass_pdf(result_dir,query_radius):
 
 
     '''
+    from .predict import find_mass_probability_distribution_function
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
