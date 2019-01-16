@@ -19,6 +19,8 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
                             'R_cond_M' : Conditional distribution of radius given mass.
                             'R_cond_M_var' : Variance for the Conditional distribution of radius given mass.
                             'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass.
+                            'M_marg' : Masses marginalized over the radii.
+                            'R_marg' : Radii marginalized over the masses.
                             if bootstrap == False:
                             'joint_dist' : Joint distribution of mass AND radius.
         output_location : The output subdirectory within save_path where the files are stored
@@ -43,6 +45,8 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         R_cond_M_var = dictionary['R_cond_M_var']
         R_cond_M_lower = dictionary['R_cond_M_quantile'][:,0]
         R_cond_M_upper = dictionary['R_cond_M_quantile'][:,1]
+        Mass_marg = dictionary['M_marg']
+        Radius_marg = dictionary['R_marg']
         joint_dist = dictionary['joint_dist']
 
 
@@ -59,6 +63,8 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_var.txt'), R_cond_M_var, comments='#', header='Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
         np.savetxt(os.path.join(output_location,'R_cond_M_lower.txt'), R_cond_M_lower, comments='#', header='Lower limit for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
         np.savetxt(os.path.join(output_location,'R_cond_M_upper.txt'), R_cond_M_upper, comments='#', header='Upper limit for the Conditional distribution of radius given mass from initial fitting w/o bootstrap')
+        np.savetxt(os.path.join(output_location,'Mass_marg.txt'), Mass_marg, comments='#', header='Masses marginalized over radii from initial fitting w/o bootstrap')
+        np.savetxt(os.path.join(output_location,'Radius_marg.txt'), Radius_marg, comments='#', header='Radii marginalized over masses from initial fitting w/o bootstrap')
         np.savetxt(os.path.join(output_location,'joint_distribution.txt'), joint_dist, comments='#', header='Joint distribution of mass and radius w/o bootstrap')
 
     else:
@@ -75,6 +81,8 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         R_cond_M_var_boot = np.array([x['R_cond_M_var'] for x in dictionary])
         R_cond_M_lower_boot = np.array([x['R_cond_M_quantile'][:,0] for x in dictionary])
         R_cond_M_upper_boot = np.array([x['R_cond_M_quantile'][:,1] for x in dictionary])
+        Mass_marg_boot = np.array([x['M_marg'] for x in dictionary])
+        Radius_marg_boot = np.array([x['R_marg'] for x in dictionary])
 
         np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot, comments='#', header='Weights for Beta densities from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot, comments='#', header='Akaike Information Criterion from bootstrap run')
@@ -89,3 +97,5 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_var_boot.txt'),R_cond_M_var_boot, comments='#', header='Variance for the Conditional distribution of radius given mass from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot, comments='#', header='Lower limit for the Conditional distribution of radius given mass from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments='#', header='Upper limit for the Conditional distribution of radius given mass from bootstrap run')
+        np.savetxt(os.path.join(output_location,'Mass_marg_boot.txt'), Mass_marg_boot, comments='#', header='Masses marginalized over radii from bootstrap run')
+        np.savetxt(os.path.join(output_location,'Radius_marg_boot.txt'), Radius_marg_boot, comments='#', header='Radii marginalized over masses from bootstrap run')

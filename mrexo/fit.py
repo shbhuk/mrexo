@@ -62,6 +62,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             'R_cond_M' : Conditional distribution of radius given mass from initial fitting w/o bootstrap.
                             'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
                             'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
+                            'M_marg' : Masses marginalized over the radii from initial fitting w/o bootstrap.
+                            'R_marg' : Radii marginalized over the masses from initial fitting w/o bootstrap.
                             'joint_dist' : Joint distribution of mass AND radius.
 
 
@@ -78,6 +80,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
                             'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
                             'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
+                            'M_marg' : Masses marginalized over the radii from bootstrap run.
+                            'R_marg' : Radii marginalized over the masses from bootstrap run.
 
 
         EXAMPLE:
