@@ -19,45 +19,43 @@ directory = "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation"
 
 
 
-sim_sizes = [20,50,100, 200]
+sim_sizes = [20,50,100]
 #sim_sizes = [10]
-intrinsic_disp = [0.0, 0.1,0.5,1.0]
+intrinsic_disp = [0.5]
 #intrinsic_disp = [1.0]
 
+plt.close()
+
+# for i in sim_sizes:
+#     for j in intrinsic_disp:
+#         print(i,j)
+#         result_dir = os.path.join(directory, 'Simulation_{}pts_{}disp'.format(i, j))
+#
+#         fig, ax, handles = plot_mr_and_rm(result_dir = result_dir)
+#         ax.set_title('{} points, {}*log M dispersion'.format(i,j))
+#
+#         # plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp.png'.format(i, j)))
+#         # plt.close()
+#
+#         ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
+#         ax.set_title('{} points, {}*log M dispersion'.format(i,j))
+#         # plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp_jointdist.png'.format(i, j)))
+#         # plt.close()
+#
+#
 
 
-for i in sim_sizes:
-    for j in intrinsic_disp:
-        print(i,j)
-        result_dir = os.path.join(directory, 'Simulation_{}pts_{}disp'.format(i, j))
-
-        fig, ax, handles = plot_mr_and_rm(result_dir = result_dir)
-        ax.set_title('{} points, {}*log M dispersion'.format(i,j))
-
-        plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp.png'.format(i, j)))
-        plt.close()
-
-        ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
-        ax.set_title('{} points, {}*log M dispersion'.format(i,j))
-        plt.savefig(os.path.join(pwd, 'Sim_{}pts_{}disp_jointdist.png'.format(i, j)))
-        plt.close()
 
 
+for i in range(0,9):
 
-
-
-'''
-for i in range(10,20):
-    i = 17
-    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/Simulation_{}_points".format(20)
+    # result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/Simulation_{}_points".format(20)
     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
-    #result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_trimmed"
-    fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
+    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_cv{}".format(i)
+    # fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
     # ax, handles = plot_m_given_r_relation(result_dir = result_dir)
-    #ax, handles = plot_mr_and_rm(result_dir=result_dir)
+    fig, ax, handles = plot_mr_and_rm(result_dir=result_dir)
 
 
-    ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
-    break
-'''
+    # ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
