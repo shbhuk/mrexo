@@ -59,6 +59,9 @@ def plot_m_given_r_relation(result_dir):
     mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
     fig = plt.figure(figsize=(8.5,6))
+    plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -139,6 +142,9 @@ def plot_r_given_m_relation(result_dir):
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     fig = plt.figure(figsize=(8.5,6))
+    plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(y=logRadius, x=logMass, yerr=logRadius_sigma, xerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -160,8 +166,8 @@ def plot_r_given_m_relation(result_dir):
 
 
     plt.show()
-    plt.ylim(Mass_min, Mass_max)
-    plt.xlim(Radius_min, Radius_max)
+    plt.xlim(Mass_min, Mass_max)
+    plt.ylim(Radius_min, Radius_max)
 
     return fig, ax1, handles
 
@@ -222,6 +228,9 @@ def plot_mr_and_rm(result_dir):
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     fig = plt.figure(figsize=(8.5,6))
+    plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
     ax1 = fig.add_subplot(1,1,1)
 
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
@@ -246,9 +255,13 @@ def plot_mr_and_rm(result_dir):
 
     plt.legend(handles=handles)
 
-    ax1.set_xlabel('log Radius ($R_{\oplus}$)')
-    ax1.set_ylabel('log Mass ($M_{\oplus}$)')
+    ax1.set_xlabel('log Radius ($R_{\oplus}$)', fontsize = 20)
+    ax1.set_ylabel('log Mass ($M_{\oplus}$)', fontsize = 20)
     ax1.set_title('Degrees {}. No. of data points = {}'.format(deg_choose, len(logRadius)))
+    
+    plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
     plt.show()
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
@@ -300,9 +313,13 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
         fig = plt.figure(figsize=(8.5,6))
         ax1 = fig.add_subplot(1,1,1)
 
-
-
+    plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
+    
     ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
+    ax1.tick_params(which = 'both',  labeltop = False, top = False, labelright = False, right = False, labelsize = 22)
+
     im = ax1.imshow(joint, cmap = 'coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
     cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)])
     cbar.ax.set_yticklabels(['Min', 'Max'])
@@ -312,8 +329,8 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
 
-    plt.xlabel('log Radius ($R_{\oplus}$)')
-    plt.ylabel('log Mass ($M_{\oplus}$)')
+    plt.xlabel('log Radius ($R_{\oplus}$)', fontsize = 20)
+    plt.ylabel('log Mass ($M_{\oplus}$)', fontsize = 20)
 
     plt.show()
 
