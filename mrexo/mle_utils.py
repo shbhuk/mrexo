@@ -160,12 +160,12 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         # Output everything as dictionary
         M_cond_R_mean = M_cond_R[:,0]
         M_cond_R_var = M_cond_R[:,1]
-        M_cond_R_quantile = M_cond_R[:,2:4]
+        M_cond_R_quantile = M_cond_R[:,2]
         R_cond_M = np.array([cond_density_quantile(y = m, y_max=Mass_max, y_min=Mass_min,
                             x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec, w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:4] for m in M_seq])
         R_cond_M_mean = R_cond_M[:,0]
         R_cond_M_var = R_cond_M[:,1]
-        R_cond_M_quantile = R_cond_M[:,2:4]
+        R_cond_M_quantile = R_cond_M[:,2]
 
         output['M_cond_R'] = M_cond_R_mean
         output['M_cond_R_var'] = M_cond_R_var
@@ -357,7 +357,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
 
     quantile = [conditional_quantile(i) for i in qtl]
 
-    return mean, var, quantile[0], quantile[1], denominator, y_beta_indv
+    return mean, var, quantile, denominator, y_beta_indv
 
 def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mass_min, Mass_max, weights, abs_tol):
     '''

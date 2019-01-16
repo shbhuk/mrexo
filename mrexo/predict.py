@@ -100,8 +100,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)
         predicted_mean = predicted_value[0]
-        predicted_lower_quantile = predicted_value[2]
-        predicted_upper_quantile = predicted_value[3]
+        predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
 
         outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
 
@@ -256,8 +255,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
                                                       x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=qtl)
         predicted_mean = predicted_value[0]
-        predicted_lower_quantile = predicted_value[2]
-        predicted_upper_quantile = predicted_value[3]
+        predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
 
         outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
 
