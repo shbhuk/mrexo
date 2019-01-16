@@ -51,8 +51,6 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                 'R_cond_M' : Conditional distribution of radius given mass.
                 'R_cond_M_var' : Variance for the Conditional distribution of radius given mass.
                 'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass.
-                'M_marg' : Masses marginalized over the radii.
-                'R_marg' : Radii marginalized over the masses.
 
 
                 if calc_joint_dist == True:
@@ -138,8 +136,6 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         M_seq = np.linspace(Mass_min,Mass_max,100)
         R_seq = np.linspace(Radius_min,Radius_max,100)
 
-
-
         output = {'weights': w_hat,
                   'aic': aic,
                   'bic': bic,
@@ -147,11 +143,6 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                   'R_points': R_seq}
 
         deg_vec = np.arange(1,deg+1)
-
-        # Marginal Densities
-        Mass_marg = np.array([marginal_density(x = m, x_max = Mass_max, x_min = Mass_min, deg = deg, w_hat = w_hat) for m in M_seq])
-        Radius_marg = np.array([marginal_density(x = r, x_max = Radius_max, x_min = Radius_min, deg = deg, w_hat = w_hat) for r in R_seq])
-
 
         # Conditional Densities with 16% and 84% quantile
         M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
@@ -173,8 +164,6 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         output['R_cond_M'] = R_cond_M_mean
         output['R_cond_M_var'] = R_cond_M_var
         output['R_cond_M_quantile'] = R_cond_M_quantile
-        output['M_marg'] = Mass_marg
-        output['R_marg'] = Radius_marg
 
         if calc_joint_dist == True:
             joint_dist = calculate_joint_distribution(R_seq, Radius_min, Radius_max, M_seq, Mass_min, Mass_max, w_hat, abs_tol)
