@@ -26,15 +26,10 @@ i = 4
 #weights_mle = np.loadtxt(os.path.join(result_dir,'output','weights.txt'))
 #print(predict_m_given_r(Radius=np.log10(5), Radius_sigma=None, posterior_sample=False, islog=True, dataset='kepler', showplot=False))
 
-for i in range(17,18):
-
-    result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
-    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_trimmed"
-    a = predict_m_given_r(Radius=1.64, Radius_sigma=None, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=False)
-    print(a)
-    break
-#c = predict_r_given_m(Mass=np.log10(1), Mass_sigma=None, posterior_sample=False, islog=False, result_dir=result_dir, showplot=True)
-
+a = predict_m_given_r(Radius=1,Radius_sigma = 0.2, posterior_sample=False, islog=True, dataset = 'mdwarf', showplot=True)
+print(a)
+c = predict_r_given_m(Mass=[1,1.2,1.3], Mass_sigma=None, posterior_sample=True, islog=False, dataset = 'mdwarf', showplot=True)
+print(a,c)
 #b = predict_m_given_r(Radius=1, Radius_sigma=0.1, posterior_sample=False, islog=True, dataset='mdwarf', showplot=True)
 
 '''

@@ -75,19 +75,18 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    exception_radii = R_points[(M_cond_R_upper < upper_boot) | (M_cond_R_lower > lower_boot)]
-    #print(exception_radii)
-
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
-
-    print(degree)
 
     # Convert the radius measurement to log scale.
     if islog == False:
         logRadius = np.log10(Radius)
+        if Radius_sigma:
+            Radius_sigma = ((np.log10(Radius + Radius_sigma) - logRadius) + np.abs(np.log10(Radius - Radius_sigma) - logRadius))/2
+            print(Radius_sigma)
     else:
         logRadius = Radius
+    
 
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
@@ -95,8 +94,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(logRadius)
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
-
-
+            
         predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)
@@ -128,14 +126,13 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), 10**Mass_iron))
 
-
+            
         n = np.size(Radius)
         mean_sample = np.zeros(n)
         random_quantile = np.zeros(n)
 
-        if len(logRadius) != len(Radius_sigma):
-            print('Length of Radius array is not equal to length of Radius_sigma array. CHECK!!!!!!!')
-            return 0
+        if n != np.size(Radius_sigma):
+            Radius_sigma = np.repeat(None,n)
 
         for i in range(0,n):
             qtl_check = np.random.random()
@@ -144,7 +141,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
                                                       w_hat=weights_mle, qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
-            random_quantile[i] = results[2]
+            random_quantile[i] = results[2][0]
 
         outputs = random_quantile
 
@@ -247,6 +244,9 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     # Convert the mass measurement to log scale.
     if islog == False:
         logMass = np.log10(Mass)
+        if Mass_sigma:
+            Mass_sigma = ((np.log10(Mass + Mass_sigma) - logMass) + np.abs(np.log10(Mass - Mass_sigma) - logMass))/2
+            print(Mass_sigma)
     else:
         logMass = Mass
 
@@ -266,12 +266,12 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             from matplotlib.lines import Line2D
 
             fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            plt.hlines(predicted_mean, Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(logMass, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(x=logMass, y=predicted_mean, xerr=Mass_sigma,
                         yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
                         fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            plt.hlines(predicted_mean, Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(logMass, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.legend(handles=handles)
 
 
@@ -281,10 +281,9 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         n = np.size(Mass)
         mean_sample = np.zeros(n)
         random_quantile = np.zeros(n)
-
-        if len(logMass) != len(Mass_sigma):
-            print('Length of Mass array is not equal to length of Mass_sigma array. CHECK!!!!!!!')
-            return 0
+        
+        if n != np.size(Mass_sigma):
+            Mass_sigma = np.repeat(None,n)
 
         for i in range(0,n):
             qtl_check = np.random.random()
@@ -293,7 +292,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
                                                       w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=[qtl_check,0.5])
 
             mean_sample[i] = results[0]
-            random_quantile[i] = results[2]
+            random_quantile[i] = results[2][0]
 
         outputs = random_quantile
 
@@ -304,15 +303,13 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             m_q =  mquantiles(logMass, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
             r_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
-            print(r_q)
-            print(m_q)
-
             fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+            plt.plot(r_q,m_q,'g')
+            plt.hlines(r_q[1], Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0],
                         fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            plt.hlines(r_q[1], Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.legend(handles=handles)
 
 
@@ -335,14 +332,18 @@ def mass_100_percent_iron_planet(logRadius):
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
 
-def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points):
+def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points, islog = True):
     '''
     
     '''  
+
+    if islog == False:
+        R_check = np.log10(R_check)
+        
     n_quantiles = 200
     qtl = np.linspace(0,1.0, n_quantiles)
 
-    results = cond_density_quantile(y=np.log10(R_check), y_std=None, y_max=Radius_max, y_min=Radius_min,
+    results = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)                                                      
 
@@ -352,16 +353,54 @@ def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max,
     pdf_interp = np.diff(interpolated_qtls) / np.diff(M_points)
    
     n_boot = np.shape(weights_boot)[0]
-    n_boot = 10
+    n_boot = 50
     pdf_boots = np.zeros((n_boot, len(M_points) - 1))
     
     for i in range(0, n_boot):
         weight = weights_boot[i,:]
-        results_boot = cond_density_quantile(y=np.log10(R_check), y_std=None, y_max=Radius_max, y_min=Radius_min,
+        results_boot = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
                                                         x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
                                                         w_hat=weight, qtl=qtl)
         interpolated_qtls = interp1d(results_boot[2], qtl)(M_points)
         pdf_boots[i] = np.diff(interpolated_qtls) / np.diff(M_points)
+        print(i)
+        
+    lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+    
+    return pdf_interp, lower_boot, upper_boot
+
+
+def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, islog = True):
+    '''
+    
+    '''  
+    
+    if islog == False:
+        M_check = np.log10(M_check)
+        
+    n_quantiles = 200
+    qtl = np.linspace(0,1.0, n_quantiles)
+
+    results = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
+                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
+                                                      w_hat=weights_mle, qtl=qtl)                                                      
+
+    interpolated_qtls = interp1d(results[2], qtl)(R_points)
+
+    # Conditional_plot. PDF is derivative of CDF
+    pdf_interp = np.diff(interpolated_qtls) / np.diff(R_points)
+   
+    n_boot = np.shape(weights_boot)[0]
+    n_boot = 50
+    pdf_boots = np.zeros((n_boot, len(R_points) - 1))
+    
+    for i in range(0, n_boot):
+        weight = weights_boot[i,:]
+        results_boot = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
+                                                        x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
+                                                        w_hat=weight, qtl=qtl)
+        interpolated_qtls = interp1d(results_boot[2], qtl)(R_points)
+        pdf_boots[i] = np.diff(interpolated_qtls) / np.diff(R_points)
         print(i)
         
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
