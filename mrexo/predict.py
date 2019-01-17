@@ -69,8 +69,6 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
     R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
-    M_cond_R_upper = np.loadtxt(os.path.join(output_location, 'M_cond_R_upper.txt'))
-    M_cond_R_lower = np.loadtxt(os.path.join(output_location, 'M_cond_R_lower.txt'))
 
     M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
@@ -82,8 +80,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     if islog == False:
         logRadius = np.log10(Radius)
         if Radius_sigma:
-            Radius_sigma = ((np.log10(Radius + Radius_sigma) - logRadius) + np.abs(np.log10(Radius - Radius_sigma) - logRadius))/2
-            print(Radius_sigma)
+            Radius_sigma = 0.434 * Radius_sigma / Radius
     else:
         logRadius = Radius
     
@@ -156,6 +153,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
             plt.hlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(r_q[1], Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
+            plt.plot(logRadius,outputs,'g.',markersize = 9)
             ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='o', color = 'green')
             ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
@@ -226,27 +224,17 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
-    M_points = np.loadtxt(os.path.join(output_location, 'M_points.txt'))
-    R_cond_M_upper = np.loadtxt(os.path.join(output_location, 'R_cond_M_upper.txt'))
-    R_cond_M_lower = np.loadtxt(os.path.join(output_location, 'R_cond_M_lower.txt'))
-
     R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
     lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    exception_masses = M_points[(R_cond_M_upper < upper_boot) | (R_cond_M_lower > lower_boot)]
-
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
-
-
-    print(degree)
 
     # Convert the mass measurement to log scale.
     if islog == False:
         logMass = np.log10(Mass)
         if Mass_sigma:
-            Mass_sigma = ((np.log10(Mass + Mass_sigma) - logMass) + np.abs(np.log10(Mass - Mass_sigma) - logMass))/2
-            print(Mass_sigma)
+            Mass_sigma = 0.434 * Mass_sigma / Mass
     else:
         logMass = Mass
 
@@ -304,7 +292,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
             r_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
 
             fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-            plt.plot(r_q,m_q,'g')
+            plt.plot(logMass,outputs,'g.',markersize = 9)
             plt.hlines(r_q[1], Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
             ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0],
