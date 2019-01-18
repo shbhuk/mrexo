@@ -142,11 +142,28 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                   'M_points': M_seq,
                   'R_points': R_seq}
 
+
         deg_vec = np.arange(1,deg+1)
 
-        # Conditional Densities with 16% and 84% quantile
-        M_cond_R = np.array([cond_density_quantile(y = r, y_max = Radius_max, y_min = Radius_min,
-                            x_max = Mass_max, x_min = Mass_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.16,0.84])[0:2] for r in R_seq])
+        M_cond_R_mean, M_cond_R_var, M_cond_R_quantile = [], [], []
+        R_cond_M_mean, R_cond_M_var, R_cond_M_quantile = [], [], []
+
+        for i in range(0,len(R_seq)):
+            # Conditional Densities with 16% and 84% quantile
+            M_cond_R = cond_density_quantile(y = R_seq[i], y_max = Radius_max, y_min = Radius_min,
+                            x_max = Mass_max, x_min = Mass_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.16,0.84])[0:3]
+            M_cond_R_mean.append(M_cond_R[0])
+            M_cond_R_var.append(M_cond_R[1])
+            M_cond_R_quantile.append(M_cond_R[2])
+
+            R_cond_M = cond_density_quantile(y = M_seq[i], y_max=Mass_max, y_min=Mass_min,
+                                x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec, 
+                                w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:3] 
+            R_cond_M_mean.append(R_cond_M[0])
+            R_cond_M_var.append(R_cond_M[1])
+            R_cond_M_quantile.append(R_cond_M[2])
+            
+            
 
         # Output everything as dictionary
         M_cond_R_mean = M_cond_R[:,0]
