@@ -44,7 +44,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
         deg_choose - The optimum degree chosen by cross validation and MLE
     '''
     if degree_candidates == None:
-        degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
+        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
 
     n = len(Mass)
 

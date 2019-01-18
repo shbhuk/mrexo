@@ -180,7 +180,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     elif select_deg == 'aic' :
         # Minimize the AIC
-        degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
+        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         aic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                         Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, save_path=aux_output_location)['aic'] for d in degree_candidates])
 
@@ -195,7 +195,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     elif select_deg == 'bic':
         # Minimize the BIC
-        degree_candidates = np.linspace(5, degree_max, 12, dtype = int)
+        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         bic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                         Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, save_path=aux_output_location)['bic'] for d in degree_candidates])
 
