@@ -29,5 +29,5 @@ result_dir = os.path.join(pwd,'M_dwarfs_cv')
 if __name__ == '__main__': 
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_deg17_final2'), select_deg = 'cv',
-                                                num_boot = 100, cores = cpu_count())
+                                                save_path = os.path.join(pwd,'test'), select_deg = 10,
+                                                num_boot = 10, cores = cpu_count())

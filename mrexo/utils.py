@@ -37,7 +37,6 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         R_points = dictionary['R_points']
         M_cond_R = dictionary['M_cond_R']
         M_cond_R_var = dictionary['M_cond_R_var']
-	print(type(dictionary['M_cond_R_quantile']))
         M_cond_R_lower = dictionary['M_cond_R_quantile'][:,0]
         M_cond_R_upper = dictionary['M_cond_R_quantile'][:,1]
         R_cond_M = dictionary['R_cond_M']

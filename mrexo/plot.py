@@ -366,11 +366,10 @@ def plot_mass_pdf(result_dir,query_radius):
         plt.fill_between(M_points[:-1], lower_boot,upper_boot,alpha=0.3)
         
         
-def plot_weights(result_dir):
+def plot_mle_weights(result_dir):
     '''
     
     '''
-    input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))

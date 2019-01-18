@@ -169,10 +169,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
         output['M_cond_R'] = M_cond_R_mean
         output['M_cond_R_var'] = M_cond_R_var
-        output['M_cond_R_quantile'] = M_cond_R_quantile
+        output['M_cond_R_quantile'] = np.array(M_cond_R_quantile)
         output['R_cond_M'] = R_cond_M_mean
         output['R_cond_M_var'] = R_cond_M_var
-        output['R_cond_M_quantile'] = R_cond_M_quantile
+        output['R_cond_M_quantile'] = np.array(R_cond_M_quantile)
 
         if calc_joint_dist == True:
             joint_dist = calculate_joint_distribution(R_seq, Radius_min, Radius_max, M_seq, Mass_min, Mass_max, w_hat, abs_tol)
@@ -237,7 +237,6 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     # Log of 0 throws weird errors
     C_pdf[C_pdf == 0] = 1e-300
     C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
-    print(np.shape(C_pdf))
     return C_pdf
 
 
