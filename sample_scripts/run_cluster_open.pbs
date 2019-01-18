@@ -15,4 +15,4 @@ cd /storage/home/szk381/work/mrexo/sample_scripts         # change into same dir
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python sample_fit.py> mdwarf_run_17.txt
+python sample_fit.py> mdwarf_run_17_v2.txt

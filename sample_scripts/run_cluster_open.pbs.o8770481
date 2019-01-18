@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "sample_fit.py", line 33, in <module>
+    num_boot = 100, cores = cpu_count())
+  File "/storage/work/s/szk381/mrexo/mrexo/fit.py", line 225, in fit_mr_relation
+    calc_joint_dist = True)
+  File "/storage/work/s/szk381/mrexo/mrexo/mle_utils.py", line 149, in MLE_fit
+    x_max = Mass_max, x_min = Mass_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.16,0.84])[0:3] for r in R_seq])
+ValueError: setting an array element with a sequence.
