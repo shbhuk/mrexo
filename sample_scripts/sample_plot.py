@@ -57,8 +57,8 @@ for i in range(0,9):
     # result_dir =  "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation/Simulation_{}_points".format(20)
     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_increase_bounds2{}".format(17)
     #result_dir =  "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_deg_cancel_boundary_poly17"
-    result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17_final"
-    result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605"
+    result_dir = "C:/Users/shbhu/Documents/GitHub/mrexo/sample_scripts/M_dwarfs_CV"
+    # result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605"
     # result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\sample_kepler2\Kepler_wo_boundary"
     # fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
     # fig, ax, handles = plot_r_given_m_relation(result_dir = result_dir)
@@ -76,6 +76,3 @@ for i in range(0,9):
     break
 
 
-
-weights = np.loadtxt(r'C:/Users/shbhu/Documents/Git/mrexo/mrexo/datasets/M_dwarfs_20181214/output/weights.txt')
-plt.imshow(np.reshape(weights, [17,17]))

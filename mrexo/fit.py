@@ -243,9 +243,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
 
         with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write("\n\n=======================================================================")
+            f.write("\n\n=======================================================================\n\n")
             f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
-            f.write("=======================================================================\n\n")
+            f.write("\n\n=======================================================================\n\n")
 
 
         # Parallelize the bootstraps
