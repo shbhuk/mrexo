@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "sample_fit.py", line 33, in <module>
+    num_boot = 100, cores = cpu_count())
+  File "/storage/work/s/szk381/mrexo/mrexo/fit.py", line 230, in fit_mr_relation
+    save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
+  File "/storage/work/s/szk381/mrexo/mrexo/utils.py", line 41, in save_dictionary
+    M_cond_R_lower = dictionary['M_cond_R_quantile'][:,0]
+TypeError: list indices must be integers, not tuple

@@ -165,15 +165,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
             
             
 
-        # Output everything as dictionary
-        M_cond_R_mean = M_cond_R[:,0]
-        M_cond_R_var = M_cond_R[:,1]
-        M_cond_R_quantile = M_cond_R[:,2]
-        R_cond_M = np.array([cond_density_quantile(y = m, y_max=Mass_max, y_min=Mass_min,
-                            x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec, w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.16,0.84])[0:2] for m in M_seq])
-        R_cond_M_mean = R_cond_M[:,0]
-        R_cond_M_var = R_cond_M[:,1]
-        R_cond_M_quantile = R_cond_M[:,2]
+        # Output everything as dictionary    
 
         output['M_cond_R'] = M_cond_R_mean
         output['M_cond_R_var'] = M_cond_R_var
