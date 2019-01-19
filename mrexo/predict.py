@@ -81,7 +81,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             Radius_sigma = 0.434 * Radius_sigma / Radius
     else:
         logRadius = Radius
-    
+
 
     # Check if single measurement or posterior distribution.
     if posterior_sample == False:
@@ -89,7 +89,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(logRadius)
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
-            
+
         predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)
@@ -121,7 +121,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), 10**Mass_iron))
 
-            
+
         n = np.size(Radius)
         mean_sample = np.zeros(n)
         random_quantile = np.zeros(n)
@@ -265,7 +265,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         n = np.size(Mass)
         mean_sample = np.zeros(n)
         random_quantile = np.zeros(n)
-        
+
         if n != np.size(Mass_sigma):
             Mass_sigma = np.repeat(None,n)
 
@@ -318,74 +318,76 @@ def mass_100_percent_iron_planet(logRadius):
 
 def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points, islog = True):
     '''
-    
-    '''  
+
+    '''
 
     if islog == False:
         R_check = np.log10(R_check)
-        
+
     n_quantiles = 200
     qtl = np.linspace(0,1.0, n_quantiles)
 
     results = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
-                                                      w_hat=weights_mle, qtl=qtl)                                                      
+                                                      w_hat=weights_mle, qtl=qtl)
 
     cdf_interp = interp1d(results[2], qtl)(M_points)
 
     # Conditional_plot. PDF is derivative of CDF
     pdf_interp = np.diff(cdf_interp) / np.diff(M_points)
-   
+
     n_boot = np.shape(weights_boot)[0]
     pdf_boots = np.zeros((n_boot, len(M_points) - 1))
-    
+    cdf_interp_boot = np.zeros((n_boot, len(M_points)))
+
     for i in range(0, n_boot):
         weight = weights_boot[i,:]
         results_boot = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
                                                         x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
                                                         w_hat=weight, qtl=qtl)
-        cdf_interp_boot = interp1d(results_boot[2], qtl)(M_points)
+        cdf_interp_boot[i] = interp1d(results_boot[2], qtl)(M_points)
         pdf_boots[i] = np.diff(cdf_interp_boot) / np.diff(M_points)
         print(i)
-        
+
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-    
+
     return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
 
 
 def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, islog = True):
     '''
-    
-    '''  
-    
+
+    '''
+
     if islog == False:
         M_check = np.log10(M_check)
-        
+
     n_quantiles = 200
     qtl = np.linspace(0,1.0, n_quantiles)
 
     results = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
                                                       x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
-                                                      w_hat=weights_mle, qtl=qtl)                                                      
+                                                      w_hat=weights_mle, qtl=qtl)
 
     cdf_interp = interp1d(results[2], qtl)(R_points)
 
     # Conditional_plot. PDF is derivative of CDF
     pdf_interp = np.diff(cdf_interp) / np.diff(R_points)
-   
+
     n_boot = np.shape(weights_boot)[0]
-    n_boot = 50
+
+    cdf_interp_boot = np.zeros((n_boot, len(R_points)))
     pdf_boots = np.zeros((n_boot, len(R_points) - 1))
-    
+
     for i in range(0, n_boot):
         weight = weights_boot[i,:]
         results_boot = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
                                                         x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
                                                         w_hat=weight, qtl=qtl)
-        cdf_interp_boot = interp1d(results_boot[2], qtl)(R_points)
+        cdf_interp_boot[i] = interp1d(results_boot[2], qtl)(R_points)
         pdf_boots[i] = np.diff(cdf_interp_boot) / np.diff(R_points)
         print(i)
-        
+
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-    
+
     return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
