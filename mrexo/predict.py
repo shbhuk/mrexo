@@ -58,8 +58,6 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
 
-    print(result_dir)
-
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
@@ -214,8 +212,6 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
 
-    print(result_dir)
-
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
@@ -335,13 +331,12 @@ def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)                                                      
 
-    interpolated_qtls = interp1d(results[2], qtl)(M_points)
+    cdf_interp = interp1d(results[2], qtl)(M_points)
 
     # Conditional_plot. PDF is derivative of CDF
-    pdf_interp = np.diff(interpolated_qtls) / np.diff(M_points)
+    pdf_interp = np.diff(cdf_interp) / np.diff(M_points)
    
     n_boot = np.shape(weights_boot)[0]
-    n_boot = 50
     pdf_boots = np.zeros((n_boot, len(M_points) - 1))
     
     for i in range(0, n_boot):
@@ -349,13 +344,13 @@ def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max,
         results_boot = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
                                                         x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
                                                         w_hat=weight, qtl=qtl)
-        interpolated_qtls = interp1d(results_boot[2], qtl)(M_points)
-        pdf_boots[i] = np.diff(interpolated_qtls) / np.diff(M_points)
+        cdf_interp_boot = interp1d(results_boot[2], qtl)(M_points)
+        pdf_boots[i] = np.diff(cdf_interp_boot) / np.diff(M_points)
         print(i)
         
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     
-    return pdf_interp, lower_boot, upper_boot
+    return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
 
 
 def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, islog = True):
@@ -373,10 +368,10 @@ def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, R
                                                       x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)                                                      
 
-    interpolated_qtls = interp1d(results[2], qtl)(R_points)
+    cdf_interp = interp1d(results[2], qtl)(R_points)
 
     # Conditional_plot. PDF is derivative of CDF
-    pdf_interp = np.diff(interpolated_qtls) / np.diff(R_points)
+    pdf_interp = np.diff(cdf_interp) / np.diff(R_points)
    
     n_boot = np.shape(weights_boot)[0]
     n_boot = 50
@@ -387,10 +382,10 @@ def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, R
         results_boot = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
                                                         x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
                                                         w_hat=weight, qtl=qtl)
-        interpolated_qtls = interp1d(results_boot[2], qtl)(R_points)
-        pdf_boots[i] = np.diff(interpolated_qtls) / np.diff(R_points)
+        cdf_interp_boot = interp1d(results_boot[2], qtl)(R_points)
+        pdf_boots[i] = np.diff(cdf_interp_boot) / np.diff(R_points)
         print(i)
         
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     
-    return pdf_interp, lower_boot, upper_boot
+    return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot

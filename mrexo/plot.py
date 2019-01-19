@@ -245,15 +245,15 @@ def plot_mr_and_rm(result_dir):
 
     mr_mean_line = Line2D([0], [0], color='maroon', lw=2,label='Mean of f(m|r) from full dataset run')
     mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m|r) from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the MEAN of the f(m|r) from bootstrap')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of MEAN of f(m|r) from bootstrap')
 
     rm_mean_line = Line2D([0], [0], color='midnightblue', lw=2,label='Mean of f(r|m) from full dataset run')
     rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r|m) from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEAN of the f(r|m) from bootstrap')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of MEAN of f(r|m) from bootstrap')
 
     handles = [mr_mean_line, mr_full, mr_boot, rm_mean_line, rm_full, rm_boot]
 
-    plt.legend(handles=handles)
+    plt.legend(handles=handles, loc=4, prop={'size': 13})
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)', fontsize = 20)
     ax1.set_ylabel('log Mass ($M_{\oplus}$)', fontsize = 20)
@@ -321,7 +321,7 @@ def plot_joint_mr_distribution(result_dir, include_conditionals):
     ax1.tick_params(which = 'both',  labeltop = False, top = False, labelright = False, right = False, labelsize = 22)
 
     im = ax1.imshow(joint, cmap = 'coolwarm', extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = 'lower', aspect = 0.3)
-    cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)])
+    cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)], fraction=0.037, pad=0.04)
     cbar.ax.set_yticklabels(['Min', 'Max'])
     #plt.colorbar(im)
 
@@ -360,7 +360,7 @@ def plot_mass_pdf(result_dir,query_radius):
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
 
     for r in query_radius:
-        pdf_interp, lower_boot, upper_boot = find_mass_probability_distribution_function(r, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points)
+        cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot = find_mass_probability_distribution_function(r, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points)
 
         plt.plot(M_points[:-1], pdf_interp)
         plt.fill_between(M_points[:-1], lower_boot,upper_boot,alpha=0.3)

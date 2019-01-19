@@ -15,10 +15,19 @@ except NameError:
 
 result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
 
+import datetime 
 
-a = predict_m_given_r(Radius=2.5, Radius_sigma = 0.3, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=True)
+s = datetime.datetime.now()
+for i in range(0,50):
+    a = predict_m_given_r(Radius=2.5, Radius_sigma = 0.2, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=False)
+e = datetime.datetime.now()
+
+print(e-s)
+
+'''
 print(a)
-c = predict_r_given_m(Mass=3, Mass_sigma=None, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=True)
+c = predict_r_given_m(Mass=3, Mass_sigma=None, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=False)
+'''
 # print(a,c)
 #b = predict_m_given_r(Radius=1, Radius_sigma=0.1, posterior_sample=False, islog=True, dataset='mdwarf', showplot=True)
 

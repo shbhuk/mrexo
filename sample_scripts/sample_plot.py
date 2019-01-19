@@ -62,16 +62,23 @@ for i in range(0,9):
     # result_dir = r"C:\Users\shbhu\Documents\Git\mrexo\sample_kepler2\Kepler_wo_boundary"
     # fig, ax, handles = plot_m_given_r_relation(result_dir = result_dir)
     # fig, ax, handles = plot_r_given_m_relation(result_dir = result_dir)
-    fig, ax, handles = plot_mr_and_rm(result_dir=result_dir)
-    ax.set_title('Kepler conditional distributions')
+    ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
+    plt.title('M dwarf joint distributions', fontsize = 20)
     plt.xlim(-0.3, 1.30483)
     plt.ylim(-1.744727, 2.44790)
 
-    _ = plot_mr_and_rm(result_dir)
+    plt.yticks(np.arange(-1.5, 2.5, 0.5))
+    plt.xticks(np.arange(-0.25, 1.5, 0.25))
+    result_dir = r"C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605"
+
+    # _ = plot_mr_and_rm(result_dir)
     ax = plot_joint_mr_distribution(result_dir, include_conditionals = False)
-    ax.set_title('Kepler joint distributions')
+    plt.title('Kepler joint distributions', fontsize = 20)
     plt.xlim(-0.3, 1.30483)
     plt.ylim(-1.744727, 2.44790)
+
+    plt.yticks(np.arange(-1.5, 2.5, 0.5))
+    plt.xticks(np.arange(-0.25, 1.5, 0.25))
     plt.show()
     break
 
