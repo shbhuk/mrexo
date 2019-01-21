@@ -104,7 +104,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     x0 = np.repeat(1./(deg**2),(deg-2)**2)
 
     # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
-    opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=500, full_output=True, iprint=1, epsilon=1e-5, acc=1e-5)
+    opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1, epsilon=1e-5, acc=1e-5)
     print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(), opt_result[2], opt_result[3], opt_result[4]))
 
 
@@ -117,13 +117,12 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
     unpadded_weight = opt_result[0]
     n_log_lik = opt_result[1]
-
+    
+    # Pad the weight array with zeros for the 
     w_sq = np.reshape(unpadded_weight,[deg-2,deg-2])
     w_sq_padded = np.zeros((deg,deg))
     w_sq_padded[1:-1,1:-1] = w_sq
     w_hat = w_sq_padded.flatten()
-
-
 
     if output_weights_only == True:
         return unpadded_weight
