@@ -253,7 +253,7 @@ def plot_mr_and_rm(result_dir):
 
     handles = [mr_mean_line, mr_full, mr_boot, rm_mean_line, rm_full, rm_boot]
 
-    plt.legend(handles=handles, loc=4, prop={'size': 13})
+    plt.legend(handles=handles, loc=4, prop={'size': 14})
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)', fontsize = 20)
     ax1.set_ylabel('log Mass ($M_{\oplus}$)', fontsize = 20)
@@ -364,23 +364,22 @@ def plot_mass_pdf(result_dir,query_radius):
 
         plt.plot(M_points[:-1], pdf_interp)
         plt.fill_between(M_points[:-1], lower_boot,upper_boot,alpha=0.3)
-        
-        
+
+
 def plot_mle_weights(result_dir):
     '''
-    
+
     '''
     output_location = os.path.join(result_dir, 'output')
 
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
-    
+
     size = int(np.sqrt(len(weights_mle)))
-    
+
     plt.imshow(np.reshape(weights_mle , [size, size]), extent = [0, size, 0, size], origin = 'left', cmap = 'viridis')
     plt.xticks(np.arange(0,size), *[np.arange(0,size)])
     plt.yticks(np.arange(0,size), *[np.arange(0,size)])
-    
+
     plt.colorbar()
     plt.title('Polynomial weights with {} degrees'.format(size))
     plt.show()
-
