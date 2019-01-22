@@ -87,7 +87,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         if logRadius < np.log10(1.3):
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(logRadius)
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**logRadius, 10**Mass_iron))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(np.round(10**logRadius,5), np.round(10**Mass_iron,5)))
 
         predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
@@ -122,7 +122,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         if np.min(logRadius) < np.log10(1.3):
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), np.round(10**Mass_iron,5)))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(np.round(10**np.min(logRadius),5), np.round(10**Mass_iron,5)))
 
 
         n = np.size(Radius)
