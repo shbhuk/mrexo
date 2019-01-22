@@ -27,7 +27,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         posterior_sample: If the input radii is a posterior sample, posterior_sample=True, else False.
                 Default=False
         qtl: 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl=[0.16,0.84]
+                Default is 0.16 and 0.84. qtl=[0.16,0.84]. If posterior_sample=True, qtl will not be considered.
         islog: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
         showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
@@ -69,7 +69,6 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
 
     M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
-    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
@@ -94,9 +93,13 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
                                                       x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=weights_mle, qtl=qtl)
         predicted_mean = predicted_value[0]
-        predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
+        if np.size(qtl)==2:
+            predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
+        else:
+            # If finding multiple quantiles, do not plot errorbar on predicted value in plot
+            predicted_lower_quantile, predicted_upper_quantile = 0,0
 
-        outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
+        outputs = [predicted_mean, np.array(predicted_value[2])]
 
         if showplot == True:
             import matplotlib.pyplot as plt
@@ -119,7 +122,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         if np.min(logRadius) < np.log10(1.3):
             #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), 10**Mass_iron))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(logRadius), np.round(10**Mass_iron,5)))
 
 
         n = np.size(Radius)
@@ -184,7 +187,7 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
         posterior_sample: If the input mass is a posterior sample, posterior_sample=True, else False.
                 Default=False
         qtl: 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl=[0.16,0.84]
+                Default is 0.16 and 0.84. qtl=[0.16,0.84]. If posterior_sample=True, qtl will not be considered.
         islog: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
         showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
@@ -221,7 +224,6 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
 
     R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
-    lower_boot, upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
@@ -240,9 +242,13 @@ def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
                                                       x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
                                                       w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=qtl)
         predicted_mean = predicted_value[0]
-        predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
+        if np.size(qtl)==2:
+            predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
+        else:
+            # If finding multiple quantiles, do not plot errorbar on predicted value in plot
+            predicted_lower_quantile, predicted_upper_quantile = 0,0
 
-        outputs = [predicted_mean,predicted_lower_quantile,predicted_upper_quantile]
+        outputs = [predicted_mean, np.array(predicted_value[2])]
 
 
         if showplot == True:
