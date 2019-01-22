@@ -2,6 +2,8 @@ import numpy as np
 import os
 from scipy.stats.mstats import mquantiles
 from scipy.interpolate import interp1d
+from scipy.interpolate import interp2d
+
 
 from .mle_utils import cond_density_quantile
 from .utils import load_lookup_table
@@ -308,3 +310,42 @@ def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, R
     lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
     return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
+
+
+def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
+    '''
+    
+    
+    '''
+
+    predict_quantity = predict_quantity.replace(' ', '').replace('-', '').lower()
+           
+    input_location = os.path.join(result_dir, 'input')
+    output_location = os.path.join(result_dir, 'output')
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+
+    lookup_grid_size = 10
+    
+    lookup_table = np.zeros((lookup_grid_size, lookup_grid_size))
+    qtl_steps = np.linspace(0,1,lookup_grid_size)
+    
+    if predict_quantity == 'mass':  
+        search_steps = np.linspace(Radius_min, Radius_max, lookup_grid_size)
+        fname = 'lookup_m_given_r'
+        comment = 'Lookup table for predicting log(Mass) given log(Radius) and certain quantile.'
+    else:
+        search_steps = np.linspace(Mass_min, Mass_max, lookup_grid_size)
+        fname = 'lookup_r_given_m'
+        comment = 'Lookup table for predicting log(Radius) given log(Mass) and certain quantile.'
+
+
+    for i in range(0,lookup_grid_size):
+        lookup_table[i,:] = predict_from_measurement(measurement = search_steps[i], qtl = qtl_steps, result_dir = result_dir, is_log = True, predict = predict_quantity)[1]
+        if i%100==0:
+            print(i)
+    
+    np.savetxt(os.path.join(output_location,fname+'.txt'), lookup_table, comments='#', header=comment)
+    
+    interp = interp2d(qtl_steps, search_steps, lookup_table)
+    np.save(os.path.join(output_location,fname+'interp2d.npy'), interp)
