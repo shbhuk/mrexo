@@ -4,13 +4,16 @@ from scipy.stats.mstats import mquantiles
 from scipy.interpolate import interp1d
 
 from .mle_utils import cond_density_quantile
+from .utils import load_lookup_table
 from .plot import plot_r_given_m_relation, plot_m_given_r_relation
 
 pwd = os.path.dirname(__file__)
 np.warnings.filterwarnings('ignore')
 
-def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwarf',
-                      posterior_sample=False, qtl=[0.16,0.84], islog=False, showplot=False):
+def predict_from_measurement(measurement, measurement_sigma=None,
+            predict = 'Mass', result_dir=None, dataset='mdwarf',
+            is_posterior=False, qtl=[0.16,0.84], is_log=False, show_plot=False,
+            use_lookup=False):
     '''
     Predict mass from given radius.
     Given radius can be a single measurement, with or without error, or can also be a posterior distribution of radii.
@@ -24,13 +27,14 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
                 and then dataset='mdwarf', or dataset='kepler'
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
-        posterior_sample: If the input radii is a posterior sample, posterior_sample=True, else False.
+        is_posterior: If the input radii is a posterior sample, is_posterior=True, else False.
                 Default=False
         qtl: 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl=[0.16,0.84]. If posterior_sample=True, qtl will not be considered.
-        islog: Whether the radius given is in log scale or not.
+                Default is 0.16 and 0.84. qtl=[0.16,0.84]. If is_posterior=True, qtl will not be considered.
+        is_log: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
-        showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
+        show_plot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
+        use_lookup:If True, will try to use lookup table. If lookup table does not exist, will give warning and calculate the prediction.
     OUTPUT:
         outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
@@ -41,12 +45,13 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
         import numpy as np
         pwd = '~/mrexo_working/'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=None, result_dir=result_dir, posterior_sample=False, islog=True)
+        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=None, result_dir=result_dir, is_posterior=False, is_log=True)
         #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
-        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=0.1, result_dir=None, dataset='mdwarf', posterior_sample=False, islog=True)
-    '''
-
+        predicted_mass, lower_qtl_mass, upper_qtl_mass = predict_m_given_r(Radius=1, Radius_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False, is_log=True)
+    '''       
+    
     dataset = dataset.replace(' ', '').replace('-', '').lower()
+    predict = predict.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
     mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181214')
@@ -57,7 +62,7 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
             result_dir = mdwarf_resultdir
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
-
+            
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
 
@@ -65,249 +70,155 @@ def predict_m_given_r(Radius,  Radius_sigma=None, result_dir=None, dataset='mdwa
     Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
-
     R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
 
-    M_cond_R_boot = np.loadtxt(os.path.join(output_location, 'M_cond_R_boot.txt'))
-
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
+    
 
-    # Convert the radius measurement to log scale.
-    if islog == False:
-        logRadius = np.log10(Radius)
-        if Radius_sigma:
-            Radius_sigma = 0.434 * Radius_sigma / Radius
+    # Convert the measurement to log scale.
+    if is_log == False:
+        log_measurement = np.log10(measurement)
+        if measurement_sigma:
+            measurement_sigma = 0.434 * measurement_sigma / measurement
     else:
-        logRadius = Radius
-
+        log_measurement = measurement
+        
+    if predict == 'mass':
+        predict_min, predict_max = Mass_min, Mass_max
+        measurement_min, measurement_max = Radius_min, Radius_max
+        w_hat = weights_mle
+        lookup_fname = 'lookup_m_given_r_interp2d.npy'
+        if np.min(log_measurement) < np.log10(1.3):
+            #This is from 100% iron curve of Fortney 2007; solving for 
+            # logM (base 10) via quadratic formula.
+            Mass_iron = mass_100_percent_iron_planet(np.min(log_measurement))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(log_measurement), 10**Mass_iron))       
+    else:
+        predict_min, predict_max = Radius_min, Radius_max 
+        measurement_min, measurement_max = Mass_min, Mass_max
+        w_hat = np.reshape(weights_mle,(degree,degree)).T.flatten()  
+        lookup_fname = 'lookup_r_given_m_interp2d.npy'
+      
+    ########################################################  
 
     # Check if single measurement or posterior distribution.
-    if posterior_sample == False:
-        if logRadius < np.log10(1.3):
-            #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
-            Mass_iron = mass_100_percent_iron_planet(logRadius)
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(np.round(10**logRadius,5), np.round(10**Mass_iron,5)))
+    if is_posterior == False:
+        # Add 0.5 to find the median        
+        
 
-        predicted_value = cond_density_quantile(y=logRadius, y_std=Radius_sigma, y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
-                                                      w_hat=weights_mle, qtl=qtl)
-        predicted_mean = predicted_value[0]
-        if np.size(qtl)==2:
-            predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
-        else:
-            # If finding multiple quantiles, do not plot errorbar on predicted value in plot
-            predicted_lower_quantile, predicted_upper_quantile = 0,0
+        lookup_flag = None
+        if use_lookup == True:
+            try:
+                lookup = load_lookup_table(os.path.join(output_location,lookup_fname))
+                predicted_median = lookup(0.5, log_measurement)
+                predicted_qtl = lookup(qtl, log_measurement)
+                lookup_flag = 1
+            except FileNotFoundError:
+                print('Error: Trying to use lookup table when it does not exist. Run script to generate lookup table or set use_lookup = False.')
+                lookup_flag = None
 
-        outputs = [predicted_mean, np.array(predicted_value[2])]
+        if not lookup_flag:
+            predicted_value = cond_density_quantile(y=log_measurement, y_std=measurement_sigma, y_max=measurement_max, 
+                                                        y_min=measurement_min, x_max=predict_max, x_min=predict_min, 
+                                                        deg=degree, deg_vec = deg_vec,
+                                                        w_hat=w_hat, qtl=np.insert(np.array(qtl),0,0.5))
+            predicted_median = predicted_value[2][0]
+            predicted_qtl = predicted_value[2][1:]
 
-        if showplot == True:
+        outputs = [predicted_median, np.array(predicted_qtl)]
+        
+        if show_plot == True:
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
+            
+            if np.size(qtl)==2:
+                predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
+            else:
+                # If finding multiple quantiles, do not plot errorbar on predicted value in plot
+                predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
+            
+            if predict == 'mass':
+                fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir) 
+                ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+                handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
+            else:
+                fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
 
-            fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-            plt.hlines(predicted_mean, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(logRadius, Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
-            ax.errorbar(x=logRadius, y=predicted_mean, xerr=Radius_sigma,
-                        yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt='o', color = 'green')
-            ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+            yerr = np.array([[predicted_median - predicted_lower_quantile, predicted_upper_quantile - predicted_median]]).T
+                
+            plt.hlines(predicted_median, measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(log_measurement, predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            ax.errorbar(x=log_measurement, y=predicted_median, xerr=measurement_sigma,
+                        yerr=yerr,fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
             plt.legend(handles=handles)
 
+    ###########################################################        
 
-    elif posterior_sample == True:
+    elif is_posterior == True:
 
-        if np.min(logRadius) < np.log10(1.3):
-            #This is from 100% iron curve of Fortney 2007; solving for logM (base 10) via quadratic formula.
-            Mass_iron = mass_100_percent_iron_planet(np.min(logRadius))
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(np.round(10**np.min(logRadius),5), np.round(10**Mass_iron,5)))
-
-
-        n = np.size(Radius)
-        mean_sample = np.zeros(n)
+        n = np.size(measurement)
         random_quantile = np.zeros(n)
+    
+        if n != np.size(measurement_sigma):
+            measurement_sigma = np.repeat(None,n)
 
-        if n != np.size(Radius_sigma):
-            Radius_sigma = np.repeat(None,n)
+        lookup_flag = None
+        random_quantile = np.zeros((n))
 
-        for i in range(0,n):
-            qtl_check = np.random.random()
-            results = cond_density_quantile(y=logRadius[i], y_std=Radius_sigma[i], y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec = deg_vec,
-                                                      w_hat=weights_mle, qtl=[qtl_check,0.5])
+        if use_lookup == True:
+            try:
+                lookup = load_lookup_table(os.path.join(output_location,lookup_fname))
+                lookup_flag = 1
+                for i in range(0,n):
+                    qtl_check = np.random.random()
+                    random_quantile[i] = lookup(qtl_check, log_measurement[i])
+            except FileNotFoundError:
+                print('Error: Trying to use lookup table when it does not exist. Run script to generate lookup table or set use_lookup = False.')
 
-            mean_sample[i] = results[0]
-            random_quantile[i] = results[2][0]
-
+        if not lookup_flag:                      
+            for i in range(0,n):
+                qtl_check = np.random.random()
+                results = cond_density_quantile(y=log_measurement[i], y_std=measurement_sigma[i], y_max=measurement_max, y_min=measurement_min,
+                                                        x_max=predict_max, x_min=predict_min, deg=degree, deg_vec = deg_vec,
+                                                        w_hat=w_hat, qtl=[qtl_check])  
+    
+                random_quantile[i] = results[2][0]
+    
         outputs = random_quantile
 
-
-        if showplot == True:
+        if show_plot == True:
             import matplotlib.pyplot as plt
             from matplotlib.lines import Line2D
 
-            r_q =  mquantiles(logRadius, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
-            m_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            if predict == 'mass':
+                fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir) 
+                ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+                handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
 
-            fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-            plt.hlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(r_q[1], Mass_min, Mass_max,linestyle = 'dashed', colors = 'darkgrey')
-            plt.plot(logRadius,outputs,'g.',markersize = 9)
-            ax.errorbar(x=r_q[1], y=m_q[1], xerr=r_q[1] - r_q[0],  yerr=m_q[1] - m_q[0], fmt='o', color = 'green')
-            ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+            else:
+                fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+                
+                
+            output_qtl =  mquantiles(outputs, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+            measurement_qtl = mquantiles(log_measurement ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
+              
+            plt.hlines(output_qtl[1], measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(measurement_qtl[1], predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            plt.plot(log_measurement,outputs,'g.',markersize = 9)
+
+            ax.errorbar(x=measurement_qtl[1], y=output_qtl[1], xerr=measurement_qtl[1] - measurement_qtl[0],
+                        yerr=output_qtl[1] - output_qtl[0],fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
             plt.legend(handles=handles)
 
 
-    if islog:
+    if is_log:
         return outputs
     else:
         return [10**x for x in outputs]
 
-
-
-def predict_r_given_m(Mass,  Mass_sigma=None, result_dir=None, dataset='mdwarf',
-                      posterior_sample=False, qtl=[0.16,0.84], islog=False, showplot=False):
-    '''
-    Predict radius from given mass.
-    Given mass can be a single measurement, with or without error, or can also be a posterior distribution of mass.
-    INPUT:
-        Mass: Numpy array of mass measurements.
-        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. Default : None
-        result_dir: The directory from where the results of the fit are read in. Default is None.
-                If None, then will either use M-dwarf or Kepler fits (supplied with package).
-        dataset: If result_dir == None, then will use included fits for M-dwarfs or Kepler dataset.
-                To run the M-dwarf or Kepler set, define result_dir as None,
-                and then dataset='mdwarf', or dataset='kepler'
-                The Kepler dataset has been explained in Ning et al. 2018.
-                The M-dwarf dataset has been explained in Kanodia et al. 2019.
-        posterior_sample: If the input mass is a posterior sample, posterior_sample=True, else False.
-                Default=False
-        qtl: 2 element array or list with the quantile values that will be returned.
-                Default is 0.16 and 0.84. qtl=[0.16,0.84]. If posterior_sample=True, qtl will not be considered.
-        islog: Whether the radius given is in log scale or not.
-                Default is False. The Radius_sigma is always in original units
-        showplot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
-    OUTPUT:
-        outputs: Tuple with the predicted radius (or distribution of radii if input is a posterior),
-                and the quantile distribution according to the 'qtl' input parameter
-    EXAMPLE:
-        #Below example predicts the radius for a mass of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
-        from mrexo import predict_r_given_m
-        import os
-        import numpy as np
-        pwd = '~/mrexo_working/'
-        result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-    '''
-
-    dataset = dataset.replace(' ', '').replace('-', '').lower()
-
-    # Define the result directory.
-    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181214')
-    kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
-
-    if result_dir == None:
-        if dataset == 'mdwarf':
-            result_dir = mdwarf_resultdir
-        elif dataset == 'kepler':
-            result_dir = kepler_resultdir
-
-    input_location = os.path.join(result_dir, 'input')
-    output_location = os.path.join(result_dir, 'output')
-
-    # Load the results from the directory
-    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
-    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
-    weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
-
-    R_cond_M_boot = np.loadtxt(os.path.join(output_location, 'R_cond_M_boot.txt'))
-
-    degree = int(np.sqrt(len(weights_mle)))
-    deg_vec = np.arange(1,degree+1)
-
-    # Convert the mass measurement to log scale.
-    if islog == False:
-        logMass = np.log10(Mass)
-        if Mass_sigma:
-            Mass_sigma = 0.434 * Mass_sigma / Mass
-    else:
-        logMass = Mass
-
-    # Check if single measurement or posterior distribution.
-    if posterior_sample == False:
-        predicted_value = cond_density_quantile(y=logMass, y_std=Mass_sigma, y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
-                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=qtl)
-        predicted_mean = predicted_value[0]
-        if np.size(qtl)==2:
-            predicted_lower_quantile, predicted_upper_quantile = predicted_value[2]
-        else:
-            # If finding multiple quantiles, do not plot errorbar on predicted value in plot
-            predicted_lower_quantile, predicted_upper_quantile = 0,0
-
-        outputs = [predicted_mean, np.array(predicted_value[2])]
-
-
-        if showplot == True:
-            import matplotlib.pyplot as plt
-            from matplotlib.lines import Line2D
-
-            fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-            plt.hlines(predicted_mean, Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(logMass, Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
-            ax.errorbar(x=logMass, y=predicted_mean, xerr=Mass_sigma,
-                        yerr=[[predicted_mean - predicted_lower_quantile, predicted_upper_quantile - predicted_mean]],
-                        fmt='o', color = 'green')
-            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            plt.legend(handles=handles)
-
-
-
-    elif posterior_sample == True:
-
-        n = np.size(Mass)
-        mean_sample = np.zeros(n)
-        random_quantile = np.zeros(n)
-
-        if n != np.size(Mass_sigma):
-            Mass_sigma = np.repeat(None,n)
-
-        for i in range(0,n):
-            qtl_check = np.random.random()
-            results = cond_density_quantile(y=logMass[i], y_std=Mass_sigma[i], y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec = deg_vec,
-                                                      w_hat=np.reshape(weights_mle,(degree,degree)).T.flatten(), qtl=[qtl_check,0.5])
-
-            mean_sample[i] = results[0]
-            random_quantile[i] = results[2][0]
-
-        outputs = random_quantile
-
-        if showplot == True:
-            import matplotlib.pyplot as plt
-            from matplotlib.lines import Line2D
-
-            m_q =  mquantiles(logMass, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
-            r_q = mquantiles(outputs ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
-
-            fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-            plt.plot(logMass,outputs,'g.',markersize = 9)
-            plt.hlines(r_q[1], Mass_min, Mass_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(m_q[1], Radius_min, Radius_max, linestyle = 'dashed', colors = 'darkgrey')
-            ax.errorbar(y=r_q[1], x=m_q[1], yerr=r_q[1] - r_q[0],  xerr=m_q[1] - m_q[0],
-                        fmt='o', color = 'green')
-            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            plt.legend(handles=handles)
-
-
-
-    if islog:
-        return outputs
-    else:
-        return [10**x for x in outputs]
 
 
 def mass_100_percent_iron_planet(logRadius):
@@ -322,12 +233,12 @@ def mass_100_percent_iron_planet(logRadius):
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
 
-def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points, islog = True):
+def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points, is_log = True):
     '''
 
     '''
 
-    if islog == False:
+    if is_log == False:
         R_check = np.log10(R_check)
 
     n_quantiles = 200
@@ -360,12 +271,12 @@ def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max,
     return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
 
 
-def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, islog = True):
+def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, is_log = True):
     '''
 
     '''
 
-    if islog == False:
+    if is_log == False:
         M_check = np.log10(M_check)
 
     n_quantiles = 200
