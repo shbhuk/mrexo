@@ -351,6 +351,8 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
             return pbeta_conditional_density(x) - q
         return root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
 
+    if np.size(qtl) == 1:
+        qtl = [qtl]
     quantile = [conditional_quantile(i) for i in qtl]
 
     return mean, var, quantile, denominator, y_beta_indv
