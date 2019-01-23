@@ -1,6 +1,10 @@
 import numpy as np
 import os
-from functools import lru_cache
+import sys
+if sys.version_info.major==3:
+    from functools import lru_cache
+else:
+    from functools32 import lru_cache
 
 def save_dictionary(dictionary, output_location, bootstrap=False):
     '''
