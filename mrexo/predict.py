@@ -122,8 +122,10 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                     artificial_posterior = np.random.normal(loc = log_measurement, scale = measurement_sigma, size = n_art)
                     qtls = np.random.uniform(size = n_art)
                     predicted_posteriors = [lookup(qtls[i], artificial_posterior[i]) for i in range(n_art)]
-                    print(np.shape(predicted_posteriors))
-                    result = mquantiles(predicted_posteriors, prob=[0.5,*qtl],axis=0,alphap=1,betap=1).data
+
+                    prob = [0.5]
+                    prob.extend(qtl)
+                    result = mquantiles(predicted_posteriors, prob=prob,axis=0,alphap=1,betap=1).data
                     predicted_median = result[0]
                     predicted_qtl = result[1:]
                     
