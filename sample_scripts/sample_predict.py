@@ -3,7 +3,7 @@ import os
 from astropy.table import Table
 import numpy as np
 
-from mrexo import predict_m_given_r, predict_r_given_m
+from mrexo import predict_from_measurement
 
 
 try :
@@ -19,7 +19,7 @@ import datetime
 
 s = datetime.datetime.now()
 for i in range(0,50):
-    a = predict_m_given_r(Radius=1, Radius_sigma = None, posterior_sample=False, islog=True, dataset = 'kepler', showplot=False)
+    a = predict_from_measurement(measurement = 1, dataset = 'mdwarf', is_log = True, predict = 'Radius')[1]
 e = datetime.datetime.now()
 
 print(e-s)

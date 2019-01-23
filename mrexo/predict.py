@@ -33,6 +33,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 Default=False
         qtl: 2 element array or list with the quantile values that will be returned.
                 Default is 0.16 and 0.84. qtl=[0.16,0.84]. If is_posterior=True, qtl will not be considered.
+                Assumes that the entered qtls are symmetric about 0.5.
         is_log: Whether the radius given is in log scale or not.
                 Default is False. The Radius_sigma is always in original units
         show_plot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
@@ -113,8 +114,19 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         if use_lookup == True:
             try:
                 lookup = load_lookup_table(os.path.join(output_location,lookup_fname))
-                predicted_median = lookup(0.5, log_measurement)
-                predicted_qtl = lookup(qtl, log_measurement)
+                if not measurement_sigma:
+                    predicted_median = lookup(0.5, log_measurement)
+                    predicted_qtl = lookup(qtl, log_measurement)
+                else:
+                    n_art = 10000
+                    artificial_posterior = np.random.normal(loc = log_measurement, scale = measurement_sigma, size = n_art)
+                    qtls = np.random.uniform(size = n_art)
+                    predicted_posteriors = [lookup(qtls[i], artificial_posterior[i]) for i in range(n_art)]
+                    print(np.shape(predicted_posteriors))
+                    result = mquantiles(predicted_posteriors, prob=[0.5,*qtl],axis=0,alphap=1,betap=1).data
+                    predicted_median = result[0]
+                    predicted_qtl = result[1:]
+                    
                 lookup_flag = 1
             except FileNotFoundError:
                 print('Error: Trying to use lookup table when it does not exist. Run script to generate lookup table or set use_lookup = False.')
@@ -139,7 +151,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             else:
                 # If finding multiple quantiles, do not plot errorbar on predicted value in plot
                 predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
-            
+          
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir) 
                 ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
@@ -201,17 +213,23 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+
+            if np.size(qtl)==2:
+                predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
+                output_qtl =  mquantiles(outputs, prob=[0.5,qtl],axis=0,alphap=1,betap=1).data
+                measurement_qtl = mquantiles(log_measurement ,prob=[0.5,qtl],axis=0,alphap=1,betap=1).data
+            else:
+                # If finding multiple quantiles, do not plot errorbar on predicted value in plot
+                output_qtl =  mquantiles(outputs, prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
+                measurement_qtl = mquantiles(log_measurement ,prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
                 
-                
-            output_qtl =  mquantiles(outputs, prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
-            measurement_qtl = mquantiles(log_measurement ,prob=[0.16, 0.5, 0.84],axis=0,alphap=1,betap=1).data
               
-            plt.hlines(output_qtl[1], measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(measurement_qtl[1], predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            plt.hlines(output_qtl[0], measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(measurement_qtl[0], predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
             plt.plot(log_measurement,outputs,'g.',markersize = 9)
 
-            ax.errorbar(x=measurement_qtl[1], y=output_qtl[1], xerr=measurement_qtl[1] - measurement_qtl[0],
-                        yerr=output_qtl[1] - output_qtl[0],fmt='o', color = 'green')
+            ax.errorbar(x=measurement_qtl[0], y=output_qtl[0], xerr=np.abs(measurement_qtl[0] - measurement_qtl[1]),
+                        yerr=np.abs(output_qtl[0] - output_qtl[1]),fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
 
@@ -325,7 +343,7 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
     Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
     Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
 
-    lookup_grid_size = 10
+    lookup_grid_size = 1000
     
     lookup_table = np.zeros((lookup_grid_size, lookup_grid_size))
     qtl_steps = np.linspace(0,1,lookup_grid_size)
@@ -348,4 +366,4 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
     np.savetxt(os.path.join(output_location,fname+'.txt'), lookup_table, comments='#', header=comment)
     
     interp = interp2d(qtl_steps, search_steps, lookup_table)
-    np.save(os.path.join(output_location,fname+'interp2d.npy'), interp)
+    np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
