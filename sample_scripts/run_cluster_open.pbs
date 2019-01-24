@@ -1,4 +1,4 @@
-#PBS -A open_a_g_sc_default                            # Specifies job should use our allocation
+#PBS -A open                            # Specifies job should use our allocation
 #PBS -l nodes=2:ppn=20    # requests your job to be allocated 1 processor core
 #PBS -l walltime=48:00:00 # specifies a maximum run time in format of hh:mm:ss
 #PBS -l pmem=4gb          # this requests 1GB of memory per process
