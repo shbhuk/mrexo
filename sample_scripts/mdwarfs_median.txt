@@ -1,0 +1,1135 @@
+Started for 17 degrees at 2019-01-24 11:58:47.235089, using 24 core/s
+Running full dataset MLE before bootstrap
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 11, 58, 47, 254825))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 11, 59, 15, 225680))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.626701063
+            Iterations: 14
+            Function evaluations: 3186
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 11:59:16.171103, with 14 iterations. Exit Code = 0
+
+
+Running 100 bootstraps for the MLE code with degree = 17, using 24 thread/s.
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 141406))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 33, 860231))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 111.981815848
+            Iterations: 25
+            Function evaluations: 5459
+            Gradient evaluations: 24
+Optimization run finished at 2019-01-24 12:00:37.698882, with 25 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 51, 647087))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 28, 845085))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 96.0497263791
+            Iterations: 19
+            Function evaluations: 4321
+            Gradient evaluations: 19
+Optimization run finished at 2019-01-24 12:01:31.825684, with 19 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 42, 655076))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 14, 396204))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 103.392542964
+            Iterations: 15
+            Function evaluations: 3412
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:02:15.942289, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 30, 414087))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 1, 243221))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 101.651633771
+            Iterations: 15
+            Function evaluations: 3410
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:03:02.726075, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 137934))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 30, 998596))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 81.1348383742
+            Iterations: 28
+            Function evaluations: 6149
+            Gradient evaluations: 27
+Optimization run finished at 2019-01-24 12:00:33.460050, with 28 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 43, 599093))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 20, 821923))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 89.9633244539
+            Iterations: 17
+            Function evaluations: 3873
+            Gradient evaluations: 17
+Optimization run finished at 2019-01-24 12:01:22.906730, with 17 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 33, 644069))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 5, 590595))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 104.302413449
+            Iterations: 14
+            Function evaluations: 3185
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:02:07.713316, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 20, 142063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 56, 95903))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 98.7071889073
+            Iterations: 36
+            Function evaluations: 8193
+            Gradient evaluations: 36
+Optimization run finished at 2019-01-24 12:03:01.865837, with 36 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 154386))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 34, 242441))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 105.542497989
+            Iterations: 16
+            Function evaluations: 3642
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:00:35.703203, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 46, 983074))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 23, 542565))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 97.8800784862
+            Iterations: 14
+            Function evaluations: 3186
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:01:24.987142, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 38, 339080))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 16, 87785))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 118.995288252
+            Iterations: 15
+            Function evaluations: 3409
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:02:17.291909, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 27, 250105))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 2, 697161))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 110.618425964
+            Iterations: 14
+            Function evaluations: 3183
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:03:03.919907, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 157977))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 35, 607743))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 122.288354828
+            Iterations: 15
+            Function evaluations: 3410
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:00:36.853977, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 48, 102538))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 27, 563479))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 87.8526977701
+            Iterations: 18
+            Function evaluations: 4095
+            Gradient evaluations: 18
+Optimization run finished at 2019-01-24 12:01:29.368886, with 18 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 43, 84063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 20, 583512))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 122.688622933
+            Iterations: 13
+            Function evaluations: 2957
+            Gradient evaluations: 13
+Optimization run finished at 2019-01-24 12:02:22.023222, with 13 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 34, 286075))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 10, 777715))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 81.4669702383
+            Iterations: 35
+            Function evaluations: 7981
+            Gradient evaluations: 35
+Optimization run finished at 2019-01-24 12:03:13.360001, with 35 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 154564))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 35, 484010))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 76.5630460462
+            Iterations: 15
+            Function evaluations: 3413
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:00:36.728352, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 46, 894106))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 27, 556008))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 92.5708806536
+            Iterations: 32
+            Function evaluations: 7055
+            Gradient evaluations: 31
+Optimization run finished at 2019-01-24 12:01:31.465153, with 32 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 42, 973090))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 22, 201352))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 127.940088577
+            Iterations: 17
+            Function evaluations: 3641
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:02:23.687251, with 17 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 35, 763096))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 11, 409334))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 117.976412898
+            Iterations: 12
+            Function evaluations: 2730
+            Gradient evaluations: 12
+Optimization run finished at 2019-01-24 12:03:12.843677, with 12 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 165235))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 38, 208508))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.467522781
+            Iterations: 16
+            Function evaluations: 3638
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:00:39.928393, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 50, 828090))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 25, 410738))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 114.649662158
+            Iterations: 22
+            Function evaluations: 5011
+            Gradient evaluations: 22
+Optimization run finished at 2019-01-24 12:01:27.456950, with 22 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 38, 461084))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 15, 789502))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.401612285
+            Iterations: 13
+            Function evaluations: 2958
+            Gradient evaluations: 13
+Optimization run finished at 2019-01-24 12:02:16.900968, with 13 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 32, 385166))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 10, 848949))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 103.120450839
+            Iterations: 12
+            Function evaluations: 2726
+            Gradient evaluations: 12
+Optimization run finished at 2019-01-24 12:03:12.647813, with 12 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 154386))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 33, 796886))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.356191864
+            Iterations: 13
+            Function evaluations: 2957
+            Gradient evaluations: 13
+Optimization run finished at 2019-01-24 12:00:34.822717, with 13 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 46, 995824))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 27, 123137))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 119.585652342
+            Iterations: 45
+            Function evaluations: 10283
+            Gradient evaluations: 45
+Optimization run finished at 2019-01-24 12:01:31.436574, with 45 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 44, 280059))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 21, 92440))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 101.509432368
+            Iterations: 29
+            Function evaluations: 6607
+            Gradient evaluations: 29
+Optimization run finished at 2019-01-24 12:02:24.338397, with 29 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 36, 14060))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 13, 341257))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 99.5903562245
+            Iterations: 11
+            Function evaluations: 2501
+            Gradient evaluations: 11
+Optimization run finished at 2019-01-24 12:03:14.427068, with 11 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 142670))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 36, 468244))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 105.962159402
+            Iterations: 23
+            Function evaluations: 5227
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:00:38.613052, with 23 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 50, 193111))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 27, 977537))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 103.625616392
+            Iterations: 14
+            Function evaluations: 3184
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:01:29.430353, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 41, 979073))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 20, 885625))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 90.7848166922
+            Iterations: 21
+            Function evaluations: 4776
+            Gradient evaluations: 21
+Optimization run finished at 2019-01-24 12:02:22.921207, with 21 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 34, 886076))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 13, 596773))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 80.7287702276
+            Iterations: 29
+            Function evaluations: 6616
+            Gradient evaluations: 29
+Optimization run finished at 2019-01-24 12:03:16.353853, with 29 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 180247))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 33, 694250))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 107.643730215
+            Iterations: 20
+            Function evaluations: 4550
+            Gradient evaluations: 20
+Optimization run finished at 2019-01-24 12:00:35.475114, with 20 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 46, 627094))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 24, 999039))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 103.053614828
+            Iterations: 3
+            Function evaluations: 702
+            Gradient evaluations: 3
+Optimization run finished at 2019-01-24 12:01:25.376438, with 3 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 39, 733079))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 22, 450953))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 92.8114281428
+            Iterations: 30
+            Function evaluations: 6831
+            Gradient evaluations: 30
+Optimization run finished at 2019-01-24 12:02:25.368763, with 30 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 35, 618111))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 12, 973087))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 74.0477613189
+            Iterations: 37
+            Function evaluations: 8427
+            Gradient evaluations: 37
+Optimization run finished at 2019-01-24 12:03:15.836212, with 37 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 157599))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 39, 901343))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 127.350806536
+            Iterations: 3
+            Function evaluations: 700
+            Gradient evaluations: 3
+Optimization run finished at 2019-01-24 12:00:40.256598, with 3 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 53, 57084))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 31, 516942))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 101.355342784
+            Iterations: 19
+            Function evaluations: 4098
+            Gradient evaluations: 18
+Optimization run finished at 2019-01-24 12:01:33.590937, with 19 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 47, 57089))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 25, 448376))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 113.762607509
+            Iterations: 20
+            Function evaluations: 4323
+            Gradient evaluations: 19
+Optimization run finished at 2019-01-24 12:02:27.017854, with 20 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 38, 302099))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 14, 591526))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 108.085146817
+            Iterations: 25
+            Function evaluations: 5695
+            Gradient evaluations: 25
+Optimization run finished at 2019-01-24 12:03:16.622795, with 25 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 133210))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 38, 654287))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 115.057256099
+            Iterations: 16
+            Function evaluations: 3639
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:00:40.249466, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 51, 745062))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 30, 928278))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 89.6427645436
+            Iterations: 32
+            Function evaluations: 7290
+            Gradient evaluations: 32
+Optimization run finished at 2019-01-24 12:01:34.193137, with 32 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 45, 550090))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 24, 418488))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 85.6912452669
+            Iterations: 23
+            Function evaluations: 5234
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:02:26.628181, with 23 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 37, 798105))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 14, 228806))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 111.812279135
+            Iterations: 38
+            Function evaluations: 8653
+            Gradient evaluations: 38
+Optimization run finished at 2019-01-24 12:03:17.684907, with 38 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 154375))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 38, 334099))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 114.468592525
+            Iterations: 25
+            Function evaluations: 5695
+            Gradient evaluations: 25
+Optimization run finished at 2019-01-24 12:00:40.744459, with 25 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 52, 967095))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 29, 401599))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 107.043934286
+            Iterations: 15
+            Function evaluations: 3411
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:01:30.851066, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 44, 99113))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 24, 765567))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 105.402236397
+            Iterations: 17
+            Function evaluations: 3870
+            Gradient evaluations: 17
+Optimization run finished at 2019-01-24 12:02:26.190939, with 17 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 38, 217089))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 15, 636936))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 98.0755408986
+            Iterations: 24
+            Function evaluations: 5460
+            Gradient evaluations: 24
+Optimization run finished at 2019-01-24 12:03:17.711676, with 24 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 139621))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 35, 259708))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 116.552397874
+            Iterations: 11
+            Function evaluations: 2503
+            Gradient evaluations: 11
+Optimization run finished at 2019-01-24 12:00:36.131520, with 11 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 47, 546076))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 27, 105214))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 117.167950244
+            Iterations: 3
+            Function evaluations: 702
+            Gradient evaluations: 3
+Optimization run finished at 2019-01-24 12:01:27.433460, with 3 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 40, 951073))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 18, 472568))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 80.8797722689
+            Iterations: 40
+            Function evaluations: 9122
+            Gradient evaluations: 40
+Optimization run finished at 2019-01-24 12:02:22.240247, with 40 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 35, 171082))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 15, 264851))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 107.043177626
+            Iterations: 29
+            Function evaluations: 6617
+            Gradient evaluations: 29
+Optimization run finished at 2019-01-24 12:03:17.874326, with 29 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 180279))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 40, 583577))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 106.288965082
+            Iterations: 27
+            Function evaluations: 6148
+            Gradient evaluations: 27
+Optimization run finished at 2019-01-24 12:00:43.918844, with 27 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 56, 97061))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 37, 21695))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 83.4856643874
+            Iterations: 31
+            Function evaluations: 7092
+            Gradient evaluations: 31
+Optimization run finished at 2019-01-24 12:01:40.129262, with 31 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 52, 895075))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 32, 352527))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 109.262559719
+            Iterations: 24
+            Function evaluations: 5460
+            Gradient evaluations: 24
+Optimization run finished at 2019-01-24 12:02:34.981964, with 24 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 46, 63089))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 21, 214777))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 122.056190511
+            Iterations: 15
+            Function evaluations: 3410
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:03:22.893937, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 157942))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 39, 781084))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 87.6559081345
+            Iterations: 32
+            Function evaluations: 7318
+            Gradient evaluations: 32
+Optimization run finished at 2019-01-24 12:00:43.194653, with 32 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 54, 374064))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 33, 506240))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 96.0951469152
+            Iterations: 24
+            Function evaluations: 5234
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:01:36.513808, with 24 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 48, 907078))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 28, 481616))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 155.350740022
+            Iterations: 3
+            Function evaluations: 701
+            Gradient evaluations: 3
+Optimization run finished at 2019-01-24 12:02:28.885171, with 3 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 41, 839094))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 23, 323224))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 95.1428035543
+            Iterations: 16
+            Function evaluations: 3639
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:03:24.434728, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 191198))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 44, 668534))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 89.2620048348
+            Iterations: 22
+            Function evaluations: 5004
+            Gradient evaluations: 22
+Optimization run finished at 2019-01-24 12:00:46.330009, with 22 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 58, 463073))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 36, 978874))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 85.0797507812
+            Iterations: 18
+            Function evaluations: 4094
+            Gradient evaluations: 18
+Optimization run finished at 2019-01-24 12:01:39.596847, with 18 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 52, 484077))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 23, 134135))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 128.31923702
+            Iterations: 15
+            Function evaluations: 3412
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:02:24.750555, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 45, 871069))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 25, 323358))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 94.1873006556
+            Iterations: 18
+            Function evaluations: 4092
+            Gradient evaluations: 18
+Optimization run finished at 2019-01-24 12:03:26.594159, with 18 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 158750))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 50, 570862))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 91.7249242224
+            Iterations: 18
+            Function evaluations: 4096
+            Gradient evaluations: 18
+Optimization run finished at 2019-01-24 12:00:53.302269, with 18 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 4, 382077))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 45, 730495))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 89.9840858527
+            Iterations: 37
+            Function evaluations: 8434
+            Gradient evaluations: 37
+Optimization run finished at 2019-01-24 12:01:49.566708, with 37 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 2, 439090))
+('Finished Integration at ', datetime.datetime(2019, New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 137007))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 33, 705273))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 91.4199889966
+            Iterations: 35
+            Function evaluations: 7989
+            Gradient evaluations: 35
+Optimization run finished at 2019-01-24 12:00:38.917123, with 35 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 55, 297062))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 31, 799424))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 97.0823347368
+            Iterations: 19
+            Function evaluations: 4325
+            Gradient evaluations: 19
+Optimization run finished at 2019-01-24 12:01:34.604214, with 19 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 45, 836090))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 24, 127322))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 80.294707933
+            Iterations: 38
+            Function evaluations: 8430
+            Gradient evaluations: 37
+Optimization run finished at 2019-01-24 12:02:27.159873, with 38 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 44, 696113))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 29, 426256))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 83.6802545258
+            Iterations: 35
+            Function evaluations: 7990
+            Gradient evaluations: 35
+Optimization run finished at 2019-01-24 12:03:32.124580, with 35 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 196231))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 49, 468820))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 109.165418978
+            Iterations: 11
+            Function evaluations: 2501
+            Gradient evaluations: 11
+Optimization run finished at 2019-01-24 12:00:51.022136, with 11 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 8, 879063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 45, 326365))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 79.5742095544
+            Iterations: 24
+            Function evaluations: 5244
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:01:47.412364, with 24 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 1, 258036))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 40, 253274))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 60.6677358735
+            Iterations: 20
+            Function evaluations: 4551
+            Gradient evaluations: 20
+Optimization run finished at 2019-01-24 12:02:43.436122, with 20 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 55, 653063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 30, 704539))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfulNew MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 138940))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 30, 377140))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 112.852600225
+            Iterations: 16
+            Function evaluations: 3648
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:00:31.561420, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 42, 627063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 16, 41600))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 85.2647942903
+            Iterations: 17
+            Function evaluations: 3870
+            Gradient evaluations: 17
+Optimization run finished at 2019-01-24 12:01:18.224978, with 17 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 29, 986075))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 2, 790323))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 110.137175573
+            Iterations: 14
+            Function evaluations: 3188
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:02:04.879556, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 15, 306073))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 43, 822080))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.282688512
+            Iterations: 15
+            Function evaluations: 3412
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:02:45.374361, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 0, 497076))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 31, 578640))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.431879774
+            Iterations: 24
+            Function evaluations: 5461
+            Gradient evaluations: 24
+Optimization run finished at 2019-01-24 12:03:33.389801, with 24 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 135098))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 49, 593014))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 95.2549401319
+            Iterations: 23
+            Function evaluations: 5257
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:00:51.929876, with 23 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 12, 678060))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 48, 660451))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 79.2803989577
+            Iterations: 14
+            Function evaluations: 3185
+            Gradient evaluations: 14
+Optimization run finished at 2019-01-24 12:01:50.768574, with 14 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 8, 539068))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 44, 274956))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfullNew MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 136038))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 33, 156361))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 87.1806867701
+            Iterations: 30
+            Function evaluations: 6852
+            Gradient evaluations: 30
+Optimization run finished at 2019-01-24 12:00:37.774480, with 30 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 50, 741063))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 24, 323724))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 104.456747252
+            Iterations: 15
+            Function evaluations: 3411
+            Gradient evaluations: 15
+Optimization run finished at 2019-01-24 12:01:25.887577, with 15 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 38, 185085))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 12, 244122))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 100.763854404
+            Iterations: 11
+            Function evaluations: 2500
+            Gradient evaluations: 11
+Optimization run finished at 2019-01-24 12:02:13.941456, with 11 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 24, 357092))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 55, 560854))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 106.019676285
+            Iterations: 19
+            Function evaluations: 4323
+            Gradient evaluations: 19
+Optimization run finished at 2019-01-24 12:02:57.324388, with 19 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 8, 419084))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 40, 640588))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 79.7462529189
+            Iterations: 16
+            Function evaluations: 3648
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:03:41.787383, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 154585))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 32, 129509))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 123.4005675
+            Iterations: 22
+            Function evaluations: 5012
+            Gradient evaluations: 22
+Optimization run finished at 2019-01-24 12:00:34.094720, with 22 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 46, 467097))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 17, 775041))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 102.348000114
+            Iterations: 16
+            Function evaluations: 3642
+            Gradient evaluations: 16
+Optimization run finished at 2019-01-24 12:01:18.990014, with 16 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 31, 959077))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 5, 895719))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfullNew MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 0, 134140))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 36, 976026))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 141.854472304
+            Iterations: 3
+            Function evaluations: 700
+            Gradient evaluations: 3
+Optimization run finished at 2019-01-24 12:00:37.534594, with 3 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 0, 50, 506069))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 22, 404761))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 87.9162520629
+            Iterations: 34
+            Function evaluations: 7511
+            Gradient evaluations: 33
+Optimization run finished at 2019-01-24 12:01:25.311772, with 34 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 1, 37, 130065))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 8, 31226))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 104.653615854
+            Iterations: 12
+            Function evaluations: 2728
+            Gradient evaluations: 12
+Optimization run finished at 2019-01-24 12:02:09.170820, with 12 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 24, 796094))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 2, 55, 471444))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 132.101956965
+            Iterations: 20
+            Function evaluations: 4546
+            Gradient evaluations: 20
+Optimization run finished at 2019-01-24 12:02:56.994214, with 20 iterations. Exit Code = 0
+
+
+New MLE
+('Started Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 10, 676065))
+('Finished Integration at ', datetime.datetime(2019, 1, 24, 12, 3, 45, 82135))
+Calculated the PDF for Mass and Radius for Integrated beta and normal Density
+Optimization terminated successfully.    (Exit mode 0)
+            Current function value: 77.4397758654
+            Iterations: 23
+            Function evaluations: 5251
+            Gradient evaluations: 23
+Optimization run finished at 2019-01-24 12:03:46.658703, with 23 iterations. Exit Code = 0
+
+
+Finished bootstrap at 2019-01-24 12:03:55.651056
+0:05:08.415997
