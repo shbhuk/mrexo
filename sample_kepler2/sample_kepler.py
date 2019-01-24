@@ -11,8 +11,8 @@ pwd = os.path.dirname(__file__)
 t = Table.read(os.path.join(pwd,'MR_Kepler_170605_noanalytTTV_noupplim.csv'))
 
 # Symmetrical errorbars
-Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2 
-Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2 
+Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
+Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 
 
 
@@ -21,11 +21,11 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 
-# Directory to store results in 
-result_dir = os.path.join(pwd,'Kepler_cv')
+# Directory to store results in
+result_dir = os.path.join(pwd,'Kepler_cv_median')
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, Mass_sigma=Mass_sigma,
                                             Radius=Radius, Radius_sigma=Radius_sigma,
-                                            save_path=result_dir, select_deg='cv', 
+                                            save_path=result_dir, select_deg=55,
                                             num_boot=100, cores=cpu_count())
