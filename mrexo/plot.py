@@ -58,7 +58,7 @@ def plot_m_given_r_relation(result_dir):
 
     mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis = 0,alphap=1,betap=1).data
 
-    fig = plt.figure(figsize=(8.5,6))
+    fig = plt.figure(figsize=(8.5,7))
     plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
@@ -68,15 +68,14 @@ def plot_m_given_r_relation(result_dir):
     ax1.plot(R_points,M_cond_R,  color='maroon', lw=2) # Full dataset run
     ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha=0.3, color='lightsalmon') # Full dataset run
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-    ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
+    # ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
 
-    mr_median_line = Line2D([0], [0], color='maroon', lw=2,label='Median of f(m|r) from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m|r) from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the median of the f(m|r) from bootstrap')
+    mr_median_line = Line2D([0], [0], color='maroon', lw=2,label='Median of f(m$|$r) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'1-$\sigma$ Quantile of f(m$|$r) from full dataset run  ')
+    # mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the median of the f(m|r) from bootstrap')
 
-    handles = [mr_median_line, mr_full, mr_boot]
+    handles = [mr_median_line, mr_full]
 
-    plt.legend(handles = handles)
 
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)')
@@ -86,6 +85,11 @@ def plot_m_given_r_relation(result_dir):
     plt.show()
     plt.ylim(Mass_min, Mass_max)
     plt.xlim(Radius_min, Radius_max)
+    import matplotlib
+    matplotlib.rc('text', usetex=True) #use latex for text
+    plt.legend(handles = handles)
+
+
 
     return fig, ax1, handles
 
@@ -141,7 +145,7 @@ def plot_r_given_m_relation(result_dir):
 
     rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
 
-    fig = plt.figure(figsize=(8.5,6))
+    fig = plt.figure(figsize=(8.5,7))
     plt.rc('axes', labelsize=20)    # fontsize of the x and y labels
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
