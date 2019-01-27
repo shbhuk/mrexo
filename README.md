@@ -35,7 +35,7 @@ a cluster node with 24 cores and 2.2 GHz processors. Our simulation
 study of 100 points and 55 degrees took about 2 days for the cross
 validation, fitting, and 24 bootstraps. We realize that the fitting
 computation time would start to become prohibitive as the sample set
-increases (\(\geq\) 200), we therefore plan to optimize the code further
+increases (~ 200), we therefore plan to optimize the code further
 by benchmarking, floating point operation optimization, and correcting
 the precision requirements in the integration step. However, this time
 intensive step of cross validation and fitting is only if the user needs
