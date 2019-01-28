@@ -1,39 +1,14 @@
-import matplotlib.pyplot as plt
-import os
-from astropy.table import Table
-import numpy as np
-
 from mrexo import predict_from_measurement
+import os
+import numpy as np
+pwd = '~/mrexo_working/'
 
+#Below example predicts the mass for a radius of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
+result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, is_posterior=False, is_log=True)
 
-try :
-    pwd = os.path.dirname(__file__)
-except NameError:
-    pwd = ''
+#Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False, is_log=True)
 
-
-
-result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
-
-import datetime
-
-s = datetime.datetime.now()
-for i in range(0,50):
-    a = predict_from_measurement(measurement = 1, dataset = 'mdwarf', is_log = True, predict = 'Radius')[1]
-e = datetime.datetime.now()
-
-print(e-s)
-
-'''
-print(a)
-c = predict_r_given_m(Mass=3, Mass_sigma=None, posterior_sample=False, islog=False, dataset = 'mdwarf', showplot=False)
-'''
-# print(a,c)
-#b = predict_m_given_r(Radius=1, Radius_sigma=0.1, posterior_sample=False, islog=True, dataset='mdwarf', showplot=True)
-
-'''
-C:/Users/shbhu/Documents/Git/mrexo/sample_scripts/M_dwarfs_deg17
-17
-[1.9423930353731744, 0.4405540095682138, 8.992463492366237]
-
-'''
+#Below example predicts the radius for a mass of log10(1) Earth mass exoplanet with uncertainty of 0.1 Earth Mass on the included Mdwarf fit. Similary for Kepler dataset.
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, predict = 'radius', result_dir=None, dataset='mdwarf', is_posterior=False, is_log=True)    
