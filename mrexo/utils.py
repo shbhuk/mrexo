@@ -95,22 +95,17 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_lower_boot.txt'),R_cond_M_lower_boot, comments='#', header='Lower limit for the Conditional distribution of radius given mass from bootstrap run')
         np.savetxt(os.path.join(aux_output_location,'R_cond_M_upper_boot.txt'),R_cond_M_upper_boot, comments='#', header='Upper limit for the Conditional distribution of radius given mass from bootstrap run')
 
+
 @lru_cache(maxsize=32)
 def load_lookup_table(f_path):
     '''
     Load the lookup table interpolate object and pass
-    
+    INPUT:
+        f_path : Entire file path for the .npy interpolated file.
+
     '''
 
     lookup_iter = np.load(f_path).item()
     print('Loaded lookup table from {}'.format(f_path))
-    
+
     return lookup_iter
-
-
-            
-    
-        
-    
-    
-    
