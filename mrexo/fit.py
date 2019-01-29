@@ -141,7 +141,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if Mass_max is None:
         Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.25)
+        Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.3)
     if Radius_max is None:
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
