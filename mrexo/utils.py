@@ -99,13 +99,15 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
 @lru_cache(maxsize=32)
 def load_lookup_table(f_path):
     '''
-    Load the lookup table interpolate object and pass
+    Load the lookup table interpolate object and pass the object.
     INPUT:
         f_path : Entire file path for the .npy interpolated file.
+    OUTPUT:
+        lookup_inter : Interpolated lookup table (.npy) object. 
 
     '''
 
-    lookup_iter = np.load(f_path).item()
+    lookup_inter = np.load(f_path).item()
     print('Loaded lookup table from {}'.format(f_path))
 
-    return lookup_iter
+    return lookup_inter

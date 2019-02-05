@@ -3,6 +3,8 @@ import os
 from scipy.stats.mstats import mquantiles
 from scipy.interpolate import interp1d
 from scipy.interpolate import interp2d
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 from .mle_utils import cond_density_quantile
 from .utils import load_lookup_table
@@ -13,14 +15,14 @@ np.warnings.filterwarnings('ignore')
 
 def predict_from_measurement(measurement, measurement_sigma=None,
             predict = 'Mass', result_dir=None, dataset='mdwarf',
-            is_posterior=False, qtl=[0.16,0.84], is_log=False, show_plot=False,
+            is_posterior=False, qtl=[0.16,0.84], show_plot=False,
             use_lookup=False):
     '''
-    Predict mass from given radius, or radius from mass.
+    Predict mass from given radius, or radius from mass for a single object.
     Function can be used to predict from a single measurement (w/ or w/o error), or from a posterior distribution.
     INPUT:
-        measurement: Numpy array of measurement/s.
-        measurement_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. Default : None
+        measurement: Numpy array of measurement/s. Always in linear scale.
+        measurement_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. Default : None. Always in linear scale.
         predict: The quantity that is being predicted. If = 'Mass', will give mass given input radius.
                 Else, can predict radius from mass, if = 'Radius'.
         result_dir: The directory where the results of the fit are stored. Default is None.
@@ -35,8 +37,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         qtl: 2 element array or list with the quantile values that will be returned.
                 Default is 0.16 and 0.84. qtl=[0.16,0.84]. If is_posterior=True, qtl will not be considered.
                 Assumes that the entered qtls are symmetric about 0.5.
-        is_log: Whether the radius given is in log scale or not.
-                Default is False. The Radius_sigma is always in original units
         show_plot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
         use_lookup: If True, will try to use lookup table. If lookup table does not exist, will give warning and calculate the prediction
                 using analytic method.
@@ -85,13 +85,11 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
 
-    # Convert the measurement to log scale.
-    if is_log == False:
-        log_measurement = np.log10(measurement)
-        if measurement_sigma:
-            measurement_sigma = 0.434 * measurement_sigma / measurement
-    else:
-        log_measurement = measurement
+    # Convert linear to log10.
+    log_measurement = np.log10(measurement)
+    if measurement_sigma:
+        measurement_sigma = 0.434 * measurement_sigma / measurement
+
 
     if predict == 'mass':
         predict_min, predict_max = Mass_min, Mass_max
@@ -115,7 +113,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     # Check if single measurement or posterior distribution.
     if is_posterior == False:
 
-        # Add 0.5 to find the median
+        # Use 0.5 to find the median
         lookup_flag = None
         if use_lookup == True:
             try:
@@ -151,8 +149,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         outputs = [predicted_median, np.array(predicted_qtl)]
 
         if show_plot == True:
-            import matplotlib.pyplot as plt
-            from matplotlib.lines import Line2D
 
             if np.size(qtl)==2:
                 predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
@@ -210,8 +206,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         outputs = random_quantile
 
         if show_plot == True:
-            import matplotlib.pyplot as plt
-            from matplotlib.lines import Line2D
 
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
@@ -241,10 +235,8 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             plt.legend(handles=handles)
             plt.show()
 
-    if is_log:
-        return outputs
-    else:
-        return [10**x for x in outputs]
+
+    return [10**x for x in outputs]
 
 
 
@@ -260,81 +252,6 @@ def mass_100_percent_iron_planet(logRadius):
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
 
-def find_mass_probability_distribution_function(R_check, Radius_min, Radius_max, Mass_max, Mass_min, weights_mle, weights_boot, degree, deg_vec, M_points, is_log = True):
-    '''
-
-    '''
-
-    if is_log == False:
-        R_check = np.log10(R_check)
-
-    n_quantiles = 200
-    qtl = np.linspace(0,1.0, n_quantiles)
-
-    results = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
-                                                      x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
-                                                      w_hat=weights_mle, qtl=qtl)
-
-    cdf_interp = interp1d(results[2], qtl)(M_points)
-
-    # Conditional_plot. PDF is derivative of CDF
-    pdf_interp = np.diff(cdf_interp) / np.diff(M_points)
-
-    n_boot = np.shape(weights_boot)[0]
-    pdf_boots = np.zeros((n_boot, len(M_points) - 1))
-    cdf_interp_boot = np.zeros((n_boot, len(M_points)))
-
-    for i in range(0, n_boot):
-        weight = weights_boot[i,:]
-        results_boot = cond_density_quantile(y=R_check, y_std=None, y_max=Radius_max, y_min=Radius_min,
-                                                        x_max=Mass_max, x_min=Mass_min, deg=degree, deg_vec=deg_vec,
-                                                        w_hat=weight, qtl=qtl)
-        cdf_interp_boot[i,:] = interp1d(results_boot[2], qtl)(M_points)
-        pdf_boots[i,:] = np.diff(cdf_interp_boot[i,:]) / np.diff(M_points)
-        print(i)
-
-    lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-
-    return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
-
-
-def find_radius_probability_distribution_function(M_check, Mass_max, Mass_min, Radius_min, Radius_max, weights_mle, weights_boot, degree, deg_vec, R_points, is_log = True):
-    '''
-
-    '''
-
-    if is_log == False:
-        M_check = np.log10(M_check)
-
-    n_quantiles = 200
-    qtl = np.linspace(0,1.0, n_quantiles)
-
-    results = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
-                                                      x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
-                                                      w_hat=weights_mle, qtl=qtl)
-
-    cdf_interp = interp1d(results[2], qtl)(R_points)
-
-    # Conditional_plot. PDF is derivative of CDF
-    pdf_interp = np.diff(cdf_interp) / np.diff(R_points)
-
-    n_boot = np.shape(weights_boot)[0]
-
-    cdf_interp_boot = np.zeros((n_boot, len(R_points)))
-    pdf_boots = np.zeros((n_boot, len(R_points) - 1))
-
-    for i in range(0, n_boot):
-        weight = weights_boot[i,:]
-        results_boot = cond_density_quantile(y=M_check, y_std=None, y_max=Mass_max, y_min=Mass_min,
-                                                        x_max=Radius_max, x_min=Radius_min, deg=degree, deg_vec=deg_vec,
-                                                        w_hat=weight, qtl=qtl)
-        cdf_interp_boot[i,:] = interp1d(results_boot[2], qtl)(R_points)
-        pdf_boots[i,:] = np.diff(cdf_interp_boot[i,:]) / np.diff(R_points)
-        print(i)
-
-    lower_boot, upper_boot = mquantiles(pdf_boots ,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-
-    return cdf_interp, pdf_interp, cdf_interp_boot, lower_boot, upper_boot
 
 
 def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
