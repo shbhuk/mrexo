@@ -21,6 +21,7 @@ This is similar to Fig 4 from Kanodia et al. 2019.
 
 
 measurement_radius = [1,3,10]
+r = measurement_radius[1]
 
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 input_location = os.path.join(result_dir, 'input')
@@ -31,7 +32,7 @@ M_points = np.loadtxt(os.path.join(output_location, 'M_points.txt'))
 
 qtls = np.linspace(0,1,200)
 
-r = 3
+
 # If lookup table exists, use lookup table. Else can generate lookup table using generate_lookup_table()
 results = predict_from_measurement(measurement = r, measurement_sigma = None,  result_dir = result_dir, qtl=qtls, use_lookup = True)
 # PDF is in log scale
