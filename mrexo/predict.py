@@ -1,7 +1,6 @@
 import numpy as np
 import os
 from scipy.stats.mstats import mquantiles
-from scipy.interpolate import interp1d
 from scipy.interpolate import interp2d
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -22,7 +21,8 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     Function can be used to predict from a single measurement (w/ or w/o error), or from a posterior distribution.
     INPUT:
         measurement: Numpy array of measurement/s. Always in linear scale.
-        measurement_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. Default : None. Always in linear scale.
+        measurement_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty.
+                           Default : None. Always in linear scale.
         predict: The quantity that is being predicted. If = 'Mass', will give mass given input radius.
                 Else, can predict radius from mass, if = 'Radius'.
         result_dir: The directory where the results of the fit are stored. Default is None.
@@ -49,15 +49,21 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         import numpy as np
         pwd = '~/mrexo_working/'
 
-        #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_deg_cv'
+        #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet, with no measurement
+        #uncertainty from the fit results in 'M_dwarfs_deg_cv'
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, is_posterior=False, is_log=True)
+        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None,
+                               result_dir=result_dir, is_posterior=False, is_log=True)
 
-        #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit. Similary for Kepler dataset.
-        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False, is_log=True)
+        #Below example predicts the mass for a radius of log10(1) Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit.
+        #Similary for Kepler dataset.
+        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False,
+                               is_log=True)
 
-        #Below example predicts the radius for a mass of log10(1) Earth mass exoplanet with uncertainty of 0.1 Earth Mass on the included Mdwarf fit. Similary for Kepler dataset.
-        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, predict = 'radius', result_dir=None, dataset='mdwarf', is_posterior=False, is_log=True)
+        #Below example predicts the radius for a mass of log10(1) Earth mass exoplanet with uncertainty of 0.1 Earth Mass on the included Mdwarf fit.
+        #Similary for Kepler dataset.
+        predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, predict = 'radius', result_dir=None,
+                               dataset='mdwarf', is_posterior=False, is_log=True)
     '''
 
     dataset = dataset.replace(' ', '').replace('-', '').lower()
@@ -72,6 +78,9 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             result_dir = mdwarf_resultdir
         elif dataset == 'kepler':
             result_dir = kepler_resultdir
+
+    if measurement_sigma == 0:
+        measurement_sigma = None
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
@@ -159,7 +168,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
                 ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
-                handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
+                handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
 
@@ -267,7 +276,12 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
              of a .txt file as well as a .npy file which has the 2D interpolated version
              of the lookup table.
 
+    EXAMPLE:
+        ## To generate lookup table to get mass from radius
+        from mrexo.predict import generate_lookup_table
+        kepler_result = '/storage/home/s/szk381/work/mrexo/mrexo/datasets/Kepler_Ning_etal_20170605'
 
+        generate_lookup_table(result_dir = kepler_result, predict_quantity = 'Mass')
 
     '''
 
@@ -294,7 +308,8 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
 
 
     for i in range(0,lookup_grid_size):
-        lookup_table[i,:] = predict_from_measurement(measurement = search_steps[i], qtl = qtl_steps, result_dir = result_dir, is_log = True, predict = predict_quantity)[1]
+        lookup_table[i,:] = predict_from_measurement(measurement = search_steps[i], qtl = qtl_steps,
+                            result_dir = result_dir, is_log = True, predict = predict_quantity)[1]
         if i%100==0:
             print(i)
 
