@@ -117,8 +117,8 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
     unpadded_weight = opt_result[0]
     n_log_lik = opt_result[1]
-    
-    # Pad the weight array with zeros for the 
+
+    # Pad the weight array with zeros for the
     w_sq = np.reshape(unpadded_weight,[deg-2,deg-2])
     w_sq_padded = np.zeros((deg,deg))
     w_sq_padded[1:-1,1:-1] = w_sq
@@ -156,15 +156,15 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
             M_cond_R_quantile.append(M_cond_R[2][1:])
 
             R_cond_M = cond_density_quantile(y = M_seq[i], y_max=Mass_max, y_min=Mass_min,
-                                x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec, 
-                                w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.5,0.16,0.84])[0:3] 
+                                x_max=Radius_max, x_min=Radius_min, deg=deg, deg_vec = deg_vec,
+                                w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.5,0.16,0.84])[0:3]
             R_cond_M_median.append(R_cond_M[2][0])
             R_cond_M_var.append(R_cond_M[1])
             R_cond_M_quantile.append(R_cond_M[2][1:])
-            
-            
 
-        # Output everything as dictionary    
+
+
+        # Output everything as dictionary
 
         output['M_cond_R'] = M_cond_R_median
         output['M_cond_R_var'] = M_cond_R_var
@@ -207,29 +207,21 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     '''
     deg_vec = np.arange(2,deg)
 
-    if Mass_sigma is None:
-        # pdf for Mass and Radius for each beta density
-        C_pdf = np.zeros((n, (deg-2)**2))
-        M_indv_pdf = find_indv_pdf(M, deg, deg_vec, Mass_max, Mass_min, x_std=None, abs_tol=abs_tol, Log=Log)
-        R_indv_pdf = find_indv_pdf(R, deg, deg_vec, Radius_max, Radius_min, x_std=None, abs_tol=abs_tol, Log=Log)
-        C_pdf = np.kron(M_indv_pdf, R_indv_pdf)
+    M_indv_pdf = np.zeros((n, deg-2))
+    R_indv_pdf = np.zeros((n, deg-2))
+    C_pdf = np.zeros((n, (deg-2)**2))
 
-    else:
-        M_indv_pdf = np.zeros((n, deg-2))
-        R_indv_pdf = np.zeros((n, deg-2))
-        C_pdf = np.zeros((n, (deg-2)**2))
+    print('Started Integration at ',datetime.datetime.now())
+    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
+        f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
 
-        print('Started Integration at ',datetime.datetime.now())
-        with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-            f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
+    # Loop across each data point.
+    for i in range(0,n):
+        M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol=abs_tol, Log=Log)
+        R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol=abs_tol, Log=Log)
 
-        # Loop across each data point.
-        for i in range(0,n):
-            M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol=abs_tol, Log=Log)
-            R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol=abs_tol, Log=Log)
-
-            # Put M.indv.pdf and R.indv.pdf into a big matrix
-            C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
+        # Put M.indv.pdf and R.indv.pdf into a big matrix
+        C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
 
     C_pdf = C_pdf.T
 

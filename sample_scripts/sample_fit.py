@@ -17,9 +17,11 @@ from mrexo.plot import plot_r_given_m_relation, plot_m_given_r_relation
 from mrexo import fit_mr_relation
 
 
-pwd = os.path.dirname(__file__)
-
-#pwd = '~/mrexo_working/'
+try :
+    pwd = os.path.dirname(__file__)
+except NameError:
+    pwd = ''
+    print('Could not find pwd')
 
 t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
 
@@ -31,14 +33,14 @@ Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
-
-
-
 # Directory to store results in
 result_dir = os.path.join(pwd,'M_dwarfs_cv')
+
+# Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
+# find the optimum number of degrees.
 
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = os.path.join(pwd,'M_dwarfs_17_median_v2'), select_deg = 17,
+                                                save_path = result_dir, select_deg = 17,
                                                 num_boot = 100, cores = cpu_count())

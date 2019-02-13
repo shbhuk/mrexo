@@ -11,13 +11,6 @@ try :
 except NameError:
     pwd = ''
 
-result_dir = os.path.join(pwd,'M_dwarfs_deg15')
-result_dir = "C:/Users/shbhu/Box Sync/M_dwarves/straight_line_simulation/simulation_50_points"
-
-result_dir = "C:/Users/shbhu/Documents/Git/mrexo/sample_kepler2/Kepler_55_open_corrected"
-directory = "C:/Users/shbhu/Documents/Git/mrexo/straight_line_simulation"
-
-
 mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
 kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 

@@ -18,12 +18,12 @@ predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma
 
 #Below example predicts the mass for a radius of 1 Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit.
 #Similary for Kepler dataset. Also outputs 16,84% qtl
-predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False)
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False, show_plot=False)
 
 #Below example predicts the mass for a radius of 1 Earth radii exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit.
 #Similary for Kepler dataset. Also output 5,16,84,95% quantile
 predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=None, dataset='mdwarf', is_posterior=False,
-                       qtl = [0.05,0.16,0.84,0.95])
+                       qtl = [0.05,0.16,0.84,0.95], show_plot=True)
 
 
 '''
