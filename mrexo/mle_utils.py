@@ -77,13 +77,14 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     # Integration to find C matrix (input for log likelihood maximization.)
     ###########################################################
     C_pdf = calc_C_matrix(n=n, deg=deg, M=Mass, Mass_sigma=Mass_sigma, Mass_max=Mass_max, Mass_min=Mass_min,
-                        R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min, Log=Log, abs_tol=abs_tol, save_path=save_path)
+                        R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
+                        Log=Log, abs_tol=abs_tol, save_path=save_path)
 
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(save_path,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
 
-    print('Calculated the PDF for Mass and Radius for Integrated beta and normal Density')
+    print('Calculated the PDF for Mass and Radius for Integrated beta and normal density')
 
     ###########################################################
     # Run optimization to find the weights
@@ -104,8 +105,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     x0 = np.repeat(1./(deg**2),(deg-2)**2)
 
     # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
-    opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1, epsilon=1e-5, acc=1e-5)
-    print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(), opt_result[2], opt_result[3], opt_result[4]))
+    opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1,
+                            epsilon=1e-5, acc=1e-5)
+    print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
+            opt_result[2], opt_result[3], opt_result[4]))
 
 
 
@@ -231,16 +234,16 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     return C_pdf
 
 
-def pdfnorm_beta(x, x_obs, x_sd, x_max, x_min, shape1, shape2, Log=True):
+def pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
     '''
     Product of normal and beta distribution
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
     if Log == True:
-        norm_beta = norm.pdf(x_obs, loc=10**x, scale=x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = norm.pdf(x_obs, loc=10**x, scale=x_std) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     else:
-        norm_beta = norm.pdf(x_obs, loc=x, scale=x_sd) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = norm.pdf(x_obs, loc=x, scale=x_std) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
 
     return norm_beta
 
@@ -251,13 +254,13 @@ def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
     x_obs = data
-    x_sd = data_sd
+    x_std = data_std
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
 
     integration_product = quad(pdfnorm_beta, a=x_min, b=x_max,
-                          args=(x_obs, x_sd, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+                          args=(x_obs, x_std, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
 
     return integration_product[0]
 
