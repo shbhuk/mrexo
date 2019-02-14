@@ -50,7 +50,7 @@ end = datetime.datetime.now()
 import pstats
 p = pstats.Stats('mle_profile')
 # p.strip_dirs().sort_stats(-1).print_stats()
-p.sort_stats('time').print_stats(10)
+p.strip_dirs().sort_stats('time').print_stats(10)
 
 print(end-start)
 
