@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import beta,norm
+import scipy
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.optimize import fmin_slsqp
@@ -234,20 +235,38 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     return C_pdf
 
 
+def norm_pdf(x, loc, scale):
+    '''
+    Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
+    Runs much quicker without the generic function handling.
+    '''
+    y = (x - loc)/scale
+    return np.exp(-y*y/2)/(np.sqrt(2*np.pi))/scale
+
+def int_gamma(a):
+    return scipy.math.factorial(a-1)
+
+
+def beta_pdf(x,a,b):
+    f = (int_gamma(a+b) * x**(a-1)*(1-x)**(b-1))/(int_gamma(a)*int_gamma(b))
+    return f
+
+
 def pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
     '''
     Product of normal and beta distribution
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     '''
+
     if Log == True:
-        norm_beta = norm.pdf(x_obs, loc=10**x, scale=x_std) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = norm_pdf(x_obs, loc=10**x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     else:
-        norm_beta = norm.pdf(x_obs, loc=x, scale=x_std) * beta.pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = norm_pdf(x_obs, loc=x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
 
     return norm_beta
 
-def integrate_function(data, data_sd, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
+def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
     '''
     Integrate the product of the normal and beta distribution.
 
@@ -276,9 +295,9 @@ def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
 
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
-        x_beta_indv = np.array([beta.pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
+        x_beta_indv = np.array([beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else:
-        x_beta_indv = np.array([integrate_function(data=x, data_sd=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+        x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 
     return x_beta_indv
 

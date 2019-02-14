@@ -4,15 +4,6 @@ import numpy as np
 from multiprocessing import cpu_count
 import numpy as np
 
-from scipy.stats.mstats import mquantiles
-from scipy.interpolate import interp1d
-from scipy.interpolate import interp2d
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-
-from mrexo.mle_utils import cond_density_quantile
-from mrexo.utils import load_lookup_table
-from mrexo.plot import plot_r_given_m_relation, plot_m_given_r_relation
 
 from mrexo import fit_mr_relation
 
