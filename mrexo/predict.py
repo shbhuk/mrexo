@@ -309,7 +309,7 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None):
 
     for i in range(0,lookup_grid_size):
         lookup_table[i,:] = predict_from_measurement(measurement = search_steps[i], qtl = qtl_steps,
-                            result_dir = result_dir, is_log = True, predict = predict_quantity)[1]
+                            result_dir = result_dir, predict = predict_quantity)[1]
         if i%100==0:
             print(i)
 

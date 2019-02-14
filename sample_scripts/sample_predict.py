@@ -14,8 +14,8 @@ Sample script to show how to use the predicting function to predict mass from ra
 
 #Below example predicts the mass for a radius of 1 Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_dummy'
 result_dir = os.path.join(pwd,'M_dwarfs_pdf_optim')
-result_dir = os.path.join(pwd,'M_dwarfs_old_pdfs')
-predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, is_posterior=False, show_plot = True)
+result_dir = os.path.join(pwd,'M_dwarfs_new_17')
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, is_posterior=False, show_plot = False)
 
 print(predicted_mass, qtls)
 
