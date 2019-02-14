@@ -25,7 +25,7 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_pdf_optim')
+result_dir = os.path.join(pwd,'M_dwarfs_new_17')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.

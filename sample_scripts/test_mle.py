@@ -11,7 +11,7 @@ from mrexo import MLE_fit
 
 from mrexo import fit_mr_relation
 
-
+"""
 try :
     pwd = os.path.dirname(__file__)
 except NameError:
@@ -59,11 +59,7 @@ print(end-start)
 
 
 """
-start = datetime.datetime.now()
-for i in range(0,100000):
-    # norm.pdf(x = 1, loc = 0, scale = 1)
-    a = beta.pdf(0.1,10,5)
-print(datetime.datetime.now() - start)
+
 
 def norm_pdf(x, loc, scale):
     '''
@@ -73,10 +69,36 @@ def norm_pdf(x, loc, scale):
     y = (x - loc)/scale
     return np.exp(-y*y/2)/(np.sqrt(2*np.pi))/scale
 
+def int_gamma(a):
+    return scipy.math.factorial(a-1)
+
+
+def beta_pdf(x,a,b):
+    f = (int_gamma(a+b) * x**(a-1)*(1-x)**(b-1))/(int_gamma(a)*int_gamma(b))
+    return f
+
+
+
+
+# start = datetime.datetime.now()
+
+
+for i in range(0,100):
+    # norm.pdf(x = 1, loc = 0, scale = 1)
+    x = np.random.uniform(0,1)
+    print(x,beta.pdf(x,10,5) - beta_pdf(x,10,5))
+
+    loc = 0.32
+    scale = 0.5
+    print(norm.pdf(x=x, loc=loc, scale=scale) - norm_pdf(x=x, loc=loc, scale=scale))
+    print('')
+
+
+# print(datetime.datetime.now() - start)
+
+
 x = 1
-loc = 0.32
-scale = 0.5
+
 
 print(norm.pdf(x = x, loc = loc, scale = scale))
 print(norm_pdf(x = x, loc = loc, scale = scale))
-"""
