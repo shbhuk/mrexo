@@ -15,4 +15,4 @@ cd /storage/home/szk381/work/mrexo/sample_kepler         # change into same dire
 
 # start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
-python sample_kepler.py> kepler_run_cv_median.txt
+python sample_kepler.py> kepler_run_cv_newpdf.txt
