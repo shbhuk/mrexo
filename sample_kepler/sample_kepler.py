@@ -22,10 +22,10 @@ Radius = np.array(t['pl_rade'])
 
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'Kepler_cv_new_pdf')
+result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
 
 if __name__ == '__main__':
     initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, Mass_sigma=Mass_sigma,
                                             Radius=Radius, Radius_sigma=Radius_sigma,
-                                            save_path=result_dir, select_deg='cv',
+                                            save_path=result_dir, select_deg=55,
                                             num_boot=48, cores=cpu_count())
