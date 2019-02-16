@@ -67,19 +67,19 @@ def plot_m_given_r_relation(result_dir):
     ax1.plot(R_points,M_cond_R,  color='maroon', lw=2) # Full dataset run
     ax1.fill_between(R_points,M_cond_R_lower,M_cond_R_upper,alpha=0.3, color='lightsalmon') # Full dataset run
     lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
-    # ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
+    ax1.fill_between(R_points,mr_lower_boot,mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
 
     mr_median_line = Line2D([0], [0], color='maroon', lw=2,label='Median of f(m$|$r) from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'1-$\sigma$ Quantile of f(m$|$r) from full dataset run  ')
-    # mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the median of the f(m|r) from bootstrap')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m$|$r) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of the median of the f(m$|$r) from bootstrap')
 
-    handles = [mr_median_line, mr_full]
+    handles = [mr_median_line, mr_full, mr_boot]
 
 
 
     ax1.set_xlabel('log Radius ($R_{\oplus}$)')
     ax1.set_ylabel('log Mass ($M_{\oplus}$)')
-    ax1.set_title('f(m|r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title('f(m$|$r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
 
     plt.show()
     plt.ylim(Mass_min, Mass_max)
@@ -156,16 +156,16 @@ def plot_r_given_m_relation(result_dir):
     ax1.fill_between(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
 
-    rm_median_line = Line2D([0], [0], color='midnightblue', lw=2,label='Median of f(r|m) from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r|m) from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the MEDIAN of the f(r|m) from bootstrap')
+    rm_median_line = Line2D([0], [0], color='midnightblue', lw=2,label=r'Median of f(r$|$m) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r$|$m) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the median of the f(r$|$m) from bootstrap')
     handles = [rm_median_line, rm_full, rm_boot]
 
     plt.legend(handles=handles)
     ax1.set_ylabel('log Radius ($R_{\oplus}$)')
     ax1.set_xlabel('log Mass ($M_{\oplus}$)')
 
-    ax1.set_title('f(r|m) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title(r'f(r$|$m) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
 
 
     plt.show()
@@ -248,13 +248,13 @@ def plot_mr_and_rm(result_dir):
     ax1.fill_betweenx(M_points,R_cond_M_lower,R_cond_M_upper,alpha=0.3, color='cornflowerblue') # Full dataset run
     ax1.fill_betweenx(M_points,rm_lower_boot,rm_upper_boot,alpha=0.3, color='b') # Bootstrap result
 
-    mr_median_line = Line2D([0], [0], color='maroon', lw=2,label='Median of f(m|r) from full dataset run')
-    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m|r) from full dataset run  ')
-    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of median of f(m|r) from bootstrap')
+    mr_median_line = Line2D([0], [0], color='maroon', lw=2,label=r'Median of f(m$|$r) from full dataset run')
+    mr_full = mpatches.Patch(color='lightsalmon', alpha=0.3,  label=r'Quantiles of f(m$|$r) from full dataset run  ')
+    mr_boot = mpatches.Patch(color='r', alpha=0.3, label=r'Quantiles of median of f(m$|$r) from bootstrap')
 
-    rm_median_line = Line2D([0], [0], color='midnightblue', lw=2,label='Median of f(r|m) from full dataset run')
-    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r|m) from full dataset run  ')
-    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of median of f(r|m) from bootstrap')
+    rm_median_line = Line2D([0], [0], color='midnightblue', lw=2,label=r'Median of f(r$|$m) from full dataset run')
+    rm_full = mpatches.Patch(color='cornflowerblue', alpha=0.3,  label=r'Quantiles of f(r$|$m) from full dataset run  ')
+    rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of median of f(r$|$m) from bootstrap')
 
     handles = [mr_median_line, mr_full, mr_boot, rm_median_line, rm_full, rm_boot]
 

@@ -262,7 +262,7 @@ def mass_100_percent_iron_planet(logRadius):
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
 
-def generate_lookup_table(predict_quantity = 'Mass', result_dir = None, cores = 1):
+def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
     '''
     Generate lookup table size 1000x1000 to make the prediction function faster.
     Then in predict_from_measurement() set use_lookup = True.
@@ -282,7 +282,7 @@ def generate_lookup_table(predict_quantity = 'Mass', result_dir = None, cores = 
             generate_lookup_table(result_dir = kepler_result, predict_quantity = 'Mass', cores = 10)
     '''
 
-    predict_quantity = predict_quantity.replace(' ', '').replace('-', '').lower()
+    predict_quantity = predict.replace(' ', '').replace('-', '').lower()
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
