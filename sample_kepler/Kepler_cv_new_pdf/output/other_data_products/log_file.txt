@@ -1393,3 +1393,10 @@ Optimization terminated after 56 iterations. Exit Code = 0Optimization terminate
 Finished Optimization at 2019-02-16 13:01:45.124714
 Optimization terminated after 54 iterations. Exit Code = 0Optimization terminated successfully.
 
+Finished Optimization at 2019-02-16 16:07:18.595856
+Optimization terminated after 116 iterations. Exit Code = 8Positive directional derivative for linesearch
+
+Finished Optimization at 2019-02-16 16:35:31.052117
+Optimization terminated after 134 iterations. Exit Code = 0Optimization terminated successfully.
+
+Ended run at 2019-02-16 16:36:17.281160

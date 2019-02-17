@@ -75,8 +75,8 @@ result_dir = os.path.join(pwd,'M_dwarfs_new_17')
 # np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
 
 if __name__ == '__main__':
-    generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
-    generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
+    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
     result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
     generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
     generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
