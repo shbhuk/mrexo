@@ -20,7 +20,7 @@ Sample script to show how to use the predicting function to predict mass from ra
 #Below example predicts the mass for a radius of 1 Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_dummy'
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 
-print(predict_from_measurement(measurement = 1, use_lookup=True, predict = 'radius'))
+# predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True)
 
 
 # result_dir = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
@@ -79,15 +79,16 @@ print(predict_from_measurement(measurement = 1, use_lookup=True, predict = 'radi
 
 # interp = interp2d(qtl_steps, search_steps, lookup_table)
 # np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
-# 
-# if __name__ == '__main__':
-#     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
-#     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
-#     result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
-#     generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
-#     generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
 
-# predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, is_posterior=False, show_plot = False)
+if __name__ == '__main__':
+    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
+    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+    # result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
+    a=1
+    # generate_lookup_table(result_dir = result_dir, predict= 'mass', cores = 10)
+    # generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+
+    print(predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True))
 
 # print(predicted_mass, qtls)
 """
