@@ -83,10 +83,10 @@ result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 if __name__ == '__main__':
     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
-    # result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
+    result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
     a=1
-    # generate_lookup_table(result_dir = result_dir, predict= 'mass', cores = 10)
-    # generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+    generate_lookup_table(result_dir = result_dir, predict= 'mass', cores = 24)
+    generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
 
     print(predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True))
 

@@ -1,0 +1,8 @@
+
+The following have been reloaded with a version change:
+  1) python/2.7.14-anaconda5.0.1 => python/3.6.3-anaconda5.0.1
+
+Traceback (most recent call last):
+  File "sample_predict.py", line 89, in <module>
+    generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+TypeError: generate_lookup_table() got an unexpected keyword argument 'predict_quantity'
