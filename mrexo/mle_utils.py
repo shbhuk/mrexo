@@ -3,7 +3,7 @@ from scipy.stats import beta,norm
 import scipy
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
-from scipy.optimize import fmin_slsqp
+from scipy.optimize import fmin_slsqp, minimize
 import datetime,os
 
 ########################################
@@ -364,6 +364,10 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
         def g(x):
             return pbeta_conditional_density(x) - q
         return root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
+
+        # result = minimize(g, x0 = (x_min + x_max)/2 , bounds = [x_min, x_max], tol = 1e-12)
+        # return result.x
+
 
     if np.size(qtl) == 1:
         qtl = [qtl]

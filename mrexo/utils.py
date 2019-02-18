@@ -103,7 +103,7 @@ def load_lookup_table(f_path):
     INPUT:
         f_path : Entire file path for the .npy interpolated file.
     OUTPUT:
-        lookup_inter : Interpolated lookup table (.npy) object. 
+        lookup_inter : Interpolated lookup table (.npy) object.
 
     '''
 

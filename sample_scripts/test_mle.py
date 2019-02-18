@@ -8,10 +8,11 @@ from scipy.stats import norm,beta
 import scipy
 import datetime as datetime
 from mrexo import MLE_fit
+import timeit
 
-from mrexo import fit_mr_relation
+from mrexo import fit_mr_relation, predict_from_measurement
 
-"""
+
 try :
     pwd = os.path.dirname(__file__)
 except NameError:
@@ -29,7 +30,7 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_cv')
+result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 print(1)
 
 Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))
@@ -42,17 +43,42 @@ Radius_bounds = np.array([Radius_min, Radius_max])
 
 # result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=17, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=False)
 
-
 start = datetime.datetime.now()
 cProfile.run('MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=17, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=False)', 'mle_profile')
+
+cProfile.run('predict_from_measurement(measurement=1, measurement_sigma=0.25, result_dir=result_dir, use_lookup = False, qtl = [0.3,0.2,0.1,0.5,0.2,0.6])', 'predict_profile')
 end = datetime.datetime.now()
 
 import pstats
-p = pstats.Stats('mle_profile')
+p = pstats.Stats('predict_profile')
 # p.strip_dirs().sort_stats(-1).print_stats()
-p.strip_dirs().sort_stats('time').print_stats(10)
+p.sort_stats('time').print_stats(10)
 
 print(end-start)
+
+
+
+"""
+#Factorial
+
+import math
+import scipy
+
+def read_factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * read_factorial(n-1)
+
+def factorial(n):return reduce(lambda x,y:x*y,[1]+range(1,n+1))
+
+
+print(timeit.timeit('"factorial(42)"', number = int(1e8)))
+print(timeit.timeit('"read_factorial(42)"', number = int(1e8)))
+print(timeit.timeit('"math.factorial(42)"', number = int(1e8)))
+print(timeit.timeit('"scipy.math.factorial(42)"', number = int(1e8)))
+"""
+
 
 
 
@@ -60,6 +86,7 @@ print(end-start)
 
 """
 
+# Comparing PDFs
 
 def norm_pdf(x, loc, scale):
     '''
@@ -102,3 +129,4 @@ x = 1
 
 print(norm.pdf(x = x, loc = loc, scale = scale))
 print(norm_pdf(x = x, loc = loc, scale = scale))
+"""

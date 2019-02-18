@@ -20,31 +20,34 @@ Sample script to show how to use the predicting function to predict mass from ra
 #Below example predicts the mass for a radius of 1 Earth radii exoplanet, with no measurement uncertainty from the fit results in 'M_dwarfs_dummy'
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 
+result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
+print(predict_from_measurement(measurement=1, measurement_sigma=None, predict = 'mass', result_dir=result_dir, use_lookup = True))
+
 # predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True)
 
 
 # result_dir = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
 # result_dir = os.path.join(pwd,'M_dwarfs_new_17')
 
-# 
+#
 # predict_quantity = 'Mass'
 # cores = 5
-# 
-# 
+#
+#
 # predict_quantity = predict_quantity.replace(' ', '').replace('-', '').lower()
-# 
+#
 # input_location = os.path.join(result_dir, 'input')
 # output_location = os.path.join(result_dir, 'output')
 # Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
 # Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
-# 
+#
 # lookup_grid_size = 20
-# 
+#
 # lookup_table = np.zeros((lookup_grid_size, lookup_grid_size))
 # qtl_steps = np.linspace(0,1,lookup_grid_size)
 # qtl_steps[-1] = 1 - 1e-20
-# 
-# 
+#
+#
 # if predict_quantity == 'mass':
 #     search_steps = np.linspace(Radius_min, Radius_max, lookup_grid_size)
 #     fname = 'lookup_m_given_r'
@@ -53,17 +56,17 @@ result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 #     search_steps = np.linspace(Mass_min, Mass_max, lookup_grid_size)
 #     fname = 'lookup_r_given_m'
 #     comment = 'Lookup table for predicting log(Radius) given log(Mass) and certain quantile.'
-# 
+#
 # def partial_predict(measurement):
 #     return predict_from_measurement(measurement = measurement, qtl = qtl_steps,
 #                                     result_dir = result_dir, predict = predict_quantity)[1]
 # print(1)
-# 
+#
 # if cores<=1:
 #     for i in range(0,lookup_grid_size):
 #         print(datetime.datetime.now())
 #         lookup_table[i,:] = partial_predict(measurement = search_steps[i])
-#         
+#
 #         if i%100==0:
 #             print(i)
 # else:
@@ -80,15 +83,15 @@ result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 # interp = interp2d(qtl_steps, search_steps, lookup_table)
 # np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
 
-if __name__ == '__main__':
-    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
-    #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
-    result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
-    a=1
-    generate_lookup_table(result_dir = result_dir, predict = 'mass', cores = 24)
-    generate_lookup_table(result_dir = result_dir, predict = 'radius', cores = 24)
+# if __name__ == '__main__':
+#     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'mass', cores = 24)
+#     #generate_lookup_table(result_dir = result_dir, predict_quantity = 'radius', cores = 24)
+#     result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
+#     a=1
+#     generate_lookup_table(result_dir = result_dir, predict = 'mass', cores = 24)
+#     generate_lookup_table(result_dir = result_dir, predict = 'radius', cores = 24)
 
-    print(predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True))
+
 
 # print(predicted_mass, qtls)
 """
