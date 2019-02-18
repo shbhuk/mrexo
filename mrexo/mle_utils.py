@@ -352,8 +352,10 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
     # Quantile
 
     def pbeta_conditional_density(j):
+        if type(j) == np.ndarray:
+            j = j[0]
         x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a=d, b=deg - d + 1) for d in deg_vec])
-
+        # print(np.shape(w_hat), np.shape(np.kron(x_indv_cdf,y_beta_indv)))
         quantile_numerator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
         p_beta = quantile_numerator / denominator
 
@@ -363,10 +365,11 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
     def conditional_quantile(q):
         def g(x):
             return pbeta_conditional_density(x) - q
-        return root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
 
-        # result = minimize(g, x0 = (x_min + x_max)/2 , bounds = [x_min, x_max], tol = 1e-12)
-        # return result.x
+        a = root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
+        result = minimize(g, x0 = (x_min + x_max)/2 , bounds = ((x_min, x_max),), method = 'BFGS', tol = 1e-12)
+        print(result.x -a)
+        return result.x
 
 
     if np.size(qtl) == 1:
