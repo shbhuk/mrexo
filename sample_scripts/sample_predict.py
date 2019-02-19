@@ -83,8 +83,8 @@ result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 # interp = interp2d(qtl_steps, search_steps, lookup_table)
 # np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
 
-if __name__ == '__main__':
-    generate_lookup_table(result_dir = result_dir, predict = 'mass', cores = 4)
+# if __name__ == '__main__':
+    # generate_lookup_table(result_dir = result_dir, predict = 'mass', cores = 4)
     # generate_lookup_table(result_dir = result_dir, predict = 'radius', cores = 24)
     # result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
     # a=1

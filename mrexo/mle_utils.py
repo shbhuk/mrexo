@@ -81,6 +81,8 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                         R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
                         Log=Log, abs_tol=abs_tol, save_path=save_path)
 
+    np.savetxt(os.path.join(save_path,'C_pdf.txt'),C_pdf)
+
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(save_path,'log_file.txt'),'a') as f:
         f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
@@ -355,7 +357,6 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
         if type(j) == np.ndarray:
             j = j[0]
         x_indv_cdf = np.array([beta.cdf((j - x_min)/(x_max - x_min), a=d, b=deg - d + 1) for d in deg_vec])
-        # print(np.shape(w_hat), np.shape(np.kron(x_indv_cdf,y_beta_indv)))
         quantile_numerator = np.sum(w_hat * np.kron(x_indv_cdf,y_beta_indv))
         p_beta = quantile_numerator / denominator
 
@@ -365,11 +366,7 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
     def conditional_quantile(q):
         def g(x):
             return pbeta_conditional_density(x) - q
-
-        a = root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
-        result = minimize(g, x0 = (x_min + x_max)/2 , bounds = ((x_min, x_max),), method = 'BFGS', tol = 1e-12)
-        print(result.x -a)
-        return result.x
+        return root(g,a=x_min, b=x_max, xtol=1e-8, rtol=1e-12)
 
 
     if np.size(qtl) == 1:
