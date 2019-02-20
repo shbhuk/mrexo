@@ -21,7 +21,14 @@ Sample script to show how to use the predicting function to predict mass from ra
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 
 # result_dir = os.path.join(pwd,'Kepler_55_new_pdf')
-# print(predict_from_measurement(measurement=1, measurement_sigma=None, predict = 'mass', dataset='kepler', use_lookup = True))
+print(predict_from_measurement(measurement=1, measurement_sigma=None, predict = 'mass', dataset='kepler', use_lookup = True))
+
+s = datetime.datetime.now()
+for i in range(int(100)):
+    _ = predict_from_measurement(measurement=1, measurement_sigma=0.25, predict = 'radius', dataset='mdwarf', use_lookup = True)
+
+e = datetime.datetime.now()
+print(e-s)
 
 # predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, result_dir=result_dir, use_lookup = True)
 
