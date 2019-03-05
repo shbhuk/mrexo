@@ -11,16 +11,15 @@ try :
 except NameError:
     pwd = ''
 
-mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
-kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
+mdwarf_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
+kepler_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 
 
 result_dir = mdwarf_result
 
 ax = plot_m_given_r_relation(result_dir)
-plt.title('M dwarf conditional distributions', fontsize = 20, pad = 2)
-plt.xlim(-0.25, 1.25483)
-plt.ylim(-1.744727, 2.44790)
+ax = plot_r_given_m_relation(result_dir)
+ax = plot_mr_and_rm(result_dir)
+ax = plot_joint_mr_distribution(result_dir)
 
-plt.yticks(np.arange(-1.5, 2.5, 0.5))
-plt.xticks(np.arange(-0.25, 1.5, 0.25))
+plt.title('M dwarf conditional distributions', fontsize = 20, pad = 2)
