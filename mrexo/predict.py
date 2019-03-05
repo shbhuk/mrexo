@@ -98,7 +98,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     # Convert linear to log10.
     log_measurement = np.log10(measurement)
     if measurement_sigma:
-        measurement_sigma = 0.434 * measurement_sigma / measurement
+        log_measurement_sigma = 0.434 * measurement_sigma / measurement
 
 
     if predict == 'mass':
@@ -133,7 +133,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                     predicted_qtl = lookup(qtl, log_measurement)
                 else:
                     n_art = 10000
-                    artificial_posterior = np.random.normal(loc = log_measurement, scale = measurement_sigma, size = n_art)
+                    artificial_posterior = np.random.normal(loc = log_measurement, scale = log_measurement_sigma, size = n_art)
                     qtls = np.random.uniform(size = n_art)
                     predicted_posteriors = [lookup(qtls[i], artificial_posterior[i]) for i in range(n_art)]
 
@@ -149,7 +149,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 lookup_flag = None
 
         if not lookup_flag:
-            predicted_value = cond_density_quantile(y=log_measurement, y_std=measurement_sigma, y_max=measurement_max,
+            predicted_value = cond_density_quantile(y=log_measurement, y_std=log_measurement_sigma, y_max=measurement_max,
                                                         y_min=measurement_min, x_max=predict_max, x_min=predict_min,
                                                         deg=degree, deg_vec = deg_vec,
                                                         w_hat=w_hat, qtl=np.insert(np.array(qtl),0,0.5))
@@ -168,17 +168,16 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-                ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+                ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
                 handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
 
-            yerr = np.array([[predicted_median - predicted_lower_quantile, predicted_upper_quantile - predicted_median]]).T
+            yerr = np.array([[10**predicted_median - 10**predicted_lower_quantile, 10**predicted_upper_quantile - 10**predicted_median]]).T
 
-            plt.hlines(predicted_median, measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(log_measurement, predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
-
-            ax.errorbar(x=log_measurement, y=predicted_median, xerr=measurement_sigma,
+            plt.hlines(10**predicted_median, 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(10**log_measurement, 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            ax.errorbar(x=measurement, y=10**predicted_median, xerr=measurement_sigma,
                         yerr=yerr,fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
@@ -217,7 +216,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-                ax.plot(R_points, mass_100_percent_iron_planet(R_points), 'k')
+                ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
                 handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
 
             else:
@@ -232,12 +231,12 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 output_qtl =  mquantiles(outputs, prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
                 measurement_qtl = mquantiles(log_measurement, prob=[0.5, 0.5],axis=0,alphap=1,betap=1).data
 
-            plt.hlines(output_qtl[0], measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(measurement_qtl[0], predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
-            plt.plot(log_measurement,outputs,'g.',markersize = 8, alpha = 0.3)
+            plt.hlines(10**output_qtl[0], 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            plt.vlines(10**measurement_qtl[0], 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            plt.plot(measurement,10**outputs,'g.',markersize = 8, alpha = 0.3)
 
-            ax.errorbar(x=measurement_qtl[0], y=output_qtl[0], xerr=np.abs(measurement_qtl[0] - measurement_qtl[1]),
-                        yerr=np.abs(output_qtl[0] - output_qtl[1]),fmt='o', color = 'green')
+            ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
+                        yerr=np.abs(10**output_qtl[0] - 10**output_qtl[1]),fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
             plt.show()
@@ -262,6 +261,7 @@ def mass_100_percent_iron_planet(logRadius):
 def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
     '''
     Generate lookup table size 1000x1000 to make the prediction function faster.
+    In log10 units. 
     Then in predict_from_measurement() set use_lookup = True.
     INPUTS:
         predict_quantity: To predict mass from radius, set to 'mass'. To go the other way,
