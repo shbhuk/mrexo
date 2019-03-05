@@ -224,6 +224,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location,
                             calc_joint_dist = True)
 
+    print('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
     with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
        f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
 

@@ -44,15 +44,16 @@ Radius_bounds = np.array([Radius_min, Radius_max])
 # result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=17, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=False)
 
 start = datetime.datetime.now()
-cProfile.run('MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=17, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=False)', 'mle_profile')
+# cProfile.run('MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=17, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=True)', 'mle_profile')
 
+cProfile.run('MLE_fit(Mass=Mass[0:5], Radius=Radius[0:5], Mass_sigma=Mass_sigma[0:5], Radius_sigma=Radius_sigma[0:5],Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=5, abs_tol=1e-8, save_path=pwd, calc_joint_dist = True, output_weights_only=True)', 'mle_profile')
 # cProfile.run('predict_from_measurement(measurement=1, measurement_sigma=0.25, result_dir=result_dir, use_lookup = False, qtl = [0.3,0.2,0.1,0.5,0.2,0.6])', 'predict_profile')
 end = datetime.datetime.now()
 
 import pstats
 p = pstats.Stats('predict_profile')
 # p.strip_dirs().sort_stats(-1).print_stats()
-p.sort_stats('time').print_stats(10)
+# p.sort_stats('time').print_stats(10)
 
 print(end-start)
 

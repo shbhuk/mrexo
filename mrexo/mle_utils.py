@@ -74,14 +74,12 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     Radius_max = Radius_bounds[1]
     Radius_min = Radius_bounds[0]
 
-    ###########################################################
+    ########################################################################
     # Integration to find C matrix (input for log likelihood maximization.)
-    ###########################################################
+    ########################################################################
     C_pdf = calc_C_matrix(n=n, deg=deg, M=Mass, Mass_sigma=Mass_sigma, Mass_max=Mass_max, Mass_min=Mass_min,
                         R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
                         Log=Log, abs_tol=abs_tol, save_path=save_path)
-
-    np.savetxt(os.path.join(save_path,'C_pdf.txt'),C_pdf)
 
     print('Finished Integration at ',datetime.datetime.now())
     with open(os.path.join(save_path,'log_file.txt'),'a') as f:
@@ -225,6 +223,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     for i in range(0,n):
         M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol=abs_tol, Log=Log)
         R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol=abs_tol, Log=Log)
+        # print(M[i],Mass_sigma[i], R[i], Radius_sigma[i], Mass_max, Mass_min, Radius_max, Radius_min, np.sum(R_indv_pdf[i,:]))
 
         # Put M.indv.pdf and R.indv.pdf into a big matrix
         C_pdf[i,:] = np.kron(M_indv_pdf[i], R_indv_pdf[i])
@@ -265,7 +264,6 @@ def pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
         norm_beta = norm_pdf(x_obs, loc=10**x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     else:
         norm_beta = norm_pdf(x_obs, loc=x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
-
     return norm_beta
 
 def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
@@ -282,7 +280,6 @@ def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs
 
     integration_product = quad(pdfnorm_beta, a=x_min, b=x_max,
                           args=(x_obs, x_std, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
-
     return integration_product[0]
 
 
@@ -300,7 +297,6 @@ def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
         x_beta_indv = np.array([beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else:
         x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
-
     return x_beta_indv
 
 
