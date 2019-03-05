@@ -190,9 +190,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
         n = np.size(measurement)
         random_quantile = np.zeros(n)
-
         lookup_flag = None
-        random_quantile = np.zeros((n))
 
         if use_lookup == True:
             try:
@@ -226,18 +224,17 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
 
             if np.size(qtl)==2:
-                predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
-                output_qtl =  mquantiles(outputs, prob=[0.5,qtl],axis=0,alphap=1,betap=1).data
-                measurement_qtl = mquantiles(log_measurement ,prob=[0.5,qtl],axis=0,alphap=1,betap=1).data
+                # predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
+                output_qtl =  mquantiles(outputs, prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
+                measurement_qtl = mquantiles(log_measurement, prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
             else:
                 # If finding multiple quantiles, do not plot errorbar on predicted value in plot
                 output_qtl =  mquantiles(outputs, prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
-                measurement_qtl = mquantiles(log_measurement ,prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
-
+                measurement_qtl = mquantiles(log_measurement, prob=[0.5, 0.5],axis=0,alphap=1,betap=1).data
 
             plt.hlines(output_qtl[0], measurement_min, measurement_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(measurement_qtl[0], predict_min, predict_max,linestyle = 'dashed', colors = 'darkgrey')
-            plt.plot(log_measurement,outputs,'g.',markersize = 9)
+            plt.plot(log_measurement,outputs,'g.',markersize = 8, alpha = 0.3)
 
             ax.errorbar(x=measurement_qtl[0], y=output_qtl[0], xerr=np.abs(measurement_qtl[0] - measurement_qtl[1]),
                         yerr=np.abs(output_qtl[0] - output_qtl[1]),fmt='o', color = 'green')
