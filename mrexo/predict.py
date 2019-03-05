@@ -177,7 +177,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             plt.hlines(10**predicted_median, 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(10**log_measurement, 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
-            print(measurement_sigma, yerr)
             ax.errorbar(x=measurement, y=10**predicted_median, xerr=measurement_sigma,
                         yerr=yerr,fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
