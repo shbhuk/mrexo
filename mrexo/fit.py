@@ -12,7 +12,7 @@ from .utils import save_dictionary
 
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
-                    select_deg=55, degree_max=None, k_fold=None, num_boot=100,
+                    select_deg=17, degree_max=None, k_fold=None, num_boot=100,
                     cores=1, abs_tol=1e-8):
     '''
     Fit a mass and radius relationship using a non parametric approach with beta densities
