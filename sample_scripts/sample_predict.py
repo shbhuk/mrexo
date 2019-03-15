@@ -17,7 +17,7 @@ Sample script to show how to use the predicting function to predict mass from ra
 
 # Predict mass and quantiles from radius for a 1 Earth radii planet with an uncertainty of 0.1 radii using the M dwarf fit from the result_dir
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
-predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=result_dir, is_posterior=False, show_plot=False)
+predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=result_dir, is_posterior=False, show_plot=True)
 
 # Predict mass from radius for the Kepler dataset for a 1 Earth radii planet using the lookup table.
 predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=None, predict = 'mass', dataset='kepler', use_lookup = True)

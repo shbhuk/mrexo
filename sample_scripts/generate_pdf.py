@@ -46,6 +46,8 @@ cdf_interp = interp1d(predicted_values, qtls, bounds_error = False, fill_value =
 # Conditional_plot. PDF is derivative of CDF
 pdf_interp = np.diff(cdf_interp) / np.diff(M_points)
 
+fig = plt.figure(figsize=(8.5,7))
+
 plt.plot(M_points[:-1], pdf_interp)
 plt.ylabel('PDF', fontsize = 20)
 plt.xlabel('log Mass ($M_{\oplus}$)', fontsize = 20)

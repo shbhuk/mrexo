@@ -60,7 +60,6 @@ def plot_m_given_r_relation(result_dir):
     ax1.errorbar(x=Radius, y=Mass, xerr=Radius_sigma, yerr=Mass_sigma,fmt='k.',markersize=3, elinewidth=0.3)
     ax1.plot(10**R_points, 10**M_cond_R,  color='maroon', lw=2) # Full dataset run
     ax1.fill_between(10**R_points, 10**M_cond_R_lower, 10**M_cond_R_upper,alpha=0.3, color='lightsalmon') # Full dataset run
-    lower_boot, upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
     ax1.fill_between(10**R_points, 10**mr_lower_boot, 10**mr_upper_boot,alpha=0.3, color='r') # Bootstrap result
 
     mr_median_line = Line2D([0], [0], color='maroon', lw=2,label='Median of f(m$|$r) from full dataset run')
