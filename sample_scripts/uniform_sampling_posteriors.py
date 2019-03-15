@@ -23,7 +23,7 @@ This is similar to Fig 4 from Kanodia et al. 2019.
 measurement_radius = [1,3,10]
 r = measurement_radius[1]
 
-n_posteriors = 1000
+n_posteriors = 10000
 random_quantiles = np.random.uniform(0,1, n_posteriors)
 
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
@@ -36,11 +36,16 @@ M_points = np.loadtxt(os.path.join(output_location, 'M_points.txt'))
 # If lookup table exists, use lookup table. Else can generate lookup table using generate_lookup_table()
 results = predict_from_measurement(measurement = r, measurement_sigma = None,  result_dir = result_dir, qtl=random_quantiles, use_lookup = True)
 # PDF is in log scale
-predicted_values = np.log10(results[1])
-
-# cdf_interp = interp1d(predicted_values, qtls, bounds_error = False, fill_value = 'extrapolate')(M_points)
+predicted_values = results[1]
 
 
 fig, ax1, handles = plot_m_given_r_relation(result_dir)
-ax1.plot(np.repeat(np.log10(r), n_posteriors),predicted_values, alpha = 0.6)
-# plt.plot()
+
+plt.figure()
+plt.hist(np.log10(predicted_values), bins = 30) # Predicted in log space
+
+import matplotlib
+matplotlib.rc('text', usetex=True) #use latex for text
+plt.xlabel('Mass ($M_{\oplus}$)')
+plt.title('Posteriors for R = '+str(r)+ '$R_{\oplus}$')
+plt.show()
