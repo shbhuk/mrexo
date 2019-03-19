@@ -217,7 +217,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             if predict == 'mass':
                 fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
                 ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
-                handles.append(Line2D([0], [0], color='k',  label='100% Iron planet'))
+                handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
 
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
@@ -233,6 +233,18 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             plt.hlines(10**output_qtl[0], 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(10**measurement_qtl[0], 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
+
+            horizontal_hist = np.histogram(outputs, bins = 20)
+            vertical_hist = np.histogram(measurement, bins = 20)
+
+            print(horizontal_hist[1], vertical_hist[1])
+
+            # plt.hist(measurement, weights = np.repeat(1/ np.max(vertical_hist[0])/4,len(measurement)),
+                                # bottom = 10**predict_min, bins = 20, color = 'grey', alpha = 0.3)
+            plt.hist(outputs, weights = np.repeat(1/ np.max(horizontal_hist[0])/4,len(outputs)), orientation = 'horizontal',
+                                 bottom = 10**measurement_min, bins = horizontal_hist[1],  color = 'grey', alpha = 0.3)
+
+
             plt.plot(measurement,10**outputs,'g.',markersize = 8, alpha = 0.3)
 
             ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
@@ -261,7 +273,7 @@ def mass_100_percent_iron_planet(logRadius):
 def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
     '''
     Generate lookup table size 1000x1000 to make the prediction function faster.
-    In log10 units. 
+    In log10 units.
     Then in predict_from_measurement() set use_lookup = True.
     INPUTS:
         predict_quantity: To predict mass from radius, set to 'mass'. To go the other way,
@@ -310,16 +322,14 @@ def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
         lookup_inputs = ((10**search_steps[i], qtl_steps, result_dir, predict_quantity) for i in range(lookup_grid_size))
         pool = Pool(processes=cores)
         lookup_table = list(pool.imap(lookup_table_parallelize,lookup_inputs))
-        
+
 
     np.savetxt(os.path.join(output_location,fname+'.txt'), lookup_table, comments='#', header=comment)
 
     interp = interp2d(qtl_steps, search_steps, lookup_table)
     print(interp)
     np.save(os.path.join(output_location,fname+'_interp2d.npy'), interp)
-    
+
 def lookup_table_parallelize(inputs):
     return np.log10(predict_from_measurement(measurement = inputs[0], qtl = inputs[1],
                                 result_dir = inputs[2], predict = inputs[3])[1])
-
-    
