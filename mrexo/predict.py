@@ -183,7 +183,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                         yerr=yerr,fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
-            plt.show()
+            plt.show(block=False)
 
     ###########################################################
 
@@ -253,7 +253,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                         yerr=np.abs(10**output_qtl[0] - 10**output_qtl[1]),fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
-            plt.show()
+            plt.show(block=False)
 
 
     return [10**x for x in outputs]

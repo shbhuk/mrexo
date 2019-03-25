@@ -74,8 +74,8 @@ def plot_m_given_r_relation(result_dir):
     ax1.set_title('f(m$|$r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
     ax1.set_yscale('log')
     ax1.set_xscale('log')
-    
-    plt.show()
+
+    plt.show(block=False)
     plt.ylim(10**Mass_min, 10**Mass_max)
     plt.xlim(10**Radius_min, 10**Radius_max)
     import matplotlib
@@ -157,7 +157,7 @@ def plot_r_given_m_relation(result_dir):
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
-    plt.show()
+    plt.show(block=False)
     plt.xlim(10**Mass_min, 10**Mass_max)
     plt.ylim(10**Radius_min, 10**Radius_max)
 
