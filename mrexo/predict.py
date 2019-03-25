@@ -44,6 +44,12 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     OUTPUT:
         outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
+        iron_planet: Corresponding predicted quantity for a 100% Iron planet.
+                Example: If predicting mass from radius, iron_planet will be the mass
+                of a 100% Iron planet for the radius. Similarly for radius predictions
+                from mass.
+                This should be used as a reality check, in the small planet mass regime,
+                where the uncertainties dominate, and can give unphysical results.
     EXAMPLE:
         from mrexo import predict_from_measurement
         import os
@@ -108,17 +114,21 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         measurement_min, measurement_max = Radius_min, Radius_max
         w_hat = weights_mle
         lookup_fname = 'lookup_m_given_r_interp2d.npy'
+        Mass_iron = mass_100_percent_iron_planet(np.min(log_measurement))
+        iron_planet = Mass_iron
 
         if np.min(log_measurement) < np.log10(1.3):
-            #This is from 100% iron curve of Fortney, Marley and Barnes 2007; solving for
-            # logM (base 10) via quadratic formula.
-            Mass_iron = mass_100_percent_iron_planet(np.min(log_measurement))
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass (Fortney, Marley and Barnes 2007)'.format(10**np.min(log_measurement), 10**Mass_iron))
     else:
         predict_min, predict_max = Radius_min, Radius_max
         measurement_min, measurement_max = Mass_min, Mass_max
         w_hat = np.reshape(weights_mle,(degree,degree)).T.flatten()
         lookup_fname = 'lookup_r_given_m_interp2d.npy'
+        Radius_iron = radius_100_percent_iron_planet(np.min(log_measurement))
+        print('Radius of 100% Iron planet of {} Earth Mass = {} Earth Radii (Fortney, Marley and Barnes 2007)'.format(10**np.min(log_measurement), 10**Radius_iron))
+
+        iron_planet = Radius_iron
+
 
     ########################################################
 
@@ -236,17 +246,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             plt.hlines(10**output_qtl[0], 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
             plt.vlines(10**measurement_qtl[0], 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
 
-            horizontal_hist = np.histogram(outputs, bins = 20)
-            vertical_hist = np.histogram(measurement, bins = 20)
-
-            print(horizontal_hist[1], vertical_hist[1])
-
-            # plt.hist(measurement, weights = np.repeat(1/ np.max(vertical_hist[0])/4,len(measurement)),
-                                # bottom = 10**predict_min, bins = 20, color = 'grey', alpha = 0.3)
-            plt.hist(outputs, weights = np.repeat(1/ np.max(horizontal_hist[0])/4,len(outputs)), orientation = 'horizontal',
-                                 bottom = 10**measurement_min, bins = horizontal_hist[1],  color = 'grey', alpha = 0.3)
-
-
             plt.plot(measurement,10**outputs,'g.',markersize = 8, alpha = 0.3)
 
             ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
@@ -256,7 +255,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             plt.show(block=False)
 
 
-    return [10**x for x in outputs]
+    return [*[10**x for x in outputs], iron_planet]
 
 
 
