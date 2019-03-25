@@ -99,6 +99,8 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     log_measurement = np.log10(measurement)
     if measurement_sigma:
         log_measurement_sigma = 0.434 * measurement_sigma / measurement
+    else:
+        log_measurement_sigma = None
 
 
     if predict == 'mass':
@@ -111,7 +113,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             #This is from 100% iron curve of Fortney 2007; solving for
             # logM (base 10) via quadratic formula.
             Mass_iron = mass_100_percent_iron_planet(np.min(log_measurement))
-            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass'.format(10**np.min(log_measurement), 10**Mass_iron))
+            print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass (Fortney 2007)'.format(10**np.min(log_measurement), 10**Mass_iron))
     else:
         predict_min, predict_max = Radius_min, Radius_max
         measurement_min, measurement_max = Mass_min, Mass_max
@@ -269,6 +271,18 @@ def mass_100_percent_iron_planet(logRadius):
 
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
+
+def mass_100_percent_iron_planet(logMass):
+    '''
+    This is from 100% iron curve of Fortney 2007; solving for logR (base 10) via quadratic formula.
+    INPUT:
+        logMass : Mass of the planet in log10 units
+    OUTPUT:
+        logRadius: Radius in log10 units for a 100% iron planet of given mass
+    '''
+
+    Radius_iron = 1
+    return Radius_iron
 
 def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
     '''
