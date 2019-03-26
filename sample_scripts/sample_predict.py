@@ -20,7 +20,7 @@ result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 predicted_mass, qtls, iron_planet = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=result_dir, is_posterior=False, show_plot=False)
 
 
-"""
+
 
 # Predict mass from radius for the Kepler dataset for a 1 Earth radii planet using the lookup table.
 predicted_mass, qtls, iron_planet = predict_from_measurement(measurement=1, measurement_sigma=None, predict = 'mass', dataset='kepler', use_lookup = True)
@@ -41,6 +41,3 @@ Sample script to show how to use the predicting function to predict radius from 
 
 #Below example predicts the radius for a mass of 1 Earth mass exoplanet with uncertainty of 0.1 Earth Mass on the included Mdwarf fit. Similary for Kepler dataset.
 predicted_mass, qtls, iron_planet = predict_from_measurement(measurement=1, measurement_sigma=0.1, predict = 'radius', result_dir=None, dataset='mdwarf', is_posterior=False)
-
-
-"""
