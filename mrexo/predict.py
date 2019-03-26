@@ -168,7 +168,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             predicted_median = predicted_value[2][0]
             predicted_qtl = predicted_value[2][1:]
 
-        outputs = [predicted_median, np.array(predicted_qtl)]
+        outputs = [predicted_median, np.array(predicted_qtl), iron_planet]
 
         if show_plot == True:
 
@@ -222,7 +222,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
                 random_quantile[i] = results[2][0]
 
-        outputs = random_quantile
+        outputs = [random_quantile, iron_planet]
 
         if show_plot == True:
 
@@ -255,7 +255,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             plt.show(block=False)
 
 
-    return [*[10**x for x in outputs], iron_planet]
+    return [10**x for x in outputs]
 
 
 
