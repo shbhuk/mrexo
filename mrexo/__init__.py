@@ -4,3 +4,5 @@ from .fit import fit_mr_relation
 from .mle_utils import MLE_fit, cond_density_quantile
 from .utils import save_dictionary, load_lookup_table
 from .cross_validate import run_cross_validation
+
+__version__ = '0.1'
