@@ -14,6 +14,13 @@ http://adsabs.harvard.edu/abs/2019arXiv190300042K
 
 We are waiting for the referee review, and are also working on a detailed tutorial for using this package. After that will also upload the package on to PyPI for easy `pip` install. In the meanwhile, feel free to email me or raise an issue if you have any issues with running this code. 
 
+
+
+1.  <https://github.com/Bo-Ning/Predicting-exoplanet-mass-and-radius-relationship>.
+
+2.  <https://github.com/shbhuk/mrexo>
+
+
 Steps to install barycorrpy from github - 
 
 ### Steps to Install from GitHub 
@@ -47,7 +54,3 @@ Windows -
 
 
 
-
-1.  <https://github.com/Bo-Ning/Predicting-exoplanet-mass-and-radius-relationship>.
-
-2.  <https://github.com/shbhuk/mrexo>
