@@ -52,5 +52,8 @@ Windows -
   `pip install git+https://github.com/shbhuk/mrexo.git -U`
 
 
+Guidelines to cite this package can be found here.
+
+To sign up for updates, please join the Google Group linked here - https://groups.google.com/forum/#!forum/mrexo
 
 
