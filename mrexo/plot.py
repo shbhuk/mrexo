@@ -71,7 +71,7 @@ def plot_m_given_r_relation(result_dir):
 
     ax1.set_xlabel('Radius ($R_{\oplus}$)')
     ax1.set_ylabel('Mass ($M_{\oplus}$)')
-    ax1.set_title('f(m$|$r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title('f(m$|$r) with degree {}, and {} bootstraps'.format(deg_choose, n_boot), pad=5)
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
@@ -153,7 +153,7 @@ def plot_r_given_m_relation(result_dir):
     ax1.set_ylabel('Radius ($R_{\oplus}$)')
     ax1.set_xlabel('Mass ($M_{\oplus}$)')
 
-    ax1.set_title(r'f(r$|$m) with degree {}, and {} bootstraps'.format(deg_choose, n_boot))
+    ax1.set_title(r'f(r$|$m) with degree {}, and {} bootstraps'.format(deg_choose, n_boot), pad=5)
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
