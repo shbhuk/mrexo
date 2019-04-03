@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # MRExo documentation build configuration file, created by
-# sphinx-quickstart on Mon Apr  1 13:52:43 2019.
+# sphinx-quickstart on Wed Apr  3 14:33:02 2019.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -31,8 +31,12 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
     'sphinx.ext.githubpages']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -66,7 +70,7 @@ release = u'0.1'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'English'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -77,7 +81,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
