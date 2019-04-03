@@ -14,3 +14,4 @@ PyCode/working_imap.py
 
 build
 *.egg-info
+dist
