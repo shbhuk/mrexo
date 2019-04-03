@@ -11,3 +11,6 @@ docs/.*
 *.swl
 PyCode/working_imap.py
 *.pyc
+
+build
+*.egg-info
