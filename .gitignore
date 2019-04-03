@@ -12,6 +12,6 @@ docs/.*
 PyCode/working_imap.py
 *.pyc
 
-build
+build/
 *.egg-info
 dist
