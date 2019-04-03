@@ -7,7 +7,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
                         degree_max=60, k_fold=10, degree_candidates=None,
                         cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8):
-    '''
+    """
     We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
     To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
     sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , k) and use the remaining k-1 subsets of data
@@ -42,7 +42,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
     OUTPUTS:
         deg_choose - The optimum degree chosen by cross validation and MLE
-    '''
+    """
     if degree_candidates == None:
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
 
@@ -77,7 +77,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
 
 def cv_parallelize(cv_input):
-    '''
+    """
     Serves as input finction for parallelizing.
 
     INPUTS:
@@ -99,7 +99,7 @@ def cv_parallelize(cv_input):
 
     OUTPUT:
         like_pred : Predicted log likelihood for the i-th dataset and test_degree
-    '''
+    """
     i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds = cv_input
     split_interval = indices_folded[i_fold]
 

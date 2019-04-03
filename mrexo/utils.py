@@ -7,7 +7,7 @@ else:
     from functools32 import lru_cache
 
 def save_dictionary(dictionary, output_location, bootstrap=False):
-    '''
+    """
     Save the keys in the dictionary as separate data .txt files.
 
     INPUTS:
@@ -31,7 +31,7 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
 
     OUTPUTS:
         Returns nothing. Saves the contents of the dictionary
-    '''
+    """
     aux_output_location = os.path.join(output_location, 'other_data_products')
 
     if bootstrap == False:
@@ -98,14 +98,14 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
 
 @lru_cache(maxsize=200)
 def load_lookup_table(f_path):
-    '''
+    """
     Load the lookup table interpolate object and pass the object.
     INPUT:
         f_path : Entire file path for the .npy interpolated file.
     OUTPUT:
         lookup_inter : Interpolated lookup table (.npy) object.
 
-    '''
+    """
 
     lookup_inter = np.load(f_path, encoding = 'bytes').item()
     print('Loaded lookup table from {}'.format(f_path))

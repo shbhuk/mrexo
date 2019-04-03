@@ -17,7 +17,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             predict = 'Mass', result_dir=None, dataset='mdwarf',
             is_posterior=False, qtl=[0.16,0.84], show_plot=False,
             use_lookup=False):
-    '''
+    """
     Predict mass from given radius, or radius from mass for a single object.
     Function can be used to predict from a single measurement (w/ or w/o error), or from a posterior distribution.
     INPUT:
@@ -71,7 +71,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         #Similary for Kepler dataset.
         predicted_mass, qtls = predict_from_measurement(measurement=1, measurement_sigma=0.1, predict = 'radius', result_dir=None,
                                dataset='mdwarf', is_posterior=False, is_log=True)
-    '''
+    """
 
     dataset = dataset.replace(' ', '').replace('-', '').lower()
     predict = predict.replace(' ', '').replace('-', '').lower()
@@ -260,31 +260,31 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
 
 def mass_100_percent_iron_planet(logRadius):
-    '''
+    """
     This is from 100% iron curve of Fortney, Marley and Barnes 2007; solving for logM (base 10) via quadratic formula.
     INPUT:
         logRadius : Radius of the planet in log10 units
     OUTPUT:
         logMass: Mass in log10 units for a 100% iron planet of given radius
-    '''
+    """
 
     Mass_iron = (-0.4938 + np.sqrt(0.4938**2-4*0.0975*(0.7932-10**(logRadius))))/(2*0.0975)
     return Mass_iron
 
 def radius_100_percent_iron_planet(logMass):
-    '''
+    """
     This is from 100% iron curve from Fortney, Marley and Barnes 2007; solving for logR (base 10) via quadratic formula.
     INPUT:
         logMass : Mass of the planet in log10 units
     OUTPUT:
         logRadius: Radius in log10 units for a 100% iron planet of given mass
-    '''
+    """
 
     Radius_iron = np.log10((0.0975*(logMass**2)) + (0.4938*logMass) + 0.7932)
     return Radius_iron
 
 def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
-    '''
+    """
     Generate lookup table size 1000x1000 to make the prediction function faster.
     In log10 units.
     Then in predict_from_measurement() set use_lookup = True.
@@ -302,7 +302,7 @@ def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
         kepler_result = '/storage/home/s/szk381/work/mrexo/mrexo/datasets/Kepler_Ning_etal_20170605'
         if __name__ == '__main__':
             generate_lookup_table(result_dir = kepler_result, predict_quantity = 'Mass', cores = 10)
-    '''
+    """
 
     predict_quantity = predict.replace(' ', '').replace('-', '').lower()
 

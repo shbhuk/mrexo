@@ -14,7 +14,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
                     select_deg=17, degree_max=None, k_fold=None, num_boot=100,
                     cores=1, abs_tol=1e-8):
-    '''
+    """
     Fit a mass and radius relationship using a non parametric approach with beta densities
 
     INPUTS:
@@ -105,7 +105,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                                                     Radius=Radius, Radius_sigma=Radius_sigma,
                                                     save_path=result_dir, select_deg=12,
                                                     num_boot=50, cores=2)
-    '''
+    """
 
     starttime = datetime.datetime.now()
     print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
@@ -268,7 +268,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 
 def bootsample_mle(inputs):
-    '''
+    """
     To bootstrap the data and run MLE. Serves as input to the parallelizing function.
     INPUTS:
         inputs : Variable required for mapping for parallel processing.
@@ -298,7 +298,7 @@ def bootsample_mle(inputs):
                 'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
                 'Radius_marg' : Marginalized radius distribution from bootstrap run.
                 'Mass_marg' : Marginalized mass distribution from bootstrap run.
-    '''
+    """
 
     MR_boot = MLE_fit(Mass=inputs[0], Radius=inputs[1],
                     Mass_sigma=inputs[2], Radius_sigma=inputs[3],
