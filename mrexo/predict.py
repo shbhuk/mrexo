@@ -236,20 +236,20 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             if np.size(qtl)==2:
                 # predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
-                output_qtl =  mquantiles(outputs, prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
+                output_qtl =  mquantiles(outputs[:-1], prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
                 measurement_qtl = mquantiles(log_measurement, prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
             else:
                 # If finding multiple quantiles, do not plot errorbar on predicted value in plot
-                output_qtl =  mquantiles(outputs, prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
+                output_qtl =  mquantiles(outputs[:-1], prob=[0.5,0.5],axis=0,alphap=1,betap=1).data
                 measurement_qtl = mquantiles(log_measurement, prob=[0.5, 0.5],axis=0,alphap=1,betap=1).data
 
-            plt.hlines(10**output_qtl[0], 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(10**measurement_qtl[0], 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
+            # plt.hlines(10**output_qtl[0], 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+            # plt.vlines(10**measurement_qtl[0], 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
 
-            plt.plot(measurement,10**outputs,'g.',markersize = 8, alpha = 0.3)
+            plt.plot(measurement,10**random_quantile,'g.',markersize = 8, alpha = 0.3)
 
-            ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
-                        yerr=np.abs(10**output_qtl[0] - 10**output_qtl[1]),fmt='o', color = 'green')
+            # ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
+                        # yerr=np.abs(10**output_qtl[0] - 10**output_qtl[1]),fmt='o', color = 'green')
             handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
             plt.show(block=False)

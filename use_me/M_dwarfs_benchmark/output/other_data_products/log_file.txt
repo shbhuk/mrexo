@@ -1,0 +1,1826 @@
+Started for 17 degrees at 2019-04-04 10:05:12.453000, using 24 core/s
+======================================
+Started run at 2019-04-04 10:05:12.469000
+Started Integration at 2019-04-04 10:05:12.484000
+Finished Integration at 2019-04-04 10:05:14.024000
+Finished Optimization at 2019-04-04 10:05:14.974000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished full dataset MLE run at 2019-04-04 10:05:27.761000
+
+
+=======================================================================
+
+Running 100 bootstraps for the MLE code with degree = 17, using 24 thread/s.
+
+=======================================================================
+
+
+======================================
+Started run at 2019-04-04 10:05:30.368000
+Started Integration at 2019-04-04 10:05:30.378000
+
+======================================
+Started run at 2019-04-04 10:05:30.381000
+Started Integration at 2019-04-04 10:05:30.385000
+
+======================================
+Started run at 2019-04-04 10:05:30.430000
+
+======================================
+Started run at 2019-04-04 10:05:30.430000
+Started Integration at 2019-04-04 10:05:30.441000
+Started Integration at 2019-04-04 10:05:30.442000
+
+======================================
+Started run at 2019-04-04 10:05:30.443000
+Started Integration at 2019-04-04 10:05:30.449000
+
+======================================
+Started run at 2019-04-04 10:05:30.453000
+
+======================================
+Started run at 2019-04-04 10:05:30.468000
+Started Integration at 2019-04-04 10:05:30.480000
+Started Integration at 2019-04-04 10:05:30.482000
+
+======================================
+Started run at 2019-04-04 10:05:30.504000
+Started Integration at 2019-04-04 10:05:30.519000
+
+======================================
+Started run at 2019-04-04 10:05:30.536000
+Started Integration at 2019-04-04 10:05:30.544000
+
+======================================
+Started run at 2019-04-04 10:05:30.547000
+
+======================================
+Started run at 2019-04-04 10:05:30.554000
+Started Integration at 2019-04-04 10:05:30.557000
+
+======================================
+Started run at 2019-04-04 10:05:30.609000
+
+======================================
+Started run at 2019-04-04 10:05:30.610000
+Started Integration at 2019-04-04 10:05:30.614000
+Started Integration at 2019-04-04 10:05:30.621000
+Started Integration at 2019-04-04 10:05:30.622000
+
+======================================
+Started run at 2019-04-04 10:05:30.664000
+
+======================================
+Started run at 2019-04-04 10:05:30.669000
+
+======================================
+Started run at 2019-04-04 10:05:30.796000
+Started Integration at 2019-04-04 10:05:30.834000
+Started Integration at 2019-04-04 10:05:30.835000
+
+======================================
+Started run at 2019-04-04 10:05:30.836000
+Started Integration at 2019-04-04 10:05:30.851000
+
+======================================
+Started run at 2019-04-04 10:05:30.919000
+
+======================================
+Started run at 2019-04-04 10:05:30.932000
+
+======================================
+Started run at 2019-04-04 10:05:30.937000
+
+======================================
+Started run at 2019-04-04 10:05:30.938000
+Started Integration at 2019-04-04 10:05:30.940000
+Started Integration at 2019-04-04 10:05:30.944000
+
+======================================
+Started run at 2019-04-04 10:05:30.944000
+Started Integration at 2019-04-04 10:05:30.945000
+Started Integration at 2019-04-04 10:05:30.945000
+Started Integration at 2019-04-04 10:05:30.946000
+Started Integration at 2019-04-04 10:05:30.949000
+
+======================================
+Started run at 2019-04-04 10:05:31.141000
+
+======================================
+Started run at 2019-04-04 10:05:31.144000
+Started Integration at 2019-04-04 10:05:31.711000
+Started Integration at 2019-04-04 10:05:32.125000
+Finished Integration at 2019-04-04 10:05:33.752000
+Finished Integration at 2019-04-04 10:05:33.832000
+Finished Integration at 2019-04-04 10:05:33.835000
+Finished Integration at 2019-04-04 10:05:33.841000
+Finished Integration at 2019-04-04 10:05:33.872000
+Finished Integration at 2019-04-04 10:05:33.881000
+Finished Integration at 2019-04-04 10:05:33.893000
+Finished Integration at 2019-04-04 10:05:34.021000
+Finished Integration at 2019-04-04 10:05:34.042000
+Finished Integration at 2019-04-04 10:05:34.063000
+Finished Integration at 2019-04-04 10:05:34.070000
+Finished Integration at 2019-04-04 10:05:34.075000
+Finished Integration at 2019-04-04 10:05:34.107000
+Finished Integration at 2019-04-04 10:05:34.138000
+Finished Integration at 2019-04-04 10:05:34.235000
+Finished Integration at 2019-04-04 10:05:34.246000
+Finished Integration at 2019-04-04 10:05:34.335000
+Finished Integration at 2019-04-04 10:05:34.361000
+Finished Integration at 2019-04-04 10:05:34.372000
+Finished Integration at 2019-04-04 10:05:34.420000
+Finished Integration at 2019-04-04 10:05:34.486000
+Finished Optimization at 2019-04-04 10:05:34.570000
+Optimization terminated after 3 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:05:35.126000
+Finished Optimization at 2019-04-04 10:05:35.298000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:05:35.299000
+Finished Optimization at 2019-04-04 10:05:35.351000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.354000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.360000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.428000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.429000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.718000
+Optimization terminated after 3 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:05:35.718000
+Finished Optimization at 2019-04-04 10:05:35.726000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.742000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:35.782000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.078000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.103000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.298000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.484000
+Optimization terminated after 20 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.857000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:36.905000
+Optimization terminated after 28 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:37.157000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:37.401000
+Optimization terminated after 25 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:37.486000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:37.742000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:38.299000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:38.341000
+Optimization terminated after 41 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:05:39.095000
+Optimization terminated after 43 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:05:57.115000
+Started Integration at 2019-04-04 10:05:57.127000
+
+======================================
+Started run at 2019-04-04 10:05:57.211000
+
+======================================
+Started run at 2019-04-04 10:05:57.218000
+Started Integration at 2019-04-04 10:05:57.223000
+Started Integration at 2019-04-04 10:05:57.224000
+
+======================================
+Started run at 2019-04-04 10:05:57.353000
+Started Integration at 2019-04-04 10:05:57.364000
+
+======================================
+Started run at 2019-04-04 10:05:57.514000
+
+======================================
+Started run at 2019-04-04 10:05:57.633000
+
+======================================
+Started run at 2019-04-04 10:05:57.644000
+Started Integration at 2019-04-04 10:05:57.646000
+Started Integration at 2019-04-04 10:05:57.663000
+
+======================================
+Started run at 2019-04-04 10:05:57.748000
+
+======================================
+Started run at 2019-04-04 10:05:57.755000
+Started Integration at 2019-04-04 10:05:57.760000
+Started Integration at 2019-04-04 10:05:57.760000
+Started Integration at 2019-04-04 10:05:57.762000
+
+======================================
+Started run at 2019-04-04 10:05:58.070000
+
+======================================
+Started run at 2019-04-04 10:05:58.126000
+Started Integration at 2019-04-04 10:05:58.138000
+Started Integration at 2019-04-04 10:05:58.635000
+
+======================================
+Started run at 2019-04-04 10:05:58.751000
+Started Integration at 2019-04-04 10:05:58.761000
+
+======================================
+Started run at 2019-04-04 10:05:58.799000
+
+======================================
+Started run at 2019-04-04 10:05:58.846000
+Started Integration at 2019-04-04 10:05:58.848000
+
+======================================
+Started run at 2019-04-04 10:05:58.983000
+Started Integration at 2019-04-04 10:05:58.985000
+Started Integration at 2019-04-04 10:05:59.015000
+
+======================================
+Started run at 2019-04-04 10:05:59.260000
+Started Integration at 2019-04-04 10:05:59.271000
+
+======================================
+Started run at 2019-04-04 10:05:59.356000
+Started Integration at 2019-04-04 10:05:59.370000
+
+======================================
+Started run at 2019-04-04 10:05:59.618000
+
+======================================
+Started run at 2019-04-04 10:05:59.619000
+Started Integration at 2019-04-04 10:05:59.629000
+Started Integration at 2019-04-04 10:05:59.629000
+
+======================================
+Started run at 2019-04-04 10:05:59.799000
+Started Integration at 2019-04-04 10:06:00.146000
+
+======================================
+Started run at 2019-04-04 10:06:00.554000
+Started Integration at 2019-04-04 10:06:00.606000
+
+======================================
+Started run at 2019-04-04 10:06:00.616000
+Finished Integration at 2019-04-04 10:06:00.623000
+Started Integration at 2019-04-04 10:06:00.630000
+Finished Integration at 2019-04-04 10:06:00.635000
+Finished Integration at 2019-04-04 10:06:00.638000
+Finished Integration at 2019-04-04 10:06:00.656000
+Finished Integration at 2019-04-04 10:06:01.052000
+Finished Integration at 2019-04-04 10:06:01.080000
+Finished Integration at 2019-04-04 10:06:01.104000
+
+======================================
+Started run at 2019-04-04 10:06:01.266000
+Started Integration at 2019-04-04 10:06:01.278000
+Finished Integration at 2019-04-04 10:06:01.335000
+Finished Integration at 2019-04-04 10:06:01.405000
+Finished Integration at 2019-04-04 10:06:01.418000
+
+======================================
+Started run at 2019-04-04 10:06:01.574000
+Started Integration at 2019-04-04 10:06:01.953000
+Finished Integration at 2019-04-04 10:06:02.035000
+Finished Integration at 2019-04-04 10:06:02.083000
+Finished Optimization at 2019-04-04 10:06:02.088000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:02.129000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:02.233000
+Finished Integration at 2019-04-04 10:06:02.233000
+Finished Integration at 2019-04-04 10:06:02.311000
+Finished Optimization at 2019-04-04 10:06:02.383000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:02.481000
+Optimization terminated after 11 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:02.753000
+Finished Optimization at 2019-04-04 10:06:02.769000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:02.789000
+Finished Integration at 2019-04-04 10:06:02.893000
+Finished Optimization at 2019-04-04 10:06:03.070000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:03.108000
+Finished Optimization at 2019-04-04 10:06:03.180000
+Optimization terminated after 3 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:03.184000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:03.355000
+Finished Optimization at 2019-04-04 10:06:03.455000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:03.477000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:03.681000
+Finished Optimization at 2019-04-04 10:06:03.682000
+Optimization terminated after 22 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:04.049000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:04.190000
+Finished Optimization at 2019-04-04 10:06:04.387000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:04.511000
+Finished Optimization at 2019-04-04 10:06:04.544000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:04.581000
+Optimization terminated after 21 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:04.804000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:05.049000
+Optimization terminated after 34 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:05.213000
+Finished Optimization at 2019-04-04 10:06:05.411000
+Optimization terminated after 20 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:05.955000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:05.961000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:06.075000
+Optimization terminated after 35 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:06.931000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:07.356000
+Optimization terminated after 35 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:07.909000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:23.641000
+Started Integration at 2019-04-04 10:06:23.655000
+
+======================================
+Started run at 2019-04-04 10:06:23.912000
+Started Integration at 2019-04-04 10:06:24.415000
+
+======================================
+Started run at 2019-04-04 10:06:24.537000
+
+======================================
+Started run at 2019-04-04 10:06:24.538000
+Started Integration at 2019-04-04 10:06:24.549000
+Started Integration at 2019-04-04 10:06:24.549000
+
+======================================
+Started run at 2019-04-04 10:06:24.651000
+Started Integration at 2019-04-04 10:06:24.662000
+
+======================================
+Started run at 2019-04-04 10:06:24.663000
+Started Integration at 2019-04-04 10:06:24.673000
+
+======================================
+Started run at 2019-04-04 10:06:24.713000
+
+======================================
+Started run at 2019-04-04 10:06:24.901000
+Started Integration at 2019-04-04 10:06:24.912000
+
+======================================
+Started run at 2019-04-04 10:06:25.016000
+Started Integration at 2019-04-04 10:06:25.029000
+Started Integration at 2019-04-04 10:06:25.091000
+
+======================================
+Started run at 2019-04-04 10:06:25.570000
+
+======================================
+Started run at 2019-04-04 10:06:25.985000
+Started Integration at 2019-04-04 10:06:25.986000
+Started Integration at 2019-04-04 10:06:25.996000
+
+======================================
+Started run at 2019-04-04 10:06:26.163000
+Started Integration at 2019-04-04 10:06:26.174000
+
+======================================
+Started run at 2019-04-04 10:06:26.380000
+
+======================================
+Started run at 2019-04-04 10:06:26.432000
+Started Integration at 2019-04-04 10:06:26.433000
+Started Integration at 2019-04-04 10:06:26.442000
+Finished Integration at 2019-04-04 10:06:26.902000
+
+======================================
+Started run at 2019-04-04 10:06:27.096000
+Started Integration at 2019-04-04 10:06:27.128000
+
+======================================
+Started run at 2019-04-04 10:06:27.640000
+Finished Integration at 2019-04-04 10:06:27.664000
+Finished Integration at 2019-04-04 10:06:27.814000
+
+======================================
+Started run at 2019-04-04 10:06:27.934000
+Started Integration at 2019-04-04 10:06:27.960000
+Started Integration at 2019-04-04 10:06:28.008000
+Finished Integration at 2019-04-04 10:06:28.062000
+Finished Integration at 2019-04-04 10:06:28.063000
+Finished Integration at 2019-04-04 10:06:28.087000
+
+======================================
+Started run at 2019-04-04 10:06:28.351000
+Started Integration at 2019-04-04 10:06:28.362000
+
+======================================
+Started run at 2019-04-04 10:06:28.380000
+Started Integration at 2019-04-04 10:06:28.391000
+
+======================================
+Started run at 2019-04-04 10:06:28.492000
+Finished Integration at 2019-04-04 10:06:28.504000
+Started Integration at 2019-04-04 10:06:28.505000
+Finished Integration at 2019-04-04 10:06:28.506000
+Finished Integration at 2019-04-04 10:06:28.736000
+
+======================================
+Started run at 2019-04-04 10:06:28.740000
+Finished Optimization at 2019-04-04 10:06:28.747000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2019-04-04 10:06:28.749000
+Finished Optimization at 2019-04-04 10:06:29.359000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:29.467000
+Finished Optimization at 2019-04-04 10:06:29.655000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:29.679000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:29.700000
+Finished Integration at 2019-04-04 10:06:29.709000
+Finished Integration at 2019-04-04 10:06:29.710000
+Started Integration at 2019-04-04 10:06:29.714000
+Finished Optimization at 2019-04-04 10:06:29.828000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:29.913000
+Finished Integration at 2019-04-04 10:06:29.914000
+Finished Optimization at 2019-04-04 10:06:29.918000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:29.986000
+Started Integration at 2019-04-04 10:06:29.999000
+Started Integration at 2019-04-04 10:06:29.999000
+Finished Integration at 2019-04-04 10:06:30.477000
+Finished Optimization at 2019-04-04 10:06:31.138000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:31.202000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:31.251000
+Finished Integration at 2019-04-04 10:06:31.415000
+Finished Optimization at 2019-04-04 10:06:31.678000
+Optimization terminated after 27 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:31.713000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:31.724000
+Finished Integration at 2019-04-04 10:06:31.735000
+Finished Integration at 2019-04-04 10:06:32.059000
+Finished Optimization at 2019-04-04 10:06:32.065000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:32.069000
+Finished Optimization at 2019-04-04 10:06:32.109000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:32.163000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:32.579000
+Optimization terminated after 45 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:33.118000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:33.179000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:33.376000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:33.377000
+Finished Integration at 2019-04-04 10:06:33.504000
+Finished Integration at 2019-04-04 10:06:33.900000
+Finished Optimization at 2019-04-04 10:06:34.050000
+Optimization terminated after 21 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:34.930000
+Optimization terminated after 60 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:34.999000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:35.008000
+Optimization terminated after 26 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:35.080000
+Optimization terminated after 29 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:35.365000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:35.469000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:51.179000
+Started Integration at 2019-04-04 10:06:51.192000
+
+======================================
+Started run at 2019-04-04 10:06:51.602000
+
+======================================
+Started run at 2019-04-04 10:06:51.845000
+Started Integration at 2019-04-04 10:06:51.875000
+
+======================================
+Started run at 2019-04-04 10:06:51.930000
+Started Integration at 2019-04-04 10:06:51.931000
+Started Integration at 2019-04-04 10:06:51.941000
+
+======================================
+Started run at 2019-04-04 10:06:52.696000
+Started Integration at 2019-04-04 10:06:52.707000
+
+======================================
+Started run at 2019-04-04 10:06:53.224000
+
+======================================
+Started run at 2019-04-04 10:06:53.225000
+Started Integration at 2019-04-04 10:06:53.236000
+Started Integration at 2019-04-04 10:06:53.236000
+
+======================================
+Started run at 2019-04-04 10:06:53.406000
+Started Integration at 2019-04-04 10:06:53.418000
+
+======================================
+Started run at 2019-04-04 10:06:53.711000
+
+======================================
+Started run at 2019-04-04 10:06:53.756000
+Started Integration at 2019-04-04 10:06:53.767000
+
+======================================
+Started run at 2019-04-04 10:06:53.994000
+Started Integration at 2019-04-04 10:06:54.011000
+Started Integration at 2019-04-04 10:06:54.099000
+
+======================================
+Started run at 2019-04-04 10:06:54.285000
+Started Integration at 2019-04-04 10:06:54.308000
+
+======================================
+Started run at 2019-04-04 10:06:54.342000
+Started Integration at 2019-04-04 10:06:54.354000
+Finished Integration at 2019-04-04 10:06:54.499000
+
+======================================
+Started run at 2019-04-04 10:06:54.637000
+Started Integration at 2019-04-04 10:06:55.012000
+
+======================================
+Started run at 2019-04-04 10:06:55.300000
+
+======================================
+Started run at 2019-04-04 10:06:55.312000
+Started Integration at 2019-04-04 10:06:55.317000
+
+======================================
+Started run at 2019-04-04 10:06:55.345000
+Started Integration at 2019-04-04 10:06:55.349000
+Finished Integration at 2019-04-04 10:06:55.351000
+Started Integration at 2019-04-04 10:06:55.357000
+
+======================================
+Started run at 2019-04-04 10:06:55.881000
+Started Integration at 2019-04-04 10:06:55.898000
+Finished Integration at 2019-04-04 10:06:55.909000
+Finished Integration at 2019-04-04 10:06:55.962000
+Finished Integration at 2019-04-04 10:06:56.247000
+Finished Integration at 2019-04-04 10:06:56.495000
+Finished Integration at 2019-04-04 10:06:56.641000
+Finished Integration at 2019-04-04 10:06:56.641000
+Finished Optimization at 2019-04-04 10:06:56.846000
+Optimization terminated after 3 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:57.099000
+Finished Integration at 2019-04-04 10:06:57.101000
+Started Integration at 2019-04-04 10:06:57.111000
+
+======================================
+Started run at 2019-04-04 10:06:57.185000
+Finished Optimization at 2019-04-04 10:06:57.199000
+Optimization terminated after 25 iterations. Exit Code = 0Optimization terminated successfully.
+
+Started Integration at 2019-04-04 10:06:57.202000
+Finished Integration at 2019-04-04 10:06:57.267000
+Finished Optimization at 2019-04-04 10:06:57.334000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:57.394000
+
+======================================
+Started run at 2019-04-04 10:06:57.409000
+Started Integration at 2019-04-04 10:06:57.419000
+
+======================================
+Started run at 2019-04-04 10:06:57.637000
+Started Integration at 2019-04-04 10:06:57.650000
+Finished Integration at 2019-04-04 10:06:57.717000
+Finished Integration at 2019-04-04 10:06:57.719000
+Finished Optimization at 2019-04-04 10:06:58.207000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:58.256000
+Finished Optimization at 2019-04-04 10:06:58.457000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:58.486000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:58.580000
+Optimization terminated after 13 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:58.817000
+Finished Integration at 2019-04-04 10:06:58.827000
+Started Integration at 2019-04-04 10:06:58.831000
+Finished Integration at 2019-04-04 10:06:58.840000
+Finished Optimization at 2019-04-04 10:06:58.886000
+Optimization terminated after 35 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:59.080000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:06:59.132000
+Finished Integration at 2019-04-04 10:06:59.212000
+Finished Optimization at 2019-04-04 10:06:59.264000
+Optimization terminated after 3 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:06:59.335000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:06:59.993000
+Started Integration at 2019-04-04 10:07:00.037000
+Finished Optimization at 2019-04-04 10:07:00.140000
+Optimization terminated after 38 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:00.141000
+Optimization terminated after 17 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:00.144000
+Optimization terminated after 35 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:07:00.277000
+Finished Integration at 2019-04-04 10:07:00.343000
+Finished Integration at 2019-04-04 10:07:00.889000
+Finished Optimization at 2019-04-04 10:07:00.925000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:07:01.027000
+Finished Optimization at 2019-04-04 10:07:01.029000
+Optimization terminated after 19 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:01.053000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:02.216000
+Optimization terminated after 26 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:07:02.444000
+Finished Optimization at 2019-04-04 10:07:02.800000
+Optimization terminated after 16 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:02.820000
+Optimization terminated after 18 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:03.083000
+Optimization terminated after 24 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:03.887000
+Optimization terminated after 32 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Integration at 2019-04-04 10:07:04.019000
+Finished Optimization at 2019-04-04 10:07:04.979000
+Optimization terminated after 15 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:07.221000
+Optimization terminated after 30 iterations. Exit Code = 0Optimization terminated successfully.
+
+
+======================================
+Started run at 2019-04-04 10:07:18.548000
+
+======================================
+Started run at 2019-04-04 10:07:18.846000
+Started Integration at 2019-04-04 10:07:18.847000
+Started Integration at 2019-04-04 10:07:18.857000
+
+======================================
+Started run at 2019-04-04 10:07:20.005000
+Started Integration at 2019-04-04 10:07:20.031000
+
+======================================
+Started run at 2019-04-04 10:07:20.174000
+Started Integration at 2019-04-04 10:07:20.185000
+Finished Integration at 2019-04-04 10:07:21.856000
+Finished Integration at 2019-04-04 10:07:21.985000
+Finished Integration at 2019-04-04 10:07:22.320000
+Finished Integration at 2019-04-04 10:07:22.532000
+Finished Optimization at 2019-04-04 10:07:23.310000
+Optimization terminated after 14 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:24.001000
+Optimization terminated after 31 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:24.305000
+Optimization terminated after 25 iterations. Exit Code = 0Optimization terminated successfully.
+
+Finished Optimization at 2019-04-04 10:07:24.527000
+Optimization terminated after 38 iterations. Exit Code = 0Optimization terminated successfully.
+
+Ended run at 2019-04-04 10:07:35.019000
+Finished Integration at Started for 17 degrees at 2019-04-04 10:42:50.137000, using 24 core/s
+Finished Integration at Running full dataset MLE before bootstrap
+Finished Integration at 
+====
+Started run at 2019-04-04 10:42:50.191000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 42, 50, 204000))
+Finished Integration at Finished Integration at 2019-04-04 10:42:51.867000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:42:52.791000, with 13 iterations. Exit Code = 0
+
+
+Finished Integration at Finished full dataset MLE run at 2019-04-04 10:43:05.783000
+
+Finished Integration at 
+
+==============
+
+Running 100 bootstraps for the MLE code with degree = 17, using 24 thread/s.
+
+==============
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.200000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 222000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.224000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 239000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.348000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 386000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.391000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 405000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.444000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.451000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.454000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 459000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 460000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 460000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.482000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.486000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.490000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 493000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 494000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 495000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.512000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 524000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.530000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.531000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.534000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 536000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 537000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.538000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 548000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 548000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.609000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.618000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 622000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 634000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.645000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 656000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.656000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 667000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.687000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 703000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.752000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.754000
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.755000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 765000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 765000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 765000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:08.770000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 8, 776000))
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.399000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.601000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.658000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.671000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.675000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.822000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.845000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.846000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.866000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.867000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.880000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.883000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.888000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.917000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.925000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.933000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:11.966000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.067000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.160000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.191000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.201000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.357000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:12.381000, with 3 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:12.394000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:12.897000, with 13 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:13.115000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.403000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.610000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.614000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.635000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.717000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.786000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.804000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:13.898000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.014000, with 19 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.079000, with 19 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.158000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.251000, with 19 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.258000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.269000, with 23 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.639000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.882000, with 29 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:14.931000, with 23 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:15.318000, with 30 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:15.320000, with 28 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:15.639000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:15.722000, with 29 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:15.755000, with 35 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.012000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 22000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.204000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 215000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.257000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 267000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.463000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 476000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.630000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 640000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.643000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 654000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.727000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 740000))
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 741000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.978000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 35, 989000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:35.990000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 4000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.052000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 63000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.278000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 289000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.318000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 390000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.391000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 401000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.572000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 582000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:36.773000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 36, 786000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:37.160000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 37, 170000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:37.246000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 37, 257000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:37.862000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 37, 874000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:38.064000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 38, 76000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:38.199000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 38, 211000))
+Finished Integration at Finished Integration at 2019-04-04 10:43:38.385000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:38.519000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:38.653000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.118000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.132000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.195000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:39.197000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 39, 220000))
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.223000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.286000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.333000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.367000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.474000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:39.589000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 39, 599000))
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.673000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:39.867000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:39.975000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:40.002000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:40.052000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:40.096000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:43:40.122000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 43, 40, 130000))
+Finished Integration at Finished Integration at 2019-04-04 10:43:40.209000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:40.510000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:40.616000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:40.620000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:40.762000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:40.790000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:41.152000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:41.236000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:43:41.469000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:41.488000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:41.716000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:41.720000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:42.644000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:42.663000, with 29 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:42.844000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:42.928000, with 34 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.195000, with 34 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.199000, with 14 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.200000, with 34 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:43.354000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.371000, with 30 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.551000, with 30 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:43:43.917000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:43:43.920000, with 28 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:44.648000, with 35 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:45.035000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:45.114000, with 36 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:45.238000, with 32 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:45.629000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:43:47.653000, with 29 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:01.569000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 1, 580000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:01.806000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 1, 816000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:01.915000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 1, 926000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:03.093000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 3, 119000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:03.151000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 3, 163000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:03.577000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 3, 588000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:03.591000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 3, 599000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:04.194000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 4, 204000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:04.519000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 4, 529000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:04.626000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 4, 637000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:04.722000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 4, 732000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:05.145000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:05.447000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:05.482000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 5, 505000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:05.569000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:05.773000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 5, 783000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:05.933000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 5, 944000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:06.199000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:06.201000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 6, 218000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:06.705000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 6, 715000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:06.851000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:07.033000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 7, 43000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:07.248000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:07.255000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 7, 261000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:07.400000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:07.603000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:07.636000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:07.908000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 7, 918000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:07.950000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 7, 961000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:08.122000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:08.169000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:08.267000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 8, 278000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:08.340000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:08.437000, with 25 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:08.880000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:08.883000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 8, 892000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:08.951000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:08.964000, with 3 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.242000, with 13 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.265000, with 36 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.266000, with 35 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.259000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:09.444000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.622000, with 3 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.629000, with 19 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.661000, with 28 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:09.804000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:09.862000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:09.958000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:10.053000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:10.072000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:10.368000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 10, 380000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:10.435000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:10.503000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:10.713000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:11.373000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:11.406000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:11.635000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:11.768000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:11.798000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:11.832000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:12.221000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:12.571000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:13.083000, with 27 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:13.482000, with 23 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:13.659000, with 22 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:14.002000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:14.659000, with 27 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:14.850000, with 31 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:14.966000, with 26 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:16.682000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:30.335000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 30, 345000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.038000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 50000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.146000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 157000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.254000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 264000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.630000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 640000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.661000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 672000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.800000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 811000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:31.829000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 31, 840000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:32.057000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 32, 67000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:32.220000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 32, 230000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:32.275000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 32, 287000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:32.411000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 32, 422000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:33.172000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 33, 182000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:33.802000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:34.229000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 34, 239000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:34.408000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:34.659000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:34.750000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:34.756000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 34, 761000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:34.830000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 34, 842000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:34.890000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.055000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.182000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.373000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:35.430000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 35, 443000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.545000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.588000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.736000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:35.740000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 35, 748000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:35.783000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 35, 799000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:35.970000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:35.998000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:36.477000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:36.478000, with 13 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:36.491000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:36.594000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:36.974000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 36, 984000))
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.059000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:37.064000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 37, 72000))
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.471000, with 23 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.475000, with 17 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.481000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:37.782000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.859000, with 22 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:37.861000, with 11 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:38.183000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:38.200000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 38, 215000))
+Finished Integration at Finished Integration at 2019-04-04 10:44:38.332000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:38.382000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 38, 394000))
+Finished Integration at Optimization run finished at 2019-04-04 10:44:38.445000, with 3 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:38.675000, with 28 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:38.903000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:39.207000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:39.272000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:39.374000
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:39.377000, with 31 iterations. Exit Code = 0
+
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 39, 390000))
+Finished Integration at Optimization run finished at 2019-04-04 10:44:39.904000, with 11 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:40.532000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:40.544000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:40.679000, with 15 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:41.526000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:41.873000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:41.917000, with 12 iterations. Exit Code = 0
+
+
+Finished Integration at Finished Integration at 2019-04-04 10:44:41.918000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:44:42.663000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:44:42.736000, with 37 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:42.954000, with 33 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:43.380000, with 23 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:43.808000, with 16 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:43.933000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:44:44.013000, with 13 iterations. Exit Code = 0
+
+
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:57.509000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 57, 519000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:57.956000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 57, 967000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:58.269000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 58, 279000))
+Finished Integration at 
+====
+Started run at 2019-04-04 10:44:58.465000
+
+Finished Integration at ('Started Integration at ', datetime.datetime(2019, 4, 4, 10, 44, 58, 476000))
+Finished Integration at Finished Integration at 2019-04-04 10:45:00.647000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:45:00.939000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:45:00.965000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Finished Integration at 2019-04-04 10:45:01.135000
+Calculated the PDF for Mass and Radius for Integrated beta and normal density 
+Finished Integration at Optimization run finished at 2019-04-04 10:45:01.334000, with 3 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:45:01.970000, with 18 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:45:02.551000, with 20 iterations. Exit Code = 0
+
+
+Finished Integration at Optimization run finished at 2019-04-04 10:45:02.592000, with 21 iterations. Exit Code = 0
+
+
+Finished Integration at Finished bootstrap at 2019-04-04 10:45:13.095000
+Finished Integration at Ended run at 2019-04-04 10:45:13.101000
+

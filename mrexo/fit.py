@@ -7,13 +7,13 @@ import datetime
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
-from .utils import save_dictionary
+from .utils import save_dictionary, _logging
 
 
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
                     select_deg=17, degree_max=None, k_fold=None, num_boot=100,
-                    cores=1, abs_tol=1e-8):
+                    cores=1, abs_tol=1e-8, verbose=2):
     """
     Fit a mass and radius relationship using a non parametric approach with beta densities
 
@@ -46,6 +46,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                 To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
         abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-8
+        verbose: Integer specifying verbosity for logging.
+                If 0: Will not log in the log file or print statements.
+                If 1: Will write log file only.
+                If 2: Will write log file and print statements.
 
     OUTPUTS:
         initialfit_result : Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
@@ -108,6 +112,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     """
 
     starttime = datetime.datetime.now()
+
     print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
     # Create subdirectories for results
@@ -124,8 +129,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if not os.path.exists(input_location):
         os.mkdir(input_location)
 
-    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-       f.write('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
+    message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
+    _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     n = len(Mass)
 
@@ -169,27 +174,29 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                 k_fold = 10
             else:
                 k_fold = 5
-            print('Picked {} k-folds'.format(k_fold))
+
+        message = 'Picked {} k-folds'.format(k_fold)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
         deg_choose = run_cross_validation(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                                         Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,
                                         degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol)
-
-        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write('Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose}))
+    
+        message = 'Finished CV. Picked {} degrees by maximizing likelihood'.format(deg_choose)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     elif select_deg == 'aic' :
         # Minimize the AIC
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         aic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, save_path=aux_output_location)['aic'] for d in degree_candidates])
+                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, 
+                        save_path=aux_output_location, verbose=verbose)['aic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(aic)]
 
-        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write('Finished AIC check. Picked {} degrees by minimizing AIC'.format({deg_choose}))
+        message = 'Finished AIC check. Picked {} degrees by minimizing AIC '.format(deg_choose)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-        print('Finished AIC check. Picked {} degrees by minimizing AIC'.format({deg_choose}))
         np.savetxt(os.path.join(aux_output_location,'AIC_degreechoose.txt'),np.array([degree_candidates,aic]))
 
 
@@ -197,14 +204,14 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         # Minimize the BIC
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         bic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, save_path=aux_output_location)['bic'] for d in degree_candidates])
+                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d,
+                        abs_tol=abs_tol, save_path=aux_output_location, verbose=verbose)['bic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(bic)]
 
-        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write('Finished BIC check. Picked {} degrees by minimizing BIC'.format({deg_choose}))
-
-        print('Finished BIC check. Picked {} degrees by minimizing BIC'.format({deg_choose}))
+        message = 'Finished BIC check. Picked {} degrees by minimizing BIC '.format(deg_choose)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+        
         np.savetxt(os.path.join(aux_output_location,'BIC_degreechoose.txt'),np.array([degree_candidates,bic]))
 
 
@@ -220,13 +227,17 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     ## Step 2: Estimate the full model without bootstrap
 
     print('Running full dataset MLE before bootstrap')
+
+
+    message = 'Running full dataset MLE before bootstrap'
+    _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
     initialfit_result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                             Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location,
-                            calc_joint_dist = True)
+                            calc_joint_dist = True, verbose=verbose)
 
-    print('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
-    with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-       f.write('Finished full dataset MLE run at {}\n'.format(datetime.datetime.now()))
+    message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
+    _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
@@ -239,14 +250,12 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         # Generate iterator for using multiprocessing Pool.imap
         n_boot_iter = (np.random.choice(n, n, replace=True) for i in range(num_boot))
         inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
-                Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location) for n_boot in n_boot_iter)
+                Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location, verbose) for n_boot in n_boot_iter)
 
-        print('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
+        message = '\n\n==============\n\nRunning {} bootstraps for the MLE code with degree = {}, using {} thread/s.\n\n==============\n\n'.format(str(num_boot),
+                    str(deg_choose),str(cores))
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write("\n\n=======================================================================\n\n")
-            f.write('Running {} bootstraps for the MLE code with degree = {}, using {} thread/s.'.format(str(num_boot),str(deg_choose),str(cores)))
-            f.write("\n\n=======================================================================\n\n")
 
 
         # Parallelize the bootstraps
@@ -255,14 +264,17 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
         save_dictionary(dictionary=bootstrap_results, output_location=output_location, bootstrap=True)
 
-        print('Finished bootstrap at {}'.format(datetime.datetime.now()))
+
+        message = 'Finished bootstrap at {}'.format(datetime.datetime.now())
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
 
         endtime = datetime.datetime.now()
         print(endtime - starttime)
 
-        with open(os.path.join(aux_output_location,'log_file.txt'),'a') as f:
-            f.write('Ended run at {}\n'.format(endtime))
 
+        message = 'Ended run at {}\n'.format(endtime)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
         return initialfit_result, bootstrap_results
 
@@ -283,6 +295,7 @@ def bootsample_mle(inputs):
                     abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                              Default : 1e-8
                     save_path: Folder name (+path) to save results in. Eg. save_path='~/mrexo_working/trial_result'
+                    verbose: Keyword specifying verbosity
     OUTPUTS:
         MR_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -
                 'weights' : Weights for Beta densities from bootstrap run.
@@ -303,6 +316,7 @@ def bootsample_mle(inputs):
     MR_boot = MLE_fit(Mass=inputs[0], Radius=inputs[1],
                     Mass_sigma=inputs[2], Radius_sigma=inputs[3],
                     Mass_bounds=inputs[4], Radius_bounds=inputs[5],
-                    deg=inputs[6], abs_tol=inputs[7], save_path=inputs[8])
+                    deg=inputs[6], 
+                    abs_tol=inputs[7], save_path=inputs[8], verbose=inputs[9])
 
     return MR_boot

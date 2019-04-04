@@ -111,3 +111,26 @@ def load_lookup_table(f_path):
     print('Loaded lookup table from {}'.format(f_path))
 
     return lookup_inter
+
+
+def _logging(message, filepath, verbose, append=True):
+    """
+    
+    """
+    
+    if append:
+        action="a"
+    else:
+        action="w"
+        
+    if verbose==1:
+        with open(os.path.join(filepath,'log_file.txt'),action) as f:
+            f.write('Finished Integration at {}\n'.format(message))
+    elif verbose==2:
+        with open(os.path.join(filepath,'log_file.txt'),action) as f:
+            f.write('Finished Integration at {}\n'.format(message))
+        print(message)
+    
+    return 1
+   
+        

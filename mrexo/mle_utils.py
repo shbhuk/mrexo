@@ -6,13 +6,16 @@ from scipy.optimize import brentq as root
 from scipy.optimize import fmin_slsqp, minimize
 import datetime,os
 
+from .utils import _logging
+
+
 ########################################
 ##### Main function: MLE_fit() #########
 ########################################
 
 def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
             deg, Log=True, abs_tol=1e-8, output_weights_only=False,
-            save_path=None, calc_joint_dist = False):
+            save_path=None, calc_joint_dist = False, verbose=2):
     '''
     Perform maximum likelihood estimation to find the weights for the beta density basis functions.
     Also, use those weights to calculate the conditional density distributions.
@@ -33,6 +36,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         output_weights_only: If True, only output the estimated weights, else will also output dictionary with keys shown below.
         save_path: Location of folder within results for auxiliary output files.
         calc_joint_dist: If True, will calculate and output the joint distribution of mass and radius.
+        verbose: Integer specifying verbosity for logging.
+                If 0: Will not log in the log file or print statements.
+                If 1: Will write log file only.
+                If 2: Will write log file and print statements.
 
     OUTPUT:
         If output_weights_only == True,
@@ -64,9 +71,11 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     starttime = datetime.datetime.now()
     if save_path is None:
         save_path = os.path.dirname(__file__)
-    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-       f.write('\n======================================\n')
-       f.write('Started run at {}\n'.format(starttime))
+        
+    
+    message = '\n====\nStarted run at {}\n'.format(starttime)
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)    
+
 
     n = np.shape(Mass)[0]
     Mass_max = Mass_bounds[1]
@@ -79,13 +88,11 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     ########################################################################
     C_pdf = calc_C_matrix(n=n, deg=deg, M=Mass, Mass_sigma=Mass_sigma, Mass_max=Mass_max, Mass_min=Mass_min,
                         R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
-                        Log=Log, abs_tol=abs_tol, save_path=save_path)
+                        Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose)
 
-    print('Finished Integration at ',datetime.datetime.now())
-    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-        f.write('Finished Integration at {}\n'.format(datetime.datetime.now()))
+    message = 'Finished Integration at {}\nCalculated the PDF for Mass and Radius for Integrated beta and normal density '.format(datetime.datetime.now())
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)    
 
-    print('Calculated the PDF for Mass and Radius for Integrated beta and normal density')
 
     ###########################################################
     # Run optimization to find the weights
@@ -112,12 +119,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
             opt_result[2], opt_result[3], opt_result[4]))
 
 
+    message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
+            opt_result[2], opt_result[3], opt_result[4])
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)  
 
-
-
-    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-        f.write('Finished Optimization at {}'.format(datetime.datetime.now()))
-        f.write('\nOptimization terminated after {} iterations. Exit Code = {}{}\n\n'.format(opt_result[2],opt_result[3],opt_result[4]))
 
     unpadded_weight = opt_result[0]
     n_log_lik = opt_result[1]
@@ -184,7 +189,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         return output
 
 
-def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, abs_tol, save_path, Log):
+def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Radius_max, Radius_min, abs_tol, save_path, Log, verbose):
     '''
     Integrate the product of the normal and beta distributions for mass and radius and then take the Kronecker product.
 
@@ -204,6 +209,10 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
         save_path: Location of folder within results for auxiliary output files
         Log: If True, data is transformed into Log scale. Default=True, since
             fitting function always converts data to log scale.
+        verbose: Integer specifying verbosity for logging.
+            If 0: Will not log in the log file or print statements.
+            If 1: Will write log file only.
+            If 2: Will write log file and print statements.
 
     OUTPUTS:
         C_pdf : Matrix explained in Ning et al. Equation 8. Product of (integrals of (product of normal and beta
@@ -214,10 +223,12 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     M_indv_pdf = np.zeros((n, deg-2))
     R_indv_pdf = np.zeros((n, deg-2))
     C_pdf = np.zeros((n, (deg-2)**2))
+    
+    
+    message = 'Started Integration at ',datetime.datetime.now()
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)  
+    
 
-    print('Started Integration at ',datetime.datetime.now())
-    with open(os.path.join(save_path,'log_file.txt'),'a') as f:
-        f.write('Started Integration at {}\n'.format(datetime.datetime.now()))
 
     # Loop across each data point.
     for i in range(0,n):
