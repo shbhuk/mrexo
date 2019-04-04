@@ -181,7 +181,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         deg_choose = run_cross_validation(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                                         Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,
                                         degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol)
-    
+
         message = 'Finished CV. Picked {} degrees by maximizing likelihood'.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
@@ -189,7 +189,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         # Minimize the AIC
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         aic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol, 
+                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol,
                         save_path=aux_output_location, verbose=verbose)['aic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(aic)]
@@ -211,7 +211,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
         message = 'Finished BIC check. Picked {} degrees by minimizing BIC '.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
-        
+
         np.savetxt(os.path.join(aux_output_location,'BIC_degreechoose.txt'),np.array([degree_candidates,bic]))
 
 
@@ -252,7 +252,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
                 Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location, verbose) for n_boot in n_boot_iter)
 
-        message = '\n\n==============\n\nRunning {} bootstraps for the MLE code with degree = {}, using {} thread/s.\n\n==============\n\n'.format(str(num_boot),
+        message = '\n\n==============\nRunning {} bootstraps for the MLE code with degree = {}, using {} thread/s.\n==============\n\n'.format(str(num_boot),
                     str(deg_choose),str(cores))
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
@@ -316,7 +316,7 @@ def bootsample_mle(inputs):
     MR_boot = MLE_fit(Mass=inputs[0], Radius=inputs[1],
                     Mass_sigma=inputs[2], Radius_sigma=inputs[3],
                     Mass_bounds=inputs[4], Radius_bounds=inputs[5],
-                    deg=inputs[6], 
+                    deg=inputs[6],
                     abs_tol=inputs[7], save_path=inputs[8], verbose=inputs[9])
 
     return MR_boot

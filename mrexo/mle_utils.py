@@ -71,10 +71,10 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     starttime = datetime.datetime.now()
     if save_path is None:
         save_path = os.path.dirname(__file__)
-        
-    
+
+
     message = '\n====\nStarted run at {}\n'.format(starttime)
-    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)    
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
     n = np.shape(Mass)[0]
@@ -91,7 +91,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                         Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose)
 
     message = 'Finished Integration at {}\nCalculated the PDF for Mass and Radius for Integrated beta and normal density '.format(datetime.datetime.now())
-    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)    
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
     ###########################################################
@@ -121,7 +121,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
     message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
             opt_result[2], opt_result[3], opt_result[4])
-    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)  
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
     unpadded_weight = opt_result[0]
@@ -223,11 +223,11 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     M_indv_pdf = np.zeros((n, deg-2))
     R_indv_pdf = np.zeros((n, deg-2))
     C_pdf = np.zeros((n, (deg-2)**2))
-    
-    
-    message = 'Started Integration at ',datetime.datetime.now()
-    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)  
-    
+
+
+    message = 'Started Integration at {}\n'.format(datetime.datetime.now())
+    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
 
 
     # Loop across each data point.
