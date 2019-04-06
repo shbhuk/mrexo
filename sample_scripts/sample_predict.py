@@ -19,7 +19,7 @@ Sample script to show how to use the predicting function to predict mass from ra
 result_dir = os.path.join(pwd,'M_dwarfs_dummy')
 predicted_mass, qtls, iron_planet = predict_from_measurement(measurement=1, measurement_sigma=0.1, result_dir=result_dir, is_posterior=False, show_plot=False)
 
-
+print(predicted_mass)
 
 
 # Predict mass from radius for the Kepler dataset for a 1 Earth radii planet using the lookup table.
