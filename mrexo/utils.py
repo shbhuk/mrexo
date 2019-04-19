@@ -1,5 +1,6 @@
 import numpy as np
 import os
+from multiprocessing import current_process
 import sys
 if sys.version_info.major==3:
     from functools import lru_cache
@@ -115,14 +116,16 @@ def load_lookup_table(f_path):
 
 def _logging(message, filepath, verbose, append=True):
     """
-    
+
     """
-    
+
+    message = str(current_process().pid)+":"+message
+
     if append:
         action="a"
     else:
         action="w"
-        
+
     if verbose==1:
         with open(os.path.join(filepath,'log_file.txt'),action) as f:
             f.write('Finished Integration at {}\n'.format(message))
@@ -130,7 +133,5 @@ def _logging(message, filepath, verbose, append=True):
         with open(os.path.join(filepath,'log_file.txt'),action) as f:
             f.write('Finished Integration at {}\n'.format(message))
         print(message)
-    
+
     return 1
-   
-        

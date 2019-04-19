@@ -5,6 +5,8 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.optimize import fmin_slsqp, minimize
 import datetime,os
+from multiprocessing import current_process
+
 
 from .utils import _logging
 
@@ -90,7 +92,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                         R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
                         Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose)
 
-    message = 'Finished Integration at {}\nCalculated the PDF for Mass and Radius for Integrated beta and normal density '.format(datetime.datetime.now())
+    message = 'Finished Integration at {}. Calculated the PDF for Mass and Radius for Integrated beta and normal density '.format(datetime.datetime.now())
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
@@ -115,11 +117,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
     # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
     opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1,
                             epsilon=1e-5, acc=1e-5)
-    print('Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
-            opt_result[2], opt_result[3], opt_result[4]))
-
-
-    message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
+    message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}'.format(datetime.datetime.now(),
             opt_result[2], opt_result[3], opt_result[4])
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
