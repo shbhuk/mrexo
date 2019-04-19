@@ -40,7 +40,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 Assumes that the entered qtls are symmetric about 0.5.
         show_plot: Boolean. Default=False. If True, will plot the conditional Mass - Radius relationship, and show the predicted point.
         use_lookup: If True, will try to use lookup table. If lookup table does not exist, will give warning and calculate the prediction
-                using analytic method.
+                using analytic method. Can only be used for posterior prediction.
     OUTPUT:
         outputs: Tuple with the predicted mass (or distribution of masses if input is a posterior),
                 and the quantile distribution according to the 'qtl' input parameter
@@ -135,32 +135,6 @@ def predict_from_measurement(measurement, measurement_sigma=None,
     # Check if single measurement or posterior distribution.
     if is_posterior == False:
 
-        # Use 0.5 to find the median
-        lookup_flag = None
-        if use_lookup == True:
-            try:
-                lookup = load_lookup_table(os.path.join(output_location,lookup_fname))
-                if not measurement_sigma:
-                    predicted_median = lookup(0.5, log_measurement)
-                    predicted_qtl = lookup(qtl, log_measurement)
-                else:
-                    n_art = 50000
-                    artificial_posterior = np.random.normal(loc = log_measurement, scale = log_measurement_sigma, size = n_art)
-                    qtls = np.random.uniform(size = n_art)
-                    predicted_posteriors = [lookup(qtls[i], artificial_posterior[i]) for i in range(n_art)]
-
-                    prob = [0.5]
-                    prob.extend(qtl)
-                    result = mquantiles(predicted_posteriors, prob=prob, axis=0, alphap=1, betap=1).data
-                    predicted_median = result[0]
-                    predicted_qtl = result[1:]
-
-                lookup_flag = 1
-            except FileNotFoundError:
-                print('Error: Trying to use lookup table when it does not exist. Run script to generate lookup table or set use_lookup = False.')
-                lookup_flag = None
-
-        if not lookup_flag:
             predicted_value = cond_density_quantile(y=log_measurement, y_std=log_measurement_sigma, y_max=measurement_max,
                                                         y_min=measurement_min, x_max=predict_max, x_min=predict_min,
                                                         deg=degree, deg_vec = deg_vec,
@@ -168,32 +142,32 @@ def predict_from_measurement(measurement, measurement_sigma=None,
             predicted_median = predicted_value[2][0]
             predicted_qtl = predicted_value[2][1:]
 
-        outputs = [predicted_median, np.array(predicted_qtl), iron_planet]
+            outputs = [predicted_median, np.array(predicted_qtl), iron_planet]
 
-        if show_plot == True:
+            if show_plot == True:
 
-            if np.size(qtl)==2:
-                predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
-            else:
-                # If finding multiple quantiles, do not plot errorbar on predicted value in plot
-                predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
-
-            if predict == 'mass':
-                fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-                ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
-                handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
-            else:
-                fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-
-            yerr = np.array([[10**predicted_median - 10**predicted_lower_quantile, 10**predicted_upper_quantile - 10**predicted_median]]).T
-
-            plt.hlines(10**predicted_median, 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
-            plt.vlines(10**log_measurement, 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
-            ax.errorbar(x=measurement, y=10**predicted_median, xerr=measurement_sigma,
-                        yerr=yerr,fmt='o', color = 'green')
-            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
-            plt.legend(handles=handles)
-            plt.show(block=False)
+                if np.size(qtl)==2:
+                    predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
+                else:
+                    # If finding multiple quantiles, do not plot errorbar on predicted value in plot
+                    predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
+    
+                if predict == 'mass':
+                    fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
+                    ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
+                    handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
+                else:
+                    fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+    
+                yerr = np.array([[10**predicted_median - 10**predicted_lower_quantile, 10**predicted_upper_quantile - 10**predicted_median]]).T
+    
+                plt.hlines(10**predicted_median, 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
+                plt.vlines(10**log_measurement, 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
+                ax.errorbar(x=measurement, y=10**predicted_median, xerr=measurement_sigma,
+                            yerr=yerr,fmt='o', color = 'green')
+                handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
+                plt.legend(handles=handles)
+                plt.show(block=False)
 
     ###########################################################
 

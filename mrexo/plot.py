@@ -336,7 +336,7 @@ def plot_joint_mr_distribution(result_dir):
 
     plt.show()
 
-    return ax1
+    return fig, ax1
 
 
 
