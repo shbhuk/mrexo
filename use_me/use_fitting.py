@@ -38,6 +38,7 @@ For more detailed guidelines read the docuemtnation for the fit_mr_relation() fu
 
 
 t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
+# t = Table.read("C:/Users/shbhu/Box Sync/M_dwarves/MRExo_paper/Referee_response/24_wo_Trappist.csv")
 
 # Symmetrical errorbars
 Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -48,7 +49,7 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_bench2')
+result_dir = os.path.join(pwd,'M_dwarfs_control17')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
@@ -56,5 +57,5 @@ result_dir = os.path.join(pwd,'M_dwarfs_bench2')
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
                                                 Radius = Radius, Radius_sigma = Radius_sigma,
-                                                save_path = result_dir, select_deg = 17,
-                                                num_boot = 10, cores = cpu_count())
+                                                save_path = result_dir, select_deg = 17, 
+                                                num_boot = 50, cores = 5)
