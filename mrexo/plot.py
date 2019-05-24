@@ -80,7 +80,7 @@ def plot_m_given_r_relation(result_dir):
     plt.xlim(10**Radius_min, 10**Radius_max)
     import matplotlib
     matplotlib.rc('text', usetex=True) #use latex for text
-    plt.legend(handles = handles)
+    plt.legend(handles = handles, prop={'size': 15})
 
 
 
@@ -149,7 +149,7 @@ def plot_r_given_m_relation(result_dir):
     rm_boot = mpatches.Patch(color='b', alpha=0.3, label=r'Quantiles of the median of the f(r$|$m) from bootstrap')
     handles = [rm_median_line, rm_full, rm_boot]
 
-    plt.legend(handles=handles)
+    plt.legend(handles=handles, prop={'size': 15})
     ax1.set_ylabel('Radius ($R_{\oplus}$)')
     ax1.set_xlabel('Mass ($M_{\oplus}$)')
 
@@ -243,7 +243,7 @@ def plot_mr_and_rm(result_dir):
 
     handles = [mr_median_line, mr_full, mr_boot, rm_median_line, rm_full, rm_boot]
 
-    plt.legend(handles=handles, loc=4, prop={'size': 14})
+    plt.legend(handles=handles, loc=4, prop={'size': 15})
 
     ax1.set_xlabel(' Radius ($R_{\oplus}$)', fontsize = 20)
     ax1.set_ylabel(' Mass ($M_{\oplus}$)', fontsize = 20)
@@ -259,7 +259,7 @@ def plot_mr_and_rm(result_dir):
     plt.xlim(10**Radius_min, 10**Radius_max)
     import matplotlib
     matplotlib.rc('text', usetex=True) #use latex for text
-    plt.legend(handles = handles)
+    plt.legend(handles = handles, prop={'size': 15})
 
     return fig, ax1, handles
 

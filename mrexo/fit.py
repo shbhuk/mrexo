@@ -180,7 +180,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
         deg_choose = run_cross_validation(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
                                         Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,
-                                        degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol)
+                                        degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
 
         message = 'Finished CV. Picked {} degrees by maximizing likelihood'.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)

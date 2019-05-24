@@ -6,7 +6,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 
 def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
                         degree_max=60, k_fold=10, degree_candidates=None,
-                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8):
+                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8, verbose=2):
     """
     We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
     To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
@@ -39,6 +39,10 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
                 Default : 1e-8
         cores: this program uses parallel computing for bootstrap. Default=1
         save_path: Location of folder within results for auxiliary output files
+        verbose: Integer specifying verbosity for logging.
+        If 0: Will not log in the log file or print statements.
+        If 1: Will write log file only.
+        If 2: Will write log file and print statements.
 
     OUTPUTS:
         deg_choose - The optimum degree chosen by cross validation and MLE
@@ -57,7 +61,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     ## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
     # Iterator input to parallelize
     cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
-     abs_tol, save_path, Mass_bounds, Radius_bounds) for i in range(k_fold) for j in degree_candidates)
+     abs_tol, save_path, Mass_bounds, Radius_bounds, verbose) for i in range(k_fold) for j in degree_candidates)
 
     # Run cross validation in parallel
     pool = Pool(processes = cores)
@@ -100,7 +104,7 @@ def cv_parallelize(cv_input):
     OUTPUT:
         like_pred : Predicted log likelihood for the i-th dataset and test_degree
     """
-    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds = cv_input
+    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds, verbose = cv_input
     split_interval = indices_folded[i_fold]
 
     mask = np.repeat(False, n)
@@ -124,7 +128,7 @@ def cv_parallelize(cv_input):
 
     # Calculate the optimum weights using MLE for a given input test_degree
     weights = MLE_fit(Mass=train_Mass, Radius=train_Radius, Mass_sigma=train_Mass_sigma, Radius_sigma=train_Radius_sigma, Mass_bounds=Mass_bounds,
-            Radius_bounds=Radius_bounds, deg=test_degree, abs_tol=abs_tol, save_path=save_path, output_weights_only=True)
+            Radius_bounds=Radius_bounds, deg=test_degree, abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
 
     size_test = np.size(test_Radius)
 
@@ -137,7 +141,8 @@ def cv_parallelize(cv_input):
     print(size_test, len(Mass_bounds))
 
     # Integrate the product of the normal and beta distribution for mass and radius and then take the Kronecker product
-    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius, test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log=True)
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius,
+                        test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log=True, verbose=verbose)
 
     # Calculate the final loglikelihood
     like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
