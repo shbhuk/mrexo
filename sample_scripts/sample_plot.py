@@ -11,15 +11,28 @@ try :
 except NameError:
     pwd = ''
 
-mdwarf_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
+mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
+mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
+kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
+
+datadir = r"C:/Users/shbhu/Documents/Git/mrexo/use_me"
+mdwarf_new_control = os.path.join(datadir,'M_dwarfs_control17')
+mdwarf_trappist17 = os.path.join(datadir,'M_dwarfs_wo_Trappist_degree17')
+mdwarf_trappistCV = os.path.join(datadir,'M_dwarfs_wo_Trappist_degreeCV')
 # kepler_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 
 
-result_dir = mdwarf_result
+# result_dir = mdwarf_trappistCV
+result_dir = kepler_result
 
-ax = plot_m_given_r_relation(result_dir)
-ax = plot_r_given_m_relation(result_dir)
+# ax = plot_m_given_r_relation(result_dir)
+# ax = plot_r_given_m_relation(result_dir)
 ax = plot_mr_and_rm(result_dir)
 ax = plot_joint_mr_distribution(result_dir)
 
-plt.title('M dwarf conditional distributions', fontsize = 20, pad = 2)
+plt.title('Kepler joint distribution', fontsize = 20, pad = 5)
+
+# plt.xlim(10**-0.28,19)
+plt.ylim(0.02, 255)
+
+plt.show()
