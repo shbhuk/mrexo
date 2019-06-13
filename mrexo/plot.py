@@ -254,7 +254,7 @@ def plot_mr_and_rm(result_dir):
     plt.rc('xtick', labelsize=20)    # fontsize of the tick labels
     plt.rc('ytick', labelsize=20)    # fontsize of the tick labels
 
-    plt.show()
+    plt.show(block=False)
     plt.ylim(10**Mass_min, 10**Mass_max)
     plt.xlim(10**Radius_min, 10**Radius_max)
     import matplotlib
@@ -334,7 +334,7 @@ def plot_joint_mr_distribution(result_dir):
     plt.xlabel('Radius ($R_{\oplus}$)', fontsize = 20)
     plt.ylabel('Mass ($M_{\oplus}$)', fontsize = 20)
 
-    plt.show()
+    plt.show(block=False)
 
     return fig, ax1
 
