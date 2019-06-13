@@ -23,16 +23,16 @@ mdwarf_trappistCV = os.path.join(datadir,'M_dwarfs_wo_Trappist_degreeCV')
 
 
 # result_dir = mdwarf_trappistCV
-result_dir = kepler_result
+result_dir = mdwarf_trappistCV
 
-# ax = plot_m_given_r_relation(result_dir)
+ax = plot_m_given_r_relation(result_dir)
 # ax = plot_r_given_m_relation(result_dir)
-ax = plot_mr_and_rm(result_dir)
-ax = plot_joint_mr_distribution(result_dir)
+# ax = plot_mr_and_rm(result_dir)
+# ax = plot_joint_mr_distribution(result_dir)
 
-plt.title('Kepler joint distribution', fontsize = 20, pad = 5)
+plt.title('M dwarf w/o TRAPPIST-1, 11 degrees', fontsize = 20, pad = 10)
 
-# plt.xlim(10**-0.28,19)
-plt.ylim(0.02, 255)
+plt.xlim(10**-0.28,19)
+plt.ylim(0.02,255)
 
 plt.show()
