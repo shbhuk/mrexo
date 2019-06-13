@@ -207,7 +207,8 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-
+            
+            # Check if need this if-else block    
             if np.size(qtl)==2:
                 # predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
                 output_qtl =  mquantiles(outputs[:-1], prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
@@ -224,7 +225,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             # ax.errorbar(x=10**measurement_qtl[0], y=10**output_qtl[0], xerr=np.abs(10**measurement_qtl[0] - 10**measurement_qtl[1]),
                         # yerr=np.abs(10**output_qtl[0] - 10**output_qtl[1]),fmt='o', color = 'green')
-            handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
+            # handles.append(Line2D([0], [0], color='green', marker='o',  label='Predicted value'))
             plt.legend(handles=handles)
             plt.show(block=False)
 
