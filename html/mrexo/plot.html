@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.2" />
+<title>mrexo.plot API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mrexo.plot</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.lines import Line2D
+import numpy as np
+import os
+from scipy.stats.mstats import mquantiles
+from astropy.table import Table
+
+
+def plot_m_given_r_relation(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of mass given radius.
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_m_given_r_relation(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_cond_R = np.loadtxt(os.path.join(output_location, &#39;M_cond_R.txt&#39;))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_upper.txt&#39;))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis = 0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,7))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(x=Radius, y=Mass, xerr=Radius_sigma, yerr=Mass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+    ax1.plot(10**R_points, 10**M_cond_R,  color=&#39;maroon&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**R_points, 10**M_cond_R_lower, 10**M_cond_R_upper,alpha=0.3, color=&#39;lightsalmon&#39;) # Full dataset run
+    ax1.fill_between(10**R_points, 10**mr_lower_boot, 10**mr_upper_boot,alpha=0.3, color=&#39;r&#39;) # Bootstrap result
+
+    mr_median_line = Line2D([0], [0], color=&#39;maroon&#39;, lw=2,label=&#39;Median of f(m$|$r) from full dataset run&#39;)
+    mr_full = mpatches.Patch(color=&#39;lightsalmon&#39;, alpha=0.3,  label=r&#39;Quantiles of f(m$|$r) from full dataset run  &#39;)
+    mr_boot = mpatches.Patch(color=&#39;r&#39;, alpha=0.3, label=r&#39;Quantiles of the median of the f(m$|$r) from bootstrap&#39;)
+
+    handles = [mr_median_line, mr_full, mr_boot]
+
+
+    ax1.set_xlabel(&#39;Radius ($R_{\oplus}$)&#39;)
+    ax1.set_ylabel(&#39;Mass ($M_{\oplus}$)&#39;)
+    ax1.set_title(&#39;f(m$|$r) with degree {}, and {} bootstraps&#39;.format(deg_choose, n_boot), pad=5)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.show(block=False)
+    plt.ylim(10**Mass_min, 10**Mass_max)
+    plt.xlim(10**Radius_min, 10**Radius_max)
+    import matplotlib
+    matplotlib.rc(&#39;text&#39;, usetex=True) #use latex for text
+    plt.legend(handles = handles, prop={&#39;size&#39;: 15})
+
+
+
+    return fig, ax1, handles
+
+
+def plot_r_given_m_relation(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of radius given mass.
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_r_given_m_relation(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_points = np.loadtxt(os.path.join(output_location, &#39;M_points.txt&#39;))
+    R_cond_M = np.loadtxt(os.path.join(output_location, &#39;R_cond_M.txt&#39;))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_upper.txt&#39;))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,7))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(y=Radius, x=Mass, yerr=Radius_sigma, xerr=Mass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+    ax1.plot(10**M_points, 10**R_cond_M,  color=&#39;midnightblue&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**M_points, 10**R_cond_M_lower, 10**R_cond_M_upper, alpha=0.3, color=&#39;cornflowerblue&#39;) # Full dataset run
+    ax1.fill_between(10**M_points, 10**rm_lower_boot, 10**rm_upper_boot, alpha=0.3, color=&#39;b&#39;) # Bootstrap result
+
+
+    rm_median_line = Line2D([0], [0], color=&#39;midnightblue&#39;, lw=2,label=r&#39;Median of f(r$|$m) from full dataset run&#39;)
+    rm_full = mpatches.Patch(color=&#39;cornflowerblue&#39;, alpha=0.3,  label=r&#39;Quantiles of f(r$|$m) from full dataset run  &#39;)
+    rm_boot = mpatches.Patch(color=&#39;b&#39;, alpha=0.3, label=r&#39;Quantiles of the median of the f(r$|$m) from bootstrap&#39;)
+    handles = [rm_median_line, rm_full, rm_boot]
+
+    plt.legend(handles=handles, prop={&#39;size&#39;: 15})
+    ax1.set_ylabel(&#39;Radius ($R_{\oplus}$)&#39;)
+    ax1.set_xlabel(&#39;Mass ($M_{\oplus}$)&#39;)
+
+    ax1.set_title(r&#39;f(r$|$m) with degree {}, and {} bootstraps&#39;.format(deg_choose, n_boot), pad=5)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.show(block=False)
+    plt.xlim(10**Mass_min, 10**Mass_max)
+    plt.ylim(10**Radius_min, 10**Radius_max)
+
+    return fig, ax1, handles
+
+def plot_mr_and_rm(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of radius given mass, as well as and mass given radius.
+    Fig 3 (a,c) from Kanodia et al. 2019
+
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_mr_and_rm(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_points = np.loadtxt(os.path.join(output_location, &#39;M_points.txt&#39;))
+
+    M_cond_R = np.loadtxt(os.path.join(output_location, &#39;M_cond_R.txt&#39;))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_upper.txt&#39;))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_lower.txt&#39;))
+    R_cond_M = np.loadtxt(os.path.join(output_location, &#39;R_cond_M.txt&#39;))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_upper.txt&#39;))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_boot.txt&#39;))
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,6.5))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(x=Radius, y=Mass, xerr=Radius_sigma, yerr=Mass_sigma,fmt=&#39;k.&#39;, markersize=3, elinewidth=0.3)
+
+    ax1.plot(10**R_points, 10**M_cond_R,  color=&#39;maroon&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**R_points, 10**M_cond_R_lower, 10**M_cond_R_upper, alpha=0.3, color=&#39;lightsalmon&#39;) # Full dataset run
+    ax1.fill_between(10**R_points, 10**mr_lower_boot, 10**mr_upper_boot, alpha=0.3, color=&#39;r&#39;) # Bootstrap result
+
+    ax1.plot(10**R_cond_M, 10**M_points,  color=&#39;midnightblue&#39;, lw=2) # Full dataset run
+    ax1.fill_betweenx(10**M_points, 10**R_cond_M_lower, 10**R_cond_M_upper, alpha=0.3, color=&#39;cornflowerblue&#39;) # Full dataset run
+    ax1.fill_betweenx(10**M_points,10**rm_lower_boot,10**rm_upper_boot, alpha=0.3, color=&#39;b&#39;) # Bootstrap result
+
+    mr_median_line = Line2D([0], [0], color=&#39;maroon&#39;, lw=2,label=r&#39;Median of f(m$|$r) from full dataset run&#39;)
+    mr_full = mpatches.Patch(color=&#39;lightsalmon&#39;, alpha=0.3,  label=r&#39;Quantiles of f(m$|$r) from full dataset run  &#39;)
+    mr_boot = mpatches.Patch(color=&#39;r&#39;, alpha=0.3, label=r&#39;Quantiles of median of f(m$|$r) from bootstrap&#39;)
+
+    rm_median_line = Line2D([0], [0], color=&#39;midnightblue&#39;, lw=2,label=r&#39;Median of f(r$|$m) from full dataset run&#39;)
+    rm_full = mpatches.Patch(color=&#39;cornflowerblue&#39;, alpha=0.3,  label=r&#39;Quantiles of f(r$|$m) from full dataset run  &#39;)
+    rm_boot = mpatches.Patch(color=&#39;b&#39;, alpha=0.3, label=r&#39;Quantiles of median of f(r$|$m) from bootstrap&#39;)
+
+    handles = [mr_median_line, mr_full, mr_boot, rm_median_line, rm_full, rm_boot]
+
+    ax1.set_xlabel(&#39; Radius ($R_{\oplus}$)&#39;, fontsize = 20)
+    ax1.set_ylabel(&#39; Mass ($M_{\oplus}$)&#39;, fontsize = 20)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+
+    plt.show(block=False)
+    plt.ylim(10**Mass_min, 10**Mass_max)
+    plt.xlim(10**Radius_min, 10**Radius_max)
+    import matplotlib
+    matplotlib.rc(&#39;text&#39;, usetex=True) #use latex for text
+    plt.legend(handles = handles, loc=4, prop={&#39;size&#39;: 15})
+
+    return fig, ax1, handles
+
+
+def plot_joint_mr_distribution(result_dir):
+    &#34;&#34;&#34;
+    Use to plot joint distribution of mass AND radius.
+    Fig 3 (b,d) from Kanodia et al. 2019
+
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_joint_mr_distribution(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    logMass = np.log10(Mass)
+    logRadius = np.log10(Radius)
+    logMass_sigma = 0.434 * Mass_sigma/Mass
+    logRadius_sigma = 0.434 * Radius_sigma/Radius
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    joint = np.loadtxt(os.path.join(output_location,&#39;joint_distribution.txt&#39;))
+
+    fig = plt.figure(figsize=(8.5,6.5))
+    ax1 = fig.add_subplot(1,1,1)
+    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+
+
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+
+    ax1.tick_params(which = &#39;both&#39;,  labeltop = False, top = False, labelright = False, right = False, labelsize = 22)
+
+    im = ax1.imshow(joint, cmap = &#39;coolwarm&#39;, extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = &#39;lower&#39;, aspect = &#39;auto&#39;)
+    cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)], fraction=0.037, pad=0.04)
+    cbar.ax.set_yticklabels([&#39;Min&#39;, &#39;Max&#39;])
+
+    x_ticks = ax1.get_xticks().tolist()
+    x_tick_labels = [np.round(10**i,3) for i in x_ticks]
+    ax1.set_xticklabels(x_tick_labels, size = 18)
+
+    y_ticks = ax1.get_yticks().tolist()
+    y_tick_labels = [10**i for i in y_ticks]
+    ax1.set_yticklabels(y_tick_labels, size = 18)
+
+
+    plt.ylim(Mass_min, Mass_max)
+    plt.xlim(Radius_min, Radius_max)
+
+    plt.xlabel(&#39;Radius ($R_{\oplus}$)&#39;, fontsize = 20)
+    plt.ylabel(&#39;Mass ($M_{\oplus}$)&#39;, fontsize = 20)
+
+    plt.show(block=False)
+
+    return fig, ax1
+
+
+
+def plot_mle_weights(result_dir):
+    &#34;&#34;&#34;
+    Function to plot MLE weights, similar to Fig 2 from Kanodia et al. 2019
+    \nINPUTS:
+        result_dir = Directory created by fitting procedure. See ~/mrexo/mrexo/datasets/M_dwarfs_20181214 for example
+
+    OUTPUTS:
+
+        Displays plot. No outputs
+
+    &#34;&#34;&#34;
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    weights_mle = np.loadtxt(os.path.join(output_location,&#39;weights.txt&#39;))
+
+    size = int(np.sqrt(len(weights_mle)))
+
+    plt.imshow(np.reshape(weights_mle , [size, size]), extent = [0, size, 0, size], origin = &#39;left&#39;, cmap = &#39;viridis&#39;)
+    plt.xticks(np.arange(0,size), *[np.arange(0,size)])
+    plt.yticks(np.arange(0,size), *[np.arange(0,size)])
+
+    plt.colorbar()
+    plt.title(&#39;Polynomial weights with {} degrees&#39;.format(size))
+    plt.show()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mrexo.plot.plot_joint_mr_distribution"><code class="name flex">
+<span>def <span class="ident">plot_joint_mr_distribution</span></span>(<span>result_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Use to plot joint distribution of mass AND radius.
+Fig 3 (b,d) from Kanodia et al. 2019</p>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>result_dir : Directory generated by the fitting function.
+    Example: result_dir = '~/mrexo_working/trial_result'
+</code></pre>
+<p>EXAMPLE:</p>
+<pre><code># Sample script to plot M-R data and fit.
+from mrexo import plot_mr_relation
+import os
+
+pwd = '~/mrexo_working/'
+result_dir = os.path.join(pwd,'Results_deg_12')
+
+_ = plot_joint_mr_distribution(result_dir)
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_joint_mr_distribution(result_dir):
+    &#34;&#34;&#34;
+    Use to plot joint distribution of mass AND radius.
+    Fig 3 (b,d) from Kanodia et al. 2019
+
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_joint_mr_distribution(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    logMass = np.log10(Mass)
+    logRadius = np.log10(Radius)
+    logMass_sigma = 0.434 * Mass_sigma/Mass
+    logRadius_sigma = 0.434 * Radius_sigma/Radius
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    joint = np.loadtxt(os.path.join(output_location,&#39;joint_distribution.txt&#39;))
+
+    fig = plt.figure(figsize=(8.5,6.5))
+    ax1 = fig.add_subplot(1,1,1)
+    ax1.errorbar(x=logRadius, y=logMass, xerr=logRadius_sigma, yerr=logMass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+
+
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+
+    ax1.tick_params(which = &#39;both&#39;,  labeltop = False, top = False, labelright = False, right = False, labelsize = 22)
+
+    im = ax1.imshow(joint, cmap = &#39;coolwarm&#39;, extent=[Radius_min, Radius_max, Mass_min, Mass_max], origin = &#39;lower&#39;, aspect = &#39;auto&#39;)
+    cbar = fig.colorbar(im, ticks=[np.min(joint), np.max(joint)], fraction=0.037, pad=0.04)
+    cbar.ax.set_yticklabels([&#39;Min&#39;, &#39;Max&#39;])
+
+    x_ticks = ax1.get_xticks().tolist()
+    x_tick_labels = [np.round(10**i,3) for i in x_ticks]
+    ax1.set_xticklabels(x_tick_labels, size = 18)
+
+    y_ticks = ax1.get_yticks().tolist()
+    y_tick_labels = [10**i for i in y_ticks]
+    ax1.set_yticklabels(y_tick_labels, size = 18)
+
+
+    plt.ylim(Mass_min, Mass_max)
+    plt.xlim(Radius_min, Radius_max)
+
+    plt.xlabel(&#39;Radius ($R_{\oplus}$)&#39;, fontsize = 20)
+    plt.ylabel(&#39;Mass ($M_{\oplus}$)&#39;, fontsize = 20)
+
+    plt.show(block=False)
+
+    return fig, ax1</code></pre>
+</details>
+</dd>
+<dt id="mrexo.plot.plot_m_given_r_relation"><code class="name flex">
+<span>def <span class="ident">plot_m_given_r_relation</span></span>(<span>result_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Use to plot the conditional relationship of mass given radius.</p>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>result_dir : Directory generated by the fitting function.
+    Example: result_dir = '~/mrexo_working/trial_result'
+</code></pre>
+<p>EXAMPLE:</p>
+<pre><code># Sample script to plot M-R data and fit.
+from mrexo import plot_mr_relation
+import os
+
+pwd = '~/mrexo_working/'
+result_dir = os.path.join(pwd,'Results_deg_12')
+
+_ = plot_m_given_r_relation(result_dir)
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_m_given_r_relation(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of mass given radius.
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_m_given_r_relation(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_cond_R = np.loadtxt(os.path.join(output_location, &#39;M_cond_R.txt&#39;))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_upper.txt&#39;))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis = 0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,7))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(x=Radius, y=Mass, xerr=Radius_sigma, yerr=Mass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+    ax1.plot(10**R_points, 10**M_cond_R,  color=&#39;maroon&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**R_points, 10**M_cond_R_lower, 10**M_cond_R_upper,alpha=0.3, color=&#39;lightsalmon&#39;) # Full dataset run
+    ax1.fill_between(10**R_points, 10**mr_lower_boot, 10**mr_upper_boot,alpha=0.3, color=&#39;r&#39;) # Bootstrap result
+
+    mr_median_line = Line2D([0], [0], color=&#39;maroon&#39;, lw=2,label=&#39;Median of f(m$|$r) from full dataset run&#39;)
+    mr_full = mpatches.Patch(color=&#39;lightsalmon&#39;, alpha=0.3,  label=r&#39;Quantiles of f(m$|$r) from full dataset run  &#39;)
+    mr_boot = mpatches.Patch(color=&#39;r&#39;, alpha=0.3, label=r&#39;Quantiles of the median of the f(m$|$r) from bootstrap&#39;)
+
+    handles = [mr_median_line, mr_full, mr_boot]
+
+
+    ax1.set_xlabel(&#39;Radius ($R_{\oplus}$)&#39;)
+    ax1.set_ylabel(&#39;Mass ($M_{\oplus}$)&#39;)
+    ax1.set_title(&#39;f(m$|$r) with degree {}, and {} bootstraps&#39;.format(deg_choose, n_boot), pad=5)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.show(block=False)
+    plt.ylim(10**Mass_min, 10**Mass_max)
+    plt.xlim(10**Radius_min, 10**Radius_max)
+    import matplotlib
+    matplotlib.rc(&#39;text&#39;, usetex=True) #use latex for text
+    plt.legend(handles = handles, prop={&#39;size&#39;: 15})
+
+
+
+    return fig, ax1, handles</code></pre>
+</details>
+</dd>
+<dt id="mrexo.plot.plot_mle_weights"><code class="name flex">
+<span>def <span class="ident">plot_mle_weights</span></span>(<span>result_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Function to plot MLE weights, similar to Fig 2 from Kanodia et al. 2019</p>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>result_dir = Directory created by fitting procedure. See ~/mrexo/mrexo/datasets/M_dwarfs_20181214 for example
+</code></pre>
+<p>OUTPUTS:</p>
+<pre><code>Displays plot. No outputs
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_mle_weights(result_dir):
+    &#34;&#34;&#34;
+    Function to plot MLE weights, similar to Fig 2 from Kanodia et al. 2019
+    \nINPUTS:
+        result_dir = Directory created by fitting procedure. See ~/mrexo/mrexo/datasets/M_dwarfs_20181214 for example
+
+    OUTPUTS:
+
+        Displays plot. No outputs
+
+    &#34;&#34;&#34;
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    weights_mle = np.loadtxt(os.path.join(output_location,&#39;weights.txt&#39;))
+
+    size = int(np.sqrt(len(weights_mle)))
+
+    plt.imshow(np.reshape(weights_mle , [size, size]), extent = [0, size, 0, size], origin = &#39;left&#39;, cmap = &#39;viridis&#39;)
+    plt.xticks(np.arange(0,size), *[np.arange(0,size)])
+    plt.yticks(np.arange(0,size), *[np.arange(0,size)])
+
+    plt.colorbar()
+    plt.title(&#39;Polynomial weights with {} degrees&#39;.format(size))
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="mrexo.plot.plot_mr_and_rm"><code class="name flex">
+<span>def <span class="ident">plot_mr_and_rm</span></span>(<span>result_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Use to plot the conditional relationship of radius given mass, as well as and mass given radius.
+Fig 3 (a,c) from Kanodia et al. 2019</p>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>result_dir : Directory generated by the fitting function.
+    Example: result_dir = '~/mrexo_working/trial_result'
+</code></pre>
+<p>EXAMPLE:</p>
+<pre><code># Sample script to plot M-R data and fit.
+from mrexo import plot_mr_relation
+import os
+
+pwd = '~/mrexo_working/'
+result_dir = os.path.join(pwd,'Results_deg_12')
+
+_ = plot_mr_and_rm(result_dir)
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_mr_and_rm(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of radius given mass, as well as and mass given radius.
+    Fig 3 (a,c) from Kanodia et al. 2019
+
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_mr_and_rm(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_points = np.loadtxt(os.path.join(output_location, &#39;M_points.txt&#39;))
+
+    M_cond_R = np.loadtxt(os.path.join(output_location, &#39;M_cond_R.txt&#39;))
+    M_cond_R_upper = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_upper.txt&#39;))
+    M_cond_R_lower = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_lower.txt&#39;))
+    R_cond_M = np.loadtxt(os.path.join(output_location, &#39;R_cond_M.txt&#39;))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_upper.txt&#39;))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    M_cond_R_boot = np.loadtxt(os.path.join(output_location, &#39;M_cond_R_boot.txt&#39;))
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+
+    mr_lower_boot, mr_upper_boot = mquantiles(M_cond_R_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,6.5))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(x=Radius, y=Mass, xerr=Radius_sigma, yerr=Mass_sigma,fmt=&#39;k.&#39;, markersize=3, elinewidth=0.3)
+
+    ax1.plot(10**R_points, 10**M_cond_R,  color=&#39;maroon&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**R_points, 10**M_cond_R_lower, 10**M_cond_R_upper, alpha=0.3, color=&#39;lightsalmon&#39;) # Full dataset run
+    ax1.fill_between(10**R_points, 10**mr_lower_boot, 10**mr_upper_boot, alpha=0.3, color=&#39;r&#39;) # Bootstrap result
+
+    ax1.plot(10**R_cond_M, 10**M_points,  color=&#39;midnightblue&#39;, lw=2) # Full dataset run
+    ax1.fill_betweenx(10**M_points, 10**R_cond_M_lower, 10**R_cond_M_upper, alpha=0.3, color=&#39;cornflowerblue&#39;) # Full dataset run
+    ax1.fill_betweenx(10**M_points,10**rm_lower_boot,10**rm_upper_boot, alpha=0.3, color=&#39;b&#39;) # Bootstrap result
+
+    mr_median_line = Line2D([0], [0], color=&#39;maroon&#39;, lw=2,label=r&#39;Median of f(m$|$r) from full dataset run&#39;)
+    mr_full = mpatches.Patch(color=&#39;lightsalmon&#39;, alpha=0.3,  label=r&#39;Quantiles of f(m$|$r) from full dataset run  &#39;)
+    mr_boot = mpatches.Patch(color=&#39;r&#39;, alpha=0.3, label=r&#39;Quantiles of median of f(m$|$r) from bootstrap&#39;)
+
+    rm_median_line = Line2D([0], [0], color=&#39;midnightblue&#39;, lw=2,label=r&#39;Median of f(r$|$m) from full dataset run&#39;)
+    rm_full = mpatches.Patch(color=&#39;cornflowerblue&#39;, alpha=0.3,  label=r&#39;Quantiles of f(r$|$m) from full dataset run  &#39;)
+    rm_boot = mpatches.Patch(color=&#39;b&#39;, alpha=0.3, label=r&#39;Quantiles of median of f(r$|$m) from bootstrap&#39;)
+
+    handles = [mr_median_line, mr_full, mr_boot, rm_median_line, rm_full, rm_boot]
+
+    ax1.set_xlabel(&#39; Radius ($R_{\oplus}$)&#39;, fontsize = 20)
+    ax1.set_ylabel(&#39; Mass ($M_{\oplus}$)&#39;, fontsize = 20)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+
+    plt.show(block=False)
+    plt.ylim(10**Mass_min, 10**Mass_max)
+    plt.xlim(10**Radius_min, 10**Radius_max)
+    import matplotlib
+    matplotlib.rc(&#39;text&#39;, usetex=True) #use latex for text
+    plt.legend(handles = handles, loc=4, prop={&#39;size&#39;: 15})
+
+    return fig, ax1, handles</code></pre>
+</details>
+</dd>
+<dt id="mrexo.plot.plot_r_given_m_relation"><code class="name flex">
+<span>def <span class="ident">plot_r_given_m_relation</span></span>(<span>result_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Use to plot the conditional relationship of radius given mass.</p>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>result_dir : Directory generated by the fitting function.
+    Example: result_dir = '~/mrexo_working/trial_result'
+</code></pre>
+<p>EXAMPLE:</p>
+<pre><code># Sample script to plot M-R data and fit.
+from mrexo import plot_mr_relation
+import os
+
+pwd = '~/mrexo_working/'
+result_dir = os.path.join(pwd,'Results_deg_12')
+
+_ = plot_r_given_m_relation(result_dir)
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def plot_r_given_m_relation(result_dir):
+    &#34;&#34;&#34;
+    Use to plot the conditional relationship of radius given mass.
+    \nINPUTS:
+        result_dir : Directory generated by the fitting function.
+            Example: result_dir = &#39;~/mrexo_working/trial_result&#39;
+
+    EXAMPLE:
+        
+        # Sample script to plot M-R data and fit.
+        from mrexo import plot_mr_relation
+        import os
+
+        pwd = &#39;~/mrexo_working/&#39;
+        result_dir = os.path.join(pwd,&#39;Results_deg_12&#39;)
+
+        _ = plot_r_given_m_relation(result_dir)
+
+    &#34;&#34;&#34;
+
+    input_location = os.path.join(result_dir, &#39;input&#39;)
+    output_location = os.path.join(result_dir, &#39;output&#39;)
+
+    t = Table.read(os.path.join(input_location, &#39;MR_inputs.csv&#39;))
+    Mass = t[&#39;pl_masse&#39;]
+    Mass_sigma = t[&#39;pl_masseerr1&#39;]
+    Radius = t[&#39;pl_rade&#39;]
+    Radius_sigma = t[&#39;pl_radeerr1&#39;]
+
+    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, &#39;Mass_bounds.txt&#39;))
+    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, &#39;Radius_bounds.txt&#39;))
+
+    R_points = np.loadtxt(os.path.join(output_location, &#39;R_points.txt&#39;))
+    M_points = np.loadtxt(os.path.join(output_location, &#39;M_points.txt&#39;))
+    R_cond_M = np.loadtxt(os.path.join(output_location, &#39;R_cond_M.txt&#39;))
+    R_cond_M_upper = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_upper.txt&#39;))
+    R_cond_M_lower = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_lower.txt&#39;))
+
+    weights_boot = np.loadtxt(os.path.join(output_location, &#39;weights_boot.txt&#39;))
+    R_cond_M_boot = np.loadtxt(os.path.join(output_location, &#39;R_cond_M_boot.txt&#39;))
+
+    n_boot = np.shape(weights_boot)[0]
+    deg_choose = int(np.sqrt(np.shape(weights_boot[1])))
+
+    rm_lower_boot, rm_upper_boot = mquantiles(R_cond_M_boot,prob=[0.16, 0.84],axis=0,alphap=1,betap=1).data
+
+    fig = plt.figure(figsize=(8.5,7))
+    plt.rc(&#39;axes&#39;, labelsize=20)    # fontsize of the x and y labels
+    plt.rc(&#39;xtick&#39;, labelsize=20)    # fontsize of the tick labels
+    plt.rc(&#39;ytick&#39;, labelsize=20)    # fontsize of the tick labels
+    ax1 = fig.add_subplot(1,1,1)
+
+    ax1.errorbar(y=Radius, x=Mass, yerr=Radius_sigma, xerr=Mass_sigma,fmt=&#39;k.&#39;,markersize=3, elinewidth=0.3)
+    ax1.plot(10**M_points, 10**R_cond_M,  color=&#39;midnightblue&#39;, lw=2) # Full dataset run
+    ax1.fill_between(10**M_points, 10**R_cond_M_lower, 10**R_cond_M_upper, alpha=0.3, color=&#39;cornflowerblue&#39;) # Full dataset run
+    ax1.fill_between(10**M_points, 10**rm_lower_boot, 10**rm_upper_boot, alpha=0.3, color=&#39;b&#39;) # Bootstrap result
+
+
+    rm_median_line = Line2D([0], [0], color=&#39;midnightblue&#39;, lw=2,label=r&#39;Median of f(r$|$m) from full dataset run&#39;)
+    rm_full = mpatches.Patch(color=&#39;cornflowerblue&#39;, alpha=0.3,  label=r&#39;Quantiles of f(r$|$m) from full dataset run  &#39;)
+    rm_boot = mpatches.Patch(color=&#39;b&#39;, alpha=0.3, label=r&#39;Quantiles of the median of the f(r$|$m) from bootstrap&#39;)
+    handles = [rm_median_line, rm_full, rm_boot]
+
+    plt.legend(handles=handles, prop={&#39;size&#39;: 15})
+    ax1.set_ylabel(&#39;Radius ($R_{\oplus}$)&#39;)
+    ax1.set_xlabel(&#39;Mass ($M_{\oplus}$)&#39;)
+
+    ax1.set_title(r&#39;f(r$|$m) with degree {}, and {} bootstraps&#39;.format(deg_choose, n_boot), pad=5)
+    ax1.set_yscale(&#39;log&#39;)
+    ax1.set_xscale(&#39;log&#39;)
+
+    plt.show(block=False)
+    plt.xlim(10**Mass_min, 10**Mass_max)
+    plt.ylim(10**Radius_min, 10**Radius_max)
+
+    return fig, ax1, handles</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mrexo" href="index.html">mrexo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="mrexo.plot.plot_joint_mr_distribution" href="#mrexo.plot.plot_joint_mr_distribution">plot_joint_mr_distribution</a></code></li>
+<li><code><a title="mrexo.plot.plot_m_given_r_relation" href="#mrexo.plot.plot_m_given_r_relation">plot_m_given_r_relation</a></code></li>
+<li><code><a title="mrexo.plot.plot_mle_weights" href="#mrexo.plot.plot_mle_weights">plot_mle_weights</a></code></li>
+<li><code><a title="mrexo.plot.plot_mr_and_rm" href="#mrexo.plot.plot_mr_and_rm">plot_mr_and_rm</a></code></li>
+<li><code><a title="mrexo.plot.plot_r_given_m_relation" href="#mrexo.plot.plot_r_given_m_relation">plot_r_given_m_relation</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.2" />
+<title>mrexo.cross_validate API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mrexo.cross_validate</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+import numpy as np
+import os
+from multiprocessing import Pool
+from .mle_utils import MLE_fit, calc_C_matrix
+
+def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
+                        degree_max=60, k_fold=10, degree_candidates=None,
+                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8, verbose=2):
+    &#34;&#34;&#34;
+    We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
+    To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
+    sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , k) and use the remaining k-1 subsets of data
+    to estimate the weights of the beta densities (w_s). Repeating this for each s-th subset Ds results in k estimated sets of weights (w_s).
+    We plug in each weight (w_s) along with the corresponding data, to obtain an estimated value for the log-likelihood.
+    This log likelihood is maximized to pick the optimum number of degrees.
+
+    Refer to Ning et al. 2018 Sec 2.2
+
+    \nINPUTS:
+        Mass: Numpy array of mass measurements. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Mass_bounds: Bounds for the mass. Log10
+        Radius_bounds: Bounds for the radius. Log10
+        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
+                    Default=None. If None, uses: n/np.log10(n), where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default=None.
+                If None, uses:
+                  - 10 folds for n &gt; 60, where n is the length of the Mass and Radius arrays.
+                  - Uses 5 folds otherwise.
+        degree_candidates: Integer vector containing degrees to run cross validation check for. Default is None.
+                    If None, defaults to 12 values between 5 and degree_max.
+        cores: Number of cores for parallel processing. This is used in the
+                bootstrap and the cross validation. Default=1.
+                To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
+        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                Default : 1e-8
+        cores: this program uses parallel computing for bootstrap. Default=1
+        save_path: Location of folder within results for auxiliary output files
+        verbose: Integer specifying verbosity for logging.
+        If 0: Will not log in the log file or print statements.
+        If 1: Will write log file only.
+        If 2: Will write log file and print statements.
+
+    OUTPUTS:
+
+        deg_choose - The optimum degree chosen by cross validation and MLE
+    &#34;&#34;&#34;
+    if degree_candidates == None:
+        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
+
+    n = len(Mass)
+
+    print(&#39;Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}&#39;.format(degree_max))
+    rand_gen = np.random.choice(n, n, replace = False)
+    row_size = np.int(np.floor(n/k_fold))
+    a = np.arange(n)
+    indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
+
+    ## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+    # Iterator input to parallelize
+    cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
+     abs_tol, save_path, Mass_bounds, Radius_bounds, verbose) for i in range(k_fold) for j in degree_candidates)
+
+    # Run cross validation in parallel
+    pool = Pool(processes = cores)
+    cv_result = list(pool.imap(_cv_parallelize,cv_input))
+
+    # Find the log-likelihood for each degree candidatea
+    likelihood_matrix = np.split(np.array(cv_result) , k_fold)
+    likelihood_per_degree = np.sum(likelihood_matrix, axis=0)
+
+    # Save likelihood file
+    np.savetxt(os.path.join(save_path,&#39;likelihood_per_degree.txt&#39;),np.array([degree_candidates,likelihood_per_degree]))
+    deg_choose = degree_candidates[np.argmax(likelihood_per_degree)]
+
+    print(&#39;Finished CV. Picked {} degrees by maximizing likelihood&#39;.format({deg_choose}))
+
+    return deg_choose
+
+
+def _cv_parallelize(cv_input):
+    &#34;&#34;&#34;
+    Serves as input finction for parallelizing.
+
+    \nINPUTS:
+
+        cv_input : Tuple with following components:
+            i_fold : i out of k-th fold being run.
+            test_degree: The degree candidate that is being tested.
+            indices_folded: The indices for the i-th fold.
+            n: Number of total data points.
+            rand_gen: List of randomized indices (sampled without replacement) used to extract i-th fold datapoints.
+            Mass: Numpy array of mass measurements. In LINEAR SCALE.
+            Radius: Numpy array of radius measurements. In LINEAR SCALE.
+            Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+            Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+            abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                    Default : 1e-8
+            save_path: Location of folder within results for auxiliary output files
+            Mass_bounds: Bounds for the mass. Log10
+            Radius_bounds: Bounds for the radius. Log10
+
+    OUTPUT:
+
+        like_pred : Predicted log likelihood for the i-th dataset and test_degree
+    &#34;&#34;&#34;
+    i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds, verbose = cv_input
+    split_interval = indices_folded[i_fold]
+
+    mask = np.repeat(False, n)
+    mask[rand_gen[split_interval]] = True
+    invert_mask = np.invert(mask)
+
+    # Test dataset - sth subset.
+    test_Radius = Radius[mask]
+    test_Mass = Mass[mask]
+    test_Radius_sigma = Radius_sigma[mask]
+    test_Mass_sigma = Mass_sigma[mask]
+
+    # Corresponding training dataset k-1 in size
+    train_Radius = Radius[invert_mask]
+    train_Mass = Mass[invert_mask]
+    train_Radius_sigma = Radius_sigma[invert_mask]
+    train_Mass_sigma = Mass_sigma[invert_mask]
+
+    with open(os.path.join(save_path,&#39;log_file.txt&#39;),&#39;a&#39;) as f:
+       f.write(&#39;Running cross validation for {} degree check and {} th-fold\n&#39;.format(test_degree, i_fold))
+
+    # Calculate the optimum weights using MLE for a given input test_degree
+    weights = MLE_fit(Mass=train_Mass, Radius=train_Radius, Mass_sigma=train_Mass_sigma, Radius_sigma=train_Radius_sigma, Mass_bounds=Mass_bounds,
+            Radius_bounds=Radius_bounds, deg=test_degree, abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
+
+    size_test = np.size(test_Radius)
+
+    # Specify the bounds
+    Mass_max = Mass_bounds[1]
+    Mass_min = Mass_bounds[0]
+    Radius_max = Radius_bounds[1]
+    Radius_min = Radius_bounds[0]
+
+    print(size_test, len(Mass_bounds))
+
+    # Integrate the product of the normal and beta distribution for mass and radius and then take the Kronecker product
+    C_pdf = calc_C_matrix(size_test, test_degree, test_Mass, test_Mass_sigma, Mass_max, Mass_min, test_Radius,
+                        test_Radius_sigma, Radius_max, Radius_min,  abs_tol, save_path, Log=True, verbose=verbose)
+
+    # Calculate the final loglikelihood
+    like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
+
+    return like_pred</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mrexo.cross_validate.run_cross_validation"><code class="name flex">
+<span>def <span class="ident">run_cross_validation</span></span>(<span>Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds, degree_max=60, k_fold=10, degree_candidates=None, cores=1, save_path='C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\mrexo', abs_tol=1e-08, verbose=2)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
+To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
+sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , k) and use the remaining k-1 subsets of data
+to estimate the weights of the beta densities (w_s). Repeating this for each s-th subset Ds results in k estimated sets of weights (w_s).
+We plug in each weight (w_s) along with the corresponding data, to obtain an estimated value for the log-likelihood.
+This log likelihood is maximized to pick the optimum number of degrees.</p>
+<pre><code>Refer to Ning et al. 2018 Sec 2.2
+</code></pre>
+<h2 id="inputs">INPUTS</h2>
+<pre><code>Mass: Numpy array of mass measurements. In LINEAR SCALE.
+Radius: Numpy array of radius measurements. In LINEAR SCALE.
+Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+Mass_bounds: Bounds for the mass. Log10
+Radius_bounds: Bounds for the radius. Log10
+degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
+            Default=None. If None, uses: n/np.log10(n), where n is the number of data points.
+k_fold: If using cross validation method, use k_fold (integer) number of folds. Default=None.
+        If None, uses:
+          - 10 folds for n &gt; 60, where n is the length of the Mass and Radius arrays.
+          - Uses 5 folds otherwise.
+degree_candidates: Integer vector containing degrees to run cross validation check for. Default is None.
+            If None, defaults to 12 values between 5 and degree_max.
+cores: Number of cores for parallel processing. This is used in the
+        bootstrap and the cross validation. Default=1.
+        To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
+abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+        Default : 1e-8
+cores: this program uses parallel computing for bootstrap. Default=1
+save_path: Location of folder within results for auxiliary output files
+verbose: Integer specifying verbosity for logging.
+If 0: Will not log in the log file or print statements.
+If 1: Will write log file only.
+If 2: Will write log file and print statements.
+</code></pre>
+<p>OUTPUTS:</p>
+<pre><code>deg_choose - The optimum degree chosen by cross validation and MLE
+</code></pre></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Radius_bounds,
+                        degree_max=60, k_fold=10, degree_candidates=None,
+                        cores=1, save_path=os.path.dirname(__file__), abs_tol=1e-8, verbose=2):
+    &#34;&#34;&#34;
+    We use k-fold cross validation to choose the optimal number of degrees from a set of input candidate degree values.
+    To conduct the k-fold cross validation, we separate the dataset randomly into k disjoint subsets with equal
+    sizes. Then we leave out the s-th subset, denoted by Ds (s = 1, . . . , k) and use the remaining k-1 subsets of data
+    to estimate the weights of the beta densities (w_s). Repeating this for each s-th subset Ds results in k estimated sets of weights (w_s).
+    We plug in each weight (w_s) along with the corresponding data, to obtain an estimated value for the log-likelihood.
+    This log likelihood is maximized to pick the optimum number of degrees.
+
+    Refer to Ning et al. 2018 Sec 2.2
+
+    \nINPUTS:
+        Mass: Numpy array of mass measurements. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Mass_bounds: Bounds for the mass. Log10
+        Radius_bounds: Bounds for the radius. Log10
+        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
+                    Default=None. If None, uses: n/np.log10(n), where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default=None.
+                If None, uses:
+                  - 10 folds for n &gt; 60, where n is the length of the Mass and Radius arrays.
+                  - Uses 5 folds otherwise.
+        degree_candidates: Integer vector containing degrees to run cross validation check for. Default is None.
+                    If None, defaults to 12 values between 5 and degree_max.
+        cores: Number of cores for parallel processing. This is used in the
+                bootstrap and the cross validation. Default=1.
+                To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
+        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+                Default : 1e-8
+        cores: this program uses parallel computing for bootstrap. Default=1
+        save_path: Location of folder within results for auxiliary output files
+        verbose: Integer specifying verbosity for logging.
+        If 0: Will not log in the log file or print statements.
+        If 1: Will write log file only.
+        If 2: Will write log file and print statements.
+
+    OUTPUTS:
+
+        deg_choose - The optimum degree chosen by cross validation and MLE
+    &#34;&#34;&#34;
+    if degree_candidates == None:
+        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
+
+    n = len(Mass)
+
+    print(&#39;Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}&#39;.format(degree_max))
+    rand_gen = np.random.choice(n, n, replace = False)
+    row_size = np.int(np.floor(n/k_fold))
+    a = np.arange(n)
+    indices_folded = [a[i*row_size:(i+1)*row_size] if i is not k_fold-1 else a[i*row_size:] for i in range(k_fold) ]
+
+    ## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+    # Iterator input to parallelize
+    cv_input = ((i,j, indices_folded,n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma,
+     abs_tol, save_path, Mass_bounds, Radius_bounds, verbose) for i in range(k_fold) for j in degree_candidates)
+
+    # Run cross validation in parallel
+    pool = Pool(processes = cores)
+    cv_result = list(pool.imap(_cv_parallelize,cv_input))
+
+    # Find the log-likelihood for each degree candidatea
+    likelihood_matrix = np.split(np.array(cv_result) , k_fold)
+    likelihood_per_degree = np.sum(likelihood_matrix, axis=0)
+
+    # Save likelihood file
+    np.savetxt(os.path.join(save_path,&#39;likelihood_per_degree.txt&#39;),np.array([degree_candidates,likelihood_per_degree]))
+    deg_choose = degree_candidates[np.argmax(likelihood_per_degree)]
+
+    print(&#39;Finished CV. Picked {} degrees by maximizing likelihood&#39;.format({deg_choose}))
+
+    return deg_choose</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mrexo" href="index.html">mrexo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="mrexo.cross_validate.run_cross_validation" href="#mrexo.cross_validate.run_cross_validation">run_cross_validation</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

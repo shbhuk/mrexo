@@ -7,7 +7,7 @@ import datetime
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
-from .utils import save_dictionary, _logging
+from .utils import _save_dictionary, _logging
 
 
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
@@ -17,98 +17,148 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     """
     Fit a mass and radius relationship using a non parametric approach with beta densities
 
-    INPUTS:
-        Mass: Numpy array of mass measurements. In LINEAR SCALE.
-        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
-        Radius: Numpy array of radius measurements. In LINEAR SCALE.
-        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
-        save_path: Folder name (+path) to save results in.
-                   Eg. save_path = '~/mrexo_working/trial_result' will create the 'trial_result' results folder in mrexo_working
-        Mass_min: Lower bound for mass. Default=None. If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))
-        Mass_max: Upper bound for mass. Default=None. If None, uses: np.log10(max(Mass + Mass_sigma))
-        Radius_min: Lower bound for radius. Default=None. If None, uses: max(np.log10(min(Radius - Radius_sigma)), -0.3)
-        Radius_max: Upper bound for radius. Default=None. If None, uses: np.log10(max(Radius + Radius_sigma))
+    \nINPUTS:
 
+        Mass:Numpy array of mass measurements. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncer-
+                    -tainty. In LINEAR SCALE.
+        Radius: Numpy array of radius measurements. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical 
+                    uncertainty. In LINEAR SCALE.
+        save_path: Folder name (+path) to save results in.
+                   Eg. save_path = '~/mrexo_working/trial_result' will create the 
+                   'trial_result' results folder in mrexo_working
+        Mass_min: Lower bound for mass. Default=None. 
+                  If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))
+        Mass_max: Upper bound for mass. Default=None.
+                  If None, uses: np.log10(max(Mass + Mass_sigma))
+        Radius_min: Lower bound for radius. Default=None.
+                  If None, uses: max(np.log10(min(Radius - Radius_sigma)), -0.3)
+        Radius_max: Upper bound for radius. Default=None. 
+                  If None, uses: np.log10(max(Radius + Radius_sigma))
         select_deg: The number of degrees for the beta densities.
-                            if select_deg= "cv": Use cross validation to find the optimal number of  degrees.
-                            if select_deg= "aic": Use AIC minimization to find the optimal number of degrees.
-                            if select_deg= "bic": Use BIC minimization to find the optimal number of degrees.
-                            if select_deg= INTEGER: Use that number and skip the
-                                             optimization process to find the number of degrees.
-                            NOTE: Use AIC or BIC optimization only for large (> 200) sample sizes.
-        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type: Integer.
-                    Default=None. If None, uses: n/np.log10(n), where n is the number of data points.
-        k_fold: If using cross validation method, use k_fold (integer) number of folds. Default=None.
-                If None, uses: 10 folds for n > 60, 5 folds otherwise. Eg. k_fold=12
-        num_boot: Number of bootstraps to perform. Default=100. num_boot must be greater than 1.
+                            if select_deg= "cv": Use cross validation to find the 
+                                optimal number of  degrees.
+                            if select_deg= "aic": Use AIC minimization to find the
+                                optimal number of degrees.
+                            if select_deg= "bic": Use BIC minimization to find the
+                                optimal number of degrees.
+                            if select_deg= Integer: Use that number and skip the
+                                optimization process to find the number of degrees.
+                            NOTE: Use AIC or BIC optimization only for 
+                                large (> 200) sample sizes.
+        degree_max: Maximum degree used for cross-validation/AIC/BIC. Type:Integer.
+                    Default=None. If None, uses: n/np.log10(n),
+                    where n is the number of data points.
+        k_fold: If using cross validation method, use k_fold (Integer) 
+                number of folds.
+                Default=None.
+                If None, uses: 10 folds for n > 60, 5 folds otherwise. 
+                Eg. k_fold=12
+        num_boot: Number of bootstraps to perform. Default=100. num_boot 
+                must be greater than 1.
         cores: Number of cores for parallel processing. This is used in the
-                bootstrap and the cross validation. Default=1.
-                To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
-        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+               bootstrap and the cross validation. Default=1.
+               To use all the cores in the CPU, 
+               cores=cpu_count() #from multiprocessing import cpu_count
+        abs_tol: Absolute tolerance to be used for the numerical integration
+                for product of normal and beta distribution.
                 Default : 1e-8
         verbose: Integer specifying verbosity for logging.
-                If 0: Will not log in the log file or print statements.
-                If 1: Will write log file only.
-                If 2: Will write log file and print statements.
+                    If 0: Will not log in the log file or print statements.
+                    If 1: Will write log file only.
+                    If 2: Will write log file and print statements.
 
     OUTPUTS:
-        initialfit_result : Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
+                
+        initialfit_result: Output dictionary from initial fitting without bootstrap 
+                            using Maximum Likelihood Estimation.
                             The keys in the dictionary are -
-                            'weights' : Weights for Beta densities from initial fitting w/o bootstrap.
-                            'aic' : Akaike Information Criterion from initial fitting w/o bootstrap.
-                            'bic' : Bayesian Information Criterion from initial fitting w/o bootstrap.
-                            'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
-                            'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
-                            'M_cond_R' : Conditional distribution of mass given radius from initial fitting w/o bootstrap.
-                            'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from initial fitting w/o bootstrap.
-                            'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from initial fitting w/o bootstrap.
-                            'R_cond_M' : Conditional distribution of radius given mass from initial fitting w/o bootstrap.
-                            'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
-                            'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from initial fitting w/o bootstrap.
+                            'weights' : Weights for Beta densities from initial
+                                fitting w/o bootstrap.
+                            'aic' : Akaike Information Criterion from initial 
+                                fitting w/o bootstrap.
+                            'bic' : Bayesian Information Criterion from initial 
+                                fitting w/o bootstrap.
+                            'M_points' : Sequence of mass points for initial 
+                                fitting w/o bootstrap.
+                            'R_points' : Sequence of radius points for initial 
+                                fitting w/o bootstrap.
+                            'M_cond_R' : Conditional distribution of mass given
+                                 radius from initial fitting w/o bootstrap.
+                            'M_cond_R_var' : Variance for the Conditional 
+                                distribution of mass given radius from initial 
+                                fitting w/o bootstrap.
+                            'M_cond_R_quantile' : Quantiles for the Conditional
+                                 distribution of mass given radius from initial
+                                 fitting w/o bootstrap.
+                            'R_cond_M' : Conditional distribution of radius given
+                                 mass from initial fitting w/o bootstrap.
+                            'R_cond_M_var' : Variance for the Conditional 
+                                distribution of radius given mass from initial
+                                fitting w/o bootstrap.
+                            'R_cond_M_quantile' : Quantiles for the Conditional
+                                 distribution of radius given mass from initial
+                                 fitting w/o bootstrap.
                             'joint_dist' : Joint distribution of mass AND radius.
 
 
         if num_boot > 2:
-        bootstrap_results : Output dictionary from bootstrap run using Maximum Likelihood Estimation.
+        bootstrap_results: Output dictionary from bootstrap run using Maximum 
+                            Likelihood Estimation.
                             'weights' : Weights for Beta densities from bootstrap run.
                             'aic' : Akaike Information Criterion from bootstrap run.
                             'bic' : Bayesian Information Criterion from bootstrap run.
-                            'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
-                            'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
-                            'M_cond_R' : Conditional distribution of mass given radius from bootstrap run.
-                            'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from bootstrap run.
-                            'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from bootstrap run.
-                            'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
-                            'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
-                            'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
+                            'M_points' : Sequence of mass points for initial 
+                                fitting w/o bootstrap.
+                            'R_points' : Sequence of radius points for initial
+                                 fitting w/o bootstrap.
+                            'M_cond_R' : Conditional distribution of mass given
+                                 radius from bootstrap run.
+                            'M_cond_R_var' : Variance for the Conditional
+                                 distribution of mass given radius from bootstrap run.
+                            'M_cond_R_quantile' : Quantiles for the Conditional
+                                 distribution of mass given radius from bootstrap run.
+                            'R_cond_M' : Conditional distribution of radius given 
+                                mass from bootstrap run.
+                            'R_cond_M_var' : Variance for the Conditional 
+                                distribution of radius given mass from bootstrap run.
+                            'R_cond_M_quantile' : Quantiles for the Conditional
+                                 distribution of radius given mass from bootstrap run.
 
 
-        EXAMPLE:
-            # Example to fit a Mass Radius relationship with 2 CPU cores, using 12 degrees, and 50 bootstraps.
-            import os
-            from astropy.table import Table
-            import numpy as np
-            from mrexo import fit_mr_relation
+    EXAMPLE:
+        
+        # Example to fit a Mass Radius relationship with 2 CPU cores, 
+            using 12 degrees, and 50 bootstraps.
 
-            pwd = '~/mrexo_working/'
+        import os
+        from astropy.table import Table
+        import numpy as np
+        from mrexo import fit_mr_relation
 
-            t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
+        pwd = '~/mrexo_working/'
 
-            # Symmetrical errorbars
-            Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
-            Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
+        t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 
-            # In Earth units
-            Mass = np.array(t['pl_masse'])
-            Radius = np.array(t['pl_rade'])
+        # Symmetrical errorbars
+        Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
+        Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 
-            # Directory to store results in
-            result_dir = os.path.join(pwd,'Results_deg_12')
+        # In Earth units
+        Mass = np.array(t['pl_masse'])
+        Radius = np.array(t['pl_rade'])
 
-            initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, Mass_sigma=Mass_sigma,
-                                                    Radius=Radius, Radius_sigma=Radius_sigma,
-                                                    save_path=result_dir, select_deg=12,
-                                                    num_boot=50, cores=2)
+        # Directory to store results in
+        result_dir = os.path.join(pwd,'Results_deg_12')
+
+        initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, 
+                                                Mass_sigma=Mass_sigma,
+                                                Radius=Radius,
+                                                Radius_sigma=Radius_sigma,
+                                                save_path=result_dir, 
+                                                select_deg=12,
+                                                num_boot=50, cores=2)
     """
 
     starttime = datetime.datetime.now()
@@ -239,7 +289,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-    save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
+    _save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
     ###########################################################
     ## Step 3: Run Bootstrap
@@ -260,9 +310,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
         # Parallelize the bootstraps
         pool = Pool(processes=cores)
-        bootstrap_results = list(pool.imap(bootsample_mle,inputs))
+        bootstrap_results = list(pool.imap(_bootsample_mle,inputs))
 
-        save_dictionary(dictionary=bootstrap_results, output_location=output_location, bootstrap=True)
+        _save_dictionary(dictionary=bootstrap_results, output_location=output_location, bootstrap=True)
 
 
         message = 'Finished bootstrap at {}'.format(datetime.datetime.now())
@@ -279,10 +329,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         return initialfit_result, bootstrap_results
 
 
-def bootsample_mle(inputs):
+def _bootsample_mle(inputs):
     """
     To bootstrap the data and run MLE. Serves as input to the parallelizing function.
-    INPUTS:
+    \nINPUTS:
         inputs : Variable required for mapping for parallel processing.
         inputs is a tuple with the following components :
                     Mass: Numpy array of mass measurements. In LINEAR SCALE.
@@ -297,6 +347,7 @@ def bootsample_mle(inputs):
                     save_path: Folder name (+path) to save results in. Eg. save_path='~/mrexo_working/trial_result'
                     verbose: Keyword specifying verbosity
     OUTPUTS:
+
         MR_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -
                 'weights' : Weights for Beta densities from bootstrap run.
                 'aic' : Akaike Information Criterion from bootstrap run.

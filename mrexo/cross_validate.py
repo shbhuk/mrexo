@@ -17,7 +17,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
     Refer to Ning et al. 2018 Sec 2.2
 
-    INPUTS:
+    \nINPUTS:
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
@@ -45,6 +45,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
         If 2: Will write log file and print statements.
 
     OUTPUTS:
+
         deg_choose - The optimum degree chosen by cross validation and MLE
     """
     if degree_candidates == None:
@@ -65,7 +66,7 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
 
     # Run cross validation in parallel
     pool = Pool(processes = cores)
-    cv_result = list(pool.imap(cv_parallelize,cv_input))
+    cv_result = list(pool.imap(_cv_parallelize,cv_input))
 
     # Find the log-likelihood for each degree candidatea
     likelihood_matrix = np.split(np.array(cv_result) , k_fold)
@@ -80,11 +81,12 @@ def run_cross_validation(Mass, Radius, Mass_sigma, Radius_sigma, Mass_bounds, Ra
     return deg_choose
 
 
-def cv_parallelize(cv_input):
+def _cv_parallelize(cv_input):
     """
     Serves as input finction for parallelizing.
 
-    INPUTS:
+    \nINPUTS:
+
         cv_input : Tuple with following components:
             i_fold : i out of k-th fold being run.
             test_degree: The degree candidate that is being tested.
@@ -102,6 +104,7 @@ def cv_parallelize(cv_input):
             Radius_bounds: Bounds for the radius. Log10
 
     OUTPUT:
+
         like_pred : Predicted log likelihood for the i-th dataset and test_degree
     """
     i_fold, test_degree, indices_folded, n, rand_gen, Mass, Radius, Radius_sigma, Mass_sigma, abs_tol, save_path, Mass_bounds, Radius_bounds, verbose = cv_input

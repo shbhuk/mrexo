@@ -7,7 +7,7 @@ if sys.version_info.major==3:
 else:
     from functools32 import lru_cache
 
-def save_dictionary(dictionary, output_location, bootstrap=False):
+def _save_dictionary(dictionary, output_location, bootstrap=False):
     """
     Save the keys in the dictionary as separate data .txt files.
 
@@ -98,7 +98,7 @@ def save_dictionary(dictionary, output_location, bootstrap=False):
 
 
 @lru_cache(maxsize=200)
-def load_lookup_table(f_path):
+def _load_lookup_table(f_path):
     """
     Load the lookup table interpolate object and pass the object.
     INPUT:

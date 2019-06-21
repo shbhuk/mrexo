@@ -25,49 +25,65 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
 
     INPUT:
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
-        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Mass_sigma: Numpy array of mass uncertainties.
+            Assumes symmetrical uncertainty. In LINEAR SCALE.
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
-        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+        Radius_sigma: Numpy array of radius uncertainties.
+            Assumes symmetrical uncertainty. In LINEAR SCALE.
         Mass_bounds: Bounds for the mass. Log10
         Radius_bounds: Bounds for the radius. Log10
         deg: Degree used for beta densities polynomials. Integer value.
-        Log: If True, data is transformed into Log scale. Default=True, since the
-            fitting function always converts data to log scale.
-        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-                Default : 1e-8
-        output_weights_only: If True, only output the estimated weights, else will also output dictionary with keys shown below.
-        save_path: Location of folder within results for auxiliary output files.
-        calc_joint_dist: If True, will calculate and output the joint distribution of mass and radius.
+        Log: If True, data is transformed into Log scale. Default=True, 
+            since the fitting function always converts data to log scale.
+        abs_tol: Absolute tolerance to be used for the numerical integration
+            for product of normal and beta distribution. Default : 1e-8
+        output_weights_only: If True, only output the estimated weights, 
+            else will also output dictionary with keys shown below.
+        save_path: Location of folder for auxiliary output files.
+        calc_joint_dist: If True, will calculate and output the
+            joint distribution of mass and radius.
         verbose: Integer specifying verbosity for logging.
                 If 0: Will not log in the log file or print statements.
                 If 1: Will write log file only.
                 If 2: Will write log file and print statements.
 
-    OUTPUT:
+    \nOUTPUT:
+
         If output_weights_only == True,
         w_hat : Weights for the beta densities.
 
         If output_weights_only == False,
-        output: Output dictionary from fitting using Maximum Likelihood Estimation.
+        output: Output dictionary from fitting using 
+                Maximum Likelihood Estimation.
                 The keys in the dictionary are:
                 'weights' : Weights for beta densities.
                 'aic' : Akaike Information Criterion.
                 'bic' : Bayesian Information Criterion.
-                'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
-                'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
+                'M_points' : Sequence of mass points for 
+                    initial fitting w/o bootstrap.
+                'R_points' : Sequence of radius points for
+                    initial fitting w/o bootstrap.
                 'M_cond_R' : Conditional distribution of mass given radius.
-                'M_cond_R_var' : Variance for the Conditional distribution of mass given radius.
-                'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius.
+                'M_cond_R_var' : Variance for the Conditional distribution 
+                    of mass given radius.
+                'M_cond_R_quantile' : Quantiles for the Conditional distribution 
+                    of mass given radius.
                 'R_cond_M' : Conditional distribution of radius given mass.
-                'R_cond_M_var' : Variance for the Conditional distribution of radius given mass.
-                'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass.
+                'R_cond_M_var' : Variance for the Conditional distribution
+                    of radius given mass.
+                'R_cond_M_quantile' : Quantiles for the Conditional distribution 
+                    of radius given mass.
 
 
                 if calc_joint_dist == True:
                 'joint_dist' : Joint distribution of mass AND radius.
     EXAMPLE:
-            result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location)
+
+            result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, 
+                            Radius_sigma=Radius_sigma,
+                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, 
+                            deg=int(deg_choose), abs_tol=abs_tol,
+                            save_path=aux_output_location)
     '''
     print('New MLE')
     starttime = datetime.datetime.now()
@@ -193,7 +209,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 
     Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
 
-    INPUTS:
+    \nINPUTS:
         n: Number of data points
         deg: Degree used for beta densities
         Mass: Numpy array of mass measurements. In LINEAR SCALE.
@@ -202,7 +218,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
         Radius_max, Radius_min : Maximum and minimum value for radius. Log10
-        abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
+        abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                 Default : 1e-8
         save_path: Location of folder within results for auxiliary output files
         Log: If True, data is transformed into Log scale. Default=True, since
@@ -213,6 +229,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
             If 2: Will write log file and print statements.
 
     OUTPUTS:
+
         C_pdf : Matrix explained in Ning et al. Equation 8. Product of (integrals of (product of normal and beta
                 distributions)) for mass and radius.
     '''
@@ -230,8 +247,8 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
 
     # Loop across each data point.
     for i in range(0,n):
-        M_indv_pdf[i,:] = find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol=abs_tol, Log=Log)
-        R_indv_pdf[i,:] = find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol=abs_tol, Log=Log)
+        M_indv_pdf[i,:] = _find_indv_pdf(M[i], deg, deg_vec, Mass_max, Mass_min, Mass_sigma[i], abs_tol=abs_tol, Log=Log)
+        R_indv_pdf[i,:] = _find_indv_pdf(R[i], deg, deg_vec, Radius_max, Radius_min, Radius_sigma[i], abs_tol=abs_tol, Log=Log)
         # print(M[i],Mass_sigma[i], R[i], Radius_sigma[i], Mass_max, Mass_min, Radius_max, Radius_min, np.sum(R_indv_pdf[i,:]))
 
         # Put M.indv.pdf and R.indv.pdf into a big matrix
@@ -245,7 +262,7 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     return C_pdf
 
 
-def norm_pdf(x, loc, scale):
+def _norm_pdf(x, loc, scale):
     '''
     Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
     Runs much quicker without the generic function handling.
@@ -253,16 +270,16 @@ def norm_pdf(x, loc, scale):
     y = (x - loc)/scale
     return np.exp(-y*y/2)/(np.sqrt(2*np.pi))/scale
 
-def int_gamma(a):
+def _int_gamma(a):
     return scipy.math.factorial(a-1)
 
 
-def beta_pdf(x,a,b):
-    f = (int_gamma(a+b) * x**(a-1)*(1-x)**(b-1))/(int_gamma(a)*int_gamma(b))
+def _beta_pdf(x,a,b):
+    f = (_int_gamma(a+b) * x**(a-1)*(1-x)**(b-1))/(_int_gamma(a)*_int_gamma(b))
     return f
 
 
-def pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
+def _pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
     '''
     Product of normal and beta distribution
 
@@ -270,9 +287,9 @@ def pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
     '''
 
     if Log == True:
-        norm_beta = norm_pdf(x_obs, loc=10**x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = _norm_pdf(x_obs, loc=10**x, scale=x_std) * _beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     else:
-        norm_beta = norm_pdf(x_obs, loc=x, scale=x_std) * beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = _norm_pdf(x_obs, loc=x, scale=x_std) * _beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
     return norm_beta
 
 def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
@@ -287,12 +304,12 @@ def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs
     shape2 = deg - degree + 1
     Log = Log
 
-    integration_product = quad(pdfnorm_beta, a=x_min, b=x_max,
+    integration_product = quad(_pdfnorm_beta, a=x_min, b=x_max,
                           args=(x_obs, x_std, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
     return integration_product[0]
 
 
-def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
+def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
     '''
     Find the individual probability density Function for a variable.
     When the data has uncertainty, the joint distribution is modelled using a
@@ -303,13 +320,13 @@ def find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
 
     if x_std == None:
         x_std = (x - x_min)/(x_max - x_min)
-        x_beta_indv = np.array([beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
+        x_beta_indv = np.array([_beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else:
         x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
     return x_beta_indv
 
 
-def marginal_density(x, x_max, x_min, deg, w_hat):
+def _marginal_density(x, x_max, x_min, deg, w_hat):
     '''
     Calculate the marginal density
 
@@ -319,10 +336,10 @@ def marginal_density(x, x_max, x_min, deg, w_hat):
         x = np.array(x)
 
     deg_vec = np.arange(1,deg+1)
-    x_beta_indv = find_indv_pdf(x,deg, deg_vec, x_max, x_min)
-    x_beta_pdf = np.kron(x_beta_indv, np.repeat(1,deg))
+    x_beta_indv = _find_indv_pdf(x,deg, deg_vec, x_max, x_min)
+    x__beta_pdf = np.kron(x_beta_indv, np.repeat(1,deg))
 
-    marg_x = np.sum(w_hat * x_beta_pdf)
+    marg_x = np.sum(w_hat * x__beta_pdf)
 
     return marg_x
 
@@ -335,11 +352,11 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
     if type(y) == list:
         y = np.array(y)
 
-    y_beta_indv = find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
-    y_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),y_beta_indv)
+    y_beta_indv = _find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
+    y__beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),y_beta_indv)
 
     # Equation 10b Ning et al 2018
-    denominator = np.sum(w_hat * y_beta_pdf)
+    denominator = np.sum(w_hat * y__beta_pdf)
 
     if denominator == 0:
         denominator = np.nan
@@ -394,8 +411,8 @@ def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mas
 
     for i in range(len(R_points)):
         for j in range(len(M_points)):
-                    r_beta_indv = find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=None, abs_tol=abs_tol, Log=False)
-                    m_beta_indv = find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=None, abs_tol=abs_tol, Log=False)
+                    r_beta_indv = _find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=None, abs_tol=abs_tol, Log=False)
+                    m_beta_indv = _find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=None, abs_tol=abs_tol, Log=False)
 
                     intermediate = np.matmul(np.reshape(weights,(deg,deg)),np.matrix(r_beta_indv).T)
                     joint[i,j] = np.matmul(np.matrix(m_beta_indv), intermediate)
