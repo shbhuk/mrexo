@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.6.2" />
 <title>mrexo API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Some introductory text
+…" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,9 +21,65 @@
 <h1 class="title">Module <code>mrexo</code></h1>
 </header>
 <section id="section-intro">
+<p>Some introductory text &hellip;</p>
+<h1 id="mrexo">MRExo</h1>
+<p>Non parametric exoplanet mass radius relationship</p>
+<p>We translate Ning et al. (2018)’s <code>R</code> script[1] into a publicly available <code>Python</code>
+package called <code>MRExo</code>[2]. </p>
+<p><code>MRExo</code> offers tools for fitting the M-R relationship to a given data
+set.
+Along with the <code>MRExo</code> installation, the fit
+results from the M dwarf sample dataset from Kanodia et al. (2019) and the Kepler
+exoplanet sample from
+Ning et al. (2018) are included. The code also includes predicting functions (M-&gt;R, and R-&gt;M), and plotting functions to generate the plots used in the below preprint.</p>
+<p>For detailed description of the code please see our preprint manuscript -
+<a href="http://adsabs.harvard.edu/abs/2019arXiv190300042K">http://adsabs.harvard.edu/abs/2019arXiv190300042K</a></p>
+<p>We are waiting for the referee review, and are also working on a detailed tutorial for using this package. After that will also upload the package on to PyPI for easy <code>pip</code> install. In the meanwhile, feel free to email me or raise an issue if you have any issues with running this code. </p>
+<ol>
+<li>
+<p><a href="https://github.com/Bo-Ning/Predicting-exoplanet-mass-and-radius-relationship">https://github.com/Bo-Ning/Predicting-exoplanet-mass-and-radius-relationship</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/shbhuk/mrexo">https://github.com/shbhuk/mrexo</a></p>
+</li>
+</ol>
+<h3 id="steps-to-install-from-github">Steps to Install from GitHub</h3>
+<p>Linux/Unix systems - </p>
+<ol>
+<li>In the terminal -
+<code>pip install git+&lt;https://github.com/shbhuk/mrexo.git&gt; -U</code></li>
+</ol>
+<p>OR
+1. In the terminal -
+<code>pip install git+ssh://git@github.com/shbhuk/mrexo.git -U</code></p>
+<p>OR </p>
+<ol>
+<li>
+<p>In the terminal -
+<code>git clone &lt;https://github.com/shbhuk/mrexo</code>&gt;</p>
+</li>
+<li>
+<p>In the repository directory
+<code>python setup.py install</code></p>
+</li>
+</ol>
+<p>The -U is to upgrade the dependencies.</p>
+<p>Windows -
+1. Install Git - <a href="https://git-for-windows.github.io/">Git for Windows</a>
+2. Install pip - <a href="https://pip.pypa.io/en/stable/installing/">pip for Windows</a>
+3. In cmd or git cmd -
+<code>pip install git+&lt;https://github.com/shbhuk/mrexo.git&gt; -U</code></p>
+<p>Guidelines to cite this package can be found here.</p>
+<p>To sign up for updates, please join the Google Group linked here - <a href="https://groups.google.com/forum/#!forum/mrexo">https://groups.google.com/forum/#!forum/mrexo</a></p>
 <details class="source">
 <summary>Source code</summary>
-<pre><code class="python">from .plot import plot_m_given_r_relation, plot_r_given_m_relation,plot_mr_and_rm, plot_joint_mr_distribution, plot_mle_weights
+<pre><code class="python">&#34;&#34;&#34;
+Some introductory text ...
+
+.. include:: ../README.md
+&#34;&#34;&#34;
+
+from .plot import plot_m_given_r_relation, plot_r_given_m_relation,plot_mr_and_rm, plot_joint_mr_distribution, plot_mle_weights
 from .predict import predict_from_measurement, mass_100_percent_iron_planet,generate_lookup_table, radius_100_percent_iron_planet
 from .fit import fit_mr_relation
 from .mle_utils import MLE_fit, cond_density_quantile
@@ -71,7 +128,12 @@ __version__ = &#39;0.1&#39;</code></pre>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#mrexo">MRExo</a><ul>
+<li><a href="#steps-to-install-from-github">Steps to Install from GitHub</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
