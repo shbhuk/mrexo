@@ -1,8 +1,7 @@
 """
-Some introductory text ...
-
 .. include:: ../README.md
 .. include:: ../docs/dependencies.md
+.. include:: ../docs/sample_usage.md
 
 """
 

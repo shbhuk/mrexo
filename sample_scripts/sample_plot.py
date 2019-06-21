@@ -11,28 +11,20 @@ try :
 except NameError:
     pwd = ''
 
-mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
-mdwarf_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\M_dwarfs_20181214'
+mdwarf_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
 kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 
-datadir = r"C:/Users/shbhu/Documents/Git/mrexo/use_me"
-mdwarf_new_control = os.path.join(datadir,'M_dwarfs_control17')
-mdwarf_trappist17 = os.path.join(datadir,'M_dwarfs_wo_Trappist_degree17')
-mdwarf_trappistCV = os.path.join(datadir,'M_dwarfs_wo_Trappist_degreeCV')
-# kepler_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
+result_dir = mdwarf_result
 
-
-# result_dir = mdwarf_trappistCV
-result_dir = mdwarf_trappistCV
-
+# Plot the conditional distribution f(m|r)
 ax = plot_m_given_r_relation(result_dir)
-# ax = plot_r_given_m_relation(result_dir)
-# ax = plot_mr_and_rm(result_dir)
-# ax = plot_joint_mr_distribution(result_dir)
 
-plt.title('M dwarf w/o TRAPPIST-1, 11 degrees', fontsize = 20, pad = 10)
+# Plot the conditional distribution f(r|m)
+ax = plot_r_given_m_relation(result_dir)
 
-plt.xlim(10**-0.28,19)
-plt.ylim(0.02,255)
+# Plot both the conditional distributions f(m|r) and f(r|m), similar to Kanodia 2019, Fig 3.
+ax = plot_mr_and_rm(result_dir)
 
-plt.show()
+# Plot the joint distribution f(m,r)
+ax = plot_joint_mr_distribution(result_dir)
+
