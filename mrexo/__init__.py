@@ -2,6 +2,8 @@
 Some introductory text ...
 
 .. include:: ../README.md
+.. include:: ../docs/dependencies.md
+
 """
 
 from .plot import plot_m_given_r_relation, plot_r_given_m_relation,plot_mr_and_rm, plot_joint_mr_distribution, plot_mle_weights
