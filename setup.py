@@ -8,8 +8,9 @@ def readme():
 
 setup(name='mrexo',
       version='0.1',
-      description='Non parametric mass radius relationship for exoplanets',
+      description='Nonparametric mass radius relationship for exoplanets',
       long_description=readme(),
+      long_description_content_type="text/markdown",
       url='https://github.com/shbhuk/mrexo',
       author='Shubham Kanodia',
       author_email='shbhuk@gmail.com',
