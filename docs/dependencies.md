@@ -5,5 +5,6 @@
 2. Numpy 
 3. SciPy
 4. Matplotlib
+5. Functools32 if running Python 2.7, else Functools
 
 ==================

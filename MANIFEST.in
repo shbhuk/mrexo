@@ -1,0 +1,5 @@
+graft mrexo/datasets/*
+graft sample_scripts/*
+include sample_scripts/*.pbs
+include sample_scripts/*.csv
+include sample_scripts/*.py

@@ -12,4 +12,4 @@ from .mle_utils import MLE_fit, cond_density_quantile
 from .utils import _save_dictionary, _load_lookup_table, _logging
 from .cross_validate import run_cross_validation
 
-__version__ = '0.1.1'
+__version__ = '0.1.4'

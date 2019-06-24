@@ -23,7 +23,7 @@ MRExo …" />
 <section id="section-intro">
 <p>﻿</p>
 <h1 id="mrexo">MRExo</h1>
-<p><a href="https://shbhuk.github.io/mrexo/">MRExo</a> is Python script for non-parametric fitting and analysis of the Mass-Radius (M-R) relationship for exoplanets.</p>
+<p><a href="https://shbhuk.github.io/mrexo/">MRExo</a> is a Python script for non-parametric fitting and analysis of the Mass-Radius (M-R) relationship for exoplanets.</p>
 <p>We translate <a href="https://iopscience.iop.org/article/10.3847/1538-4357/aaeb31">Ning et al. (2018)</a>’s <code>R</code> script into a publicly available <code>Python</code> package called <a href="http://bit.ly/mrexo_paper"><code>MRExo</code></a>. It offers tools for fitting the M-R relationship to a given data
 set.
 Along with the <code>MRExo</code> installation, the fit results from the M dwarf sample dataset from Kanodia et al. (2019) and the Kepler
@@ -92,6 +92,7 @@ The code also includes <strong>predicting functions</strong> (M-&gt;R, and R-&gt
 <li>Numpy </li>
 <li>SciPy</li>
 <li>Matplotlib</li>
+<li>Functools32 if running Python 2.7, else Functools</li>
 </ol>
 <p>==================
 ﻿</p>
@@ -235,7 +236,7 @@ from .mle_utils import MLE_fit, cond_density_quantile
 from .utils import _save_dictionary, _load_lookup_table, _logging
 from .cross_validate import run_cross_validation
 
-__version__ = &#39;0.1&#39;</code></pre>
+__version__ = &#39;0.1.2&#39;</code></pre>
 </details>
 </section>
 <section>
