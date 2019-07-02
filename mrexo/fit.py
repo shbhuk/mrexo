@@ -323,7 +323,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print(endtime - starttime)
 
 
-        message = 'Ended run at {}\n'.format(endtime)
+        message = 'Ended run at {}\n++++++++++++++++++++++++++++++++++++++++++\n'.format(endtime)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
         return initialfit_result, bootstrap_results
