@@ -163,6 +163,7 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
     starttime = datetime.datetime.now()
 
+
     print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
 
     # Create subdirectories for results
@@ -178,6 +179,17 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         os.mkdir(aux_output_location)
     if not os.path.exists(input_location):
         os.mkdir(input_location)
+
+    message = """	
+	___  _________ _______   _______ 
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/ 
+                                  
+    """
+    _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -323,8 +335,20 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print(endtime - starttime)
 
 
-        message = 'Ended run at {}\n++++++++++++++++++++++++++++++++++++++++++\n'.format(endtime)
+        message = 'Ended run at {}'.format(endtime)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+
+        message = """	
+	 ___  _ _  ___   ___  _  _  __  
+	|_ _|| U || __| | __|| \| ||  \ 
+	 | | |   || _|  | _| | \\ || o )
+	 |_| |_n_||___| |___||_|\_||__/ 
+        """
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+
+        
 
         return initialfit_result, bootstrap_results
 
