@@ -1,5 +1,8 @@
 ﻿
-# MRExo 
+# MRExo
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3306969.svg)](https://doi.org/10.5281/zenodo.3306969)
+
 
 [MRExo](https://shbhuk.github.io/mrexo/) is a Python script for non-parametric fitting and analysis of the Mass-Radius (M-R) relationship for exoplanets.
 
