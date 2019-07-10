@@ -152,10 +152,10 @@ def _logging(message, filepath, verbose, append=True):
 
     if verbose==1:
         with open(os.path.join(filepath,&#39;log_file.txt&#39;),action) as f:
-            f.write(&#39;Finished Integration at {}\n&#39;.format(message))
+            f.write(&#39;Using core {}\n&#39;.format(message))
     elif verbose==2:
         with open(os.path.join(filepath,&#39;log_file.txt&#39;),action) as f:
-            f.write(&#39;Finished Integration at {}\n&#39;.format(message))
+            f.write(&#39;Using core {}\n&#39;.format(message))
         print(message)
 
     return 1</code></pre>
