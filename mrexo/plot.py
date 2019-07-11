@@ -326,7 +326,7 @@ def plot_joint_mr_distribution(result_dir):
     ax1.set_xticklabels(x_tick_labels, size = 18)
 
     y_ticks = ax1.get_yticks().tolist()
-    y_tick_labels = [10**i for i in y_ticks]
+    y_tick_labels = [np.round(10**i,2) for i in y_ticks]
     ax1.set_yticklabels(y_tick_labels, size = 18)
 
 
