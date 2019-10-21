@@ -262,11 +262,11 @@ def calc_C_matrix(n, deg, M, Mass_sigma, Mass_max, Mass_min, R, Radius_sigma, Ra
     return C_pdf
 
 
-def _norm_pdf(x, loc, scale):
+def _norm_pdf(a, loc, scale):
     '''
     Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
     Runs much quicker without the generic function handling.
-    '''
+    CHECK'''
     y = (x - loc)/scale
     return np.exp(-y*y/2)/(np.sqrt(2*np.pi))/scale
 
@@ -279,64 +279,65 @@ def _beta_pdf(x,a,b):
     return f
 
 
-def _pdfnorm_beta(x, x_obs, x_std, x_max, x_min, shape1, shape2, Log=True):
+def _pdfnorm_beta(a, a_obs, x_std, a_max, a_min, shape1, shape2, Log=True):
     '''
     Product of normal and beta distribution
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-    '''
+    CHECK'''
 
     if Log == True:
-        norm_beta = _norm_pdf(x_obs, loc=10**x, scale=x_std) * _beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = _norm_pdf(a_obs, loc=10**a, scale=x_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
     else:
-        norm_beta = _norm_pdf(x_obs, loc=x, scale=x_std) * _beta_pdf((x - x_min)/(x_max - x_min), a=shape1, b=shape2)/(x_max - x_min)
+        norm_beta = _norm_pdf(a_obs, loc=a, scale=x_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
     return norm_beta
 
-def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs_tol=1e-8):
+def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
     '''
     Integrate the product of the normal and beta distribution.
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-    '''
+    CHECK'''
     x_obs = data
     x_std = data_std
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
 
-    integration_product = quad(_pdfnorm_beta, a=x_min, b=x_max,
-                          args=(x_obs, x_std, x_max, x_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+    integration_product = quad(_pdfnorm_beta, a=a_min, b=a_max,
+                          args=(x_obs, x_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
     return integration_product[0]
 
 
-def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
+def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=None, abs_tol=1e-8, Log=True):
     '''
     Find the individual probability density Function for a variable.
-    When the data has uncertainty, the joint distribution is modelled using a
+    If the data has uncertainty, the joint distribution is modelled using a
     convolution of beta and normal distributions.
 
-    Refer to Ning et al. 2018 Sec 2.2, Eq 7 & 8.
-    '''
+    Refer to Ning et al. 2018 Sec 2.2, Eq 8.
+    CHECK'''
 
-    if x_std == None:
-        x_std = (x - x_min)/(x_max - x_min)
-        x_beta_indv = np.array([_beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
+
+    if a_std == None:
+        a_std = (a - a_min)/(a_max - a_min)
+        a_beta_indv = np.array([_beta_pdf(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
     else:
-        x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
-    return x_beta_indv
+        a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+    return a_beta_indv
 
 
-def _marginal_density(x, x_max, x_min, deg, w_hat):
+def _marginal_density(a, a_max, a_min, deg, w_hat):
     '''
     Calculate the marginal density
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 10
     '''
-    if type(x) == list:
-        x = np.array(x)
+    if type(a) == list:
+        a = np.array(a)
 
     deg_vec = np.arange(1,deg+1)
-    x_beta_indv = _find_indv_pdf(x,deg, deg_vec, x_max, x_min)
+    x_beta_indv = _find_indv_pdf(a,deg, deg_vec, a_max, a_min)
     x__beta_pdf = np.kron(x_beta_indv, np.repeat(1,deg))
 
     marg_x = np.sum(w_hat * x__beta_pdf)
@@ -352,11 +353,11 @@ def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_
     if type(y) == list:
         y = np.array(y)
 
-    y_beta_indv = _find_indv_pdf(x=y, deg=deg, deg_vec=deg_vec, x_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
-    y__beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),y_beta_indv)
+    y_beta_indv = _find_indv_pdf(a=y, deg=deg, deg_vec=deg_vec, a_max=y_max, x_min=y_min, x_std=y_std, abs_tol=abs_tol, Log=False)
+    y_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),y_beta_indv)
 
     # Equation 10b Ning et al 2018
-    denominator = np.sum(w_hat * y__beta_pdf)
+    denominator = np.sum(w_hat * y_beta_pdf)
 
     if denominator == 0:
         denominator = np.nan
