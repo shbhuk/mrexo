@@ -15,6 +15,7 @@ mdwarf_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_
 kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 
 FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\FP2018_RadPer_SampleSize50_Trial1'
+FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\PR_50Trial0'
 
 result_dir = FP_result
 
@@ -29,3 +30,6 @@ ax = plot_mr_and_rm(result_dir)
 
 # Plot the joint distribution f(m,r)
 ax = plot_joint_mr_distribution(result_dir)
+
+ax[1].set_xlabel('Radius')
+ax[1].set_ylabel('Period')

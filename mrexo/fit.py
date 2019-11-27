@@ -231,11 +231,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
             print('Provide Radius Bounds')
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
-    if Mass_sigma < MassSigmaLimit:
-        Mass_sigma[Mass_sigma < MassSigmaLimit] == None
+    Mass_sigma[Mass_sigma!=None][Mass_sigma[[Mass_sigma!=None]] < MassSigmaLimit] == None
 
-    if Radius_sigma < RadiusSigmaLimit:
-        Radius_sigma[Radius_sigma < RadiusSigmaLimit] == None
+    Radius_sigma[Radius_sigma!=None][Radius_sigma[Radius_sigma!=None] < RadiusSigmaLimit] == None
 
     if degree_max == None:
         degree_max = int(n/np.log10(n)) + 2
