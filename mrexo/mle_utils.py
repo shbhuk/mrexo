@@ -33,11 +33,11 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         Mass_bounds: Bounds for the mass. Log10
         Radius_bounds: Bounds for the radius. Log10
         deg: Degree used for beta densities polynomials. Integer value.
-        Log: If True, data is transformed into Log scale. Default=True, 
+        Log: If True, data is transformed into Log scale. Default=True,
             since the fitting function always converts data to log scale.
         abs_tol: Absolute tolerance to be used for the numerical integration
             for product of normal and beta distribution. Default : 1e-8
-        output_weights_only: If True, only output the estimated weights, 
+        output_weights_only: If True, only output the estimated weights,
             else will also output dictionary with keys shown below.
         save_path: Location of folder for auxiliary output files.
         calc_joint_dist: If True, will calculate and output the
@@ -53,25 +53,25 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
         w_hat : Weights for the beta densities.
 
         If output_weights_only == False,
-        output: Output dictionary from fitting using 
+        output: Output dictionary from fitting using
                 Maximum Likelihood Estimation.
                 The keys in the dictionary are:
                 'weights' : Weights for beta densities.
                 'aic' : Akaike Information Criterion.
                 'bic' : Bayesian Information Criterion.
-                'M_points' : Sequence of mass points for 
+                'M_points' : Sequence of mass points for
                     initial fitting w/o bootstrap.
                 'R_points' : Sequence of radius points for
                     initial fitting w/o bootstrap.
                 'M_cond_R' : Conditional distribution of mass given radius.
-                'M_cond_R_var' : Variance for the Conditional distribution 
+                'M_cond_R_var' : Variance for the Conditional distribution
                     of mass given radius.
-                'M_cond_R_quantile' : Quantiles for the Conditional distribution 
+                'M_cond_R_quantile' : Quantiles for the Conditional distribution
                     of mass given radius.
                 'R_cond_M' : Conditional distribution of radius given mass.
                 'R_cond_M_var' : Variance for the Conditional distribution
                     of radius given mass.
-                'R_cond_M_quantile' : Quantiles for the Conditional distribution 
+                'R_cond_M_quantile' : Quantiles for the Conditional distribution
                     of radius given mass.
 
 
@@ -79,9 +79,9 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                 'joint_dist' : Joint distribution of mass AND radius.
     EXAMPLE:
 
-            result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, 
+            result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma,
                             Radius_sigma=Radius_sigma,
-                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, 
+                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,
                             deg=int(deg_choose), abs_tol=abs_tol,
                             save_path=aux_output_location)
     '''
@@ -319,7 +319,11 @@ def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True)
     '''
 
     if x_std == None:
-        x_std = (x - x_min)/(x_max - x_min)
+        if Log == True:
+            x_std = (np.log10(x) - x_min)/(x_max - x_min)
+        else:
+            x_std = (x - x_min)/(x_max - x_min)
+
         x_beta_indv = np.array([_beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else:
         x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
