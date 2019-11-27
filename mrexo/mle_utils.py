@@ -310,7 +310,7 @@ def integrate_function(data, data_std, deg, degree, x_max, x_min, Log=False, abs
     return integration_product[0]
 
 
-def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True):
+def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=np.nan, abs_tol=1e-8, Log=True):
     '''
     Find the individual probability density Function for a variable.
     When the data has uncertainty, the joint distribution is modelled using a
@@ -318,8 +318,7 @@ def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True)
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 7 & 8.
     '''
-
-    if x_std == None:
+    if np.isnan(x_std):
         if Log == True:
             x_std = (np.log10(x) - x_min)/(x_max - x_min)
         else:
@@ -348,7 +347,7 @@ def _marginal_density(x, x_max, x_min, deg, w_hat):
 
     return marg_x
 
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
@@ -416,8 +415,8 @@ def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mas
 
     for i in range(len(R_points)):
         for j in range(len(M_points)):
-                    r_beta_indv = _find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=None, abs_tol=abs_tol, Log=False)
-                    m_beta_indv = _find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=None, abs_tol=abs_tol, Log=False)
+                    r_beta_indv = _find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=np.nan, abs_tol=abs_tol, Log=False)
+                    m_beta_indv = _find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=np.nan, abs_tol=abs_tol, Log=False)
 
                     intermediate = np.matmul(np.reshape(weights,(deg,deg)),np.matrix(r_beta_indv).T)
                     joint[i,j] = np.matmul(np.matrix(m_beta_indv), intermediate)

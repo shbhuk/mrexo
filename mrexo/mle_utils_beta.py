@@ -309,7 +309,7 @@ def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs
     return integration_product[0]
 
 
-def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=None, abs_tol=1e-8, Log=True):
+def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=True):
     '''
     Find the individual probability density Function for a variable.
     If the data has uncertainty, the joint distribution is modelled using a
@@ -319,8 +319,11 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=None, abs_tol=1e-8, Log=
     CHECK'''
 
 
-    if a_std == None:
-        a_std = (a - a_min)/(a_max - a_min)
+    if np.isnan(a_std):
+        if Log:
+            a_std = (np.log10(a) - a_min)/(a_max - a_min)
+        else:
+            a_std = (a - a_min)/(a_max - a_min)
         a_beta_indv = np.array([_beta_pdf(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
     else:
         a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
@@ -344,7 +347,7 @@ def _marginal_density(a, a_max, a_min, deg, w_hat):
 
     return marg_x
 
-def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_std=None, qtl=[0.16,0.84], abs_tol=1e-8):
+def cond_density_quantile(y, y_max, y_min, x_max, x_min, deg, deg_vec, w_hat, y_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
@@ -412,8 +415,8 @@ def calculate_joint_distribution(R_points, Radius_min, Radius_max, M_points, Mas
 
     for i in range(len(R_points)):
         for j in range(len(M_points)):
-                    r_beta_indv = _find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=None, abs_tol=abs_tol, Log=False)
-                    m_beta_indv = _find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=None, abs_tol=abs_tol, Log=False)
+                    r_beta_indv = _find_indv_pdf(x=R_points[i], deg=deg, deg_vec=deg_vec, x_max=Radius_max, x_min=Radius_min, x_std=np.nan, abs_tol=abs_tol, Log=False)
+                    m_beta_indv = _find_indv_pdf(x=M_points[j], deg=deg, deg_vec=deg_vec, x_max=Mass_max, x_min=Mass_min, x_std=np.nan, abs_tol=abs_tol, Log=False)
 
                     intermediate = np.matmul(np.reshape(weights,(deg,deg)),np.matrix(r_beta_indv).T)
                     joint[i,j] = np.matmul(np.matrix(m_beta_indv), intermediate)

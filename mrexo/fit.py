@@ -23,9 +23,13 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         Mass:Numpy array of mass measurements. In LINEAR SCALE.
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncer-
                     -tainty. In LINEAR SCALE.
+                    If no uncertainties then use np.nan. Array must have same size
+                    as measurements (Mass array)
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
         Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical
                     uncertainty. In LINEAR SCALE.
+                    If no uncertainties then use np.nan. Array must have same size
+                    as measurements (Radius array)
         save_path: Folder name (+path) to save results in.
                    Eg. save_path = '~/mrexo_working/trial_result' will create the
                    'trial_result' results folder in mrexo_working
@@ -215,25 +219,24 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print('Length of Radius and Radius sigma vectors must be the same')
 
     if Mass_min is None:
-        if Mass_sigma is None:
+        if np.any(np.isnan(Mass_sigma)):
             print('Provide Mass Bounds')
         Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))
     if Mass_max is None:
-        if Mass_sigma is None:
+        if np.any(np.isnan(Mass_sigma)):
             print('Provide Mass Bounds')
         Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
-        if Radius_sigma is None:
+        if np.any(np.isnan(Radius_sigma)):
             print('Provide Radius Bounds')
         Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.3)
     if Radius_max is None:
-        if Radius_sigma is None:
+        if np.any(np.isnan(Radius_sigma)):
             print('Provide Radius Bounds')
         Radius_max = np.log10(max(Radius + Radius_sigma))
 
-    Mass_sigma[Mass_sigma!=None][Mass_sigma[[Mass_sigma!=None]] < MassSigmaLimit] == None
-
-    Radius_sigma[Radius_sigma!=None][Radius_sigma[Radius_sigma!=None] < RadiusSigmaLimit] == None
+    Mass_sigma[(Mass_sigma!=np.nan) & (Mass_sigma[Mass_sigma!=np.nan] < MassSigmaLimit)] = np.nan
+    Radius_sigma[(Radius_sigma!=np.nan) & (Radius_sigma[Radius_sigma!=np.nan] < RadiusSigmaLimit)] = np.nan
 
     if degree_max == None:
         degree_max = int(n/np.log10(n)) + 2
