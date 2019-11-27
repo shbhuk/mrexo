@@ -12,6 +12,7 @@ from .utils import _save_dictionary, _logging
 
 def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
+                    MassSigmaLimit = 1e-3, RadiusSigmaLimit = 1e-3,
                     select_deg=17, degree_max=None, k_fold=None, num_boot=100,
                     cores=1, abs_tol=1e-8, verbose=2):
     """
@@ -23,21 +24,31 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncer-
                     -tainty. In LINEAR SCALE.
         Radius: Numpy array of radius measurements. In LINEAR SCALE.
-        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical 
+        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical
                     uncertainty. In LINEAR SCALE.
         save_path: Folder name (+path) to save results in.
-                   Eg. save_path = '~/mrexo_working/trial_result' will create the 
+                   Eg. save_path = '~/mrexo_working/trial_result' will create the
                    'trial_result' results folder in mrexo_working
-        Mass_min: Lower bound for mass. Default=None. 
+        Mass_min: Lower bound for mass. Default=None.
                   If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))
         Mass_max: Upper bound for mass. Default=None.
                   If None, uses: np.log10(max(Mass + Mass_sigma))
         Radius_min: Lower bound for radius. Default=None.
                   If None, uses: max(np.log10(min(Radius - Radius_sigma)), -0.3)
-        Radius_max: Upper bound for radius. Default=None. 
+        Radius_max: Upper bound for radius. Default=None.
                   If None, uses: np.log10(max(Radius + Radius_sigma))
+        MassSigmaLimit: The lower limit on sigma value for Mass. If the sigmas are
+                lower than this limit, they get changed to None. This is because,
+                the Standard normal distribution blows up if the sigma values are
+                too small (~1e-4). Then the distribution is no longer a convolution
+                of Normal and Beta distributions, but is just a Beta distribution.
+        RadiusSigmaLimit: The lower limit on sigma value for Radius. If the sigmas are
+                lower than this limit, they get changed to None. This is because,
+                the Standard normal distribution blows up if the sigma values are
+                too small (~1e-4). Then the distribution is no longer a convolution
+                of Normal and Beta distributions, but is just a Beta distribution.
         select_deg: The number of degrees for the beta densities.
-                            if select_deg= "cv": Use cross validation to find the 
+                            if select_deg= "cv": Use cross validation to find the
                                 optimal number of  degrees.
                             if select_deg= "aic": Use AIC minimization to find the
                                 optimal number of degrees.
@@ -45,21 +56,21 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                                 optimal number of degrees.
                             if select_deg= Integer: Use that number and skip the
                                 optimization process to find the number of degrees.
-                            NOTE: Use AIC or BIC optimization only for 
+                            NOTE: Use AIC or BIC optimization only for
                                 large (> 200) sample sizes.
         degree_max: Maximum degree used for cross-validation/AIC/BIC. Type:Integer.
                     Default=None. If None, uses: n/np.log10(n),
                     where n is the number of data points.
-        k_fold: If using cross validation method, use k_fold (Integer) 
+        k_fold: If using cross validation method, use k_fold (Integer)
                 number of folds.
                 Default=None.
-                If None, uses: 10 folds for n > 60, 5 folds otherwise. 
+                If None, uses: 10 folds for n > 60, 5 folds otherwise.
                 Eg. k_fold=12
-        num_boot: Number of bootstraps to perform. Default=100. num_boot 
+        num_boot: Number of bootstraps to perform. Default=100. num_boot
                 must be greater than 1.
         cores: Number of cores for parallel processing. This is used in the
                bootstrap and the cross validation. Default=1.
-               To use all the cores in the CPU, 
+               To use all the cores in the CPU,
                cores=cpu_count() #from multiprocessing import cpu_count
         abs_tol: Absolute tolerance to be used for the numerical integration
                 for product of normal and beta distribution.
@@ -70,31 +81,31 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                     If 2: Will write log file and print statements.
 
     OUTPUTS:
-                
-        initialfit_result: Output dictionary from initial fitting without bootstrap 
+
+        initialfit_result: Output dictionary from initial fitting without bootstrap
                             using Maximum Likelihood Estimation.
                             The keys in the dictionary are -
                             'weights' : Weights for Beta densities from initial
                                 fitting w/o bootstrap.
-                            'aic' : Akaike Information Criterion from initial 
+                            'aic' : Akaike Information Criterion from initial
                                 fitting w/o bootstrap.
-                            'bic' : Bayesian Information Criterion from initial 
+                            'bic' : Bayesian Information Criterion from initial
                                 fitting w/o bootstrap.
-                            'M_points' : Sequence of mass points for initial 
+                            'M_points' : Sequence of mass points for initial
                                 fitting w/o bootstrap.
-                            'R_points' : Sequence of radius points for initial 
+                            'R_points' : Sequence of radius points for initial
                                 fitting w/o bootstrap.
                             'M_cond_R' : Conditional distribution of mass given
                                  radius from initial fitting w/o bootstrap.
-                            'M_cond_R_var' : Variance for the Conditional 
-                                distribution of mass given radius from initial 
+                            'M_cond_R_var' : Variance for the Conditional
+                                distribution of mass given radius from initial
                                 fitting w/o bootstrap.
                             'M_cond_R_quantile' : Quantiles for the Conditional
                                  distribution of mass given radius from initial
                                  fitting w/o bootstrap.
                             'R_cond_M' : Conditional distribution of radius given
                                  mass from initial fitting w/o bootstrap.
-                            'R_cond_M_var' : Variance for the Conditional 
+                            'R_cond_M_var' : Variance for the Conditional
                                 distribution of radius given mass from initial
                                 fitting w/o bootstrap.
                             'R_cond_M_quantile' : Quantiles for the Conditional
@@ -104,12 +115,12 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 
         if num_boot > 2:
-        bootstrap_results: Output dictionary from bootstrap run using Maximum 
+        bootstrap_results: Output dictionary from bootstrap run using Maximum
                             Likelihood Estimation.
                             'weights' : Weights for Beta densities from bootstrap run.
                             'aic' : Akaike Information Criterion from bootstrap run.
                             'bic' : Bayesian Information Criterion from bootstrap run.
-                            'M_points' : Sequence of mass points for initial 
+                            'M_points' : Sequence of mass points for initial
                                 fitting w/o bootstrap.
                             'R_points' : Sequence of radius points for initial
                                  fitting w/o bootstrap.
@@ -119,17 +130,17 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                                  distribution of mass given radius from bootstrap run.
                             'M_cond_R_quantile' : Quantiles for the Conditional
                                  distribution of mass given radius from bootstrap run.
-                            'R_cond_M' : Conditional distribution of radius given 
+                            'R_cond_M' : Conditional distribution of radius given
                                 mass from bootstrap run.
-                            'R_cond_M_var' : Variance for the Conditional 
+                            'R_cond_M_var' : Variance for the Conditional
                                 distribution of radius given mass from bootstrap run.
                             'R_cond_M_quantile' : Quantiles for the Conditional
                                  distribution of radius given mass from bootstrap run.
 
 
     EXAMPLE:
-        
-        # Example to fit a Mass Radius relationship with 2 CPU cores, 
+
+        # Example to fit a Mass Radius relationship with 2 CPU cores,
             using 12 degrees, and 50 bootstraps.
 
         import os
@@ -152,11 +163,11 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         # Directory to store results in
         result_dir = os.path.join(pwd,'Results_deg_12')
 
-        initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass, 
+        initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass,
                                                 Mass_sigma=Mass_sigma,
                                                 Radius=Radius,
                                                 Radius_sigma=Radius_sigma,
-                                                save_path=result_dir, 
+                                                save_path=result_dir,
                                                 select_deg=12,
                                                 num_boot=50, cores=2)
     """
@@ -180,14 +191,14 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if not os.path.exists(input_location):
         os.mkdir(input_location)
 
-    message = """	
-	___  _________ _______   _______ 
+    message = """
+	___  _________ _______   _______
 	|  \/  || ___ \  ___\ \ / /  _  |
 	| .  . || |_/ / |__  \ V /| | | |
 	| |\/| ||    /|  __| /   \| | | |
 	| |  | || |\ \| |___/ /^\ \ \_/ /
-	\_|  |_/\_| \_\____/\/   \/\___/ 
-                                  
+	\_|  |_/\_| \_\____/\/   \/\___/
+
     """
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
@@ -204,13 +215,27 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         print('Length of Radius and Radius sigma vectors must be the same')
 
     if Mass_min is None:
+        if Mass_sigma is None:
+            print('Provide Mass Bounds')
         Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))
     if Mass_max is None:
+        if Mass_sigma is None:
+            print('Provide Mass Bounds')
         Mass_max = np.log10(max(Mass + Mass_sigma))
     if Radius_min is None:
+        if Radius_sigma is None:
+            print('Provide Radius Bounds')
         Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.3)
     if Radius_max is None:
+        if Radius_sigma is None:
+            print('Provide Radius Bounds')
         Radius_max = np.log10(max(Radius + Radius_sigma))
+
+    if Mass_sigma < MassSigmaLimit:
+        Mass_sigma[Mass_sigma < MassSigmaLimit] == None
+
+    if Radius_sigma < RadiusSigmaLimit:
+        Radius_sigma[Radius_sigma < RadiusSigmaLimit] == None
 
     if degree_max == None:
         degree_max = int(n/np.log10(n)) + 2
@@ -339,16 +364,16 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
-        message = """	
-	 ___  _ _  ___   ___  _  _  __  
-	|_ _|| U || __| | __|| \| ||  \ 
+        message = """
+	 ___  _ _  ___   ___  _  _  __
+	|_ _|| U || __| | __|| \| ||  \
 	 | | |   || _|  | _| | \\ || o )
-	 |_| |_n_||___| |___||_|\_||__/ 
+	 |_| |_n_||___| |___||_|\_||__/
         """
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
-        
+
 
         return initialfit_result, bootstrap_results
 
