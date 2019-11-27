@@ -320,7 +320,11 @@ def _find_indv_pdf(x,deg,deg_vec,x_max,x_min,x_std=None, abs_tol=1e-8, Log=True)
     '''
 
     if x_std == None:
-        x_std = (x - x_min)/(x_max - x_min)
+        if Log == True:
+            x_std = (np.log10(x) - x_min)/(x_max - x_min)
+        else:
+            x_std = (x - x_min)/(x_max - x_min)
+
         x_beta_indv = np.array([_beta_pdf(x_std, a=d, b=deg - d + 1)/(x_max - x_min) for d in deg_vec])
     else:
         x_beta_indv = np.array([integrate_function(data=x, data_std=x_std, deg=deg, degree=d, x_max=x_max, x_min=x_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
