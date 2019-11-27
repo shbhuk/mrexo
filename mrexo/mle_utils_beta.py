@@ -8,7 +8,7 @@ import datetime,os
 from multiprocessing import current_process
 
 
-from .utils import _logging
+from mrexo.utils import _logging
 
 
 ########################################
@@ -267,8 +267,8 @@ def _norm_pdf(a, loc, scale):
     Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
     Runs much quicker without the generic function handling.
     CHECK'''
-    y = (x - loc)/scale
-    return np.exp(-y*y/2)/(np.sqrt(2*np.pi))/scale
+    N = (a - loc)/scale
+    return np.exp(-N*N/2)/(np.sqrt(2*np.pi))/scale
 
 def _int_gamma(a):
     return scipy.math.factorial(a-1)
@@ -279,7 +279,7 @@ def _beta_pdf(x,a,b):
     return f
 
 
-def _pdfnorm_beta(a, a_obs, x_std, a_max, a_min, shape1, shape2, Log=True):
+def _pdfnorm_beta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
     '''
     Product of normal and beta distribution
 
@@ -287,9 +287,9 @@ def _pdfnorm_beta(a, a_obs, x_std, a_max, a_min, shape1, shape2, Log=True):
     CHECK'''
 
     if Log == True:
-        norm_beta = _norm_pdf(a_obs, loc=10**a, scale=x_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
+        norm_beta = _norm_pdf(a_obs, loc=10**a, scale=a_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
     else:
-        norm_beta = _norm_pdf(a_obs, loc=a, scale=x_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
+        norm_beta = _norm_pdf(a_obs, loc=a, scale=a_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
     return norm_beta
 
 def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
@@ -298,14 +298,14 @@ def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 8.
     CHECK'''
-    x_obs = data
-    x_std = data_std
+    a_obs = data
+    a_std = data_std
     shape1 = degree
     shape2 = deg - degree + 1
     Log = Log
 
     integration_product = quad(_pdfnorm_beta, a=a_min, b=a_max,
-                          args=(x_obs, x_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+                          args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
     return integration_product[0]
 
 

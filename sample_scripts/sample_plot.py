@@ -14,7 +14,9 @@ except NameError:
 mdwarf_result = r'C:\Users\shbhu\Documents\GitHub\mrexo\mrexo\datasets\M_dwarfs_20181214'
 kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_etal_20170605'
 
-result_dir = mdwarf_result
+FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\FP2018_RadPer_SampleSize50_Trial1'
+
+result_dir = FP_result
 
 # Plot the conditional distribution f(m|r)
 ax = plot_m_given_r_relation(result_dir)
@@ -27,4 +29,3 @@ ax = plot_mr_and_rm(result_dir)
 
 # Plot the joint distribution f(m,r)
 ax = plot_joint_mr_distribution(result_dir)
-

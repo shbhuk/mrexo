@@ -108,6 +108,7 @@ def MLE_fit(Mass, Mass_sigma, Radius, Radius_sigma, Mass_bounds, Radius_bounds,
                         R=Radius, Radius_sigma=Radius_sigma, Radius_max=Radius_max, Radius_min=Radius_min,
                         Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose)
 
+    np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf)
     message = 'Finished Integration at {}. Calculated the PDF for Mass and Radius for Integrated beta and normal density '.format(datetime.datetime.now())
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
