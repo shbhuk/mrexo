@@ -176,13 +176,13 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
 
         for i in range(0,len(X_seq)):
             # Conditional Densities with 16% and 84% quantile
-            Y_cond_X = cond_density_quantile(a = Y_seq[i], a_max = X_max, a_min = X_min,
+            Y_cond_X = cond_density_quantile(a = X_seq[i], a_max = X_max, a_min = X_min,
                             b_max = Y_max, b_min = Y_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.5,0.16,0.84])[0:3]
             Y_cond_X_median.append(Y_cond_X[2][0])
             Y_cond_X_var.append(Y_cond_X[1])
             Y_cond_X_quantile.append(Y_cond_X[2][1:])
 
-            X_cond_Y = cond_density_quantile(a = X_seq[i], a_max=Y_max, a_min=Y_min,
+            X_cond_Y = cond_density_quantile(a = Y_seq[i], a_max=Y_max, a_min=Y_min,
                                 b_max=X_max, b_min=X_min, deg=deg, deg_vec = deg_vec,
                                 w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.5,0.16,0.84])[0:3]
             X_cond_Y_median.append(X_cond_Y[2][0])
@@ -351,16 +351,16 @@ def _marginal_density(a, a_max, a_min, deg, w_hat):
 
     return marg_x
 
-def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, y_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
+def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
     '''
     Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
     Refer to Ning et al. 2018 Sec 2.2, Eq 10
     '''
     if type(a) == list:
-        y = np.array(a)
+        a = np.array(a)
 
-    a_beta_indv = _find_indv_pdf(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=y_std, abs_tol=abs_tol, Log=False)
+    a_beta_indv = _find_indv_pdf(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=a_std, abs_tol=abs_tol, Log=False)
     a_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),a_beta_indv)
 
     # Equation 10b Ning et al 2018
@@ -396,7 +396,7 @@ def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, y_
     def conditional_quantile(q):
         def g(x):
             return pbeta_conditional_density(x) - q
-        return root(g,a=b_min, b=b_max, xtol=1e-8, rtol=1e-12)
+        return root(g, a=b_min, b=b_max, xtol=1e-8, rtol=1e-12)
 
 
     if np.size(qtl) == 1:

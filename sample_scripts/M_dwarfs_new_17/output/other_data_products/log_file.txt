@@ -1,0 +1,133 @@
+Using core 3040:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 3040:Started for 17 degrees at 2019-12-04 09:57:02.667711, using 1 core/sUsing core 3040:Running full dataset MLE before bootstrapUsing core 3040:====
+Started run at 2019-12-04 09:57:02.680676Using core 3040:Started Integration at 2019-12-04 09:57:02.681674Using core 3040:Finished Integration at 2019-12-04 09:57:04.902763. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 3040:Optimization run finished at 2019-12-04 09:57:06.396366, with 17 iterations. Exit Code = 0
+
+Using core 3040:Finished full dataset MLE run at 2019-12-04 09:57:25.308765
+Using core 3040:
+
+==============
+Running 10 bootstraps for the MLE code with degree = 17, using 1 thread/s.
+==============
+
+Using core 27212:====
+Started run at 2019-12-04 09:57:26.842438Using core 27212:Started Integration at 2019-12-04 09:57:26.844398Using core 27212:Finished Integration at 2019-12-04 09:57:28.873968. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:57:29.971034, with 14 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:57:44.336597Using core 27212:Started Integration at 2019-12-04 09:57:44.338592Using core 27212:Finished Integration at 2019-12-04 09:57:46.045057. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:57:47.078350, with 14 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:58:00.258086Using core 27212:Started Integration at 2019-12-04 09:58:00.259083Using core 27212:Finished Integration at 2019-12-04 09:58:01.929614. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:58:04.429903, with 33 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:58:17.623602Using core 27212:Started Integration at 2019-12-04 09:58:17.625598Using core 27212:Finished Integration at 2019-12-04 09:58:19.433452. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:58:21.149861, with 17 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:58:36.629444Using core 27212:Started Integration at 2019-12-04 09:58:36.630444Using core 27212:Finished Integration at 2019-12-04 09:58:38.548311. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:58:38.998742, with 6 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:58:52.243340Using core 27212:Started Integration at 2019-12-04 09:58:52.245305Using core 27212:Finished Integration at 2019-12-04 09:58:54.093401. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:58:55.978937, with 23 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:59:12.348140Using core 27212:Started Integration at 2019-12-04 09:59:12.349137Using core 27212:Finished Integration at 2019-12-04 09:59:14.133092. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:59:15.585207, with 17 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:59:29.261239Using core 27212:Started Integration at 2019-12-04 09:59:29.262235Using core 27212:Finished Integration at 2019-12-04 09:59:31.009592. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:59:32.898506, with 26 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 09:59:51.747078Using core 27212:Started Integration at 2019-12-04 09:59:51.749072Using core 27212:Finished Integration at 2019-12-04 09:59:53.871392. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 09:59:55.034281, with 15 iterations. Exit Code = 0
+
+Using core 27212:====
+Started run at 2019-12-04 10:00:14.164105Using core 27212:Started Integration at 2019-12-04 10:00:14.166094Using core 27212:Finished Integration at 2019-12-04 10:00:16.979759. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27212:Optimization run finished at 2019-12-04 10:00:17.908249, with 13 iterations. Exit Code = 0
+
+Using core 3040:Finished bootstrap at 2019-12-04 10:00:36.827635Using core 3040:Ended run at 2019-12-04 10:00:36.828632Using core 3040:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        Using core 27820:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 27820:Started for 17 degrees at 2019-12-04 10:22:07.316335, using 1 core/sUsing core 27820:Running full dataset MLE before bootstrapUsing core 27820:====
+Started run at 2019-12-04 10:22:07.327260Using core 27820:Started Integration at 2019-12-04 10:22:07.329254Using core 27820:Finished Integration at 2019-12-04 10:22:09.235154. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 27820:Optimization run finished at 2019-12-04 10:22:10.521713, with 17 iterations. Exit Code = 0
+
+Using core 27820:Finished full dataset MLE run at 2019-12-04 10:22:28.898320
+Using core 27820:
+
+==============
+Running 10 bootstraps for the MLE code with degree = 17, using 1 thread/s.
+==============
+
+Using core 24948:====
+Started run at 2019-12-04 10:22:30.734244Using core 24948:Started Integration at 2019-12-04 10:22:30.735799Using core 24948:Finished Integration at 2019-12-04 10:22:32.941338. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:22:36.089914, with 39 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:22:52.885982Using core 24948:Started Integration at 2019-12-04 10:22:52.886977Using core 24948:Finished Integration at 2019-12-04 10:22:55.584760. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:22:57.126634, with 19 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:23:17.251856Using core 24948:Started Integration at 2019-12-04 10:23:17.253814Using core 24948:Finished Integration at 2019-12-04 10:23:19.613088. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:23:22.583020, with 26 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:23:38.896541Using core 24948:Started Integration at 2019-12-04 10:23:38.899123Using core 24948:Finished Integration at 2019-12-04 10:23:40.960062. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:23:42.644554, with 22 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:23:59.778284Using core 24948:Started Integration at 2019-12-04 10:23:59.780278Using core 24948:Finished Integration at 2019-12-04 10:24:01.715582. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:24:03.050012, with 16 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:24:18.372017Using core 24948:Started Integration at 2019-12-04 10:24:18.374014Using core 24948:Finished Integration at 2019-12-04 10:24:20.240019. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:24:21.597398, with 16 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:24:38.211852Using core 24948:Started Integration at 2019-12-04 10:24:38.213848Using core 24948:Finished Integration at 2019-12-04 10:24:41.224472. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:24:42.703983, with 19 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:25:02.169526Using core 24948:Started Integration at 2019-12-04 10:25:02.170527Using core 24948:Finished Integration at 2019-12-04 10:25:03.976728. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:25:05.883591, with 26 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:25:20.186382Using core 24948:Started Integration at 2019-12-04 10:25:20.187378Using core 24948:Finished Integration at 2019-12-04 10:25:22.634831. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:25:25.421375, with 33 iterations. Exit Code = 0
+
+Using core 24948:====
+Started run at 2019-12-04 10:25:41.422563Using core 24948:Started Integration at 2019-12-04 10:25:41.423560Using core 24948:Finished Integration at 2019-12-04 10:25:43.509978. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 24948:Optimization run finished at 2019-12-04 10:25:44.953119, with 17 iterations. Exit Code = 0
+
+Using core 27820:Finished bootstrap at 2019-12-04 10:26:00.376456Using core 27820:Ended run at 2019-12-04 10:26:00.377453Using core 27820:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        
