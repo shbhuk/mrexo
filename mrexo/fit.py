@@ -11,7 +11,7 @@ from .utils import _save_dictionary, _logging
 
 
 
-def fit_mr_relation(Y, Y_sigma, X, X_sigma, save_path,
+def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
                     X_label, Y_label, X_char='x', Y_char='y',
                     Y_min=None, Y_max=None, X_min=None, X_max=None,
                     YSigmaLimit = 1e-3, XSigmaLimit = 1e-3,

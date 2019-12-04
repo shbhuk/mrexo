@@ -5,7 +5,7 @@ from multiprocessing import cpu_count
 import numpy as np
 
 
-from mrexo import fit_mr_relation
+from mrexo import fit_xy_relation
 
 
 try :
@@ -57,6 +57,6 @@ RadiusDict = {'X': Radius, 'X_sigma': Radius_sigma, 'X_max':None, 'X_min':None, 
 MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
 
 if __name__ == '__main__':
-            initialfit_result, bootstrap_results = fit_mr_relation(**RadiusDict, **MassDict,
+            initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
                                                 save_path = result_dir, select_deg = 17,
                                                 num_boot = 10, cores = 1)

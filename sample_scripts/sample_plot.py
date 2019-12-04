@@ -23,7 +23,7 @@ new_cv = os.path.join(pwd,'M_dwarfs_new_17')
 result_dir = new_cv
 
 # # Plot the conditional distribution f(m|r)
-ax = plot_y_given_x_relation(result_dir)
+ax = plot_yx_and_xy(result_dir)
 # ax[1].set_xlabel('Radius')
 # ax[1].set_ylabel('Period')
 #
