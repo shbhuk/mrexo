@@ -48,13 +48,15 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_new_cv')
+result_dir = os.path.join(pwd,'M_dwarfs_new_17')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
 
+RadiusDict = {'X': Radius, 'X_sigma': Radius_sigma, 'X_max':None, 'X_min':None, 'X_label':'Radius', 'X_char':'r'}
+MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
+
 if __name__ == '__main__':
-            initialfit_result, bootstrap_results = fit_mr_relation(Mass = Mass, Mass_sigma = Mass_sigma,
-                                                Radius = Radius, Radius_sigma = Radius_sigma,
+            initialfit_result, bootstrap_results = fit_mr_relation(**RadiusDict, **MassDict,
                                                 save_path = result_dir, select_deg = 17,
-                                                num_boot = None, cores = 1)
+                                                num_boot = 10, cores = 1)

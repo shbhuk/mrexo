@@ -1,52 +1,60 @@
-#%cd "C:/Users/shbhu/Documents/Git/Py_mass_radius_working/PyCode"
+#%cd "C:/Users/shbhu/Documents/Git/Py_Y_X_working/PyCode"
 import numpy as np
 from multiprocessing import Pool,cpu_count
 import os
 from astropy.table import Table
 import datetime
 
-from .mle_utils import MLE_fit
+from .mle_utils_beta import MLE_fit
 from .cross_validate import run_cross_validation
 from .utils import _save_dictionary, _logging
 
 
-def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
-                    Mass_min=None, Mass_max=None, Radius_min=None, Radius_max=None,
-                    MassSigmaLimit = 1e-3, RadiusSigmaLimit = 1e-3,
+
+def fit_mr_relation(Y, Y_sigma, X, X_sigma, save_path,
+                    X_label, Y_label, X_char='x', Y_char='y',
+                    Y_min=None, Y_max=None, X_min=None, X_max=None,
+                    YSigmaLimit = 1e-3, XSigmaLimit = 1e-3,
                     select_deg=17, degree_max=None, k_fold=None, num_boot=100,
                     cores=1, abs_tol=1e-8, verbose=2):
     """
-    Fit a mass and radius relationship using a non parametric approach with beta densities
+    Fit a Y and X relationship using a non parametric approach with beta densities
 
     \nINPUTS:
 
-        Mass:Numpy array of mass measurements. In LINEAR SCALE.
-        Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncer-
+        Y:Numpy array of Y measurements. In LINEAR SCALE.
+        Y_sigma: Numpy array of Y uncertainties. Assumes symmetrical uncer-
                     -tainty. In LINEAR SCALE.
                     If no uncertainties then use np.nan. Array must have same size
-                    as measurements (Mass array)
-        Radius: Numpy array of radius measurements. In LINEAR SCALE.
-        Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical
+                    as measurements (Y array)
+        X: Numpy array of X measurements. In LINEAR SCALE.
+        X_sigma: Numpy array of X uncertainties. Assumes symmetrical
                     uncertainty. In LINEAR SCALE.
                     If no uncertainties then use np.nan. Array must have same size
-                    as measurements (Radius array)
+                    as measurements (X array)
         save_path: Folder name (+path) to save results in.
                    Eg. save_path = '~/mrexo_working/trial_result' will create the
                    'trial_result' results folder in mrexo_working
-        Mass_min: Lower bound for mass. Default=None.
-                  If None, uses: np.log10(max(min(Mass - Mass_sigma), 0.01))
-        Mass_max: Upper bound for mass. Default=None.
-                  If None, uses: np.log10(max(Mass + Mass_sigma))
-        Radius_min: Lower bound for radius. Default=None.
-                  If None, uses: max(np.log10(min(Radius - Radius_sigma)), -0.3)
-        Radius_max: Upper bound for radius. Default=None.
-                  If None, uses: np.log10(max(Radius + Radius_sigma))
-        MassSigmaLimit: The lower limit on sigma value for Mass. If the sigmas are
+        X_label: String label for X. Example Radius/Mass/Period
+        Y_label: String label for Y. Example Radius/Mass/Period
+        X_char: String alphabet (character) to depict X quantity.
+            Eg 'm' for Mass, 'r' for Radius
+        Y_char: String alphabet (character) to depict Y quantity
+            Eg 'm' for Mass, 'r' for Radius
+        Y_min: Lower bound for Y. Default=None.
+                  If None, uses: np.log10(max(min(Y - Y_sigma), 0.01))
+        Y_max: Upper bound for Y. Default=None.
+                  If None, uses: np.log10(max(Y + Y_sigma))
+        X_min: Lower bound for X. Default=None.
+                  If None, uses: max(np.log10(min(X - X_sigma)), -0.3)
+        X_max: Upper bound for X. Default=None.
+                  If None, uses: np.log10(max(X + X_sigma))
+        YSigmaLimit: The lower limit on sigma value for Y. If the sigmas are
                 lower than this limit, they get changed to None. This is because,
                 the Standard normal distribution blows up if the sigma values are
                 too small (~1e-4). Then the distribution is no longer a convolution
                 of Normal and Beta distributions, but is just a Beta distribution.
-        RadiusSigmaLimit: The lower limit on sigma value for Radius. If the sigmas are
+        XSigmaLimit: The lower limit on sigma value for X. If the sigmas are
                 lower than this limit, they get changed to None. This is because,
                 the Standard normal distribution blows up if the sigma values are
                 too small (~1e-4). Then the distribution is no longer a convolution
@@ -95,27 +103,27 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                                 fitting w/o bootstrap.
                             'bic' : Bayesian Information Criterion from initial
                                 fitting w/o bootstrap.
-                            'M_points' : Sequence of mass points for initial
+                            'Y_points' : Sequence of Y points for initial
                                 fitting w/o bootstrap.
-                            'R_points' : Sequence of radius points for initial
+                            'X_points' : Sequence of X points for initial
                                 fitting w/o bootstrap.
-                            'M_cond_R' : Conditional distribution of mass given
-                                 radius from initial fitting w/o bootstrap.
-                            'M_cond_R_var' : Variance for the Conditional
-                                distribution of mass given radius from initial
+                            'Y_cond_X' : Conditional distribution of Y given
+                                 X from initial fitting w/o bootstrap.
+                            'Y_cond_X_var' : Variance for the Conditional
+                                distribution of Y given X from initial
                                 fitting w/o bootstrap.
-                            'M_cond_R_quantile' : Quantiles for the Conditional
-                                 distribution of mass given radius from initial
+                            'Y_cond_X_quantile' : Quantiles for the Conditional
+                                 distribution of Y given X from initial
                                  fitting w/o bootstrap.
-                            'R_cond_M' : Conditional distribution of radius given
-                                 mass from initial fitting w/o bootstrap.
-                            'R_cond_M_var' : Variance for the Conditional
-                                distribution of radius given mass from initial
+                            'X_cond_Y' : Conditional distribution of X given
+                                 Y from initial fitting w/o bootstrap.
+                            'X_cond_Y_var' : Variance for the Conditional
+                                distribution of X given Y from initial
                                 fitting w/o bootstrap.
-                            'R_cond_M_quantile' : Quantiles for the Conditional
-                                 distribution of radius given mass from initial
+                            'X_cond_Y_quantile' : Quantiles for the Conditional
+                                 distribution of X given Y from initial
                                  fitting w/o bootstrap.
-                            'joint_dist' : Joint distribution of mass AND radius.
+                            'joint_dist' : Joint distribution of Y AND X.
 
 
         if num_boot > 2:
@@ -124,27 +132,27 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
                             'weights' : Weights for Beta densities from bootstrap run.
                             'aic' : Akaike Information Criterion from bootstrap run.
                             'bic' : Bayesian Information Criterion from bootstrap run.
-                            'M_points' : Sequence of mass points for initial
+                            'Y_points' : Sequence of Y points for initial
                                 fitting w/o bootstrap.
-                            'R_points' : Sequence of radius points for initial
+                            'X_points' : Sequence of X points for initial
                                  fitting w/o bootstrap.
-                            'M_cond_R' : Conditional distribution of mass given
-                                 radius from bootstrap run.
-                            'M_cond_R_var' : Variance for the Conditional
-                                 distribution of mass given radius from bootstrap run.
-                            'M_cond_R_quantile' : Quantiles for the Conditional
-                                 distribution of mass given radius from bootstrap run.
-                            'R_cond_M' : Conditional distribution of radius given
-                                mass from bootstrap run.
-                            'R_cond_M_var' : Variance for the Conditional
-                                distribution of radius given mass from bootstrap run.
-                            'R_cond_M_quantile' : Quantiles for the Conditional
-                                 distribution of radius given mass from bootstrap run.
+                            'Y_cond_X' : Conditional distribution of Y given
+                                 X from bootstrap run.
+                            'Y_cond_X_var' : Variance for the Conditional
+                                 distribution of Y given X from bootstrap run.
+                            'Y_cond_X_quantile' : Quantiles for the Conditional
+                                 distribution of Y given X from bootstrap run.
+                            'X_cond_Y' : Conditional distribution of X given
+                                Y from bootstrap run.
+                            'X_cond_Y_var' : Variance for the Conditional
+                                distribution of X given Y from bootstrap run.
+                            'X_cond_Y_quantile' : Quantiles for the Conditional
+                                 distribution of X given Y from bootstrap run.
 
 
     EXAMPLE:
 
-        # Example to fit a Mass Radius relationship with 2 CPU cores,
+        # Example to fit a Y X relationship with 2 CPU cores,
             using 12 degrees, and 50 bootstraps.
 
         import os
@@ -157,20 +165,22 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 
         # Symmetrical errorbars
-        Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
-        Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
+        Y_sigma = (abs(t['pl_Yeerr1']) + abs(t['pl_Yeerr2']))/2
+        X_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 
         # In Earth units
-        Mass = np.array(t['pl_masse'])
-        Radius = np.array(t['pl_rade'])
+        Y = np.array(t['pl_Ye'])
+        X = np.array(t['pl_rade'])
 
         # Directory to store results in
         result_dir = os.path.join(pwd,'Results_deg_12')
 
-        initialfit_result, bootstrap_results = fit_mr_relation(Mass=Mass,
-                                                Mass_sigma=Mass_sigma,
-                                                Radius=Radius,
-                                                Radius_sigma=Radius_sigma,
+        ##FINDME
+
+        initialfit_result, bootstrap_results = fit_mr_relation(Y=Y,
+                                                Y_sigma=Y_sigma,
+                                                X=X,
+                                                X_sigma=X_sigma,
                                                 save_path=result_dir,
                                                 select_deg=12,
                                                 num_boot=50, cores=2)
@@ -195,6 +205,10 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     if not os.path.exists(input_location):
         os.mkdir(input_location)
 
+    LabelDictionary = {'X_label':X_label, 'Y_label':Y_label, 'X_char': X_char, 'Y_char':Y_char}
+    with open(os.path.join(aux_output_location, 'AxesLabels.txt'), 'w') as f:
+        print(LabelDictionary, file=f)
+
     message = """
 	___  _________ _______   _______
 	|  \/  || ___ \  ___\ \ / /  _  |
@@ -209,48 +223,48 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-    n = len(Mass)
+    n = len(Y)
 
-    if len(Mass) != len(Radius):
-        print('Length of Mass and Radius vectors must be the same')
-    if len(Mass) != len(Mass_sigma) and (Mass_sigma is not None):
-        print('Length of Mass and Mass sigma vectors must be the same')
-    if len(Radius) != len(Radius_sigma) and (Radius_sigma is not None):
-        print('Length of Radius and Radius sigma vectors must be the same')
+    if len(Y) != len(X):
+        print('Length of Y and X vectors must be the same')
+    if len(Y) != len(Y_sigma) and (Y_sigma is not None):
+        print('Length of Y and Y sigma vectors must be the same')
+    if len(X) != len(X_sigma) and (X_sigma is not None):
+        print('Length of X and X sigma vectors must be the same')
 
-    if Mass_min is None:
-        if np.any(np.isnan(Mass_sigma)):
-            print('Provide Mass Bounds')
-        Mass_min = np.log10(max(min(Mass - Mass_sigma), 0.01))
-    if Mass_max is None:
-        if np.any(np.isnan(Mass_sigma)):
-            print('Provide Mass Bounds')
-        Mass_max = np.log10(max(Mass + Mass_sigma))
-    if Radius_min is None:
-        if np.any(np.isnan(Radius_sigma)):
-            print('Provide Radius Bounds')
-        Radius_min = min(np.log10(min(np.abs(Radius - Radius_sigma))), -0.3)
-    if Radius_max is None:
-        if np.any(np.isnan(Radius_sigma)):
-            print('Provide Radius Bounds')
-        Radius_max = np.log10(max(Radius + Radius_sigma))
+    if Y_min is None:
+        if np.any(np.isnan(Y_sigma)):
+            print('Provide {} Bounds'.format(Y_label))
+        Y_min = np.log10(max(min(Y - Y_sigma), 0.01))
+    if Y_max is None:
+        if np.any(np.isnan(Y_sigma)):
+            print('Provide {} Bounds'.format(Y_label))
+        Y_max = np.log10(max(Y + Y_sigma))
+    if X_min is None:
+        if np.any(np.isnan(X_sigma)):
+            print('Provide {} Bounds'.format(X_label))
+        X_min = min(np.log10(min(np.abs(X - X_sigma))), -0.3)
+    if X_max is None:
+        if np.any(np.isnan(X_sigma)):
+            print('Provide {} Bounds'.format(X_label))
+        X_max = np.log10(max(X + X_sigma))
 
-    Mass_sigma[(Mass_sigma!=np.nan) & (Mass_sigma[Mass_sigma!=np.nan] < MassSigmaLimit)] = np.nan
-    Radius_sigma[(Radius_sigma!=np.nan) & (Radius_sigma[Radius_sigma!=np.nan] < RadiusSigmaLimit)] = np.nan
+    Y_sigma[(Y_sigma!=np.nan) & (Y_sigma[Y_sigma!=np.nan] < YSigmaLimit)] = np.nan
+    X_sigma[(X_sigma!=np.nan) & (X_sigma[X_sigma!=np.nan] < XSigmaLimit)] = np.nan
 
     if degree_max == None:
         degree_max = int(n/np.log10(n)) + 2
     else:
         degree_max = int(degree_max)
 
-    Mass_bounds = np.array([Mass_min, Mass_max])
-    Radius_bounds = np.array([Radius_min, Radius_max])
+    Y_bounds = np.array([Y_min, Y_max])
+    X_bounds = np.array([X_min, X_max])
 
 
-    t = Table([Mass, Mass_sigma, Radius, Radius_sigma], names=('pl_masse', 'pl_masseerr1', 'pl_rade', 'pl_radeerr1'))
-    t.write(os.path.join(input_location, 'MR_inputs.csv'), overwrite=True)
-    np.savetxt(os.path.join(input_location, 'Mass_bounds.txt'),Mass_bounds, comments='#', header='Minimum mass and maximum mass (log10)')
-    np.savetxt(os.path.join(input_location, 'Radius_bounds.txt'),Radius_bounds, comments='#', header='Minimum radius and maximum radius (log10)')
+    t = Table([Y, Y_sigma, X, X_sigma], names=(Y_char, Y_char+'_sigma', X_char, X_char+'_sigma'))
+    t.write(os.path.join(input_location, 'XY_inputs.csv'), overwrite=True)
+    np.savetxt(os.path.join(input_location, 'Y_bounds.txt'),Y_bounds, comments='#', header='Minimum and maximum {} (log10)'.format(Y_label))
+    np.savetxt(os.path.join(input_location, 'X_bounds.txt'),X_bounds, comments='#', header='Minimum and maximum {} (log10)'.format(X_label))
 
     ###########################################################
     ## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
@@ -266,8 +280,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         message = 'Picked {} k-folds'.format(k_fold)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-        deg_choose = run_cross_validation(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,
+        deg_choose = run_cross_validation(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+                                        X_char=X_char, Y_char=Y_char,
+                                        Y_bounds=Y_bounds, X_bounds=X_bounds,
                                         degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
 
         message = 'Finished CV. Picked {} degrees by maximizing likelihood'.format(deg_choose)
@@ -276,8 +291,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     elif select_deg == 'aic' :
         # Minimize the AIC
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
-        aic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d, abs_tol=abs_tol,
+        aic = np.array([MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+                        X_char=X_char, Y_char=Y_char,
+                        Y_bounds=Y_bounds, X_bounds=X_bounds, deg=d, abs_tol=abs_tol,
                         save_path=aux_output_location, verbose=verbose)['aic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(aic)]
@@ -291,8 +307,9 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     elif select_deg == 'bic':
         # Minimize the BIC
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
-        bic = np.array([MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                        Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds, deg=d,
+        bic = np.array([MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+                        X_char=X_char, Y_char=Y_char,
+                        Y_bounds=Y_bounds, X_bounds=X_bounds, deg=d,
                         abs_tol=abs_tol, save_path=aux_output_location, verbose=verbose)['bic'] for d in degree_candidates])
 
         deg_choose = degree_candidates[np.argmin(bic)]
@@ -320,25 +337,29 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
     message = 'Running full dataset MLE before bootstrap'
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-    initialfit_result = MLE_fit(Mass=Mass, Radius=Radius, Mass_sigma=Mass_sigma, Radius_sigma=Radius_sigma,
-                            Mass_bounds=Mass_bounds, Radius_bounds=Radius_bounds,  deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location,
+    initialfit_result = MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+                            Y_bounds=Y_bounds, X_bounds=X_bounds,
+                            X_char=X_char, Y_char=Y_char,
+                            deg=int(deg_choose), abs_tol=abs_tol, save_path=aux_output_location,
                             calc_joint_dist = True, verbose=verbose)
 
     message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-    _save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
+    _save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False,
+                    X_char=X_char, Y_char=Y_char, X_label=X_label, Y_label=Y_label)
 
     ###########################################################
     ## Step 3: Run Bootstrap
     if num_boot == 0:
-        print('Bootstrap not run since num_boot = 0')
+        message='Bootstrap not run since num_boot = 0'
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
         return initialfit_result
     else:
         # Generate iterator for using multiprocessing Pool.imap
         n_boot_iter = (np.random.choice(n, n, replace=True) for i in range(num_boot))
-        inputs = ((Mass[n_boot], Radius[n_boot], Mass_sigma[n_boot], Radius_sigma[n_boot],
-                Mass_bounds, Radius_bounds, deg_choose, abs_tol, aux_output_location, verbose) for n_boot in n_boot_iter)
+        inputs = ((Y[n_boot], X[n_boot], Y_sigma[n_boot], X_sigma[n_boot], Y_char, X_char,
+                Y_bounds, X_bounds, deg_choose, abs_tol, aux_output_location, verbose) for n_boot in n_boot_iter)
 
         message = '\n\n==============\nRunning {} bootstraps for the MLE code with degree = {}, using {} thread/s.\n==============\n\n'.format(str(num_boot),
                     str(deg_choose),str(cores))
@@ -350,7 +371,8 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
         pool = Pool(processes=cores)
         bootstrap_results = list(pool.imap(_bootsample_mle,inputs))
 
-        _save_dictionary(dictionary=bootstrap_results, output_location=output_location, bootstrap=True)
+        _save_dictionary(dictionary=bootstrap_results, output_location=output_location, bootstrap=True,
+                            X_char=X_char, Y_char=Y_char, X_label=X_label, Y_label=Y_label)
 
 
         message = 'Finished bootstrap at {}'.format(datetime.datetime.now())
@@ -366,10 +388,12 @@ def fit_mr_relation(Mass, Mass_sigma, Radius, Radius_sigma, save_path,
 
 
         message = """
-	 ___  _ _  ___   ___  _  _  __
-	|_ _|| U || __| | __|| \| ||  \
-	 | | |   || _|  | _| | \\ || o )
-	 |_| |_n_||___| |___||_|\_||__/
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
         """
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
@@ -385,12 +409,16 @@ def _bootsample_mle(inputs):
     \nINPUTS:
         inputs : Variable required for mapping for parallel processing.
         inputs is a tuple with the following components :
-                    Mass: Numpy array of mass measurements. In LINEAR SCALE.
-                    Radius: Numpy array of radius measurements. In LINEAR SCALE.
-                    Mass_sigma: Numpy array of mass uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
-                    Radius_sigma: Numpy array of radius uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
-                    Mass_bounds: Bounds for the mass.
-                    Radius_bounds: Bounds for the radius.
+                    Y: Numpy array of Y measurements. In LINEAR SCALE.
+                    X: Numpy array of X measurements. In LINEAR SCALE.
+                    Y_sigma: Numpy array of Y uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+                    X_sigma: Numpy array of X uncertainties. Assumes symmetrical uncertainty. In LINEAR SCALE.
+                    X_char: String alphabet (character) to depict X quantity.
+                        Eg 'm' for Mass, 'r' for Radius
+                    Y_char: String alphabet (character) to depict Y quantity
+                        Eg 'm' for Mass, 'r' for Radius
+                    Y_bounds: Bounds for the Y.
+                    X_bounds: Bounds for the X.
                     deg: Degree chosen for the beta densities.
                     abs_tol: Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
                              Default : 1e-8
@@ -398,26 +426,27 @@ def _bootsample_mle(inputs):
                     verbose: Keyword specifying verbosity
     OUTPUTS:
 
-        MR_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -
+        XY_boot :Output dictionary from bootstrap run using Maximum Likelihood Estimation. Its keys are  -
                 'weights' : Weights for Beta densities from bootstrap run.
                 'aic' : Akaike Information Criterion from bootstrap run.
                 'bic' : Bayesian Information Criterion from bootstrap run.
-                'M_points' : Sequence of mass points for initial fitting w/o bootstrap.
-                'R_points' : Sequence of radius points for initial fitting w/o bootstrap.
-                'M_cond_R' : Conditional distribution of mass given radius from bootstrap run.
-                'M_cond_R_var' : Variance for the Conditional distribution of mass given radius from bootstrap run.
-                'M_cond_R_quantile' : Quantiles for the Conditional distribution of mass given radius from bootstrap run.
-                'R_cond_M' : Conditional distribution of radius given mass from bootstrap run.
-                'R_cond_M_var' : Variance for the Conditional distribution of radius given mass from bootstrap run.
-                'R_cond_M_quantile' : Quantiles for the Conditional distribution of radius given mass from bootstrap run.
-                'Radius_marg' : Marginalized radius distribution from bootstrap run.
-                'Mass_marg' : Marginalized mass distribution from bootstrap run.
+                'Y_points' : Sequence of Y points for initial fitting w/o bootstrap.
+                'X_points' : Sequence of X points for initial fitting w/o bootstrap.
+                'Y_cond_X' : Conditional distribution of Y given X from bootstrap run.
+                'Y_cond_X_var' : Variance for the Conditional distribution of Y given X from bootstrap run.
+                'Y_cond_X_quantile' : Quantiles for the Conditional distribution of Y given X from bootstrap run.
+                'X_cond_Y' : Conditional distribution of X given Y from bootstrap run.
+                'X_cond_Y_var' : Variance for the Conditional distribution of X given Y from bootstrap run.
+                'X_cond_Y_quantile' : Quantiles for the Conditional distribution of X given Y from bootstrap run.
+                'X_marg' : Marginalized X distribution from bootstrap run.
+                'Y_marg' : Marginalized Y distribution from bootstrap run.
     """
 
-    MR_boot = MLE_fit(Mass=inputs[0], Radius=inputs[1],
-                    Mass_sigma=inputs[2], Radius_sigma=inputs[3],
-                    Mass_bounds=inputs[4], Radius_bounds=inputs[5],
-                    deg=inputs[6],
-                    abs_tol=inputs[7], save_path=inputs[8], verbose=inputs[9])
+    XY_boot = MLE_fit(Y=inputs[0], X=inputs[1],
+                    Y_sigma=inputs[2], X_sigma=inputs[3],
+                    Y_char=inputs[4], X_char=inputs[5],
+                    Y_bounds=inputs[6], X_bounds=inputs[7],
+                    deg=inputs[8],
+                    abs_tol=inputs[9], save_path=inputs[10], verbose=inputs[11])
 
-    return MR_boot
+    return XY_boot
