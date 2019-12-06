@@ -285,7 +285,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
                                         Y_bounds=Y_bounds, X_bounds=X_bounds,
                                         degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
 
-        message = 'Finished CV. Picked {} degrees by maximizing likelihood'.format(deg_choose)
+        message = 'Finished CV. Picked {} degrees by maximizing likelihood\n'.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     elif select_deg == 'aic' :
@@ -334,7 +334,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
     print('Running full dataset MLE before bootstrap')
 
 
-    message = 'Running full dataset MLE before bootstrap'
+    message = 'Running full dataset MLE before bootstrap\n'
     _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
     initialfit_result = MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,

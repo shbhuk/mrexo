@@ -60,7 +60,7 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
     n = len(Y)
 
-    message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
+    message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_max)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
     rand_gen = np.random.choice(n, n, replace = False)
