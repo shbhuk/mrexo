@@ -13,7 +13,7 @@ from .plot import plot_r_given_m_relation, plot_m_given_r_relation
 pwd = os.path.dirname(__file__)
 np.warnings.filterwarnings('ignore')
 
-def predict_from_measurement(measurement, measurement_sigma=None,
+def predict_from_measurement(measurement, measurement_sigma=np.nan,
             predict = 'Mass', result_dir=None, dataset='mdwarf',
             is_posterior=False, qtl=[0.16,0.84], show_plot=False,
             use_lookup=False):
@@ -24,7 +24,7 @@ def predict_from_measurement(measurement, measurement_sigma=None,
         measurement: Numpy array of measurement/s. Always in linear scale.
         measurement_sigma: Numpy array of radius uncertainties. Assumes
             symmetrical uncertainty. Default : None. Always in linear scale.
-        predict: The quantity that is being predicted. 
+        predict: The quantity that is being predicted.
                 If = 'Mass', will give mass given input radius.
                 Else, can predict radius from mass, if = 'Radius'.
         result_dir: The directory where the results of the fit are stored.
@@ -36,21 +36,21 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 and then dataset='mdwarf', or dataset='kepler'
                 The Kepler dataset has been explained in Ning et al. 2018.
                 The M-dwarf dataset has been explained in Kanodia et al. 2019.
-        is_posterior: If the input radii is a posterior sample, 
+        is_posterior: If the input radii is a posterior sample,
                 is_posterior=True, else False.
                 Default=False
         qtl: 2 element array or list with the quantiles that will be returned.
                 Default is 0.16 and 0.84. qtl=[0.16,0.84].
                 If is_posterior=True, qtl will not be considered.
-        show_plot: Boolean. Default=False. 
+        show_plot: Boolean. Default=False.
                 If True, will plot the conditional Mass - Radius relationship,
                 and show the predicted point.
         use_lookup: If True, will try to use lookup table.
-                If lookup table does not exist, will give warning and 
-                calculate the prediction using analytic method. 
+                If lookup table does not exist, will give warning and
+                calculate the prediction using analytic method.
                 Can only be used for posterior prediction.
     OUTPUTS:
-        
+
         outputs: Tuple with the predicted mass
                 (or distribution of masses if input is a posterior),
                 and the quantile distribution according to
@@ -62,37 +62,37 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 check, in the small planet mass regime,where the uncertainties
                 dominate, and can give unphysical results.
     EXAMPLE:
-        
+
         from mrexo import predict_from_measurement
         import os
         import numpy as np
         pwd = '~/mrexo_working/'
 
-        #Below example predicts the mass for a radius of log10(1) Earth radii 
+        #Below example predicts the mass for a radius of log10(1) Earth radii
         #exoplanet, with no measurement uncertainty from
         #the fit results in 'M_dwarfs_deg_cv'
-        
+
         result_dir = os.path.join(pwd,'M_dwarfs_deg_cv')
-        predicted_mass, qtls = predict_from_measurement(measurement=1, 
+        predicted_mass, qtls = predict_from_measurement(measurement=1,
                                measurement_sigma=None,
-                               result_dir=result_dir, 
+                               result_dir=result_dir,
                             is_posterior=False, is_log=True)
 
-        #Below example predicts the mass for a radius of log10(1) Earth radii 
+        #Below example predicts the mass for a radius of log10(1) Earth radii
         #exoplanet with uncertainty of 0.1 Earth Radii on the included Mdwarf fit.
         predicted_mass, qtls = predict_from_measurement(
-                                measurement=1, measurement_sigma=0.1, 
+                                measurement=1, measurement_sigma=0.1,
                                 result_dir=None, dataset='mdwarf',
                                 is_posterior=False,
                                 is_log=True)
 
-        #Below example predicts the radius for a mass of log10(1) Earth mass 
+        #Below example predicts the radius for a mass of log10(1) Earth mass
         #exoplanet with uncertainty of 0.1 Earth Mass on the included Mdwarf fit.
         #Similary for Kepler dataset.
         predicted_mass, qtls = predict_from_measurement(
                                 measurement=1, measurement_sigma=0.1,
                                 predict = 'radius',
-                                result_dir=None, dataset='mdwarf', 
+                                result_dir=None, dataset='mdwarf',
                                 is_posterior=False, is_log=True)
     """
 
@@ -174,16 +174,16 @@ def predict_from_measurement(measurement, measurement_sigma=None,
                 else:
                     # If finding multiple quantiles, do not plot errorbar on predicted value in plot
                     predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
-    
+
                 if predict == 'mass':
                     fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
                     ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
                     handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
                 else:
                     fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-    
+
                 yerr = np.array([[10**predicted_median - 10**predicted_lower_quantile, 10**predicted_upper_quantile - 10**predicted_median]]).T
-    
+
                 plt.hlines(10**predicted_median, 10**measurement_min, 10**measurement_max, linestyle = 'dashed', colors = 'darkgrey')
                 plt.vlines(10**log_measurement, 10**predict_min, 10**predict_max,linestyle = 'dashed', colors = 'darkgrey')
                 ax.errorbar(x=measurement, y=10**predicted_median, xerr=measurement_sigma,
@@ -230,8 +230,8 @@ def predict_from_measurement(measurement, measurement_sigma=None,
 
             else:
                 fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
-            
-            # Check if need this if-else block    
+
+            # Check if need this if-else block
             if np.size(qtl)==2:
                 # predicted_lower_quantile, predicted_upper_quantile = predicted_qtl
                 output_qtl =  mquantiles(outputs[:-1], prob=[0.5, qtl[0], qtl[1]],axis=0,alphap=1,betap=1).data
@@ -263,7 +263,7 @@ def mass_100_percent_iron_planet(logRadius):
     \nINPUT:
         logRadius : Radius of the planet in log10 units
     OUTPUT:
-        
+
         logMass: Mass in log10 units for a 100% iron planet of given radius
     """
 
@@ -276,7 +276,7 @@ def radius_100_percent_iron_planet(logMass):
     \nINPUT:
         logMass : Mass of the planet in log10 units
     OUTPUT:
-        
+
         logRadius: Radius in log10 units for a 100% iron planet of given mass
     """
 
@@ -298,9 +298,9 @@ def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
         The generated lookup table is saved in /result_dir/output/ in the form
         of a .txt file as well as a .npy file which has the 2D interpolated version
         of the lookup table.
-        
+
     EXAMPLE:
-        
+
         ## To generate lookup table to get mass from radius
         from mrexo.predict import generate_lookup_table
         kepler_result = '/storage/home/s/szk381/work/mrexo/mrexo/datasets/Kepler_Ning_etal_20170605'

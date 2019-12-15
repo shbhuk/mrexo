@@ -95,7 +95,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
         save_path = os.path.dirname(__file__)
 
 
-    message = '====\nStarted run at {}'.format(starttime)
+    message = '====\nStarted run at {}\n'.format(starttime)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
