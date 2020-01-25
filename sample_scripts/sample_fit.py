@@ -38,6 +38,8 @@ For more detailed guidelines read the docuemtnation for the fit_mr_relation() fu
 
 
 t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
+# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
+
 
 # Symmetrical errorbars
 Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
@@ -59,4 +61,4 @@ MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_lab
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
                                                 save_path = result_dir, select_deg = 17,
-                                                num_boot = 10, cores = 2)
+                                                num_boot = 50, cores = 4)
