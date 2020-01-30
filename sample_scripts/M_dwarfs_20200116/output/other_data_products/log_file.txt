@@ -1,4 +1,4 @@
-Using core 27396:
+Using core 16236:
 	___  _________ _______   _______
 	|  \/  || ___ \  ___\ \ / /  _  |
 	| .  . || |_/ / |__  \ V /| | | |
@@ -6,2256 +6,824 @@ Using core 27396:
 	| |  | || |\ \| |___/ /^\ \ \_/ /
 	\_|  |_/\_| \_\____/\/   \/\___/
 
-    Using core 27396:Started for cv degrees at 2020-01-16 08:52:09.407404, using 2 core/sUsing core 27396:Picked 5 k-foldsUsing core 27396:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 22
-Using core 26784:Running cross validation for 5 degree check and 0 th-fold
-Using core 29688:Running cross validation for 6 degree check and 0 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:11.431626
-Using core 26784:====
-Started run at 2020-01-16 08:52:11.432119
-Using core 29688:Started Integration at 2020-01-16 08:52:11.439996
-Using core 26784:Started Integration at 2020-01-16 08:52:11.440988
-Using core 26784:Finished Integration at 2020-01-16 08:52:11.954844. 
+    Using core 16236:Started for cv degrees at 2020-01-30 16:38:45.663780, using 2 core/sUsing core 16236:Picked 5 k-foldsUsing core 16236:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 22
+Using core 924:Running cross validation for 5 degree check and 0 th-fold
+Using core 38728:Running cross validation for 6 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:38:47.811704
+Using core 38728:====
+Started run at 2020-01-30 16:38:47.812202
+Using core 38728:Started Integration at 2020-01-30 16:38:47.819926
+Using core 924:Started Integration at 2020-01-30 16:38:47.819926
+Using core 924:Finished Integration at 2020-01-30 16:38:48.299062. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:11.970222, with 7 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:38:48.324855, with 20 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:11.972204
-Using core 26784:Running cross validation for 8 degree check and 0 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:12.083309
-Using core 26784:Started Integration at 2020-01-16 08:52:12.085790
-Using core 29688:Finished Integration at 2020-01-16 08:52:12.118525. 
+Using core 924:Started Integration at 2020-01-30 16:38:48.327334
+Using core 924:Running cross validation for 8 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:38:48.470679
+Using core 924:Started Integration at 2020-01-30 16:38:48.472664
+Using core 38728:Finished Integration at 2020-01-30 16:38:48.494486. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:52:12.139357, with 18 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:38:48.520278, with 22 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:52:12.141342
-Using core 29688:Running cross validation for 10 degree check and 0 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:12.290637
-Using core 29688:Started Integration at 2020-01-16 08:52:12.292125
-Using core 26784:Finished Integration at 2020-01-16 08:52:13.207245. 
+Using core 38728:Started Integration at 2020-01-30 16:38:48.522263
+Using core 38728:Running cross validation for 10 degree check and 0 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:38:48.709751
+Using core 38728:Started Integration at 2020-01-30 16:38:48.711239
+Using core 924:Finished Integration at 2020-01-30 16:38:49.534103. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:13.290077, with 34 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:38:49.611975, with 37 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:13.291564
-Using core 26784:Running cross validation for 12 degree check and 0 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:13.500877
-Using core 26784:Started Integration at 2020-01-16 08:52:13.503359
-Using core 29688:Finished Integration at 2020-01-16 08:52:13.711180. 
+Using core 924:Started Integration at 2020-01-30 16:38:49.614950
+Using core 924:Running cross validation for 12 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:38:49.886262
+Using core 924:Started Integration at 2020-01-30 16:38:49.888743
+Using core 38728:Finished Integration at 2020-01-30 16:38:50.003814. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:52:13.848573, with 32 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:38:50.195766, with 42 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:52:13.851057
-Using core 29688:Running cross validation for 14 degree check and 0 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:14.131790
-Using core 29688:Started Integration at 2020-01-16 08:52:14.133277
-Using core 26784:Finished Integration at 2020-01-16 08:52:15.094029. 
+Using core 38728:Started Integration at 2020-01-30 16:38:50.197750
+Using core 38728:Running cross validation for 14 degree check and 0 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:38:50.538503
+Using core 38728:Started Integration at 2020-01-30 16:38:50.539992
+Using core 924:Finished Integration at 2020-01-30 16:38:51.481400. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:15.452141, with 36 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:38:51.959543, with 38 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:15.453629
-Using core 26784:Running cross validation for 16 degree check and 0 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:15.758175
-Using core 26784:Started Integration at 2020-01-16 08:52:15.760159
-Using core 29688:Finished Integration at 2020-01-16 08:52:15.962029. 
+Using core 924:Started Integration at 2020-01-30 16:38:51.961527
+Using core 924:Running cross validation for 16 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:38:52.373705
+Using core 924:Started Integration at 2020-01-30 16:38:52.375193
+Using core 38728:Finished Integration at 2020-01-30 16:38:52.601862. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:52:16.656429, with 26 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:38:53.745145, with 41 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:52:16.658413
-Using core 29688:Running cross validation for 18 degree check and 0 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:17.423245
-Using core 29688:Started Integration at 2020-01-16 08:52:17.424237
-Using core 26784:Finished Integration at 2020-01-16 08:52:18.327949. 
+Using core 38728:Started Integration at 2020-01-30 16:38:53.747128
+Using core 38728:Running cross validation for 18 degree check and 0 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:38:54.250567
+Using core 38728:Started Integration at 2020-01-30 16:38:54.252551
+Using core 924:Finished Integration at 2020-01-30 16:38:54.659767. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Finished Integration at 2020-01-16 08:52:19.911181. 
+Using core 924:Optimization run finished at 2020-01-30 16:38:56.053031, with 23 iterations. Exit Code = 0
+
+Using core 924:Started Integration at 2020-01-30 16:38:56.055015
+Using core 924:Running cross validation for 20 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:38:56.779672
+Using core 924:Started Integration at 2020-01-30 16:38:56.780664
+Using core 38728:Finished Integration at 2020-01-30 16:38:56.995927. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:20.130913, with 29 iterations. Exit Code = 0
-
-Using core 26784:Started Integration at 2020-01-16 08:52:20.132397
-Using core 26784:Running cross validation for 20 degree check and 0 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:20.572845
-Using core 26784:Started Integration at 2020-01-16 08:52:20.573837
-Using core 26784:Finished Integration at 2020-01-16 08:52:23.333581. 
+Using core 924:Finished Integration at 2020-01-30 16:39:00.251176. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:52:25.789278, with 35 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:05.683864, with 18 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:52:25.791759
-Using core 29688:Running cross validation for 22 degree check and 0 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:26.480702
-Using core 29688:Started Integration at 2020-01-16 08:52:26.481694
-Using core 29688:Finished Integration at 2020-01-16 08:52:30.908990. 
+Using core 924:Started Integration at 2020-01-30 16:39:05.685351
+Using core 38728:Optimization run finished at 2020-01-30 16:39:06.208136, with 49 iterations. Exit Code = 0
+
+Using core 38728:Started Integration at 2020-01-30 16:39:06.209625
+Using core 924:Running cross validation for 22 degree check and 0 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:06.384713
+Using core 924:Started Integration at 2020-01-30 16:39:06.385704
+Using core 38728:Running cross validation for 5 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:06.880216
+Using core 38728:Started Integration at 2020-01-30 16:39:06.881704
+Using core 38728:Finished Integration at 2020-01-30 16:39:07.417880. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:34.832847, with 38 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:07.427304, with 7 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:34.835327
-Using core 26784:Running cross validation for 5 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:35.529231
-Using core 26784:Started Integration at 2020-01-16 08:52:35.530719
-Using core 26784:Finished Integration at 2020-01-16 08:52:36.100622. 
+Using core 38728:Started Integration at 2020-01-30 16:39:07.428296
+Using core 38728:Running cross validation for 6 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:07.549320
+Using core 38728:Started Integration at 2020-01-30 16:39:07.550312
+Using core 38728:Finished Integration at 2020-01-30 16:39:08.262073. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:36.119967, with 20 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:08.280920, with 17 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:36.121951
-Using core 26784:Running cross validation for 6 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:36.246943
-Using core 26784:Started Integration at 2020-01-16 08:52:36.247934
-Using core 26784:Finished Integration at 2020-01-16 08:52:36.979039. 
+Using core 38728:Started Integration at 2020-01-30 16:39:08.282408
+Using core 38728:Running cross validation for 8 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:08.457001
+Using core 38728:Started Integration at 2020-01-30 16:39:08.458489
+Using core 38728:Finished Integration at 2020-01-30 16:39:09.463384. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:37.017231, with 22 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:09.551176, with 42 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:37.020208
-Using core 26784:Running cross validation for 8 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:37.213646
-Using core 26784:Started Integration at 2020-01-16 08:52:37.214639
-Using core 26784:Finished Integration at 2020-01-16 08:52:38.300382. 
+Using core 38728:Started Integration at 2020-01-30 16:39:09.552664
+Using core 38728:Running cross validation for 10 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:09.779832
+Using core 38728:Started Integration at 2020-01-30 16:39:09.780824
+Using core 924:Finished Integration at 2020-01-30 16:39:10.911705. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:38.368831, with 37 iterations. Exit Code = 0
-
-Using core 26784:Started Integration at 2020-01-16 08:52:38.370815
-Using core 26784:Running cross validation for 10 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:38.602942
-Using core 26784:Started Integration at 2020-01-16 08:52:38.604431
-Using core 26784:Finished Integration at 2020-01-16 08:52:40.083007. 
+Using core 38728:Finished Integration at 2020-01-30 16:39:11.113082. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:40.458479, with 38 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:11.324872, with 44 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:40.460463
-Using core 26784:Running cross validation for 12 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:41.323008
-Using core 26784:Started Integration at 2020-01-16 08:52:41.324495
-Using core 26784:Finished Integration at 2020-01-16 08:52:43.786144. 
+Using core 38728:Started Integration at 2020-01-30 16:39:11.326360
+Using core 38728:Running cross validation for 12 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:11.634873
+Using core 38728:Started Integration at 2020-01-30 16:39:11.635866
+Using core 38728:Finished Integration at 2020-01-30 16:39:13.323753. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:44.421521, with 41 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:13.957641, with 48 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:44.423503
-Using core 26784:Running cross validation for 14 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:44.947279
-Using core 26784:Started Integration at 2020-01-16 08:52:44.948272
-Using core 26784:Finished Integration at 2020-01-16 08:52:47.277984. 
+Using core 38728:Started Integration at 2020-01-30 16:39:13.959129
+Using core 38728:Running cross validation for 14 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:14.324681
+Using core 38728:Started Integration at 2020-01-30 16:39:14.325673
+Using core 38728:Finished Integration at 2020-01-30 16:39:16.347865. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:52:48.360751, with 32 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:17.221817, with 29 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:48.362239
-Using core 26784:Running cross validation for 16 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:49.456418
-Using core 26784:Started Integration at 2020-01-16 08:52:49.457907
-Using core 29688:Optimization run finished at 2020-01-16 08:52:51.375439, with 31 iterations. Exit Code = 0
-
-Using core 29688:Started Integration at 2020-01-16 08:52:51.376928
-Using core 26784:Finished Integration at 2020-01-16 08:52:52.184912. 
+Using core 38728:Started Integration at 2020-01-30 16:39:17.225289
+Using core 38728:Running cross validation for 16 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:17.692029
+Using core 38728:Started Integration at 2020-01-30 16:39:17.693018
+Using core 38728:Finished Integration at 2020-01-30 16:39:20.124409. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Running cross validation for 18 degree check and 1 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:52:52.600560
-Using core 29688:Started Integration at 2020-01-16 08:52:52.602546
-Using core 26784:Optimization run finished at 2020-01-16 08:52:54.437743, with 34 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:23.879626, with 38 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:52:54.439232
-Using core 26784:Running cross validation for 20 degree check and 1 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:52:55.079071
-Using core 26784:Started Integration at 2020-01-16 08:52:55.080064
-Using core 29688:Finished Integration at 2020-01-16 08:52:55.625168. 
+Using core 38728:Started Integration at 2020-01-30 16:39:23.881113
+Using core 38728:Running cross validation for 18 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:24.454985
+Using core 38728:Started Integration at 2020-01-30 16:39:24.455977
+Using core 38728:Finished Integration at 2020-01-30 16:39:28.003866. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Finished Integration at 2020-01-16 08:52:58.210320. 
+Using core 38728:Optimization run finished at 2020-01-30 16:39:35.085753, with 36 iterations. Exit Code = 0
+
+Using core 38728:Started Integration at 2020-01-30 16:39:35.087242
+Using core 38728:Running cross validation for 20 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:35.667562
+Using core 38728:Started Integration at 2020-01-30 16:39:35.668554
+Using core 38728:Finished Integration at 2020-01-30 16:39:39.356314. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:53:02.063248, with 34 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:39:40.393453, with 3 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:53:02.064737
-Using core 29688:Running cross validation for 22 degree check and 1 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:53:02.662913
-Using core 29688:Started Integration at 2020-01-16 08:53:02.664400
-Using core 26784:Optimization run finished at 2020-01-16 08:53:03.369713, with 18 iterations. Exit Code = 0
-
-Using core 26784:Started Integration at 2020-01-16 08:53:03.371200
-Using core 26784:Running cross validation for 5 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:04.193569
-Using core 26784:Started Integration at 2020-01-16 08:53:04.195057
-Using core 26784:Finished Integration at 2020-01-16 08:53:04.693040. 
+Using core 38728:Started Integration at 2020-01-30 16:39:40.395436
+Using core 38728:Running cross validation for 22 degree check and 1 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:39:41.250043
+Using core 38728:Started Integration at 2020-01-30 16:39:41.251035
+Using core 38728:Finished Integration at 2020-01-30 16:39:46.914364. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:04.700481, with 9 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:48.785771, with 61 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:04.701968
-Using core 26784:Running cross validation for 6 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:04.831920
-Using core 26784:Started Integration at 2020-01-16 08:53:04.832913
-Using core 26784:Finished Integration at 2020-01-16 08:53:05.523344. 
+Using core 924:Started Integration at 2020-01-30 16:39:48.787756
+Using core 924:Running cross validation for 5 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:50.097691
+Using core 924:Started Integration at 2020-01-30 16:39:50.098685
+Using core 924:Finished Integration at 2020-01-30 16:39:50.682476. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:05.543680, with 21 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:50.700827, with 14 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:05.545168
-Using core 26784:Running cross validation for 8 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:05.729184
-Using core 26784:Started Integration at 2020-01-16 08:53:05.730177
-Using core 26784:Finished Integration at 2020-01-16 08:53:06.768305. 
+Using core 924:Started Integration at 2020-01-30 16:39:50.702315
+Using core 924:Running cross validation for 6 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:50.898235
+Using core 924:Started Integration at 2020-01-30 16:39:50.900715
+Using core 924:Finished Integration at 2020-01-30 16:39:51.712171. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:06.830801, with 34 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:51.747388, with 18 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:06.832288
-Using core 26784:Running cross validation for 10 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:07.116001
-Using core 26784:Started Integration at 2020-01-16 08:53:07.116993
-Using core 29688:Finished Integration at 2020-01-16 08:53:07.511312. 
+Using core 924:Started Integration at 2020-01-30 16:39:51.748875
+Using core 924:Running cross validation for 8 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:52.066316
+Using core 924:Started Integration at 2020-01-30 16:39:52.068300
+Using core 924:Finished Integration at 2020-01-30 16:39:53.213067. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Finished Integration at 2020-01-16 08:53:08.757760. 
+Using core 924:Optimization run finished at 2020-01-30 16:39:53.298379, with 40 iterations. Exit Code = 0
+
+Using core 924:Started Integration at 2020-01-30 16:39:53.299371
+Using core 924:Running cross validation for 10 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:53.685259
+Using core 924:Started Integration at 2020-01-30 16:39:53.686253
+Using core 924:Finished Integration at 2020-01-30 16:39:55.204011. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:08.929873, with 34 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:55.471355, with 19 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:08.931363
-Using core 26784:Running cross validation for 12 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:09.341554
-Using core 26784:Started Integration at 2020-01-16 08:53:09.343042
-Using core 29688:Optimization run finished at 2020-01-16 08:53:09.578145, with 3 iterations. Exit Code = 0
-
-Using core 29688:Started Integration at 2020-01-16 08:53:09.579633
-Using core 29688:Running cross validation for 14 degree check and 2 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:53:10.729857
-Using core 29688:Started Integration at 2020-01-16 08:53:10.730849
-Using core 26784:Finished Integration at 2020-01-16 08:53:11.238753. 
+Using core 924:Started Integration at 2020-01-30 16:39:55.474827
+Using core 924:Running cross validation for 12 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:55.998604
+Using core 924:Started Integration at 2020-01-30 16:39:55.999597
+Using core 924:Finished Integration at 2020-01-30 16:39:57.673099. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:11.427729, with 15 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:39:57.858108, with 15 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:11.429713
-Using core 26784:Running cross validation for 16 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:11.883553
-Using core 26784:Started Integration at 2020-01-16 08:53:11.886033
-Using core 29688:Finished Integration at 2020-01-16 08:53:12.902833. 
+Using core 924:Started Integration at 2020-01-30 16:39:57.859596
+Using core 924:Running cross validation for 14 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:39:58.370476
+Using core 924:Started Integration at 2020-01-30 16:39:58.371468
+Using core 924:Finished Integration at 2020-01-30 16:40:00.429372. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:53:13.482161, with 20 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:01.084092, with 21 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:53:13.483155
-Using core 29688:Running cross validation for 18 degree check and 2 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:53:14.072897
-Using core 29688:Started Integration at 2020-01-16 08:53:14.073889
-Using core 26784:Finished Integration at 2020-01-16 08:53:14.239057. 
+Using core 924:Started Integration at 2020-01-30 16:40:01.085580
+Using core 924:Running cross validation for 16 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:01.762128
+Using core 924:Started Integration at 2020-01-30 16:40:01.763116
+Using core 924:Finished Integration at 2020-01-30 16:40:04.724236. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:15.928433, with 22 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:06.277708, with 24 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:15.929921
-Using core 26784:Running cross validation for 20 degree check and 2 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:16.571249
-Using core 26784:Started Integration at 2020-01-16 08:53:16.572242
-Using core 29688:Finished Integration at 2020-01-16 08:53:17.020630. 
+Using core 924:Started Integration at 2020-01-30 16:40:06.279196
+Using core 924:Running cross validation for 18 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:07.101564
+Using core 924:Started Integration at 2020-01-30 16:40:07.102557
+Using core 924:Finished Integration at 2020-01-30 16:40:09.969436. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Finished Integration at 2020-01-16 08:53:20.027377. 
+Using core 924:Optimization run finished at 2020-01-30 16:40:14.676476, with 26 iterations. Exit Code = 0
+
+Using core 924:Started Integration at 2020-01-30 16:40:14.677965
+Using core 924:Running cross validation for 20 degree check and 2 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:15.531085
+Using core 924:Started Integration at 2020-01-30 16:40:15.533069
+Using core 38728:Optimization run finished at 2020-01-30 16:40:16.611876, with 51 iterations. Exit Code = 0
+
+Using core 38728:Started Integration at 2020-01-30 16:40:16.614845
+Using core 38728:Running cross validation for 22 degree check and 2 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:40:17.745229
+Using core 38728:Started Integration at 2020-01-30 16:40:17.746221
+Using core 924:Finished Integration at 2020-01-30 16:40:18.686637. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:53:22.038658, with 26 iterations. Exit Code = 0
-
-Using core 29688:Started Integration at 2020-01-16 08:53:22.040146
-Using core 29688:Running cross validation for 22 degree check and 2 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:53:22.819362
-Using core 29688:Started Integration at 2020-01-16 08:53:22.820354
-Using core 29688:Finished Integration at 2020-01-16 08:53:27.258561. 
+Using core 38728:Finished Integration at 2020-01-30 16:40:22.827245. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:28.173682, with 28 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:28.234141, with 33 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:28.175170
-Using core 26784:Running cross validation for 5 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:28.948931
-Using core 26784:Started Integration at 2020-01-16 08:53:28.950915
-Using core 26784:Finished Integration at 2020-01-16 08:53:29.563474. 
+Using core 924:Started Integration at 2020-01-30 16:40:28.235629
+Using core 924:Running cross validation for 5 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:29.261358
+Using core 924:Started Integration at 2020-01-30 16:40:29.262351
+Using core 924:Finished Integration at 2020-01-30 16:40:29.794557. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:29.576371, with 16 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:29.802494, with 10 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:29.577859
-Using core 26784:Running cross validation for 6 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:29.732114
-Using core 26784:Started Integration at 2020-01-16 08:53:29.733602
-Using core 26784:Finished Integration at 2020-01-16 08:53:30.452307. 
+Using core 924:Started Integration at 2020-01-30 16:40:29.803981
+Using core 924:Running cross validation for 6 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:29.949311
+Using core 924:Started Integration at 2020-01-30 16:40:29.950797
+Using core 924:Finished Integration at 2020-01-30 16:40:30.705710. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:30.467682, with 16 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:30.729518, with 19 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:30.469171
-Using core 26784:Running cross validation for 8 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:30.631860
-Using core 26784:Started Integration at 2020-01-16 08:53:30.633346
-Using core 26784:Finished Integration at 2020-01-16 08:53:31.585666. 
+Using core 924:Started Integration at 2020-01-30 16:40:30.731006
+Using core 924:Running cross validation for 8 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:30.958670
+Using core 924:Started Integration at 2020-01-30 16:40:30.959663
+Using core 924:Finished Integration at 2020-01-30 16:40:32.155518. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:31.653122, with 36 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:32.246781, with 44 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:31.654610
-Using core 26784:Running cross validation for 10 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:31.955683
-Using core 26784:Started Integration at 2020-01-16 08:53:31.956675
-Using core 26784:Finished Integration at 2020-01-16 08:53:33.340018. 
+Using core 924:Started Integration at 2020-01-30 16:40:32.248270
+Using core 924:Running cross validation for 10 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:32.526030
+Using core 924:Started Integration at 2020-01-30 16:40:32.527022
+Using core 924:Finished Integration at 2020-01-30 16:40:33.963438. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:33.565699, with 43 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:34.024942, with 11 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:33.568179
-Using core 26784:Running cross validation for 12 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:33.919347
-Using core 26784:Started Integration at 2020-01-16 08:53:33.920339
-Using core 26784:Finished Integration at 2020-01-16 08:53:35.627074. 
+Using core 924:Started Integration at 2020-01-30 16:40:34.026430
+Using core 924:Running cross validation for 12 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:34.376111
+Using core 924:Started Integration at 2020-01-30 16:40:34.377599
+Using core 924:Finished Integration at 2020-01-30 16:40:36.026302. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:36.097779, with 38 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:36.327870, with 11 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:36.099266
-Using core 26784:Running cross validation for 14 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:36.478212
-Using core 26784:Started Integration at 2020-01-16 08:53:36.479203
-Using core 26784:Finished Integration at 2020-01-16 08:53:38.507346. 
+Using core 924:Started Integration at 2020-01-30 16:40:36.330846
+Using core 924:Running cross validation for 14 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:37.569360
+Using core 924:Started Integration at 2020-01-30 16:40:37.571839
+Using core 924:Finished Integration at 2020-01-30 16:40:41.576047. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:39.477026, with 34 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:42.129582, with 15 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:39.478019
-Using core 26784:Running cross validation for 16 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:40.017667
-Using core 26784:Started Integration at 2020-01-16 08:53:40.019155
-Using core 26784:Finished Integration at 2020-01-16 08:53:42.448563. 
+Using core 924:Started Integration at 2020-01-30 16:40:42.131567
+Using core 924:Running cross validation for 16 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:42.785791
+Using core 924:Started Integration at 2020-01-30 16:40:42.787278
+Using core 924:Finished Integration at 2020-01-30 16:40:45.681935. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:44.868547, with 37 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:46.878288, with 14 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:44.870036
-Using core 26784:Running cross validation for 18 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:45.459284
-Using core 26784:Started Integration at 2020-01-16 08:53:45.460275
-Using core 29688:Optimization run finished at 2020-01-16 08:53:47.815784, with 38 iterations. Exit Code = 0
+Using core 924:Started Integration at 2020-01-30 16:40:46.880271
+Using core 924:Running cross validation for 18 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:47.568719
+Using core 924:Started Integration at 2020-01-30 16:40:47.569716
+Using core 38728:Optimization run finished at 2020-01-30 16:40:47.605919, with 37 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:53:47.818755
-Using core 26784:Finished Integration at 2020-01-16 08:53:48.059811. 
+Using core 38728:Started Integration at 2020-01-30 16:40:47.607902
+Using core 38728:Running cross validation for 20 degree check and 3 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:40:49.200559
+Using core 38728:Started Integration at 2020-01-30 16:40:49.201551
+Using core 924:Finished Integration at 2020-01-30 16:40:50.688064. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Running cross validation for 20 degree check and 3 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:53:49.294356
-Using core 29688:Started Integration at 2020-01-16 08:53:49.314196
-Using core 29688:Finished Integration at 2020-01-16 08:53:52.627477. 
+Using core 38728:Finished Integration at 2020-01-30 16:40:52.770769. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:53:54.369924, with 35 iterations. Exit Code = 0
+Using core 924:Optimization run finished at 2020-01-30 16:40:53.962160, with 17 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:53:54.371908
-Using core 26784:Running cross validation for 22 degree check and 3 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:53:55.050933
-Using core 26784:Started Integration at 2020-01-16 08:53:55.052420
-Using core 26784:Finished Integration at 2020-01-16 08:53:59.266436. 
+Using core 924:Started Integration at 2020-01-30 16:40:53.963648
+Using core 924:Running cross validation for 22 degree check and 3 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:40:54.815776
+Using core 924:Started Integration at 2020-01-30 16:40:54.817263
+Using core 38728:Optimization run finished at 2020-01-30 16:40:59.307551, with 21 iterations. Exit Code = 0
+
+Using core 38728:Started Integration at 2020-01-30 16:40:59.309040
+Using core 38728:Running cross validation for 5 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:00.221185
+Using core 38728:Started Integration at 2020-01-30 16:41:00.223168
+Using core 924:Finished Integration at 2020-01-30 16:41:00.624928. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:01.147764, with 3 iterations. Exit Code = 0
-
-Using core 26784:Started Integration at 2020-01-16 08:54:01.149748
-Using core 26784:Running cross validation for 5 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:02.417030
-Using core 26784:Started Integration at 2020-01-16 08:54:02.418021
-Using core 26784:Finished Integration at 2020-01-16 08:54:03.055876. 
+Using core 38728:Finished Integration at 2020-01-30 16:41:00.822833. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:03.063813, with 9 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:00.830768, with 8 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:54:03.065797
-Using core 26784:Running cross validation for 6 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:03.209637
-Using core 26784:Started Integration at 2020-01-16 08:54:03.211126
-Using core 29688:Optimization run finished at 2020-01-16 08:54:04.002244, with 40 iterations. Exit Code = 0
-
-Using core 29688:Started Integration at 2020-01-16 08:54:04.003732
-Using core 26784:Finished Integration at 2020-01-16 08:54:04.056804. 
+Using core 38728:Started Integration at 2020-01-30 16:41:00.835232
+Using core 38728:Running cross validation for 6 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:00.991473
+Using core 38728:Started Integration at 2020-01-30 16:41:00.992961
+Using core 38728:Finished Integration at 2020-01-30 16:41:01.960161. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:04.076149, with 16 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:02.001825, with 18 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:54:04.077637
-Using core 26784:Running cross validation for 8 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:04.288437
-Using core 26784:Started Integration at 2020-01-16 08:54:04.289925
-Using core 29688:Running cross validation for 10 degree check and 4 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:54:04.902485
-Using core 29688:Started Integration at 2020-01-16 08:54:04.903476
-Using core 26784:Finished Integration at 2020-01-16 08:54:05.569109. 
+Using core 38728:Started Integration at 2020-01-30 16:41:02.010753
+Using core 38728:Running cross validation for 8 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:02.321745
+Using core 38728:Started Integration at 2020-01-30 16:41:02.327697
+Using core 38728:Finished Integration at 2020-01-30 16:41:03.828096. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:05.723862, with 42 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:03.904978, with 38 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:54:05.726341
-Using core 26784:Running cross validation for 12 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:06.018981
-Using core 26784:Started Integration at 2020-01-16 08:54:06.019976
-Using core 29688:Finished Integration at 2020-01-16 08:54:06.356260. 
+Using core 38728:Started Integration at 2020-01-30 16:41:03.906960
+Using core 38728:Running cross validation for 10 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:04.164881
+Using core 38728:Started Integration at 2020-01-30 16:41:04.165873
+Using core 38728:Finished Integration at 2020-01-30 16:41:05.608240. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:54:06.542261, with 39 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:05.734720, with 26 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:54:06.543253
-Using core 29688:Running cross validation for 14 degree check and 4 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:54:06.868133
-Using core 29688:Started Integration at 2020-01-16 08:54:06.869125
-Using core 26784:Finished Integration at 2020-01-16 08:54:07.527316. 
+Using core 38728:Started Integration at 2020-01-30 16:41:05.736209
+Using core 38728:Running cross validation for 12 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:06.062080
+Using core 38728:Started Integration at 2020-01-30 16:41:06.063568
+Using core 38728:Finished Integration at 2020-01-30 16:41:08.261344. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:07.715797, with 16 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:08.737505, with 31 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:54:07.717284
-Using core 26784:Running cross validation for 16 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:08.097221
-Using core 26784:Started Integration at 2020-01-16 08:54:08.098213
-Using core 29688:Finished Integration at 2020-01-16 08:54:08.837254. 
+Using core 38728:Started Integration at 2020-01-30 16:41:08.738993
+Using core 38728:Running cross validation for 14 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:09.210193
+Using core 38728:Started Integration at 2020-01-30 16:41:09.211680
+Using core 38728:Finished Integration at 2020-01-30 16:41:12.464945. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:54:09.604069, with 19 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:13.998577, with 44 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:54:09.605557
-Using core 29688:Running cross validation for 18 degree check and 4 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:54:10.145701
-Using core 29688:Started Integration at 2020-01-16 08:54:10.146693
-Using core 26784:Finished Integration at 2020-01-16 08:54:10.625333. 
+Using core 38728:Started Integration at 2020-01-30 16:41:14.000064
+Using core 924:Optimization run finished at 2020-01-30 16:41:14.197472, with 20 iterations. Exit Code = 0
+
+Using core 924:Started Integration at 2020-01-30 16:41:14.199457
+Using core 38728:Running cross validation for 16 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:14.653793
+Using core 38728:Started Integration at 2020-01-30 16:41:14.654784
+Using core 924:Running cross validation for 18 degree check and 4 th-fold
+Using core 924:====
+Started run at 2020-01-30 16:41:15.644305
+Using core 924:Started Integration at 2020-01-30 16:41:15.645298
+Using core 38728:Finished Integration at 2020-01-30 16:41:17.482977. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Optimization run finished at 2020-01-16 08:54:12.051829, with 19 iterations. Exit Code = 0
-
-Using core 26784:Started Integration at 2020-01-16 08:54:12.053814
-Using core 26784:Running cross validation for 20 degree check and 4 th-fold
-Using core 26784:====
-Started run at 2020-01-16 08:54:12.667365
-Using core 26784:Started Integration at 2020-01-16 08:54:12.668358
-Using core 29688:Finished Integration at 2020-01-16 08:54:12.885605. 
+Using core 924:Finished Integration at 2020-01-30 16:41:18.758193. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 26784:Finished Integration at 2020-01-16 08:54:15.574917. 
+Using core 38728:Optimization run finished at 2020-01-30 16:41:19.514593, with 29 iterations. Exit Code = 0
+
+Using core 38728:Started Integration at 2020-01-30 16:41:19.517073
+Using core 38728:Running cross validation for 20 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:20.189650
+Using core 38728:Started Integration at 2020-01-30 16:41:20.190642
+Using core 38728:Finished Integration at 2020-01-30 16:41:24.306945. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:54:18.030615, with 31 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:25.497841, with 3 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:54:18.037062
-Using core 29688:Running cross validation for 22 degree check and 4 th-fold
-Using core 29688:====
-Started run at 2020-01-16 08:54:18.730967
-Using core 29688:Started Integration at 2020-01-16 08:54:18.731958
-Using core 26784:Optimization run finished at 2020-01-16 08:54:19.597478, with 15 iterations. Exit Code = 0
+Using core 38728:Started Integration at 2020-01-30 16:41:25.499827
+Using core 924:Optimization run finished at 2020-01-30 16:41:26.017650, with 34 iterations. Exit Code = 0
 
-Using core 26784:Started Integration at 2020-01-16 08:54:19.599958
-Using core 29688:Finished Integration at 2020-01-16 08:54:23.047655. 
+Using core 924:Started Integration at 2020-01-30 16:41:26.019137
+Using core 38728:Running cross validation for 22 degree check and 4 th-fold
+Using core 38728:====
+Started run at 2020-01-30 16:41:26.366337
+Using core 38728:Started Integration at 2020-01-30 16:41:26.367331
+Using core 38728:Finished Integration at 2020-01-30 16:41:31.151746. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 29688:Optimization run finished at 2020-01-16 08:54:29.830636, with 16 iterations. Exit Code = 0
+Using core 38728:Optimization run finished at 2020-01-30 16:41:40.333906, with 19 iterations. Exit Code = 0
 
-Using core 29688:Started Integration at 2020-01-16 08:54:29.832121
-Using core 27396:Finished CV. Picked {20} degrees by maximizing likelihoodUsing core 27396:Finished CV. Picked 20 degrees by maximizing likelihood
-Using core 27396:Running full dataset MLE before bootstrap
-Using core 27396:====
-Started run at 2020-01-16 08:54:30.749418
-Using core 27396:Started Integration at 2020-01-16 08:54:30.750906
-Using core 27396:Finished Integration at 2020-01-16 08:54:33.371804. 
+Using core 38728:Started Integration at 2020-01-30 16:41:40.335361
+Using core 16236:Finished CV. Picked {22} degrees by maximizing likelihoodUsing core 16236:Finished CV. Picked 22 degrees by maximizing likelihood
+Using core 16236:Running full dataset MLE before bootstrap
+Using core 16236:====
+Started run at 2020-01-30 16:41:41.162902
+Using core 16236:Started Integration at 2020-01-30 16:41:41.163896
+Using core 16236:Finished Integration at 2020-01-30 16:41:45.484387. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 27396:Optimization run finished at 2020-01-16 08:54:37.434232, with 17 iterations. Exit Code = 0
+Using core 16236:Optimization run finished at 2020-01-30 16:41:53.268606, with 18 iterations. Exit Code = 0
 
-Using core 27396:Finished full dataset MLE run at 2020-01-16 08:54:57.974676
-Using core 27396:
+Using core 16236:Finished full dataset MLE run at 2020-01-30 16:42:19.231936
+Using core 16236:
 
 ==============
-Running 100 bootstraps for the MLE code with degree = 20, using 2 thread/s.
+Running 50 bootstraps for the MLE code with degree = 22, using 2 thread/s.
 ==============
 
-Using core 19764:====
-Started run at 2020-01-16 08:55:00.137825
-Using core 7004:====
-Started run at 2020-01-16 08:55:00.138322
-Using core 19764:Started Integration at 2020-01-16 08:55:00.139313
-Using core 7004:Started Integration at 2020-01-16 08:55:00.139809
-Using core 19764:Finished Integration at 2020-01-16 08:55:05.632514. 
+Using core 10056:====
+Started run at 2020-01-30 16:42:21.421900
+Using core 15460:====
+Started run at 2020-01-30 16:42:21.422396
+Using core 15460:Started Integration at 2020-01-30 16:42:21.426376
+Using core 10056:Started Integration at 2020-01-30 16:42:21.427854
+Using core 15460:Finished Integration at 2020-01-30 16:42:26.760845. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 08:55:05.859681. 
+Using core 10056:Finished Integration at 2020-01-30 16:42:26.853101. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 08:55:10.575649, with 17 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:42:36.227996, with 16 iterations. Exit Code = 0
 
-Using core 7004:Optimization run finished at 2020-01-16 08:55:12.962897, with 25 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:42:44.671405, with 34 iterations. Exit Code = 0
 
-Using core 19764:====
-Started run at 2020-01-16 08:55:34.636611
-Using core 19764:Started Integration at 2020-01-16 08:55:34.638594
-Using core 7004:====
-Started run at 2020-01-16 08:55:36.938547
-Using core 7004:Started Integration at 2020-01-16 08:55:36.940531
-Using core 19764:Finished Integration at 2020-01-16 08:55:38.517812. 
+Using core 10056:====
+Started run at 2020-01-30 16:43:01.399008
+Using core 10056:Started Integration at 2020-01-30 16:43:01.399999
+Using core 10056:Finished Integration at 2020-01-30 16:43:06.809374. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 08:55:40.542483. 
+Using core 15460:====
+Started run at 2020-01-30 16:43:08.630687
+Using core 15460:Started Integration at 2020-01-30 16:43:08.631681
+Using core 15460:Finished Integration at 2020-01-30 16:43:14.133808. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 08:55:44.028867, with 19 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:43:23.136703, with 30 iterations. Exit Code = 0
 
-Using core 7004:Optimization run finished at 2020-01-16 08:55:50.208532, with 34 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:43:27.739584, with 24 iterations. Exit Code = 0
 
-Using core 19764:====
-Started run at 2020-01-16 08:56:07.630037
-Using core 19764:Started Integration at 2020-01-16 08:56:07.633013
-Using core 19764:Finished Integration at 2020-01-16 08:56:11.461639. 
+Using core 10056:====
+Started run at 2020-01-30 16:43:49.057666
+Using core 10056:Started Integration at 2020-01-30 16:43:49.058661
+Using core 15460:====
+Started run at 2020-01-30 16:43:54.475970
+Using core 15460:Started Integration at 2020-01-30 16:43:54.477458
+Using core 10056:Finished Integration at 2020-01-30 16:43:56.133106. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 08:56:14.293302
-Using core 7004:Started Integration at 2020-01-16 08:56:14.295783
-Using core 7004:Finished Integration at 2020-01-16 08:56:18.449782. 
+Using core 15460:Finished Integration at 2020-01-30 16:44:00.559906. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 08:56:22.179702, with 34 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:44:05.752034, with 16 iterations. Exit Code = 0
 
-Using core 7004:Optimization run finished at 2020-01-16 08:56:25.979558, with 23 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:44:13.829891, with 22 iterations. Exit Code = 0
 
-Using core 19764:====
-Started run at 2020-01-16 08:56:50.524617
-Using core 19764:Started Integration at 2020-01-16 08:56:50.526601
-Using core 7004:====
-Started run at 2020-01-16 08:56:54.036795
-Using core 7004:Started Integration at 2020-01-16 08:56:54.038280
-Using core 19764:Finished Integration at 2020-01-16 08:56:54.153849. 
+Using core 10056:====
+Started run at 2020-01-30 16:44:32.823221
+Using core 10056:Started Integration at 2020-01-30 16:44:32.824213
+Using core 10056:Finished Integration at 2020-01-30 16:44:38.657670. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 08:56:58.132264. 
+Using core 15460:====
+Started run at 2020-01-30 16:44:40.209653
+Using core 15460:Started Integration at 2020-01-30 16:44:40.210645
+Using core 15460:Finished Integration at 2020-01-30 16:44:45.676565. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 08:57:09.822489, with 36 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:45:08.692455, with 41 iterations. Exit Code = 0
 
-Using core 7004:Optimization run finished at 2020-01-16 08:57:14.139673, with 38 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:45:12.125271, with 58 iterations. Exit Code = 0
 
-Using core 19764:====
-Started run at 2020-01-16 08:57:33.937019
-Using core 19764:Started Integration at 2020-01-16 08:57:33.939003
-Using core 19764:Finished Integration at 2020-01-16 08:57:37.792924. 
+Using core 15460:====
+Started run at 2020-01-30 16:45:38.509993
+Using core 15460:Started Integration at 2020-01-30 16:45:38.511482
+Using core 10056:====
+Started run at 2020-01-30 16:45:41.192857
+Using core 10056:Started Integration at 2020-01-30 16:45:41.193850
+Using core 15460:Finished Integration at 2020-01-30 16:45:45.132090. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 08:57:38.286443
-Using core 7004:Started Integration at 2020-01-16 08:57:38.288429
-Using core 7004:Finished Integration at 2020-01-16 08:57:42.622477. 
+Using core 10056:Finished Integration at 2020-01-30 16:45:48.484555. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 08:57:47.583468, with 17 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:45:55.094746, with 16 iterations. Exit Code = 0
 
-Using core 19764:Optimization run finished at 2020-01-16 08:57:50.793084, with 42 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:46:00.582986, with 19 iterations. Exit Code = 0
 
-Using core 7004:====
-Started run at 2020-01-16 08:58:13.210301
-Using core 7004:Started Integration at 2020-01-16 08:58:13.213774
-Using core 19764:====
-Started run at 2020-01-16 08:58:17.219472
-Using core 19764:Started Integration at 2020-01-16 08:58:17.220958
-Using core 7004:Finished Integration at 2020-01-16 08:58:17.814176. 
+Using core 15460:====
+Started run at 2020-01-30 16:46:20.702236
+Using core 15460:Started Integration at 2020-01-30 16:46:20.704220
+Using core 10056:====
+Started run at 2020-01-30 16:46:25.229230
+Using core 10056:Started Integration at 2020-01-30 16:46:25.231212
+Using core 15460:Finished Integration at 2020-01-30 16:46:26.114588. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Finished Integration at 2020-01-16 08:58:21.515326. 
+Using core 10056:Finished Integration at 2020-01-30 16:46:30.934222. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 08:58:24.934255, with 10 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:46:36.088654, with 19 iterations. Exit Code = 0
 
-Using core 7004:Optimization run finished at 2020-01-16 08:58:29.739007, with 34 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:46:40.017471, with 17 iterations. Exit Code = 0
 
-Using core 19764:====
-Started run at 2020-01-16 08:58:49.373664
-Using core 19764:Started Integration at 2020-01-16 08:58:49.375648
-Using core 19764:Finished Integration at 2020-01-16 08:58:53.177489. 
+Using core 15460:====
+Started run at 2020-01-30 16:47:01.111856
+Using core 15460:Started Integration at 2020-01-30 16:47:01.112848
+Using core 10056:====
+Started run at 2020-01-30 16:47:04.924607
+Using core 10056:Started Integration at 2020-01-30 16:47:04.926590
+Using core 15460:Finished Integration at 2020-01-30 16:47:06.683424. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 08:58:53.712176
-Using core 7004:Started Integration at 2020-01-16 08:58:53.714657
-Using core 19764:Optimization run finished at 2020-01-16 08:58:55.724448, with 9 iterations. Exit Code = 0
-
-Using core 7004:Finished Integration at 2020-01-16 08:58:58.070032. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 08:59:05.815569, with 19 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 08:59:30.154293
-Using core 19764:Started Integration at 2020-01-16 08:59:30.156771
-Using core 19764:Finished Integration at 2020-01-16 08:59:34.254723. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 08:59:38.983587
-Using core 7004:Started Integration at 2020-01-16 08:59:38.985571
-Using core 19764:Optimization run finished at 2020-01-16 08:59:40.725539, with 23 iterations. Exit Code = 0
-
-Using core 7004:Finished Integration at 2020-01-16 08:59:43.408403. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 08:59:48.710149, with 14 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:00:11.640726
-Using core 19764:Started Integration at 2020-01-16 09:00:11.647670
-Using core 19764:Finished Integration at 2020-01-16 09:00:18.098646. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:00:21.787399
-Using core 7004:Started Integration at 2020-01-16 09:00:21.790375
-Using core 7004:Finished Integration at 2020-01-16 09:00:27.958135. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:00:29.064215, with 28 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:00:44.141625, with 34 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:01:11.963258
-Using core 19764:Started Integration at 2020-01-16 09:01:11.965242
-Using core 19764:Finished Integration at 2020-01-16 09:01:17.292778. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:01:22.348507
-Using core 7004:Started Integration at 2020-01-16 09:01:22.350491
-Using core 19764:Optimization run finished at 2020-01-16 09:01:27.134411, with 24 iterations. Exit Code = 0
-
-Using core 7004:Finished Integration at 2020-01-16 09:01:29.672939. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:01:42.423614, with 28 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:01:58.861053
-Using core 19764:Started Integration at 2020-01-16 09:01:58.863037
-Using core 19764:Finished Integration at 2020-01-16 09:02:02.749693. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:02:06.633870
-Using core 7004:Started Integration at 2020-01-16 09:02:06.635855
-Using core 7004:Finished Integration at 2020-01-16 09:02:10.803246. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:02:12.266942, with 29 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:02:25.401032, with 44 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:02:37.908656
-Using core 19764:Started Integration at 2020-01-16 09:02:37.910640
-Using core 19764:Finished Integration at 2020-01-16 09:02:41.531441. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:02:42.525424, with 3 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:02:50.065121
-Using core 7004:Started Integration at 2020-01-16 09:02:50.067601
-Using core 7004:Finished Integration at 2020-01-16 09:02:55.331649. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:03:02.705185, with 23 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:03:09.640258
-Using core 19764:Started Integration at 2020-01-16 09:03:09.645714
-Using core 19764:Finished Integration at 2020-01-16 09:03:13.935618. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:03:27.002243, with 41 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:03:28.143540
-Using core 7004:Started Integration at 2020-01-16 09:03:28.145523
-Using core 7004:Finished Integration at 2020-01-16 09:03:32.334740. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:03:33.326243, with 3 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:03:53.322981
-Using core 19764:Started Integration at 2020-01-16 09:03:53.326455
-Using core 19764:Finished Integration at 2020-01-16 09:03:58.069206. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:04:02.088792
-Using core 7004:Started Integration at 2020-01-16 09:04:02.092265
-Using core 7004:Finished Integration at 2020-01-16 09:04:10.079350. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:04:15.329014, with 42 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:04:20.829655, with 31 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:04:43.098568
-Using core 19764:Started Integration at 2020-01-16 09:04:43.100552
-Using core 19764:Finished Integration at 2020-01-16 09:04:50.197321. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:04:51.220073
-Using core 7004:Started Integration at 2020-01-16 09:04:51.222553
-Using core 7004:Finished Integration at 2020-01-16 09:04:57.569865. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:05:03.788714, with 33 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:05:13.151210, with 36 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:05:44.226116
-Using core 19764:Started Integration at 2020-01-16 09:05:44.230078
-Using core 19764:Finished Integration at 2020-01-16 09:05:50.397341. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:05:53.310846
-Using core 7004:Started Integration at 2020-01-16 09:05:53.313325
-Using core 7004:Finished Integration at 2020-01-16 09:05:59.404207. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:06:04.833920, with 32 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:06:07.150734, with 18 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:06:47.904577
-Using core 19764:Started Integration at 2020-01-16 09:06:47.907057
-Using core 7004:====
-Started run at 2020-01-16 09:06:49.838978
-Using core 7004:Started Integration at 2020-01-16 09:06:49.841457
-Using core 19764:Finished Integration at 2020-01-16 09:06:54.384823. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 09:06:56.638641. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:07:02.889234, with 22 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:07:08.598690, with 33 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:07:29.949508
-Using core 19764:Started Integration at 2020-01-16 09:07:29.954964
-Using core 19764:Finished Integration at 2020-01-16 09:07:33.760280. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:07:33.800484
-Using core 7004:Started Integration at 2020-01-16 09:07:33.802932
-Using core 7004:Finished Integration at 2020-01-16 09:07:37.937590. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:07:38.394405, with 16 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:07:47.070934, with 30 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:08:01.950438
-Using core 19764:Started Integration at 2020-01-16 09:08:01.953415
-Using core 19764:Finished Integration at 2020-01-16 09:08:05.642663. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:08:09.880486, with 15 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:08:10.352678
-Using core 7004:Started Integration at 2020-01-16 09:08:10.354662
-Using core 7004:Finished Integration at 2020-01-16 09:08:13.751766. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:08:18.276775, with 16 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:08:32.260504
-Using core 19764:Started Integration at 2020-01-16 09:08:32.262986
-Using core 19764:Finished Integration at 2020-01-16 09:08:36.443273. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:08:41.010936, with 15 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:08:42.212249
-Using core 7004:Started Integration at 2020-01-16 09:08:42.214232
-Using core 7004:Finished Integration at 2020-01-16 09:08:46.690138. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:08:54.392522, with 24 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:09:07.809819
-Using core 19764:Started Integration at 2020-01-16 09:09:07.816764
-Using core 19764:Finished Integration at 2020-01-16 09:09:11.415740. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:09:19.944460, with 26 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:09:20.626460
-Using core 7004:Started Integration at 2020-01-16 09:09:20.627949
-Using core 7004:Finished Integration at 2020-01-16 09:09:24.925291. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:09:36.572860, with 33 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:09:48.531424
-Using core 19764:Started Integration at 2020-01-16 09:09:48.533406
-Using core 19764:Finished Integration at 2020-01-16 09:09:52.910109. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:09:58.702398, with 19 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:10:03.231374
-Using core 7004:Started Integration at 2020-01-16 09:10:03.235343
-Using core 7004:Finished Integration at 2020-01-16 09:10:07.190488. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:10:08.205758, with 3 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:10:22.821889
-Using core 19764:Started Integration at 2020-01-16 09:10:22.825371
-Using core 19764:Finished Integration at 2020-01-16 09:10:27.042353. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:10:32.742384, with 18 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:10:34.055297
-Using core 7004:Started Integration at 2020-01-16 09:10:34.058273
-Using core 7004:Finished Integration at 2020-01-16 09:10:38.145810. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:10:44.250577, with 20 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:10:57.854370
-Using core 19764:Started Integration at 2020-01-16 09:10:57.856354
-Using core 19764:Finished Integration at 2020-01-16 09:11:02.104594. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:11:10.030675
-Using core 7004:Started Integration at 2020-01-16 09:11:10.035635
-Using core 7004:Finished Integration at 2020-01-16 09:11:15.791220. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:11:16.186531, with 38 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:11:22.510035, with 21 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:11:42.690295
-Using core 19764:Started Integration at 2020-01-16 09:11:42.693282
-Using core 19764:Finished Integration at 2020-01-16 09:11:47.251511. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:11:49.882789
-Using core 7004:Started Integration at 2020-01-16 09:11:49.884773
-Using core 7004:Finished Integration at 2020-01-16 09:11:53.837894. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:12:01.320551, with 21 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:12:01.752070, with 41 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:12:29.654057
-Using core 7004:Started Integration at 2020-01-16 09:12:29.656040
-Using core 19764:====
-Started run at 2020-01-16 09:12:30.288440
-Using core 19764:Started Integration at 2020-01-16 09:12:30.290424
-Using core 7004:Finished Integration at 2020-01-16 09:12:33.927593. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Finished Integration at 2020-01-16 09:12:35.542569. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:12:47.676218, with 33 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:12:49.578873, with 34 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:13:17.378685
-Using core 7004:Started Integration at 2020-01-16 09:13:17.381660
-Using core 19764:====
-Started run at 2020-01-16 09:13:19.017963
-Using core 19764:Started Integration at 2020-01-16 09:13:19.019947
-Using core 7004:Finished Integration at 2020-01-16 09:13:21.504907. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Finished Integration at 2020-01-16 09:13:22.777148. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:13:26.033388, with 15 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:13:30.035116, with 23 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:13:50.378558
-Using core 7004:Started Integration at 2020-01-16 09:13:50.382031
-Using core 7004:Finished Integration at 2020-01-16 09:13:54.082191. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:13:54.442784
-Using core 19764:Started Integration at 2020-01-16 09:13:54.444768
-Using core 19764:Finished Integration at 2020-01-16 09:13:59.822398. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:14:05.062639, with 14 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:14:08.985999, with 45 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:14:33.553378
-Using core 19764:Started Integration at 2020-01-16 09:14:33.555361
-Using core 7004:====
-Started run at 2020-01-16 09:14:37.760945
-Using core 7004:Started Integration at 2020-01-16 09:14:37.763921
-Using core 19764:Finished Integration at 2020-01-16 09:14:38.562483. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 09:14:43.476851. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:14:45.443489, with 19 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:15:04.980434, with 67 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:15:16.319989
-Using core 19764:Started Integration at 2020-01-16 09:15:16.321971
-Using core 19764:Finished Integration at 2020-01-16 09:15:23.035870. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:15:41.245973, with 38 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:15:43.826166
-Using core 7004:Started Integration at 2020-01-16 09:15:43.830133
-Using core 7004:Finished Integration at 2020-01-16 09:15:48.702342. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:15:57.474599, with 25 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:16:10.803111
-Using core 19764:Started Integration at 2020-01-16 09:16:10.805096
-Using core 19764:Finished Integration at 2020-01-16 09:16:15.411943. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:16:25.557624
-Using core 7004:Started Integration at 2020-01-16 09:16:25.559609
-Using core 19764:Optimization run finished at 2020-01-16 09:16:27.209304, with 38 iterations. Exit Code = 0
-
-Using core 7004:Finished Integration at 2020-01-16 09:16:30.201672. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:16:39.836969, with 27 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:16:56.743626
-Using core 19764:Started Integration at 2020-01-16 09:16:56.746106
-Using core 19764:Finished Integration at 2020-01-16 09:17:01.556315. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:17:07.264285, with 17 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:17:08.585628
-Using core 7004:Started Integration at 2020-01-16 09:17:08.587611
-Using core 7004:Finished Integration at 2020-01-16 09:17:12.928107. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:17:24.039005, with 35 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:17:33.669837
-Using core 19764:Started Integration at 2020-01-16 09:17:33.672318
-Using core 19764:Finished Integration at 2020-01-16 09:17:38.524686. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:====
-Started run at 2020-01-16 09:17:52.729134
-Using core 7004:Started Integration at 2020-01-16 09:17:52.731118
-Using core 19764:Optimization run finished at 2020-01-16 09:17:55.318750, with 47 iterations. Exit Code = 0
-
-Using core 7004:Finished Integration at 2020-01-16 09:17:56.667871. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:18:04.160943, with 25 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:18:22.428625
-Using core 19764:Started Integration at 2020-01-16 09:18:22.430609
-Using core 19764:Finished Integration at 2020-01-16 09:18:26.325698. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:18:31.181040, with 15 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:18:32.231570
-Using core 7004:Started Integration at 2020-01-16 09:18:32.233554
-Using core 7004:Finished Integration at 2020-01-16 09:18:36.090945. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:18:57.989843
-Using core 19764:Started Integration at 2020-01-16 09:18:57.993319
-Using core 7004:Optimization run finished at 2020-01-16 09:19:01.438035, with 82 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:19:02.409699. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:19:11.602563, with 30 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:19:24.873541
-Using core 7004:Started Integration at 2020-01-16 09:19:24.876020
-Using core 7004:Finished Integration at 2020-01-16 09:19:29.113350. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:19:36.749771
-Using core 19764:Started Integration at 2020-01-16 09:19:36.753238
-Using core 7004:Optimization run finished at 2020-01-16 09:19:41.162182, with 34 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:19:42.665062. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:19:55.156827, with 29 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:20:20.903689
-Using core 7004:Started Integration at 2020-01-16 09:20:20.906171
-Using core 7004:Finished Integration at 2020-01-16 09:20:28.894250. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:20:30.485914, with 3 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:20:33.898393
-Using core 19764:Started Integration at 2020-01-16 09:20:33.900875
-Using core 19764:Finished Integration at 2020-01-16 09:20:40.986730. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:20:42.503499, with 3 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:21:08.823740
-Using core 7004:Started Integration at 2020-01-16 09:21:08.827709
-Using core 7004:Finished Integration at 2020-01-16 09:21:15.604060. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:21:18.090013
-Using core 19764:Started Integration at 2020-01-16 09:21:18.091997
-Using core 19764:Finished Integration at 2020-01-16 09:21:25.673855. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:21:29.650286, with 31 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:21:34.645998, with 19 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:22:10.809361
-Using core 7004:Started Integration at 2020-01-16 09:22:10.812833
-Using core 19764:====
-Started run at 2020-01-16 09:22:15.620561
-Using core 19764:Started Integration at 2020-01-16 09:22:15.623537
-Using core 7004:Finished Integration at 2020-01-16 09:22:17.847600. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:22:19.645601, with 3 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:22:23.078914. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:22:30.316545, with 15 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:22:59.052804
-Using core 7004:Started Integration at 2020-01-16 09:22:59.055284
-Using core 7004:Finished Integration at 2020-01-16 09:23:05.111444. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:23:07.573092
-Using core 19764:Started Integration at 2020-01-16 09:23:07.575572
-Using core 19764:Finished Integration at 2020-01-16 09:23:12.546485. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:23:22.867749, with 29 iterations. Exit Code = 0
-
-Using core 7004:Optimization run finished at 2020-01-16 09:23:25.903765, with 59 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:23:49.151288
-Using core 19764:Started Integration at 2020-01-16 09:23:49.153271
-Using core 7004:====
-Started run at 2020-01-16 09:23:51.713623
-Using core 7004:Started Integration at 2020-01-16 09:23:51.715607
-Using core 19764:Finished Integration at 2020-01-16 09:23:52.658505. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Finished Integration at 2020-01-16 09:23:55.197032. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:24:00.009720, with 16 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:24:02.372663, with 31 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:24:22.793978
-Using core 7004:Started Integration at 2020-01-16 09:24:22.796457
-Using core 19764:====
-Started run at 2020-01-16 09:24:25.065161
-Using core 19764:Started Integration at 2020-01-16 09:24:25.067147
-Using core 7004:Finished Integration at 2020-01-16 09:24:26.363193. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Finished Integration at 2020-01-16 09:24:28.675545. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:24:31.171420, with 17 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:24:33.374153, with 16 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:24:54.528059
-Using core 7004:Started Integration at 2020-01-16 09:24:54.530045
-Using core 19764:====
-Started run at 2020-01-16 09:24:56.243723
-Using core 19764:Started Integration at 2020-01-16 09:24:56.245708
-Using core 7004:Finished Integration at 2020-01-16 09:24:57.871100. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Finished Integration at 2020-01-16 09:25:00.048540. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:25:05.995581, with 27 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:25:10.644092, with 37 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:25:28.944013
-Using core 7004:Started Integration at 2020-01-16 09:25:28.945999
-Using core 7004:Finished Integration at 2020-01-16 09:25:32.649631. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:25:33.179854
-Using core 19764:Started Integration at 2020-01-16 09:25:33.181839
-Using core 19764:Finished Integration at 2020-01-16 09:25:37.292686. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:25:40.702686, with 26 iterations. Exit Code = 0
-
-Using core 19764:Optimization run finished at 2020-01-16 09:25:43.446558, with 19 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:26:03.741888
-Using core 7004:Started Integration at 2020-01-16 09:26:03.744368
-Using core 19764:====
-Started run at 2020-01-16 09:26:06.232800
-Using core 19764:Started Integration at 2020-01-16 09:26:06.236768
-Using core 7004:Finished Integration at 2020-01-16 09:26:07.380544. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:26:08.325425, with 3 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:26:09.398769. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:26:16.802561, with 26 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:26:32.567922
-Using core 7004:Started Integration at 2020-01-16 09:26:32.569907
-Using core 7004:Finished Integration at 2020-01-16 09:26:35.962050. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:26:40.045123
-Using core 19764:Started Integration at 2020-01-16 09:26:40.047107
-Using core 7004:Optimization run finished at 2020-01-16 09:26:43.703618, with 27 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:26:43.861844. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:26:47.931027, with 14 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:27:06.662470
-Using core 7004:Started Integration at 2020-01-16 09:27:06.665943
-Using core 7004:Finished Integration at 2020-01-16 09:27:10.209860. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:27:11.209797
-Using core 19764:Started Integration at 2020-01-16 09:27:11.212277
-Using core 7004:Optimization run finished at 2020-01-16 09:27:15.400997, with 15 iterations. Exit Code = 0
-
-Using core 19764:Finished Integration at 2020-01-16 09:27:16.802197. 
+Using core 10056:Finished Integration at 2020-01-30 16:47:10.755129. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:27:21.926373, with 17 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:47:25.911856, with 27 iterations. Exit Code = 0
 
-Using core 7004:====
-Started run at 2020-01-16 09:27:38.830550
-Using core 7004:Started Integration at 2020-01-16 09:27:38.833031
-Using core 7004:Finished Integration at 2020-01-16 09:27:42.989511. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:27:45.137193, with 3 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:27:47.062168
-Using core 19764:Started Integration at 2020-01-16 09:27:47.070104
-Using core 19764:Finished Integration at 2020-01-16 09:27:53.828600. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:28:05.466745, with 28 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:47:26.859713, with 35 iterations. Exit Code = 0
 
-Using core 7004:====
-Started run at 2020-01-16 09:28:29.457770
-Using core 7004:Started Integration at 2020-01-16 09:28:29.470177
-Using core 7004:Finished Integration at 2020-01-16 09:28:35.342810. 
+Using core 10056:====
+Started run at 2020-01-30 16:47:50.952914
+Using core 10056:Started Integration at 2020-01-30 16:47:50.953907
+Using core 15460:====
+Started run at 2020-01-30 16:47:51.273332
+Using core 15460:Started Integration at 2020-01-30 16:47:51.274323
+Using core 10056:Finished Integration at 2020-01-30 16:47:56.109332. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:28:41.759563, with 17 iterations. Exit Code = 0
-
-Using core 19764:====
-Started run at 2020-01-16 09:28:43.905261
-Using core 19764:Started Integration at 2020-01-16 09:28:43.907244
-Using core 19764:Finished Integration at 2020-01-16 09:28:49.658363. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:28:55.753213, with 14 iterations. Exit Code = 0
-
-Using core 7004:====
-Started run at 2020-01-16 09:29:17.901598
-Using core 7004:Started Integration at 2020-01-16 09:29:17.903582
-Using core 7004:Finished Integration at 2020-01-16 09:29:25.459150. 
+Using core 15460:Finished Integration at 2020-01-30 16:47:56.268547. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:====
-Started run at 2020-01-16 09:29:35.744207
-Using core 19764:Started Integration at 2020-01-16 09:29:35.747183
-Using core 7004:Optimization run finished at 2020-01-16 09:29:44.413296, with 28 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:48:08.148740, with 21 iterations. Exit Code = 0
 
-Using core 19764:Finished Integration at 2020-01-16 09:29:50.093488. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 19764:Optimization run finished at 2020-01-16 09:30:13.365809, with 32 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:48:09.201747, with 24 iterations. Exit Code = 0
 
-Using core 7004:====
-Started run at 2020-01-16 09:30:34.875843
-Using core 7004:Started Integration at 2020-01-16 09:30:34.878323
-Using core 7004:Finished Integration at 2020-01-16 09:30:39.984148. 
+Using core 15460:====
+Started run at 2020-01-30 16:48:33.367365
+Using core 15460:Started Integration at 2020-01-30 16:48:33.368854
+Using core 10056:====
+Started run at 2020-01-30 16:48:34.816181
+Using core 10056:Started Integration at 2020-01-30 16:48:34.817173
+Using core 15460:Finished Integration at 2020-01-30 16:48:39.584726. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 7004:Optimization run finished at 2020-01-16 09:30:48.494420, with 29 iterations. Exit Code = 0
-
-Using core 27396:Finished bootstrap at 2020-01-16 09:31:08.239191Using core 27396:Ended run at 2020-01-16 09:31:08.240679Using core 27396:
-	 _______ _    _ ______   ______ _   _ _____
-	 |__   __| |  | |  ____| |  ____| \ | |  __ |
-	    | |  | |__| | |__    | |__  |  \| | |  | |
-	    | |  |  __  |  __|   |  __| | . ` | |  | |
-	    | |  | |  | | |____  | |____| |\  | |__| |
-	    |_|  |_|  |_|______| |______|_| \_|_____/
-        Using core 33544:
-	___  _________ _______   _______
-	|  \/  || ___ \  ___\ \ / /  _  |
-	| .  . || |_/ / |__  \ V /| | | |
-	| |\/| ||    /|  __| /   \| | | |
-	| |  | || |\ \| |___/ /^\ \ \_/ /
-	\_|  |_/\_| \_\____/\/   \/\___/
-
-    Using core 33544:Started for cv degrees at 2020-01-17 15:45:41.777008, using 2 core/sUsing core 33544:Picked 5 k-foldsUsing core 33544:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 22
-Using core 32008:Running cross validation for 5 degree check and 0 th-fold
-Using core 30080:Running cross validation for 6 degree check and 0 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:45:43.881672
-Using core 32008:Started Integration at 2020-01-17 15:45:43.885640
-Using core 30080:====
-Started run at 2020-01-17 15:45:43.886136
-Using core 30080:Started Integration at 2020-01-17 15:45:43.888616
-Using core 32008:Finished Integration at 2020-01-17 15:45:44.357337. 
+Using core 10056:Finished Integration at 2020-01-30 16:48:40.962613. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:45:44.376681, with 10 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:48:51.230310, with 17 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:45:44.382138
-Using core 30080:Finished Integration at 2020-01-17 15:45:44.478359. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Running cross validation for 8 degree check and 0 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:45:44.499688
-Using core 32008:Started Integration at 2020-01-17 15:45:44.504649
-Using core 30080:Optimization run finished at 2020-01-17 15:45:44.506633, with 18 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:49:07.355767, with 40 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:45:44.515560
-Using core 30080:Running cross validation for 10 degree check and 0 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:45:44.662874
-Using core 30080:Started Integration at 2020-01-17 15:45:44.666841
-Using core 32008:Finished Integration at 2020-01-17 15:45:45.519466. 
+Using core 15460:====
+Started run at 2020-01-30 16:49:23.208425
+Using core 15460:Started Integration at 2020-01-30 16:49:23.209417
+Using core 15460:Finished Integration at 2020-01-30 16:49:30.081993. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:45:45.634040, with 43 iterations. Exit Code = 0
+Using core 10056:====
+Started run at 2020-01-30 16:49:37.291354
+Using core 10056:Started Integration at 2020-01-30 16:49:37.292345
+Using core 15460:Optimization run finished at 2020-01-30 16:49:38.559626, with 16 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:45:45.636025
-Using core 32008:Running cross validation for 12 degree check and 0 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:45:45.835416
-Using core 32008:Started Integration at 2020-01-17 15:45:45.838888
-Using core 30080:Finished Integration at 2020-01-17 15:45:45.981241. 
+Using core 10056:Finished Integration at 2020-01-30 16:49:42.432393. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:45:46.147896, with 36 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:50:02.533787, with 37 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:45:46.150378
-Using core 30080:Running cross validation for 14 degree check and 0 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:45:46.432105
-Using core 30080:Started Integration at 2020-01-17 15:45:46.437065
-Using core 32008:Finished Integration at 2020-01-17 15:45:47.378969. 
+Using core 15460:====
+Started run at 2020-01-30 16:50:03.475691
+Using core 15460:Started Integration at 2020-01-30 16:50:03.477180
+Using core 15460:Finished Integration at 2020-01-30 16:50:10.452427. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:45:47.731128, with 31 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:50:19.237084, with 15 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:45:47.733114
-Using core 32008:Running cross validation for 16 degree check and 0 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:45:48.095688
-Using core 32008:Started Integration at 2020-01-17 15:45:48.100152
-Using core 30080:Finished Integration at 2020-01-17 15:45:48.297065. 
+Using core 10056:====
+Started run at 2020-01-30 16:50:29.049950
+Using core 10056:Started Integration at 2020-01-30 16:50:29.050943
+Using core 10056:Finished Integration at 2020-01-30 16:50:34.650285. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:45:49.642712, with 37 iterations. Exit Code = 0
+Using core 15460:====
+Started run at 2020-01-30 16:50:47.112286
+Using core 15460:Started Integration at 2020-01-30 16:50:47.117246
+Using core 10056:Optimization run finished at 2020-01-30 16:50:51.367967, with 27 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:45:49.647672
-Using core 30080:Running cross validation for 18 degree check and 0 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:45:50.097544
-Using core 30080:Started Integration at 2020-01-17 15:45:50.099032
-Using core 32008:Finished Integration at 2020-01-17 15:45:50.749784. 
+Using core 15460:Finished Integration at 2020-01-30 16:50:53.768111. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:45:54.012473, with 35 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:51:17.560736, with 33 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:45:54.014457
-Using core 30080:Finished Integration at 2020-01-17 15:45:54.111178. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Running cross validation for 20 degree check and 0 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:45:54.527817
-Using core 32008:Started Integration at 2020-01-17 15:45:54.531785
-Using core 32008:Finished Integration at 2020-01-17 15:45:57.336665. 
+Using core 10056:====
+Started run at 2020-01-30 16:51:25.767553
+Using core 10056:Started Integration at 2020-01-30 16:51:25.769041
+Using core 10056:Finished Integration at 2020-01-30 16:51:31.729969. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:00.632586, with 43 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:46:00.635565
-Using core 30080:Running cross validation for 22 degree check and 0 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:01.211417
-Using core 30080:Started Integration at 2020-01-17 15:46:01.214890
-Using core 32008:Optimization run finished at 2020-01-17 15:46:02.790185, with 21 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:46:02.792169
-Using core 32008:Running cross validation for 5 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:03.447881
-Using core 32008:Started Integration at 2020-01-17 15:46:03.452358
-Using core 32008:Finished Integration at 2020-01-17 15:46:04.057465. 
+Using core 15460:====
+Started run at 2020-01-30 16:51:49.635075
+Using core 15460:Started Integration at 2020-01-30 16:51:49.636568
+Using core 15460:Finished Integration at 2020-01-30 16:51:58.127091. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:04.073833, with 20 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:52:07.616563, with 48 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:04.075818
-Using core 32008:Running cross validation for 6 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:04.190891
-Using core 32008:Started Integration at 2020-01-17 15:46:04.194361
-Using core 32008:Finished Integration at 2020-01-17 15:46:04.896699. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:04.921994, with 19 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:52:12.977335, with 17 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:04.923977
-Using core 32008:Running cross validation for 8 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:05.055418
-Using core 32008:Started Integration at 2020-01-17 15:46:05.059385
-Using core 30080:Finished Integration at 2020-01-17 15:46:05.519675. 
+Using core 10056:====
+Started run at 2020-01-30 16:52:53.804583
+Using core 10056:Started Integration at 2020-01-30 16:52:53.806567
+Using core 15460:====
+Started run at 2020-01-30 16:52:56.691800
+Using core 15460:Started Integration at 2020-01-30 16:52:56.693784
+Using core 10056:Finished Integration at 2020-01-30 16:53:01.684535. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Finished Integration at 2020-01-17 15:46:06.134713. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:06.223497, with 41 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:46:06.225483
-Using core 32008:Running cross validation for 10 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:06.421402
-Using core 32008:Started Integration at 2020-01-17 15:46:06.425371
-Using core 32008:Finished Integration at 2020-01-17 15:46:07.719931. 
+Using core 15460:Finished Integration at 2020-01-30 16:53:04.922424. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:07.884105, with 30 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:53:15.826985, with 21 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:07.886094
-Using core 32008:Running cross validation for 12 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:08.178234
-Using core 32008:Started Integration at 2020-01-17 15:46:08.182201
-Using core 32008:Finished Integration at 2020-01-17 15:46:09.880506. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:10.299129, with 39 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:53:30.358297, with 36 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:10.301115
-Using core 32008:Running cross validation for 14 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:10.689979
-Using core 32008:Started Integration at 2020-01-17 15:46:10.693947
-Using core 32008:Finished Integration at 2020-01-17 15:46:12.653643. 
+Using core 10056:====
+Started run at 2020-01-30 16:53:59.105467
+Using core 10056:Started Integration at 2020-01-30 16:53:59.107452
+Using core 10056:Finished Integration at 2020-01-30 16:54:04.608092. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:13.233962, with 21 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:46:13.235947
-Using core 32008:Running cross validation for 16 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:13.700203
-Using core 32008:Started Integration at 2020-01-17 15:46:13.702186
-Using core 32008:Finished Integration at 2020-01-17 15:46:16.240218. 
+Using core 15460:====
+Started run at 2020-01-30 16:54:08.064716
+Using core 15460:Started Integration at 2020-01-30 16:54:08.066204
+Using core 15460:Finished Integration at 2020-01-30 16:54:13.791533. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:17.499563, with 20 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:54:20.273756, with 29 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:17.502539
-Using core 32008:Running cross validation for 18 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:18.013419
-Using core 32008:Started Integration at 2020-01-17 15:46:18.014908
-Using core 30080:Optimization run finished at 2020-01-17 15:46:18.110138, with 24 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:54:30.333134, with 31 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:18.112122
-Using core 30080:Running cross validation for 20 degree check and 1 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:19.259370
-Using core 30080:Started Integration at 2020-01-17 15:46:19.264826
-Using core 32008:Finished Integration at 2020-01-17 15:46:21.267178. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Finished Integration at 2020-01-17 15:46:23.123211. 
+Using core 10056:====
+Started run at 2020-01-30 16:54:45.197759
+Using core 10056:Started Integration at 2020-01-30 16:54:45.199250
+Using core 10056:Finished Integration at 2020-01-30 16:54:51.279214. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:26.270827, with 29 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:46:26.273309
-Using core 32008:Running cross validation for 22 degree check and 1 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:26.857099
-Using core 32008:Started Integration at 2020-01-17 15:46:26.861068
-Using core 30080:Optimization run finished at 2020-01-17 15:46:29.146635, with 22 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:46:29.152587
-Using core 30080:Running cross validation for 5 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:29.827147
-Using core 30080:Started Integration at 2020-01-17 15:46:29.830619
-Using core 30080:Finished Integration at 2020-01-17 15:46:30.419371. 
+Using core 15460:====
+Started run at 2020-01-30 16:54:56.786303
+Using core 15460:Started Integration at 2020-01-30 16:54:56.788288
+Using core 15460:Finished Integration at 2020-01-30 16:55:03.796768. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:30.436236, with 8 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:55:08.719568, with 28 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:30.438717
-Using core 30080:Running cross validation for 6 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:30.620253
-Using core 30080:Started Integration at 2020-01-17 15:46:30.624220
-Using core 30080:Finished Integration at 2020-01-17 15:46:31.291340. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:31.316636, with 18 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:55:21.458833, with 32 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:31.318620
-Using core 32008:Finished Integration at 2020-01-17 15:46:31.473371. 
+Using core 10056:====
+Started run at 2020-01-30 16:55:33.581074
+Using core 10056:Started Integration at 2020-01-30 16:55:33.582562
+Using core 10056:Finished Integration at 2020-01-30 16:55:39.057410. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Running cross validation for 8 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:31.521484
-Using core 30080:Started Integration at 2020-01-17 15:46:31.525451
-Using core 30080:Finished Integration at 2020-01-17 15:46:32.489677. 
+Using core 15460:====
+Started run at 2020-01-30 16:55:46.126403
+Using core 15460:Started Integration at 2020-01-30 16:55:46.127891
+Using core 15460:Finished Integration at 2020-01-30 16:55:51.987636. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:32.573499, with 36 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:56:07.509460, with 29 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:32.575484
-Using core 30080:Running cross validation for 10 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:32.872587
-Using core 30080:Started Integration at 2020-01-17 15:46:32.877549
-Using core 30080:Finished Integration at 2020-01-17 15:46:34.217739. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:34.424075, with 43 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:56:10.978980, with 57 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:34.427548
-Using core 30080:Running cross validation for 12 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:34.813435
-Using core 30080:Started Integration at 2020-01-17 15:46:34.817899
-Using core 30080:Finished Integration at 2020-01-17 15:46:36.391213. 
+Using core 15460:====
+Started run at 2020-01-30 16:56:32.003926
+Using core 15460:Started Integration at 2020-01-30 16:56:32.004918
+Using core 10056:====
+Started run at 2020-01-30 16:56:35.470470
+Using core 10056:Started Integration at 2020-01-30 16:56:35.471464
+Using core 15460:Finished Integration at 2020-01-30 16:56:37.352790. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:36.766189, with 31 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:46:36.768667
-Using core 30080:Running cross validation for 14 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:37.221516
-Using core 30080:Started Integration at 2020-01-17 15:46:37.225980
-Using core 30080:Finished Integration at 2020-01-17 15:46:39.256604. 
+Using core 10056:Finished Integration at 2020-01-30 16:56:40.707240. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:40.493132, with 40 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:56:51.627176, with 19 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:40.495614
-Using core 30080:Running cross validation for 16 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:41.105196
-Using core 30080:Started Integration at 2020-01-17 15:46:41.120081
-Using core 32008:Optimization run finished at 2020-01-17 15:46:42.931964, with 21 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:56:53.774855, with 29 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:42.937420
-Using core 30080:Finished Integration at 2020-01-17 15:46:43.455245. 
+Using core 10056:====
+Started run at 2020-01-30 16:57:16.846793
+Using core 10056:Started Integration at 2020-01-30 16:57:16.848281
+Using core 15460:====
+Started run at 2020-01-30 16:57:18.985050
+Using core 15460:Started Integration at 2020-01-30 16:57:18.986041
+Using core 10056:Finished Integration at 2020-01-30 16:57:22.210042. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Running cross validation for 18 degree check and 2 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:44.038541
-Using core 32008:Started Integration at 2020-01-17 15:46:44.042012
-Using core 30080:Optimization run finished at 2020-01-17 15:46:45.869772, with 36 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:46:45.872252
-Using core 30080:Running cross validation for 20 degree check and 2 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:46.555740
-Using core 30080:Started Integration at 2020-01-17 15:46:46.559708
-Using core 32008:Finished Integration at 2020-01-17 15:46:46.658413. 
+Using core 15460:Finished Integration at 2020-01-30 16:57:24.497594. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:46:49.234637, with 16 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:57:31.343882, with 16 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:46:49.237116
-Using core 30080:Finished Integration at 2020-01-17 15:46:49.727660. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Running cross validation for 22 degree check and 2 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:46:50.151741
-Using core 32008:Started Integration at 2020-01-17 15:46:50.155212
-Using core 30080:Optimization run finished at 2020-01-17 15:46:50.766285, with 3 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:57:41.440954, with 31 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:50.768766
-Using core 30080:Running cross validation for 5 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:51.570300
-Using core 30080:Started Integration at 2020-01-17 15:46:51.574269
-Using core 30080:Finished Integration at 2020-01-17 15:46:52.096061. 
+Using core 10056:====
+Started run at 2020-01-30 16:57:58.451277
+Using core 10056:Started Integration at 2020-01-30 16:57:58.452775
+Using core 10056:Finished Integration at 2020-01-30 16:58:03.709901. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:52.125325, with 8 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:46:52.130781
-Using core 30080:Running cross validation for 6 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:52.271148
-Using core 30080:Started Integration at 2020-01-17 15:46:52.275117
-Using core 30080:Finished Integration at 2020-01-17 15:46:53.043420. 
+Using core 15460:====
+Started run at 2020-01-30 16:58:09.114285
+Using core 15460:Started Integration at 2020-01-30 16:58:09.117756
+Using core 15460:Finished Integration at 2020-01-30 16:58:15.142175. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:53.069213, with 20 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:58:23.297901, with 32 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:53.072190
-Using core 30080:Running cross validation for 8 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:53.227932
-Using core 30080:Started Integration at 2020-01-17 15:46:53.231902
-Using core 30080:Finished Integration at 2020-01-17 15:46:54.472893. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:54.550765, with 22 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:58:24.892046, with 16 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:54.555228
-Using core 30080:Running cross validation for 10 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:54.840925
-Using core 30080:Started Integration at 2020-01-17 15:46:54.845389
-Using core 32008:Finished Integration at 2020-01-17 15:46:55.088925. 
+Using core 10056:====
+Started run at 2020-01-30 16:58:51.243536
+Using core 10056:Started Integration at 2020-01-30 16:58:51.244527
+Using core 15460:====
+Started run at 2020-01-30 16:58:52.565376
+Using core 15460:Started Integration at 2020-01-30 16:58:52.566368
+Using core 10056:Finished Integration at 2020-01-30 16:58:57.543231. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Finished Integration at 2020-01-17 15:46:56.491613. 
+Using core 15460:Finished Integration at 2020-01-30 16:58:58.346256. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:56.693980, with 32 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:59:11.901442, with 22 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:56.695966
-Using core 30080:Running cross validation for 12 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:57.084333
-Using core 30080:Started Integration at 2020-01-17 15:46:57.088798
-Using core 30080:Finished Integration at 2020-01-17 15:46:59.057421. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:46:59.544493, with 35 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 16:59:14.263889, with 25 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:46:59.546477
-Using core 30080:Running cross validation for 14 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:46:59.901613
-Using core 30080:Started Integration at 2020-01-17 15:46:59.905085
-Using core 30080:Finished Integration at 2020-01-17 15:47:02.042350. 
+Using core 10056:====
+Started run at 2020-01-30 16:59:38.739507
+Using core 10056:Started Integration at 2020-01-30 16:59:38.742979
+Using core 15460:====
+Started run at 2020-01-30 16:59:40.871811
+Using core 15460:Started Integration at 2020-01-30 16:59:40.873299
+Using core 10056:Finished Integration at 2020-01-30 16:59:44.506995. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:03.701469, with 55 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:47:03.703950
-Using core 30080:Running cross validation for 16 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:04.183581
-Using core 30080:Started Integration at 2020-01-17 15:47:04.187549
-Using core 32008:Optimization run finished at 2020-01-17 15:47:05.390349, with 19 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:47:05.392830
-Using core 30080:Finished Integration at 2020-01-17 15:47:06.599101. 
+Using core 15460:Finished Integration at 2020-01-30 16:59:46.628387. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Running cross validation for 18 degree check and 3 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:47:06.605550
-Using core 32008:Started Integration at 2020-01-17 15:47:06.607038
-Using core 30080:Optimization run finished at 2020-01-17 15:47:08.820190, with 35 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 16:59:53.074899, with 16 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:08.825150
-Using core 32008:Finished Integration at 2020-01-17 15:47:09.257166. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Running cross validation for 20 degree check and 3 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:09.344462
-Using core 30080:Started Integration at 2020-01-17 15:47:09.348927
-Using core 32008:Optimization run finished at 2020-01-17 15:47:12.197950, with 16 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 17:00:04.872260, with 33 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:47:12.199934
-Using core 32008:Running cross validation for 22 degree check and 3 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:47:12.980638
-Using core 30080:Finished Integration at 2020-01-17 15:47:12.983119. 
+Using core 10056:====
+Started run at 2020-01-30 17:00:21.850838
+Using core 10056:Started Integration at 2020-01-30 17:00:21.852326
+Using core 10056:Finished Integration at 2020-01-30 17:00:27.233469. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Started Integration at 2020-01-17 15:47:12.985599
-Using core 30080:Optimization run finished at 2020-01-17 15:47:17.561198, with 16 iterations. Exit Code = 0
+Using core 15460:====
+Started run at 2020-01-30 17:00:33.235527
+Using core 15460:Started Integration at 2020-01-30 17:00:33.239993
+Using core 10056:Optimization run finished at 2020-01-30 17:00:37.755078, with 18 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:17.563680
-Using core 32008:Finished Integration at 2020-01-17 15:47:17.836974. 
+Using core 15460:Finished Integration at 2020-01-30 17:00:40.192456. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Running cross validation for 5 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:18.205998
-Using core 30080:Started Integration at 2020-01-17 15:47:18.209966
-Using core 30080:Finished Integration at 2020-01-17 15:47:18.724320. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:18.744160, with 10 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 17:00:48.119000, with 14 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:18.751599
-Using core 30080:Running cross validation for 6 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:18.949503
-Using core 30080:Started Integration at 2020-01-17 15:47:18.953471
-Using core 30080:Finished Integration at 2020-01-17 15:47:19.628030. 
+Using core 10056:====
+Started run at 2020-01-30 17:01:04.654153
+Using core 10056:Started Integration at 2020-01-30 17:01:04.655641
+Using core 10056:Finished Integration at 2020-01-30 17:01:10.521833. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:19.652334, with 19 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:47:19.654320
-Using core 30080:Running cross validation for 8 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:19.860159
-Using core 30080:Started Integration at 2020-01-17 15:47:19.863634
-Using core 30080:Finished Integration at 2020-01-17 15:47:20.804046. 
+Using core 15460:====
+Started run at 2020-01-30 17:01:16.179705
+Using core 15460:Started Integration at 2020-01-30 17:01:16.180698
+Using core 15460:Finished Integration at 2020-01-30 17:01:23.143049. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:20.879439, with 30 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 17:01:33.618571, with 38 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:20.881919
-Using core 30080:Running cross validation for 10 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:21.161167
-Using core 30080:Started Integration at 2020-01-17 15:47:21.165138
-Using core 30080:Finished Integration at 2020-01-17 15:47:22.446303. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:22.630320, with 38 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 17:01:34.173601, with 18 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:22.632799
-Using core 30080:Running cross validation for 12 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:23.024142
-Using core 30080:Started Integration at 2020-01-17 15:47:23.028111
-Using core 30080:Finished Integration at 2020-01-17 15:47:24.659455. 
+Using core 10056:====
+Started run at 2020-01-30 17:02:02.652924
+Using core 10056:Started Integration at 2020-01-30 17:02:02.654414
+Using core 15460:====
+Started run at 2020-01-30 17:02:03.013021
+Using core 15460:Started Integration at 2020-01-30 17:02:03.014013
+Using core 10056:Finished Integration at 2020-01-30 17:02:07.941773. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:24.787422, with 11 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:47:24.789903
-Using core 30080:Running cross validation for 14 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:25.244735
-Using core 30080:Started Integration at 2020-01-17 15:47:25.248704
-Using core 30080:Finished Integration at 2020-01-17 15:47:27.175663. 
+Using core 15460:Finished Integration at 2020-01-30 17:02:07.992861. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Optimization run finished at 2020-01-17 15:47:27.453424, with 18 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 17:02:10.001165, with 3 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:47:27.455408
-Using core 30080:Optimization run finished at 2020-01-17 15:47:27.548160, with 13 iterations. Exit Code = 0
+Using core 15460:Optimization run finished at 2020-01-30 17:02:20.879437, with 23 iterations. Exit Code = 0
 
-Using core 30080:Started Integration at 2020-01-17 15:47:27.550143
-Using core 30080:Running cross validation for 16 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:28.099215
-Using core 30080:Started Integration at 2020-01-17 15:47:28.103184
-Using core 32008:Running cross validation for 18 degree check and 4 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:47:28.473199
-Using core 32008:Started Integration at 2020-01-17 15:47:28.477663
-Using core 30080:Finished Integration at 2020-01-17 15:47:30.614431. 
+Using core 10056:====
+Started run at 2020-01-30 17:02:33.999631
+Using core 10056:Started Integration at 2020-01-30 17:02:34.001615
+Using core 10056:Finished Integration at 2020-01-30 17:02:39.610383. 
 Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Finished Integration at 2020-01-17 15:47:31.285023. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:31.437791, with 13 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:47:31.439777
-Using core 30080:Running cross validation for 20 degree check and 4 th-fold
-Using core 30080:====
-Started run at 2020-01-17 15:47:32.207087
-Using core 30080:Started Integration at 2020-01-17 15:47:32.211552
-Using core 32008:Optimization run finished at 2020-01-17 15:47:34.039311, with 16 iterations. Exit Code = 0
+Using core 10056:Optimization run finished at 2020-01-30 17:03:03.366427, with 51 iterations. Exit Code = 0
 
-Using core 32008:Started Integration at 2020-01-17 15:47:34.041792
-Using core 32008:Running cross validation for 22 degree check and 4 th-fold
-Using core 32008:====
-Started run at 2020-01-17 15:47:34.802160
-Using core 32008:Started Integration at 2020-01-17 15:47:34.806129
-Using core 30080:Finished Integration at 2020-01-17 15:47:35.101247. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 32008:Finished Integration at 2020-01-17 15:47:39.186305. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 30080:Optimization run finished at 2020-01-17 15:47:40.356864, with 19 iterations. Exit Code = 0
-
-Using core 30080:Started Integration at 2020-01-17 15:47:40.358848
-Using core 32008:Optimization run finished at 2020-01-17 15:47:49.183737, with 20 iterations. Exit Code = 0
-
-Using core 32008:Started Integration at 2020-01-17 15:47:49.186217
-Using core 33544:Finished CV. Picked {22} degrees by maximizing likelihoodUsing core 33544:Finished CV. Picked 22 degrees by maximizing likelihood
-Using core 33544:Running full dataset MLE before bootstrap
-Using core 33544:====
-Started run at 2020-01-17 15:47:50.098634
-Using core 33544:Started Integration at 2020-01-17 15:47:50.100416
-Using core 33544:Finished Integration at 2020-01-17 15:47:54.348161. 
-Calculated the PDF for m and r for Integrated beta and normal density.
-Using core 33544:Optimization run finished at 2020-01-17 15:48:02.398753, with 18 iterations. Exit Code = 0
-
-Using core 33544:Finished full dataset MLE run at 2020-01-17 15:48:27.514871
-Using core 33544:
-
-==============
-Running 100 bootstraps for the MLE code with degree = 22, using 2 thread/s.
-==============
-
-Using core 31948:====
-Started run at 2020-01-17 15:48:29.890162
-Using core 26252:====
-Started run at 2020-01-17 15:48:29.891156
-Using core 31948:Started Integration at 2020-01-17 15:48:29.892642
-Using core 26252:Started Integration at 2020-01-17 15:48:29.897837
-Using core 31948:Finished Integration at 2020-01-17 15:48:35.157918. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:48:35.381615. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:48:44.230750, with 16 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:48:47.570319, with 21 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:49:11.592592
-Using core 31948:Started Integration at 2020-01-17 15:49:11.595568
-Using core 26252:====
-Started run at 2020-01-17 15:49:15.411793
-Using core 26252:Started Integration at 2020-01-17 15:49:15.413777
-Using core 31948:Finished Integration at 2020-01-17 15:49:17.692897. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:49:20.842993. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:49:41.867939, with 37 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:49:44.810706, with 36 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:50:10.120102
-Using core 31948:Started Integration at 2020-01-17 15:50:10.122580
-Using core 26252:====
-Started run at 2020-01-17 15:50:12.918535
-Using core 26252:Started Integration at 2020-01-17 15:50:12.920516
-Using core 31948:Finished Integration at 2020-01-17 15:50:15.673814. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:50:19.186485. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:50:29.580663, with 19 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 15:50:33.452934, with 30 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 15:51:08.378281
-Using core 26252:Started Integration at 2020-01-17 15:51:08.382249
-Using core 31948:====
-Started run at 2020-01-17 15:51:14.093689
-Using core 31948:Started Integration at 2020-01-17 15:51:14.096668
-Using core 26252:Finished Integration at 2020-01-17 15:51:16.912457. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 15:51:23.793961. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:51:42.395946, with 31 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 15:51:52.531708, with 34 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 15:52:26.176878
-Using core 26252:Started Integration at 2020-01-17 15:52:26.179854
-Using core 26252:Finished Integration at 2020-01-17 15:52:38.440479. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 15:52:38.686495
-Using core 31948:Started Integration at 2020-01-17 15:52:38.691950
-Using core 31948:Finished Integration at 2020-01-17 15:52:51.411376. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:52:59.594880, with 23 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 15:53:35.528099, with 55 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 15:53:40.720227
-Using core 26252:Started Integration at 2020-01-17 15:53:40.722707
-Using core 26252:Finished Integration at 2020-01-17 15:53:46.839379. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:53:55.802595, with 16 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:54:01.309684
-Using core 31948:Started Integration at 2020-01-17 15:54:01.312164
-Using core 31948:Finished Integration at 2020-01-17 15:54:06.964084. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 15:54:20.241013
-Using core 26252:Started Integration at 2020-01-17 15:54:20.243495
-Using core 26252:Finished Integration at 2020-01-17 15:54:25.880038. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:54:26.335367, with 36 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:54:46.614327, with 37 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:54:52.213175
-Using core 31948:Started Integration at 2020-01-17 15:54:52.215656
-Using core 31948:Finished Integration at 2020-01-17 15:54:58.958280. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:55:09.143145, with 19 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 15:55:12.495114
-Using core 26252:Started Integration at 2020-01-17 15:55:12.497593
-Using core 26252:Finished Integration at 2020-01-17 15:55:18.327081. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:55:24.892140, with 12 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:55:33.426316
-Using core 31948:Started Integration at 2020-01-17 15:55:33.428796
-Using core 31948:Finished Integration at 2020-01-17 15:55:38.292074. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:55:46.984475, with 17 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 15:55:49.532428
-Using core 26252:Started Integration at 2020-01-17 15:55:49.534412
-Using core 26252:Finished Integration at 2020-01-17 15:55:54.644700. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:56:08.672573, with 26 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:56:11.982878
-Using core 31948:Started Integration at 2020-01-17 15:56:11.985357
-Using core 31948:Finished Integration at 2020-01-17 15:56:17.266766. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 15:56:32.765280
-Using core 26252:Started Integration at 2020-01-17 15:56:32.767759
-Using core 26252:Finished Integration at 2020-01-17 15:56:38.248558. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:56:41.019711, with 43 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:56:45.475279, with 14 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:57:05.403569
-Using core 31948:Started Integration at 2020-01-17 15:57:05.405555
-Using core 26252:====
-Started run at 2020-01-17 15:57:09.618577
-Using core 26252:Started Integration at 2020-01-17 15:57:09.621057
-Using core 31948:Finished Integration at 2020-01-17 15:57:11.080290. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:57:15.812130. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:57:30.809187, with 37 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:57:30.943602, with 27 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:57:55.155845
-Using core 31948:Started Integration at 2020-01-17 15:57:55.157831
-Using core 26252:====
-Started run at 2020-01-17 15:57:55.561572
-Using core 26252:Started Integration at 2020-01-17 15:57:55.564053
-Using core 31948:Finished Integration at 2020-01-17 15:58:00.950612. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:58:01.644517. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:58:09.309204, with 15 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:58:11.966773, with 19 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:58:38.585608
-Using core 31948:Started Integration at 2020-01-17 15:58:38.588583
-Using core 26252:====
-Started run at 2020-01-17 15:58:42.247575
-Using core 26252:Started Integration at 2020-01-17 15:58:42.249560
-Using core 31948:Finished Integration at 2020-01-17 15:58:45.023192. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 15:58:48.110792. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 15:58:58.364601, with 18 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 15:59:10.385161, with 28 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 15:59:29.961291
-Using core 31948:Started Integration at 2020-01-17 15:59:29.963774
-Using core 31948:Finished Integration at 2020-01-17 15:59:35.359755. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 15:59:36.606203
-Using core 26252:Started Integration at 2020-01-17 15:59:36.608683
-Using core 26252:Finished Integration at 2020-01-17 15:59:41.841981. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 15:59:51.339884, with 17 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 15:59:55.788508, with 36 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:00:18.415038
-Using core 26252:Started Integration at 2020-01-17 16:00:18.417518
-Using core 31948:====
-Started run at 2020-01-17 16:00:21.578031
-Using core 31948:Started Integration at 2020-01-17 16:00:21.580512
-Using core 26252:Finished Integration at 2020-01-17 16:00:23.892368. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:00:27.032542. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:00:32.801521, with 17 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:00:47.884384, with 39 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:00:56.887777
-Using core 26252:Started Integration at 2020-01-17 16:00:56.889764
-Using core 26252:Finished Integration at 2020-01-17 16:01:02.651793. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:01:15.355346
-Using core 31948:Started Integration at 2020-01-17 16:01:15.357330
-Using core 26252:Optimization run finished at 2020-01-17 16:01:22.583554, with 31 iterations. Exit Code = 0
-
-Using core 31948:Finished Integration at 2020-01-17 16:01:22.594467. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:01:34.329331, with 20 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:01:49.573898
-Using core 26252:Started Integration at 2020-01-17 16:01:49.575876
-Using core 26252:Finished Integration at 2020-01-17 16:01:55.058164. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:02:00.027093
-Using core 31948:Started Integration at 2020-01-17 16:02:00.029077
-Using core 31948:Finished Integration at 2020-01-17 16:02:04.995525. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:02:12.697414, with 14 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:02:25.415848, with 55 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:02:38.260760
-Using core 31948:Started Integration at 2020-01-17 16:02:38.262743
-Using core 31948:Finished Integration at 2020-01-17 16:02:44.526233. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:02:51.974665
-Using core 26252:Started Integration at 2020-01-17 16:02:51.976650
-Using core 26252:Finished Integration at 2020-01-17 16:02:57.303193. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:03:05.465369, with 38 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:03:13.297210, with 28 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:03:31.001933
-Using core 31948:Started Integration at 2020-01-17 16:03:31.003916
-Using core 31948:Finished Integration at 2020-01-17 16:03:36.533819. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:03:38.863532
-Using core 26252:Started Integration at 2020-01-17 16:03:38.866012
-Using core 26252:Finished Integration at 2020-01-17 16:03:44.376572. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:03:58.396014, with 24 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:04:00.936525, with 42 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:04:28.109391
-Using core 26252:Started Integration at 2020-01-17 16:04:28.111871
-Using core 31948:====
-Started run at 2020-01-17 16:04:29.770001
-Using core 31948:Started Integration at 2020-01-17 16:04:29.772480
-Using core 26252:Finished Integration at 2020-01-17 16:04:35.231455. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:04:37.537858. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:05:01.765473, with 30 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:05:05.621378, with 38 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:05:32.727284
-Using core 31948:Started Integration at 2020-01-17 16:05:32.729267
-Using core 26252:====
-Started run at 2020-01-17 16:05:34.265875
-Using core 26252:Started Integration at 2020-01-17 16:05:34.268356
-Using core 31948:Finished Integration at 2020-01-17 16:05:40.604260. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 16:05:43.540581. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:05:55.308181, with 13 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:06:10.141063, with 36 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:06:37.364520
-Using core 26252:Started Integration at 2020-01-17 16:06:37.367001
-Using core 26252:Finished Integration at 2020-01-17 16:06:49.395002. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:06:55.108922
-Using core 31948:Started Integration at 2020-01-17 16:06:55.111897
-Using core 26252:Optimization run finished at 2020-01-17 16:07:03.915402, with 18 iterations. Exit Code = 0
-
-Using core 31948:Finished Integration at 2020-01-17 16:07:05.351818. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:07:29.012508, with 36 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:07:39.559453
-Using core 26252:Started Integration at 2020-01-17 16:07:39.562925
-Using core 26252:Finished Integration at 2020-01-17 16:07:47.375916. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:07:49.583117, with 3 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:08:02.776718
-Using core 31948:Started Integration at 2020-01-17 16:08:02.778702
-Using core 31948:Finished Integration at 2020-01-17 16:08:07.899902. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:08:17.315472
-Using core 26252:Started Integration at 2020-01-17 16:08:17.317951
-Using core 26252:Finished Integration at 2020-01-17 16:08:22.990703. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:08:24.158783, with 31 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:08:33.063472, with 19 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:08:48.788659
-Using core 31948:Started Integration at 2020-01-17 16:08:48.791140
-Using core 31948:Finished Integration at 2020-01-17 16:08:54.192081. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:08:57.615473
-Using core 26252:Started Integration at 2020-01-17 16:08:57.617954
-Using core 26252:Finished Integration at 2020-01-17 16:09:02.574482. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:09:12.863506, with 19 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:09:13.262787, with 36 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:09:36.789061
-Using core 26252:Started Integration at 2020-01-17 16:09:36.791044
-Using core 31948:====
-Started run at 2020-01-17 16:09:36.822292
-Using core 31948:Started Integration at 2020-01-17 16:09:36.824276
-Using core 26252:Finished Integration at 2020-01-17 16:09:42.072452. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:09:42.552086. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:09:57.808550, with 28 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:10:11.124662, with 53 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:10:22.271769
-Using core 26252:Started Integration at 2020-01-17 16:10:22.274247
-Using core 26252:Finished Integration at 2020-01-17 16:10:27.512505. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:10:35.284330, with 15 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:10:35.526874
-Using core 31948:Started Integration at 2020-01-17 16:10:35.529352
-Using core 31948:Finished Integration at 2020-01-17 16:10:41.042393. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:11:00.278763
-Using core 26252:Started Integration at 2020-01-17 16:11:00.282234
-Using core 31948:Optimization run finished at 2020-01-17 16:11:01.768250, with 39 iterations. Exit Code = 0
-
-Using core 26252:Finished Integration at 2020-01-17 16:11:06.049722. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:11:13.976300, with 15 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:11:26.144171
-Using core 31948:Started Integration at 2020-01-17 16:11:26.412508
-Using core 31948:Finished Integration at 2020-01-17 16:11:31.123555. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:11:38.324445
-Using core 26252:Started Integration at 2020-01-17 16:11:38.506478
-Using core 26252:Finished Integration at 2020-01-17 16:11:44.034397. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:11:46.378493, with 29 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:12:10.821375
-Using core 31948:Started Integration at 2020-01-17 16:12:10.823856
-Using core 26252:Optimization run finished at 2020-01-17 16:12:14.821615, with 58 iterations. Exit Code = 0
-
-Using core 31948:Finished Integration at 2020-01-17 16:12:16.403360. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:12:40.057106
-Using core 26252:Started Integration at 2020-01-17 16:12:40.059089
-Using core 31948:Optimization run finished at 2020-01-17 16:12:44.081153, with 51 iterations. Exit Code = 0
-
-Using core 26252:Finished Integration at 2020-01-17 16:12:45.165905. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:13:00.190242, with 29 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:13:07.767635
-Using core 31948:Started Integration at 2020-01-17 16:13:07.770611
-Using core 31948:Finished Integration at 2020-01-17 16:13:13.030196. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:13:21.955220, with 18 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:13:24.432740
-Using core 26252:Started Integration at 2020-01-17 16:13:24.435220
-Using core 26252:Finished Integration at 2020-01-17 16:13:29.905604. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:13:37.639236, with 15 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:13:46.043463
-Using core 31948:Started Integration at 2020-01-17 16:13:46.045446
-Using core 31948:Finished Integration at 2020-01-17 16:13:51.666614. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:14:01.912982
-Using core 26252:Started Integration at 2020-01-17 16:14:01.914968
-Using core 26252:Finished Integration at 2020-01-17 16:14:07.362040. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:14:13.390425, with 39 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:14:15.226119, with 15 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:14:37.460811
-Using core 31948:Started Integration at 2020-01-17 16:14:37.463289
-Using core 26252:====
-Started run at 2020-01-17 16:14:39.316841
-Using core 26252:Started Integration at 2020-01-17 16:14:39.318825
-Using core 31948:Finished Integration at 2020-01-17 16:14:42.897467. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 16:14:44.003546. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:14:51.967818, with 15 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:14:58.068122, with 29 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:15:16.255948
-Using core 26252:Started Integration at 2020-01-17 16:15:16.257932
-Using core 26252:Finished Integration at 2020-01-17 16:15:21.695084. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:15:22.349805
-Using core 31948:Started Integration at 2020-01-17 16:15:22.351788
-Using core 31948:Finished Integration at 2020-01-17 16:15:27.402062. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:15:32.659660, with 21 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:15:38.809565, with 21 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:15:56.306462
-Using core 26252:Started Integration at 2020-01-17 16:15:56.308448
-Using core 26252:Finished Integration at 2020-01-17 16:16:01.902830. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:16:02.150379
-Using core 31948:Started Integration at 2020-01-17 16:16:02.152816
-Using core 31948:Finished Integration at 2020-01-17 16:16:07.159439. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:16:20.451248, with 36 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:16:23.986242, with 30 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:16:44.319761
-Using core 26252:Started Integration at 2020-01-17 16:16:44.322241
-Using core 31948:====
-Started run at 2020-01-17 16:16:47.463907
-Using core 31948:Started Integration at 2020-01-17 16:16:47.465890
-Using core 26252:Finished Integration at 2020-01-17 16:16:49.730627. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:16:52.822194. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:17:04.190019, with 25 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:17:12.339299, with 35 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:17:31.471509
-Using core 26252:Started Integration at 2020-01-17 16:17:31.474981
-Using core 26252:Finished Integration at 2020-01-17 16:17:36.134947. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:17:39.664438
-Using core 31948:Started Integration at 2020-01-17 16:17:39.666421
-Using core 31948:Finished Integration at 2020-01-17 16:17:44.722152. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:17:46.762694, with 21 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:18:01.742392, with 32 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:18:11.829048
-Using core 26252:Started Integration at 2020-01-17 16:18:11.831032
-Using core 26252:Finished Integration at 2020-01-17 16:18:17.246858. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:18:25.428377
-Using core 31948:Started Integration at 2020-01-17 16:18:25.430363
-Using core 31948:Finished Integration at 2020-01-17 16:18:30.724666. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:18:36.554153, with 36 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:18:37.991561, with 14 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:18:59.762987
-Using core 26252:Started Integration at 2020-01-17 16:18:59.764970
-Using core 31948:====
-Started run at 2020-01-17 16:19:01.415660
-Using core 31948:Started Integration at 2020-01-17 16:19:01.417645
-Using core 26252:Finished Integration at 2020-01-17 16:19:05.274540. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:19:06.115259. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:19:15.630030, with 18 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:19:30.923694, with 50 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:19:39.411284
-Using core 31948:Started Integration at 2020-01-17 16:19:39.414224
-Using core 31948:Finished Integration at 2020-01-17 16:19:44.825087. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:19:55.173631
-Using core 26252:Started Integration at 2020-01-17 16:19:55.178592
-Using core 31948:Optimization run finished at 2020-01-17 16:19:56.006910, with 21 iterations. Exit Code = 0
-
-Using core 26252:Finished Integration at 2020-01-17 16:20:00.276479. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:20:09.406351, with 17 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:20:20.539074
-Using core 31948:Started Integration at 2020-01-17 16:20:20.541553
-Using core 31948:Finished Integration at 2020-01-17 16:20:25.744592. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:20:33.552626
-Using core 26252:Started Integration at 2020-01-17 16:20:33.555105
-Using core 31948:Optimization run finished at 2020-01-17 16:20:39.727826, with 26 iterations. Exit Code = 0
-
-Using core 26252:Finished Integration at 2020-01-17 16:20:40.512002. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:21:00.403092, with 30 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:21:13.164180
-Using core 31948:Started Integration at 2020-01-17 16:21:13.166661
-Using core 31948:Finished Integration at 2020-01-17 16:21:21.256919. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:21:29.599141, with 13 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:21:34.079509
-Using core 26252:Started Integration at 2020-01-17 16:21:34.081989
-Using core 26252:Finished Integration at 2020-01-17 16:21:41.693607. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:22:03.834055
-Using core 31948:Started Integration at 2020-01-17 16:22:03.837032
-Using core 31948:Finished Integration at 2020-01-17 16:22:11.224456. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:22:14.650329, with 52 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:22:23.399273, with 19 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:22:45.636938
-Using core 26252:Started Integration at 2020-01-17 16:22:45.639418
-Using core 26252:Finished Integration at 2020-01-17 16:22:50.922811. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:22:51.302748
-Using core 31948:Started Integration at 2020-01-17 16:22:51.304731
-Using core 31948:Finished Integration at 2020-01-17 16:22:57.211595. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:23:07.513035, with 19 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:23:11.434907, with 39 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:23:30.889518
-Using core 31948:Started Integration at 2020-01-17 16:23:30.891502
-Using core 26252:====
-Started run at 2020-01-17 16:23:34.722109
-Using core 26252:Started Integration at 2020-01-17 16:23:34.724093
-Using core 31948:Finished Integration at 2020-01-17 16:23:36.345021. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 16:23:40.199933. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:23:44.020126, with 15 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:23:58.421486, with 34 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:24:07.413471
-Using core 31948:Started Integration at 2020-01-17 16:24:07.415952
-Using core 31948:Finished Integration at 2020-01-17 16:24:12.683967. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:24:22.447233
-Using core 26252:Started Integration at 2020-01-17 16:24:22.449216
-Using core 26252:Finished Integration at 2020-01-17 16:24:27.516352. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:24:35.734081, with 16 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:24:37.493393, with 46 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:24:58.839251
-Using core 26252:Started Integration at 2020-01-17 16:24:58.841236
-Using core 31948:====
-Started run at 2020-01-17 16:25:00.968579
-Using core 31948:Started Integration at 2020-01-17 16:25:00.971554
-Using core 26252:Finished Integration at 2020-01-17 16:25:04.166291. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:25:06.240563. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:25:17.770580, with 22 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:25:24.121364, with 38 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:25:41.576599
-Using core 31948:Started Integration at 2020-01-17 16:25:41.579575
-Using core 31948:Finished Integration at 2020-01-17 16:25:47.229013. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:====
-Started run at 2020-01-17 16:25:48.294422
-Using core 26252:Started Integration at 2020-01-17 16:25:48.296902
-Using core 26252:Finished Integration at 2020-01-17 16:25:53.553510. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:26:09.091704, with 39 iterations. Exit Code = 0
-
-Using core 26252:Optimization run finished at 2020-01-17 16:26:10.725032, with 33 iterations. Exit Code = 0
-
-Using core 31948:====
-Started run at 2020-01-17 16:26:32.045097
-Using core 31948:Started Integration at 2020-01-17 16:26:32.047081
-Using core 26252:====
-Started run at 2020-01-17 16:26:33.731497
-Using core 26252:Started Integration at 2020-01-17 16:26:33.736953
-Using core 31948:Finished Integration at 2020-01-17 16:26:36.927225. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Finished Integration at 2020-01-17 16:26:39.116571. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:26:51.529466, with 21 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:26:53.713851, with 29 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:27:14.565196
-Using core 26252:Started Integration at 2020-01-17 16:27:14.567180
-Using core 31948:====
-Started run at 2020-01-17 16:27:17.251532
-Using core 31948:Started Integration at 2020-01-17 16:27:17.253516
-Using core 26252:Finished Integration at 2020-01-17 16:27:19.918028. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Finished Integration at 2020-01-17 16:27:22.570140. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:27:29.878205, with 19 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:27:44.885678, with 41 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:27:54.650927
-Using core 26252:Started Integration at 2020-01-17 16:27:54.654895
-Using core 26252:Finished Integration at 2020-01-17 16:27:59.505776. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:28:08.526528
-Using core 31948:Started Integration at 2020-01-17 16:28:08.529008
-Using core 26252:Optimization run finished at 2020-01-17 16:28:09.467935, with 20 iterations. Exit Code = 0
-
-Using core 31948:Finished Integration at 2020-01-17 16:28:13.441392. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:Optimization run finished at 2020-01-17 16:28:21.191393, with 15 iterations. Exit Code = 0
-
-Using core 26252:====
-Started run at 2020-01-17 16:28:32.805233
-Using core 26252:Started Integration at 2020-01-17 16:28:32.807217
-Using core 26252:Finished Integration at 2020-01-17 16:28:38.357457. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 31948:====
-Started run at 2020-01-17 16:28:44.598131
-Using core 31948:Started Integration at 2020-01-17 16:28:44.600114
-Using core 31948:Finished Integration at 2020-01-17 16:28:49.944515. 
-Calculated the PDF for m and r for Integrated beta and normal density.Using core 26252:Optimization run finished at 2020-01-17 16:28:51.709778, with 26 iterations. Exit Code = 0
-
-Using core 31948:Optimization run finished at 2020-01-17 16:29:11.451574, with 41 iterations. Exit Code = 0
-
-Using core 33544:Finished bootstrap at 2020-01-17 16:29:30.093238Using core 33544:Ended run at 2020-01-17 16:29:30.094726Using core 33544:
+Using core 16236:Finished bootstrap at 2020-01-30 17:03:22.865611Using core 16236:Ended run at 2020-01-30 17:03:22.866603Using core 16236:
 	 _______ _    _ ______   ______ _   _ _____
 	 |__   __| |  | |  ____| |  ____| \ | |  __ |
 	    | |  | |__| | |__    | |__  |  \| | |  | |
