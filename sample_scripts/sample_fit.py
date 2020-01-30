@@ -38,19 +38,19 @@ For more detailed guidelines read the docuemtnation for the fit_mr_relation() fu
 
 
 t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
-# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
+t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
 
 
 # Symmetrical errorbars
-Mass_sigma = (abs(t['pl_masseerr1']) + abs(t['pl_masseerr2']))/2
-Radius_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
+Mass_sigma = (abs(t['pl_masseerr1'])) #+ abs(t['pl_masseerr2']))/2
+Radius_sigma = (abs(t['pl_radeerr1']))# + abs(t['pl_radeerr2']))/2
 
 # In Earth units
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'M_dwarfs_20181214_xy')
+result_dir = os.path.join(pwd,'Kepler_Ning_etal_20170605_xy')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
@@ -60,5 +60,5 @@ MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_lab
 
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
-                                                save_path = result_dir, select_deg = 17,
+                                                save_path = result_dir, select_deg = 55,
                                                 num_boot = 50, cores = 4)

@@ -243,7 +243,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
     if X_min is None:
         if np.any(np.isnan(X_sigma)):
             print('Provide {} Bounds'.format(X_label))
-        X_min = min(np.log10(min(np.abs(X - X_sigma))), -0.3)
+        X_min = np.log10(min(np.abs(X - X_sigma)))
     if X_max is None:
         if np.any(np.isnan(X_sigma)):
             print('Provide {} Bounds'.format(X_label))
