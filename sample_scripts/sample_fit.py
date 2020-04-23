@@ -50,7 +50,7 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'Mdwarfs_20200421_2')
+result_dir = os.path.join(pwd,'Mdwarfs_20200421_35')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
@@ -60,5 +60,5 @@ MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_lab
 
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
-                                                save_path = result_dir, select_deg = 'cv', degree_max=60,
+                                                save_path = result_dir, select_deg = 35,
                                                 num_boot = 50, cores = 6)
