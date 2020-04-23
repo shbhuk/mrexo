@@ -37,8 +37,8 @@ For more detailed guidelines read the docuemtnation for the fit_mr_relation() fu
 '''
 
 
-t = Table.read(os.path.join(pwd,'Cool_stars_MR_20181214_exc_upperlim.csv'))
-t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
+t = Table.read(os.path.join(pwd,'Cool_stars_20200421_exc_upperlim.csv'))
+# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
 
 
 # Symmetrical errorbars
@@ -50,7 +50,7 @@ Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'Kepler_Ning_etal_20170605_xy')
+result_dir = os.path.join(pwd,'Mdwarfs_20200421_2')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
@@ -60,5 +60,5 @@ MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_lab
 
 if __name__ == '__main__':
             initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
-                                                save_path = result_dir, select_deg = 55,
-                                                num_boot = 50, cores = 4)
+                                                save_path = result_dir, select_deg = 'cv', degree_max=60,
+                                                num_boot = 50, cores = 6)
