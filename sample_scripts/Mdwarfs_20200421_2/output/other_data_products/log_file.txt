@@ -1042,3 +1042,10 @@ Started run at 2020-04-23 09:08:26.461715
 Using core 665376:Started Integration at 2020-04-23 09:08:26.463714
 Using core 665376:Finished Integration at 2020-04-23 09:09:55.034037. 
 Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 655684:Optimization run finished at 2020-04-23 09:34:32.567244, with 15 iterations. Exit Code = 0
+
+Using core 655684:====
+Started run at 2020-04-23 09:36:50.107514
+Using core 655684:Started Integration at 2020-04-23 09:36:50.109513
+Using core 655684:Finished Integration at 2020-04-23 09:38:16.470078. 
+Calculated the PDF for m and r for Integrated beta and normal density.
