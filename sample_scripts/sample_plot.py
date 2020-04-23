@@ -18,7 +18,8 @@ kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_
 # FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\FP2018_RadPer_SampleSize50_Trial1'
 # FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\PR_50Trial0_deg15'
 
-new_cv = os.path.join(pwd,'M_dwarfs_20200116')
+new_cv = os.path.join(pwd,'Mdwarfs_20200421')
+
 
 result_dir = new_cv
 
@@ -46,3 +47,5 @@ ax = plot_joint_xy_distribution(result_dir)
 
 # ax[1].set_xlabel('Radius')
 # ax[1].set_ylabel('Period')
+
+plt.show()
