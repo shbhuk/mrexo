@@ -18,7 +18,7 @@ kepler_result = r'C:\Users\shbhu\Documents\Git\mrexo\mrexo\datasets\Kepler_Ning_
 # FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\FP2018_RadPer_SampleSize50_Trial1'
 # FP_result = r'C:\\Users\\shbhu\\Box Sync\\M_dwarves\\MassRadiusPeriod\\PR_50Trial0_deg15'
 
-new_cv = os.path.join(pwd,'Mdwarfs_20200421_30')
+new_cv = os.path.join(pwd,'Mdwarfs_20200421')
 
 
 result_dir = new_cv
