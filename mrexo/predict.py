@@ -8,23 +8,24 @@ from multiprocessing import Pool,cpu_count
 
 from .mle_utils import cond_density_quantile
 from .utils import _load_lookup_table
-from .plot import plot_r_given_m_relation, plot_m_given_r_relation
+from .plot import plot_x_given_y_relation, plot_y_given_x_relation
 
 pwd = os.path.dirname(__file__)
 np.warnings.filterwarnings('ignore')
 
 def predict_from_measurement(measurement, measurement_sigma=np.nan,
-            predict = 'Mass', result_dir=None, dataset='mdwarf',
+            predict = 'mass', result_dir=None, dataset='mdwarf',
             is_posterior=False, qtl=[0.16,0.84], show_plot=False,
             use_lookup=False):
     """
-    Predict mass from given radius, or radius from mass for a single object.
+    Predict Qty Y from Qty X or X from Y for a single object on the basis of the XY nonparametric fit.
     Function can be used to predict from a single measurement (w/ or w/o error), or from a posterior distribution.
     \nINPUTS:
         measurement: Numpy array of measurement/s. Always in linear scale.
         measurement_sigma: Numpy array of radius uncertainties. Assumes
             symmetrical uncertainty. Default : None. Always in linear scale.
         predict: The quantity that is being predicted.
+                Specify based on Xlabel and Ylabel used for fitting.
                 If = 'Mass', will give mass given input radius.
                 Else, can predict radius from mass, if = 'Radius'.
         result_dir: The directory where the results of the fit are stored.
@@ -100,7 +101,7 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
     predict = predict.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
-    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20181214')
+    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20200116')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
@@ -114,12 +115,19 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
+    aux_output_location = os.path.join(output_location, 'other_data_products')
+
+    with open(os.path.join(aux_output_location, 'AxesLabels.txt'), 'r') as f:
+        LabelDictionary = eval(f.read())
 
     # Load the results from the directory
-    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
-    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+    Y_min, Y_max = np.loadtxt(os.path.join(input_location, 'Y_bounds.txt'))
+    X_min, X_max = np.loadtxt(os.path.join(input_location, 'X_bounds.txt'))
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
-    R_points = np.loadtxt(os.path.join(output_location, 'R_points.txt'))
+    X_points = np.loadtxt(os.path.join(output_location, 'X_points.txt'))
+    Y_points = np.loadtxt(os.path.join(output_location, 'Y_points.txt'))
+    Y_label = LabelDictionary['Y_label'].replace(' ', '').lower()
+    X_label = LabelDictionary['X_label'].replace(' ', '').lower()
 
     degree = int(np.sqrt(len(weights_mle)))
     deg_vec = np.arange(1,degree+1)
@@ -132,25 +140,36 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
         log_measurement_sigma = None
 
 
-    if predict == 'mass':
-        predict_min, predict_max = Mass_min, Mass_max
-        measurement_min, measurement_max = Radius_min, Radius_max
+    if predict==Y_label:
+        predict_min, predict_max = Y_min, Y_max
+        measurement_min, measurement_max = X_min, X_max
         w_hat = weights_mle
-        lookup_fname = 'lookup_m_given_r_interp2d.npy'
+        lookup_fname = 'lookup_y_given_x_interp2d.npy'
+
+    elif predict==X_label:
+        predict_min, predict_max = X_min, X_max
+        measurement_min, measurement_max = Y_min, Y_max
+        w_hat = np.reshape(weights_mle,(degree,degree)).T.flatten()
+        lookup_fname = 'lookup_x_given_y_interp2d.npy'
+    else:
+        print("predict keyword does not match X or Y label")
+        raise ValueError
+
+
+    if predict == 'mass':
         Mass_iron = mass_100_percent_iron_planet(np.min(log_measurement))
         iron_planet = Mass_iron
 
         if np.min(log_measurement) < np.log10(1.3):
             print('Mass of 100% Iron planet of {} Earth Radii = {} Earth Mass (Fortney, Marley and Barnes 2007)'.format(10**np.min(log_measurement), 10**Mass_iron))
-    else:
-        predict_min, predict_max = Radius_min, Radius_max
-        measurement_min, measurement_max = Mass_min, Mass_max
-        w_hat = np.reshape(weights_mle,(degree,degree)).T.flatten()
-        lookup_fname = 'lookup_r_given_m_interp2d.npy'
+
+    elif predict == 'radius':
         Radius_iron = radius_100_percent_iron_planet(np.min(log_measurement))
         print('Radius of 100% Iron planet of {} Earth Mass = {} Earth Radii (Fortney, Marley and Barnes 2007)'.format(10**np.min(log_measurement), 10**Radius_iron))
-
         iron_planet = Radius_iron
+
+    else:
+        iron_planet = np.nan
 
 
     ########################################################
@@ -158,10 +177,11 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
     # Check if single measurement or posterior distribution.
     if is_posterior == False:
 
-            predicted_value = cond_density_quantile(y=log_measurement, y_std=log_measurement_sigma, y_max=measurement_max,
-                                                        y_min=measurement_min, x_max=predict_max, x_min=predict_min,
+            predicted_value = cond_density_quantile(a=log_measurement, a_std=log_measurement_sigma, a_max=measurement_max,
+                                                        a_min=measurement_min, b_max=predict_max, b_min=predict_min,
                                                         deg=degree, deg_vec = deg_vec,
                                                         w_hat=w_hat, qtl=np.insert(np.array(qtl),0,0.5))
+
             predicted_median = predicted_value[2][0]
             predicted_qtl = predicted_value[2][1:]
 
@@ -175,12 +195,14 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
                     # If finding multiple quantiles, do not plot errorbar on predicted value in plot
                     predicted_lower_quantile, predicted_upper_quantile = predicted_median, predicted_median
 
-                if predict == 'mass':
-                    fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-                    ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
-                    handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
+                if predict == Y_label:
+                    fig, ax, handles = plot_y_given_x_relation(result_dir=result_dir)
                 else:
-                    fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+                    fig, ax, handles = plot_x_given_y_relation(result_dir=result_dir)
+
+                if predict == 'mass':
+                    ax.plot(10**X_points, 10**mass_100_percent_iron_planet(X_points), 'k')
+                    handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
 
                 yerr = np.array([[10**predicted_median - 10**predicted_lower_quantile, 10**predicted_upper_quantile - 10**predicted_median]]).T
 
@@ -194,13 +216,13 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
 
     ###########################################################
 
-    elif is_posterior == True:
+    elif is_posterior==True:
 
         n = np.size(measurement)
         random_quantile = np.zeros(n)
         lookup_flag = None
 
-        if use_lookup == True:
+        if use_lookup==True:
             try:
                 lookup = _load_lookup_table(os.path.join(output_location,lookup_fname))
                 lookup_flag = 1
@@ -213,23 +235,25 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
         if not lookup_flag:
             for i in range(0,n):
                 qtl_check = np.random.random()
-                results = cond_density_quantile(y=log_measurement[i], y_std=None, y_max=measurement_max, y_min=measurement_min,
-                                                        x_max=predict_max, x_min=predict_min, deg=degree, deg_vec = deg_vec,
+
+                results = cond_density_quantile(a=log_measurement[i], a_std=None, a_max=measurement_max, a_min=measurement_min,
+                                                        b_max=predict_max, b_min=predict_min, deg=degree, deg_vec = deg_vec,
                                                         w_hat=w_hat, qtl=[qtl_check])
 
                 random_quantile[i] = results[2][0]
 
-        outputs = [random_quantile, iron_planet]
+        outputs = [random_quantile]
 
         if show_plot == True:
 
-            if predict == 'mass':
-                fig, ax, handles = plot_m_given_r_relation(result_dir=result_dir)
-                ax.plot(10**R_points, 10**mass_100_percent_iron_planet(R_points), 'k')
-                handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
-
+            if predict==Y_label:
+                fig, ax, handles = plot_y_given_x_relation(result_dir=result_dir)
             else:
-                fig, ax, handles = plot_r_given_m_relation(result_dir=result_dir)
+                fig, ax, handles = plot_x_given_y_relation(result_dir=result_dir)
+
+            if predict == 'mass':
+                ax.plot(10**X_points, 10**mass_100_percent_iron_planet(X_points), 'k')
+                handles.append(Line2D([0], [0], color='k',  label=r'100$\%$ Iron planet'))
 
             # Check if need this if-else block
             if np.size(qtl)==2:
@@ -312,21 +336,28 @@ def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
 
     input_location = os.path.join(result_dir, 'input')
     output_location = os.path.join(result_dir, 'output')
-    Mass_min, Mass_max = np.loadtxt(os.path.join(input_location, 'Mass_bounds.txt'))
-    Radius_min, Radius_max = np.loadtxt(os.path.join(input_location, 'Radius_bounds.txt'))
+    aux_output_location = os.path.join(output_location, 'other_data_products')
+
+    with open(os.path.join(aux_output_location, 'AxesLabels.txt'), 'r') as f:
+        LabelDictionary = eval(f.read())
+
+    Y_min, Y_max = np.loadtxt(os.path.join(input_location, 'Y_bounds.txt'))
+    X_min, X_max = np.loadtxt(os.path.join(input_location, 'X_bounds.txt'))
+    Y_label = LabelDictionary['Y_label'].replace(' ', '').lower()
+    X_label = LabelDictionary['X_label'].replace(' ', '').lower()
 
     lookup_grid_size = 1000
 
     qtl_steps = np.linspace(0,1,lookup_grid_size)
 
-    if predict_quantity == 'mass':
-        search_steps = np.linspace(Radius_min, Radius_max, lookup_grid_size)
-        fname = 'lookup_m_given_r'
-        comment = 'Lookup table for predicting log(Mass) given log(Radius) and certain quantile.'
+    if predict_quantity==Y_label:
+        search_steps = np.linspace(X_min, X_max, lookup_grid_size)
+        fname = 'lookup_y_given_x'
+        comment = 'Lookup table for predicting log({}) given log({}) and certain quantile.'.format(Y_label, X_label)
     else:
-        search_steps = np.linspace(Mass_min, Mass_max, lookup_grid_size)
-        fname = 'lookup_r_given_m'
-        comment = 'Lookup table for predicting log(Radius) given log(Mass) and certain quantile.'
+        search_steps = np.linspace(Y_min, Y_max, lookup_grid_size)
+        fname = 'lookup_x_given_y'
+        comment = 'Lookup table for predicting log({}) given log({}) and certain quantile.'.format(X_label, Y_label)
 
     if cores <= 1:
         lookup_table = np.zeros((lookup_grid_size, lookup_grid_size))
