@@ -101,7 +101,7 @@ def predict_from_measurement(measurement, measurement_sigma=np.nan,
     predict = predict.replace(' ', '').replace('-', '').lower()
 
     # Define the result directory.
-    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_202000520')
+    mdwarf_resultdir = os.path.join(pwd, 'datasets', 'M_dwarfs_20200520')
     kepler_resultdir = os.path.join(pwd, 'datasets', 'Kepler_Ning_etal_20170605')
 
     if result_dir == None:
