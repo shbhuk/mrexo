@@ -329,7 +329,7 @@ def generate_lookup_table(predict = 'Mass', result_dir = None, cores = 1):
         from mrexo.predict import generate_lookup_table
         kepler_result = '/storage/home/s/szk381/work/mrexo/mrexo/datasets/Kepler_Ning_etal_20170605'
         if __name__ == '__main__':
-            generate_lookup_table(result_dir = kepler_result, predict_quantity = 'Mass', cores = 10)
+            generate_lookup_table(result_dir = kepler_result, predict = 'Mass', cores = 10)
     """
 
     predict_quantity = predict.replace(' ', '').replace('-', '').lower()
