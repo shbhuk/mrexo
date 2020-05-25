@@ -253,7 +253,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
     X_sigma[(X_sigma!=np.nan) & (X_sigma[X_sigma!=np.nan] < XSigmaLimit)] = np.nan
 
     if degree_max == None:
-        degree_max = int(n/np.log10(n)) + 2
+        degree_max = int(n/np.log(n)) + 2
     else:
         degree_max = int(degree_max)
 
