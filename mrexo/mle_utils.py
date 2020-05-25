@@ -3,12 +3,12 @@ from scipy.stats import beta,norm
 import scipy
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
-from scipy.optimize import fmin_slsqp, minimize
 import datetime,os
 from multiprocessing import current_process
 
 
 from mrexo.utils import _logging
+from mrexo.Optimizers import optimizer
 
 
 ########################################
@@ -110,7 +110,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
     ########################################################################
     C_pdf = calc_C_matrix(n=n, deg=deg, Y=Y, Y_sigma=Y_sigma, Y_max=Y_max, Y_min=Y_min,
                         X=X, X_sigma=X_sigma, X_max=X_max, X_min=X_min,
-                        Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose)
+                        Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose, SaveCMatrix=False)
 
     message = 'Finished Integration at {}. \nCalculated the PDF for {} and {} for Integrated beta and normal density.\n'.format(datetime.datetime.now(), Y_char, X_char)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -120,36 +120,21 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
     # Run optimization to find the weights
     ###########################################################
 
-    # Ensure that the weights always sum up to 1.
-    def eqn(w):
-        return np.sum(w) - 1
 
-    # Function input to optimizer
-    def fn1(w):
-        a = - np.sum(np.log(np.matmul(w,C_pdf)))
-        return a
-
-    # Define a list of lists of bounds
-    bounds = [[0,1]]*(deg-2)**2
-    # Initial value for weights
-    x0 = np.repeat(1./(deg**2),(deg-2)**2)
-
-    # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
-    opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1,
-                            epsilon=1e-5, acc=1e-5)
-    message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
-            opt_result[2], opt_result[3], opt_result[4])
-    _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
-
-
-    unpadded_weight = opt_result[0]
-    n_log_lik = opt_result[1]
+    unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg=deg,
+                    verbose=verbose, save_path=save_path)
+    print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
+    # rand = np.random.randn()
+    # np.savetxt(os.path.join(save_path, 'loglikelihoodtest{:.3f}.txt'.format(rand)), [n_log_lik])
+    # np.savetxt(os.path.join(save_path, 'Cpdf{:.3f}.txt'.format(rand)), C_pdf)
+    # np.savetxt(os.path.join(save_path, 'IntermediateWeight{:.3f}.txt'.format(rand)), w_hat)
 
     # Pad the weight array with zeros for the
     w_sq = np.reshape(unpadded_weight,[deg-2,deg-2])
     w_sq_padded = np.zeros((deg,deg))
     w_sq_padded[1:-1,1:-1] = w_sq
     w_hat = w_sq_padded.flatten()
+
 
     if output_weights_only == True:
         return unpadded_weight
@@ -207,7 +192,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
         return output
 
 
-def calc_C_matrix(n, deg, Y, Y_sigma, Y_max, Y_min, X, X_sigma, X_max, X_min, abs_tol, save_path, Log, verbose):
+def calc_C_matrix(n, deg, Y, Y_sigma, Y_max, Y_min, X, X_sigma, X_max, X_min, abs_tol, save_path, Log, verbose, SaveCMatrix=False):
     '''
     Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 
@@ -263,6 +248,9 @@ def calc_C_matrix(n, deg, Y, Y_sigma, Y_max, Y_min, X, X_sigma, X_max, X_min, ab
     # Log of 0 throws weird errors
     C_pdf[C_pdf == 0] = 1e-300
     C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+
+    if SaveCMatrix:
+        np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf)
     return C_pdf
 
 
