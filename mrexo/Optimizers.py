@@ -16,7 +16,7 @@ def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
 
     # Function input to optimizer
     def fn1(w):
-        a = - np.sum(np.log(np.matmul(w,C_pdf)))
+        a = - np.sum(np.log(np.matmul(w,C_pdf))) / n
         return a
 
     # Define a list of lists of bounds
@@ -46,27 +46,21 @@ def optimizer(C_pdf, deg, verbose, save_path, MaxIter=500, rtol=1e-3):
     n = np.shape(C_pdf)[1] # Sample size
 
     # Initial value for weights
-    x0 = np.repeat(1./(ReducedDeg**2),ReducedDeg**2)
+    w = np.repeat(1./(ReducedDeg**2),ReducedDeg**2)
 
-    w_final = np.zeros(np.shape(x0))
+    # w_final = np.zeros(np.shape(x0))
 
     FractionalError = np.ones(MaxIter)
     loglike = np.zeros(MaxIter)
 
-    t = 0
+    t = 1
 
     while np.abs(FractionalError[t-1]) > rtol:
-        if t==1:
-            w = x0
-        else:
-            w = w_final
-
         TempMatrix =  C_pdf * w[:, None]
         IntMatrix = TempMatrix / np.sum(TempMatrix, axis=0)
-        w_final = np.mean(IntMatrix, axis=1)
+        w = np.mean(IntMatrix, axis=1)
 
-        loglike[t] = LogLikelihood(C_pdf, w_final, n)
-
+        loglike[t] = LogLikelihood(C_pdf, w, n)
         FractionalError[t] = (loglike[t] - loglike[t-1])/np.abs(loglike[t-1])
 
         t+=1
@@ -75,11 +69,11 @@ def optimizer(C_pdf, deg, verbose, save_path, MaxIter=500, rtol=1e-3):
             break
 
     message = "Optimization run finished at {}, with {} iterations.\nSum of weights = {} \
-        \nLogLikelihood = {}, Fractional Error = {}".format(datetime.datetime.now(), t, np.sum(w_final), loglike[t-1], FractionalError[t-1])
+        \nLogLikelihood = {}, Fractional Error = {}".format(datetime.datetime.now(), t, np.sum(w), loglike[t-1], FractionalError[t-1])
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
-    return w_final, loglike[np.nonzero(loglike)][-1]
+    return w, loglike[np.nonzero(loglike)][-1]
 
 
 
