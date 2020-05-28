@@ -367,7 +367,7 @@ def plot_joint_xy_distribution(result_dir):
     ax1.set_xlabel(LabelDictionary['X_label'])
     ax1.set_ylabel(LabelDictionary['Y_label'])
 
-    plt.show(block=False)
+    # plt.show(block=False)
 
     return fig, ax1
 

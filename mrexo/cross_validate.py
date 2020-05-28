@@ -60,7 +60,7 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
     if degree_candidates == None:
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
-        degree_candidates = (np.floor(n**np.arange(0.3, 0.76, 0.05)))
+        # degree_candidates = (np.floor(n**np.arange(0.3, 0.76, 0.05))).astype(int)
 
     message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_max)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -143,7 +143,7 @@ def _cv_parallelize(cv_input):
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
     # Calculate the optimum weights using MLE for a given input test_degree
-    weights = MLE_fit(Y=train_Y, X=train_X, Y_sigma=train_Y_sigma, X_sigma=train_X_sigma,
+    weights, _ = MLE_fit(Y=train_Y, X=train_X, Y_sigma=train_Y_sigma, X_sigma=train_X_sigma,
             Y_bounds=Y_bounds, X_bounds=X_bounds, Y_char=Y_char, X_char=X_char,
             deg=test_degree, abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
 

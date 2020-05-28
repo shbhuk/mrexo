@@ -56,6 +56,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
 
         If output_weights_only == True,
         w_hat : Weights for the beta densities.
+        n_log_lik: The log likelihood produced from the optimization to find the weights.
 
         If output_weights_only == False,
         output: Output dictionary from fitting using
@@ -95,7 +96,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
         save_path = os.path.dirname(__file__)
 
 
-    message = '====\nStarted run at {}\n'.format(starttime)
+    message = '=========\nStarted run at {}'.format(starttime)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
@@ -112,7 +113,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
                         X=X, X_sigma=X_sigma, X_max=X_max, X_min=X_min,
                         Log=Log, abs_tol=abs_tol, save_path=save_path, verbose=verbose, SaveCMatrix=False)
 
-    message = 'Finished Integration at {}. \nCalculated the PDF for {} and {} for Integrated beta and normal density.\n'.format(datetime.datetime.now(), Y_char, X_char)
+    message = 'Finished Integration at {}. \nCalculated the PDF for {} and {} for Integrated beta and normal density.'.format(datetime.datetime.now(), Y_char, X_char)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
@@ -123,7 +124,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
 
     unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg=deg,
                     verbose=verbose, save_path=save_path)
-    print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
+    # print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
     # rand = np.random.randn()
     # np.savetxt(os.path.join(save_path, 'loglikelihoodtest{:.3f}.txt'.format(rand)), [n_log_lik])
     # np.savetxt(os.path.join(save_path, 'Cpdf{:.3f}.txt'.format(rand)), C_pdf)
@@ -137,7 +138,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
 
 
     if output_weights_only == True:
-        return unpadded_weight
+        return unpadded_weight, n_log_lik
 
     else:
         # Calculate AIC and BIC
@@ -229,7 +230,7 @@ def calc_C_matrix(n, deg, Y, Y_sigma, Y_max, Y_min, X, X_sigma, X_max, X_min, ab
     C_pdf = np.zeros((n, (deg-2)**2))
 
 
-    message = 'Started Integration at {}\n'.format(datetime.datetime.now())
+    message = 'Started Integration at {}'.format(datetime.datetime.now())
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 

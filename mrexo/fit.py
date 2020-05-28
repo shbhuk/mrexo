@@ -7,6 +7,7 @@ import datetime
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
+from .profile_likelihood import RunProfileLikelihood
 from .utils import _save_dictionary, _logging
 
 
@@ -252,10 +253,10 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
     Y_sigma[(Y_sigma!=np.nan) & (Y_sigma[Y_sigma!=np.nan] < YSigmaLimit)] = np.nan
     X_sigma[(X_sigma!=np.nan) & (X_sigma[X_sigma!=np.nan] < XSigmaLimit)] = np.nan
 
-    if degree_max == None:
-        degree_max = int(n/np.log(n)) + 2
-    else:
-        degree_max = int(degree_max)
+    # if degree_max == None:
+    #     degree_max = int(n/np.log(n)) + 2
+    # else:
+    #     degree_max = int(degree_max)
 
     Y_bounds = np.array([Y_min, Y_max])
     X_bounds = np.array([X_min, X_max])
@@ -268,7 +269,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
 
     ###########################################################
     ## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
-
+    print(select_deg)
     if select_deg == 'cv':
         # Use the CV method with training and test dataset to maximize log likelihood.
         if k_fold == None:
@@ -283,10 +284,23 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
         deg_choose = run_cross_validation(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
                                         X_char=X_char, Y_char=Y_char,
                                         Y_bounds=Y_bounds, X_bounds=X_bounds,
-                                        degree_max=degree_max, k_fold=k_fold, cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
+                                        degree_max=degree_max, k_fold=k_fold,
+                                        cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
 
         message = 'Finished CV. Picked {} degrees by maximizing likelihood\n'.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+    elif select_deg == 'profile':
+
+        deg_choose = RunProfileLikelihood(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+                                        X_char=X_char, Y_char=Y_char,
+                                        Y_bounds=Y_bounds, X_bounds=X_bounds,
+                                        degree_max=degree_max,
+                                        cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
+
+        message = 'Finished Profile Likelihood. Picked {} degrees by maximizing likelihood\n'.format(deg_choose)
+        _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
 
     elif select_deg == 'aic' :
         # Minimize the AIC
@@ -354,7 +368,7 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
     if num_boot == 0:
         message='Bootstrap not run since num_boot = 0'
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
-        return initialfit_result
+        return initialfit_result, _
     else:
         # Generate iterator for using multiprocessing Pool.imap
         n_boot_iter = (np.random.choice(n, n, replace=True) for i in range(num_boot))

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # from mrexo import plot_r_given_m_relation, plot_m_given_r_relation, plot_mr_and_rm, plot_joint_mr_distribution
-from mrexo.plot_beta import plot_x_given_y_relation, plot_y_given_x_relation, plot_yx_and_xy, plot_joint_xy_distribution
+from mrexo.plot import plot_x_given_y_relation, plot_y_given_x_relation, plot_yx_and_xy, plot_joint_xy_distribution
 
 
 try :
