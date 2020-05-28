@@ -7,8 +7,8 @@ import datetime,os
 from multiprocessing import current_process
 
 
-from mrexo.utils import _logging
-from mrexo.Optimizers import optimizer
+from .utils import _logging
+from .Optimizers import optimizer
 
 
 ########################################
@@ -96,7 +96,7 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
         save_path = os.path.dirname(__file__)
 
 
-    message = '=========\nStarted run at {}'.format(starttime)
+    message = '=========\nStarted MLE run at {}'.format(starttime)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 

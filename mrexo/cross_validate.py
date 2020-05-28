@@ -4,6 +4,7 @@ import os
 from multiprocessing import Pool
 from .mle_utils import MLE_fit, calc_C_matrix
 from .utils import _save_dictionary, _logging
+from .Optimizers import LogLikelihood
 
 
 def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
@@ -62,7 +63,7 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
         degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         # degree_candidates = (np.floor(n**np.arange(0.3, 0.76, 0.05))).astype(int)
 
-    message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_max)
+    message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
     rand_gen = np.random.choice(n, n, replace = False)
@@ -162,6 +163,7 @@ def _cv_parallelize(cv_input):
                         test_X_sigma, X_max, X_min,  abs_tol, save_path, Log=True, verbose=verbose)
 
     # Calculate the final loglikelihood
-    like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
+    # like_pred =  np.sum(np.log(np.matmul(weights,C_pdf)))
+    like_pred = LogLikelihood(C_pdf, weights, size_test)
 
     return like_pred
