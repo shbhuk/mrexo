@@ -6,7 +6,7 @@ import numpy as np
 
 
 from mrexo import fit_xy_relation
-from mrexo import predict_from_measurement, plot_joint_xy_distribution, plot_mle_weights, plot_yx_and_xy
+from mrexo import predict_from_measurement, plot_joint_xy_distribution, plot_mle_weights, plot_y_given_x_relation
 
 
 try :
@@ -64,6 +64,7 @@ if __name__ == '__main__':
                                                 save_path = result_dir, select_deg = 'profile',
                                                 num_boot = 5, cores = 2, degree_max=50)
 """
+import matplotlib.pyplot as plt
 QueryRadii = [1, 3, 5, 8]
 ExistingMR = np.zeros((len(QueryRadii), 3))
 NewMR = np.zeros((len(QueryRadii), 3))
@@ -75,16 +76,17 @@ for i, r in enumerate(QueryRadii):
                 result_dir=result_dir)
     NewMR[i, 1:] = predictionquantile
 
-df = pd.DataFrame({"Radii":QueryRadii, "Old34planetdeg30":ExistingMR, "New34planet":NewMR)
+df = pd.DataFrame({"Radii":QueryRadii, "Old34planetdeg30_50":ExistingMR[:,0], "Old34planetdeg30_16":ExistingMR[:,1], "Old34planetdeg30_84":ExistingMR[:,2],
+                    "New34planet_50":NewMR[:,0], "New34planet_16":NewMR[:,1], "New34planet_84":NewMR[:,2]})
 df.to_csv(os.path.join(result_dir, 'output', 'other_data_products', 'PredictRadii.csv'), index=False)
 
 fig, _ = plot_joint_xy_distribution(result_dir=result_dir)
-fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'JointDist.png')
-
-fig, _ = plot_mle_weights(result_dir=result_dir)
-fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'Weights.png')
-
-fig, _ = plot_yx_and_xy(result_dir=result_dir)
-fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'ConditionalDist.png')
-
+fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'JointDist.png'))
+plt.close()
+fig = plot_mle_weights(result_dir=result_dir)
+fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'Weights.png'))
+plt.close()
+fig, _, _ = plot_y_given_x_relation(result_dir=result_dir)
+fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'ConditionalDist.png'))
+plt.close()
 """

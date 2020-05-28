@@ -83,7 +83,7 @@ def plot_y_given_x_relation(result_dir):
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
-    plt.show(block=False)
+    # plt.show(block=False)
     plt.ylim(10**Y_min, 10**Y_max)
     plt.xlim(10**X_min, 10**X_max)
     import matplotlib
@@ -173,7 +173,7 @@ def plot_x_given_y_relation(result_dir):
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
-    plt.show(block=False)
+    # plt.show(block=False)
     plt.xlim(10**Y_min, 10**Y_max)
     plt.ylim(10**X_min, 10**X_max)
     import matplotlib
@@ -278,7 +278,7 @@ def plot_yx_and_xy(result_dir):
     ax1.set_yscale('log')
     ax1.set_xscale('log')
 
-    plt.show(block=False)
+    # plt.show(block=False)
     plt.ylim(10**Y_min, 10**Y_max)
     plt.xlim(10**X_min, 10**X_max)
     import matplotlib
@@ -396,4 +396,4 @@ def plot_mle_weights(result_dir):
 
     plt.colorbar()
     plt.title('Polynomial weights with {} degrees'.format(size))
-    plt.show()
+    # plt.show()
