@@ -1,0 +1,609 @@
+Using core 1730104:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 1730104:Started for cv degrees at 2020-05-28 13:56:28.124680, using 4 core/sUsing core 1730104:Picked 10 k-foldsUsing core 1730104:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 60Using core 1733124:Running cross validation for 5 degree check and 0 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:56:30.330420Using core 1733124:Started Integration at 2020-05-28 13:56:30.331419Using core 1730828:Running cross validation for 11 degree check and 0 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:56:30.376394Using core 1730828:Started Integration at 2020-05-28 13:56:30.377393Using core 855200:Running cross validation for 17 degree check and 0 th-fold
+Using core 857156:Running cross validation for 23 degree check and 0 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:56:30.388387Using core 857156:=========
+Started MLE run at 2020-05-28 13:56:30.389386Using core 855200:Started Integration at 2020-05-28 13:56:30.389386Using core 857156:Started Integration at 2020-05-28 13:56:30.390385Using core 1733124:Finished Integration at 2020-05-28 13:56:32.157376. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 13:56:32.160374, with 7 iterations.
+Sum of weights = 0.9999999999999997         
+LogLikelihood = -9.236545749263616, Fractional Error = 0.0008793867975449588Using core 1733124:Started Integration at 2020-05-28 13:56:32.161373Using core 1733124:Running cross validation for 29 degree check and 0 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:56:32.383247Using core 1733124:Started Integration at 2020-05-28 13:56:32.384246Using core 1730828:Finished Integration at 2020-05-28 13:56:35.645382. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:56:35.651379, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.863090267017501, Fractional Error = 0.0007910263900791907Using core 1730828:Started Integration at 2020-05-28 13:56:35.652378Using core 1730828:Running cross validation for 35 degree check and 0 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:56:36.289014Using core 1730828:Started Integration at 2020-05-28 13:56:36.290014Using core 855200:Finished Integration at 2020-05-28 13:56:39.051436. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:56:39.058432, with 10 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -8.687175398106797, Fractional Error = 0.0008184752844589993Using core 855200:Started Integration at 2020-05-28 13:56:39.059431Using core 855200:Running cross validation for 41 degree check and 0 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:56:40.097838Using core 855200:Started Integration at 2020-05-28 13:56:40.098837Using core 857156:Finished Integration at 2020-05-28 13:56:47.114827. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:56:47.121823, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.5840352000155, Fractional Error = 0.0009785751833131249Using core 857156:Started Integration at 2020-05-28 13:56:47.123822Using core 857156:Running cross validation for 47 degree check and 0 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:56:49.176649Using core 857156:Started Integration at 2020-05-28 13:56:49.177648Using core 1733124:Finished Integration at 2020-05-28 13:56:57.418938. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 13:56:57.427933, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.506397677207488, Fractional Error = 0.0009494581711012305Using core 1733124:Started Integration at 2020-05-28 13:56:57.429932Using core 1733124:Running cross validation for 53 degree check and 0 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:57:00.487184Using core 1733124:Started Integration at 2020-05-28 13:57:00.488184Using core 1730828:Finished Integration at 2020-05-28 13:57:06.251890. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:57:06.261884, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.293923315428279, Fractional Error = 0.0009553437787150468Using core 1730828:Started Integration at 2020-05-28 13:57:06.263883Using core 1730828:Running cross validation for 60 degree check and 0 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:57:09.921792Using core 1730828:Started Integration at 2020-05-28 13:57:09.922792Using core 855200:Finished Integration at 2020-05-28 13:57:13.758600. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:57:13.779588, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.246294837576778, Fractional Error = 0.0009219046926689206Using core 855200:Started Integration at 2020-05-28 13:57:13.781586Using core 855200:Running cross validation for 5 degree check and 1 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:57:17.854278Using core 855200:Started Integration at 2020-05-28 13:57:17.855278Using core 855200:Finished Integration at 2020-05-28 13:57:19.674219. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:57:19.676218, with 7 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -9.156782071575817, Fractional Error = 0.0009109312221908756Using core 855200:Started Integration at 2020-05-28 13:57:19.677217Using core 855200:Running cross validation for 11 degree check and 1 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:57:19.882124Using core 855200:Started Integration at 2020-05-28 13:57:19.883119Using core 855200:Finished Integration at 2020-05-28 13:57:25.122105. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:57:25.127103, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.752309174912142, Fractional Error = 0.0008694714780771116Using core 855200:Started Integration at 2020-05-28 13:57:25.128102Using core 855200:Running cross validation for 17 degree check and 1 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:57:25.704793Using core 855200:Started Integration at 2020-05-28 13:57:25.705775Using core 857156:Finished Integration at 2020-05-28 13:57:27.919506. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:57:27.945492, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.208711725460132, Fractional Error = 0.000901254457717304Using core 857156:Started Integration at 2020-05-28 13:57:27.947491Using core 857156:Running cross validation for 23 degree check and 1 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:57:32.592835Using core 857156:Started Integration at 2020-05-28 13:57:32.593835Using core 855200:Finished Integration at 2020-05-28 13:57:39.502886. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:57:39.508884, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.569762402294709, Fractional Error = 0.000880424877883588Using core 855200:Started Integration at 2020-05-28 13:57:39.510882Using core 855200:Running cross validation for 29 degree check and 1 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:57:41.030014Using core 855200:Started Integration at 2020-05-28 13:57:41.031014Using core 1733124:Finished Integration at 2020-05-28 13:57:43.111824. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 13:57:43.142806, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.176629554707334, Fractional Error = 0.0008943976675008219Using core 1733124:Started Integration at 2020-05-28 13:57:43.145804Using core 1733124:Running cross validation for 35 degree check and 1 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:57:48.244890Using core 1733124:Started Integration at 2020-05-28 13:57:48.245889Using core 857156:Finished Integration at 2020-05-28 13:57:49.551143. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:57:49.559139, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.457742747102971, Fractional Error = 0.0007967567990274168Using core 857156:Started Integration at 2020-05-28 13:57:49.561138Using core 857156:Running cross validation for 41 degree check and 1 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:57:51.428071Using core 857156:Started Integration at 2020-05-28 13:57:51.429070Using core 1730828:Finished Integration at 2020-05-28 13:57:57.929355. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:57:57.968333, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.14501131459897, Fractional Error = 0.0009025134540721915Using core 1730828:Started Integration at 2020-05-28 13:57:57.970332Using core 1730828:Running cross validation for 47 degree check and 1 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:58:03.673073Using core 1730828:Started Integration at 2020-05-28 13:58:03.674072Using core 855200:Finished Integration at 2020-05-28 13:58:16.995459. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:58:17.004453, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.386414748781338, Fractional Error = 0.0009516001555367657Using core 855200:Started Integration at 2020-05-28 13:58:17.006452Using core 1733124:Finished Integration at 2020-05-28 13:58:19.567989. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 13:58:19.578982, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.173669272759959, Fractional Error = 0.0009452777295932864Using core 1733124:Started Integration at 2020-05-28 13:58:19.580982Using core 855200:Running cross validation for 53 degree check and 1 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:58:19.795859Using core 855200:Started Integration at 2020-05-28 13:58:19.796858Using core 1733124:Running cross validation for 60 degree check and 1 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:58:22.893107Using core 1733124:Started Integration at 2020-05-28 13:58:22.894106Using core 857156:Finished Integration at 2020-05-28 13:58:25.810443. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:58:25.830413, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.126293568540401, Fractional Error = 0.000905019096334446Using core 857156:Started Integration at 2020-05-28 13:58:25.832408Using core 857156:Running cross validation for 5 degree check and 2 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:58:29.737196Using core 857156:Started Integration at 2020-05-28 13:58:29.738195Using core 857156:Finished Integration at 2020-05-28 13:58:31.655101. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:58:31.657099, with 7 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -9.153720426283911, Fractional Error = 0.0008925704807484103Using core 857156:Started Integration at 2020-05-28 13:58:31.659078Using core 857156:Running cross validation for 11 degree check and 2 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:58:31.855966Using core 857156:Started Integration at 2020-05-28 13:58:31.856965Using core 857156:Finished Integration at 2020-05-28 13:58:37.207907. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:58:37.212904, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.747910097883965, Fractional Error = 0.0008614536232486121Using core 857156:Started Integration at 2020-05-28 13:58:37.213903Using core 857156:Running cross validation for 17 degree check and 2 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:58:37.762590Using core 857156:Started Integration at 2020-05-28 13:58:37.763589Using core 1730828:Finished Integration at 2020-05-28 13:58:42.874687. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:58:42.900662, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.088229063492546, Fractional Error = 0.0008840778601698812Using core 1730828:Started Integration at 2020-05-28 13:58:42.902653Using core 1730828:Running cross validation for 23 degree check and 2 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:58:47.192200Using core 1730828:Started Integration at 2020-05-28 13:58:47.193200Using core 857156:Finished Integration at 2020-05-28 13:58:47.532006. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:58:47.538002, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.562184180008003, Fractional Error = 0.0008937740524140007Using core 857156:Started Integration at 2020-05-28 13:58:47.539002Using core 857156:Running cross validation for 29 degree check and 2 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:58:48.443486Using core 857156:Started Integration at 2020-05-28 13:58:48.444504Using core 855200:Finished Integration at 2020-05-28 13:59:03.214042. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:59:03.248023, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.055747903186704, Fractional Error = 0.0008772508589658392Using core 855200:Started Integration at 2020-05-28 13:59:03.251021Using core 1730828:Finished Integration at 2020-05-28 13:59:07.112816. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:59:07.119812, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.445381342500585, Fractional Error = 0.0008401206314249979Using core 1730828:Started Integration at 2020-05-28 13:59:07.120811Using core 855200:Running cross validation for 35 degree check and 2 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:59:07.975323Using core 855200:Started Integration at 2020-05-28 13:59:07.976323Using core 1730828:Running cross validation for 41 degree check and 2 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:59:08.871811Using core 1730828:Started Integration at 2020-05-28 13:59:08.872810Using core 1733124:Finished Integration at 2020-05-28 13:59:11.645224. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 13:59:11.684202, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.023048204897371, Fractional Error = 0.0008912732450479299Using core 1733124:Started Integration at 2020-05-28 13:59:11.686201Using core 857156:Finished Integration at 2020-05-28 13:59:15.477035. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 13:59:15.486030, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.363526375933366, Fractional Error = 0.0008056554085521211Using core 857156:Started Integration at 2020-05-28 13:59:15.488029Using core 1733124:Running cross validation for 47 degree check and 2 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 13:59:17.007160Using core 1733124:Started Integration at 2020-05-28 13:59:17.008160Using core 857156:Running cross validation for 53 degree check and 2 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 13:59:18.178491Using core 857156:Started Integration at 2020-05-28 13:59:18.178491Using core 855200:Finished Integration at 2020-05-28 13:59:38.342967. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 13:59:38.353960, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.146918879712347, Fractional Error = 0.0007948660255699901Using core 855200:Started Integration at 2020-05-28 13:59:38.355959Using core 855200:Running cross validation for 60 degree check and 2 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 13:59:41.474177Using core 855200:Started Integration at 2020-05-28 13:59:41.475177Using core 1730828:Finished Integration at 2020-05-28 13:59:45.693765. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:59:45.714754, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.104400694702818, Fractional Error = 0.0009393057153381201Using core 1730828:Started Integration at 2020-05-28 13:59:45.716752Using core 1730828:Running cross validation for 5 degree check and 3 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:59:49.329688Using core 1730828:Started Integration at 2020-05-28 13:59:49.330687Using core 1730828:Finished Integration at 2020-05-28 13:59:51.184627. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:59:51.186626, with 7 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.971486972826751, Fractional Error = 0.0009139558100807205Using core 1730828:Started Integration at 2020-05-28 13:59:51.188625Using core 1730828:Running cross validation for 11 degree check and 3 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:59:51.389510Using core 1730828:Started Integration at 2020-05-28 13:59:51.390510Using core 1730828:Finished Integration at 2020-05-28 13:59:56.711469. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 13:59:56.716466, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.586966350795743, Fractional Error = 0.0009202762702409144Using core 1730828:Started Integration at 2020-05-28 13:59:56.717466Using core 1730828:Running cross validation for 17 degree check and 3 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 13:59:57.287140Using core 1730828:Started Integration at 2020-05-28 13:59:57.288139Using core 1733124:Finished Integration at 2020-05-28 13:59:59.983598. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:00:00.010583, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.065374434880644, Fractional Error = 0.0009045442026171332Using core 1733124:Started Integration at 2020-05-28 14:00:00.013582Using core 857156:Finished Integration at 2020-05-28 14:00:02.050417. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:00:02.081400, with 9 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -8.032353529362346, Fractional Error = 0.0008891968083763987Using core 857156:Started Integration at 2020-05-28 14:00:02.083399Using core 1733124:Running cross validation for 23 degree check and 3 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:00:04.095249Using core 1733124:Started Integration at 2020-05-28 14:00:04.096248Using core 1730828:Finished Integration at 2020-05-28 14:00:06.187054. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:00:06.193051, with 10 iterations.
+Sum of weights = 1.0000000000000002         
+LogLikelihood = -8.403239703457151, Fractional Error = 0.000878843189414644Using core 1730828:Started Integration at 2020-05-28 14:00:06.194050Using core 857156:Running cross validation for 29 degree check and 3 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:00:06.655786Using core 857156:Started Integration at 2020-05-28 14:00:06.656785Using core 1730828:Running cross validation for 35 degree check and 3 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:00:07.110526Using core 1730828:Started Integration at 2020-05-28 14:00:07.111526Using core 1733124:Finished Integration at 2020-05-28 14:00:21.057555. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:00:21.064551, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.301516131341737, Fractional Error = 0.0009839059433294237Using core 1733124:Started Integration at 2020-05-28 14:00:21.066550Using core 1733124:Running cross validation for 41 degree check and 3 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:00:22.798560Using core 1733124:Started Integration at 2020-05-28 14:00:22.799559Using core 855200:Finished Integration at 2020-05-28 14:00:31.995303. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:00:32.034281, with 9 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -7.999221315219017, Fractional Error = 0.0008953509913622061Using core 855200:Started Integration at 2020-05-28 14:00:32.037279Using core 857156:Finished Integration at 2020-05-28 14:00:32.629940. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:00:32.638935, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.22593749470717, Fractional Error = 0.0009401107595020379Using core 857156:Started Integration at 2020-05-28 14:00:32.639935Using core 857156:Running cross validation for 47 degree check and 3 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:00:35.250443Using core 857156:Started Integration at 2020-05-28 14:00:35.250443Using core 855200:Running cross validation for 53 degree check and 3 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:00:37.065406Using core 855200:Started Integration at 2020-05-28 14:00:37.066405Using core 1730828:Finished Integration at 2020-05-28 14:00:41.873656. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:00:41.883650, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.014037036170546, Fractional Error = 0.0009785838938557354Using core 1730828:Started Integration at 2020-05-28 14:00:41.885649Using core 1730828:Running cross validation for 60 degree check and 3 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:00:44.953896Using core 1730828:Started Integration at 2020-05-28 14:00:44.954895Using core 1733124:Finished Integration at 2020-05-28 14:00:57.626653. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:00:57.648640, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.965290739868903, Fractional Error = 0.0009796633826851752Using core 1733124:Started Integration at 2020-05-28 14:00:57.651638Using core 1733124:Running cross validation for 5 degree check and 4 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:01:01.121656Using core 1733124:Started Integration at 2020-05-28 14:01:01.122655Using core 1733124:Finished Integration at 2020-05-28 14:01:03.064547. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:01:03.066546, with 7 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -9.12296756472382, Fractional Error = 0.0009271783117367501Using core 1733124:Started Integration at 2020-05-28 14:01:03.067545Using core 1733124:Running cross validation for 11 degree check and 4 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:01:03.255437Using core 1733124:Started Integration at 2020-05-28 14:01:03.256437Using core 1733124:Finished Integration at 2020-05-28 14:01:08.630365. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:01:08.635363, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.739077030734316, Fractional Error = 0.0008118017345266152Using core 1733124:Started Integration at 2020-05-28 14:01:08.637362Using core 1733124:Running cross validation for 17 degree check and 4 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:01:09.176054Using core 1733124:Started Integration at 2020-05-28 14:01:09.177053Using core 857156:Finished Integration at 2020-05-28 14:01:17.918058. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:01:17.944043, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.926775103805884, Fractional Error = 0.0009743830601501625Using core 857156:Started Integration at 2020-05-28 14:01:17.946042Using core 1733124:Finished Integration at 2020-05-28 14:01:18.170913. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:01:18.176910, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.56580910883553, Fractional Error = 0.0008496842219079017Using core 1733124:Started Integration at 2020-05-28 14:01:18.178909Using core 1733124:Running cross validation for 23 degree check and 4 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:01:19.042416Using core 1733124:Started Integration at 2020-05-28 14:01:19.042416Using core 855200:Finished Integration at 2020-05-28 14:01:20.731450. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:01:20.765431, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -7.893982945352999, Fractional Error = 0.000965461543305585Using core 855200:Started Integration at 2020-05-28 14:01:20.767430Using core 857156:Running cross validation for 29 degree check and 4 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:01:22.468455Using core 857156:Started Integration at 2020-05-28 14:01:22.470454Using core 855200:Running cross validation for 35 degree check and 4 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:01:25.108946Using core 855200:Started Integration at 2020-05-28 14:01:25.110945Using core 1730828:Finished Integration at 2020-05-28 14:01:34.681476. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:01:34.726451, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.861928666882274, Fractional Error = 0.0009658191978916963Using core 1730828:Started Integration at 2020-05-28 14:01:34.728450Using core 1733124:Finished Integration at 2020-05-28 14:01:36.437491. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:01:36.444470, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.464947464902773, Fractional Error = 0.000988476532388747Using core 1733124:Started Integration at 2020-05-28 14:01:36.445470Using core 1733124:Running cross validation for 41 degree check and 4 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:01:38.922053Using core 1733124:Started Integration at 2020-05-28 14:01:38.923053Using core 1730828:Running cross validation for 47 degree check and 4 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:01:39.690614Using core 1730828:Started Integration at 2020-05-28 14:01:39.691614Using core 857156:Finished Integration at 2020-05-28 14:01:48.555548. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:01:48.563543, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.38982577962173, Fractional Error = 0.0009307602720155242Using core 857156:Started Integration at 2020-05-28 14:01:48.565542Using core 857156:Running cross validation for 53 degree check and 4 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:01:51.094097Using core 857156:Started Integration at 2020-05-28 14:01:51.095096Using core 855200:Finished Integration at 2020-05-28 14:01:55.418625. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:01:55.429619, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.179200929560558, Fractional Error = 0.0009295345651984114Using core 855200:Started Integration at 2020-05-28 14:01:55.431617Using core 855200:Running cross validation for 60 degree check and 4 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:01:58.336957Using core 855200:Started Integration at 2020-05-28 14:01:58.337957Using core 1733124:Finished Integration at 2020-05-28 14:02:17.185185. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:02:17.204174, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.133167116453416, Fractional Error = 0.0008896526931790937Using core 1733124:Started Integration at 2020-05-28 14:02:17.207172Using core 1730828:Finished Integration at 2020-05-28 14:02:19.702746. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:02:19.727732, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.096182243321412, Fractional Error = 0.0008755699473814083Using core 1730828:Started Integration at 2020-05-28 14:02:19.730730Using core 1733124:Running cross validation for 5 degree check and 5 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:02:20.564254Using core 1733124:Started Integration at 2020-05-28 14:02:20.565253Using core 1733124:Finished Integration at 2020-05-28 14:02:22.403203. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:02:22.406201, with 8 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.430840542970786, Fractional Error = 0.0007522774244530722Using core 1733124:Started Integration at 2020-05-28 14:02:22.407200Using core 1733124:Running cross validation for 11 degree check and 5 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:02:22.587098Using core 1733124:Started Integration at 2020-05-28 14:02:22.587098Using core 1730828:Running cross validation for 17 degree check and 5 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:02:23.614510Using core 1730828:Started Integration at 2020-05-28 14:02:23.615510Using core 1733124:Finished Integration at 2020-05-28 14:02:27.860084. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:02:27.865081, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.037636514622298, Fractional Error = 0.0009485616563345694Using core 1733124:Started Integration at 2020-05-28 14:02:27.867080Using core 1733124:Running cross validation for 23 degree check and 5 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:02:28.382785Using core 1733124:Started Integration at 2020-05-28 14:02:28.383785Using core 1730828:Finished Integration at 2020-05-28 14:02:32.614367. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:02:32.621363, with 10 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -7.841752978198659, Fractional Error = 0.000998214947344944Using core 1730828:Started Integration at 2020-05-28 14:02:32.622362Using core 1730828:Running cross validation for 29 degree check and 5 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:02:33.495863Using core 1730828:Started Integration at 2020-05-28 14:02:33.496862Using core 857156:Finished Integration at 2020-05-28 14:02:36.188324. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:02:36.218307, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.06460031346989, Fractional Error = 0.0008706776385498405Using core 857156:Started Integration at 2020-05-28 14:02:36.221305Using core 857156:Running cross validation for 35 degree check and 5 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:02:40.480871Using core 857156:Started Integration at 2020-05-28 14:02:40.481870Using core 1733124:Finished Integration at 2020-05-28 14:02:45.423046. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:02:45.430043, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.723905592735236, Fractional Error = 0.0009051523241664635Using core 1733124:Started Integration at 2020-05-28 14:02:45.432041Using core 855200:Finished Integration at 2020-05-28 14:02:47.117078. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Running cross validation for 41 degree check and 5 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:02:47.120076Using core 1733124:Started Integration at 2020-05-28 14:02:47.121076Using core 855200:Optimization run finished at 2020-05-28 14:02:47.159054, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.032742021094405, Fractional Error = 0.000884500921567977Using core 855200:Started Integration at 2020-05-28 14:02:47.161053Using core 855200:Running cross validation for 47 degree check and 5 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:02:51.911338Using core 855200:Started Integration at 2020-05-28 14:02:51.912338Using core 1730828:Finished Integration at 2020-05-28 14:02:59.588950. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:02:59.597945, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.641420314752664, Fractional Error = 0.0008811273256070411Using core 1730828:Started Integration at 2020-05-28 14:02:59.599944Using core 1730828:Running cross validation for 53 degree check and 5 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:03:02.156483Using core 1730828:Started Integration at 2020-05-28 14:03:02.158482Using core 857156:Finished Integration at 2020-05-28 14:03:11.483152. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:03:11.495146, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.425419469196831, Fractional Error = 0.000908869405521744Using core 857156:Started Integration at 2020-05-28 14:03:11.496145Using core 857156:Running cross validation for 60 degree check and 5 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:03:14.557396Using core 857156:Started Integration at 2020-05-28 14:03:14.558396Using core 1733124:Finished Integration at 2020-05-28 14:03:21.661336. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:03:21.683323, with 10 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -7.374303991381994, Fractional Error = 0.0008878983196805986Using core 1733124:Started Integration at 2020-05-28 14:03:21.685322Using core 1733124:Running cross validation for 5 degree check and 6 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:03:25.103369Using core 1733124:Started Integration at 2020-05-28 14:03:25.104368Using core 1733124:Finished Integration at 2020-05-28 14:03:26.948314. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:03:26.950314, with 7 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.911233620089831, Fractional Error = 0.0009131929350192019Using core 1733124:Started Integration at 2020-05-28 14:03:26.951313Using core 1733124:Running cross validation for 11 degree check and 6 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:03:27.138206Using core 1733124:Started Integration at 2020-05-28 14:03:27.139205Using core 855200:Finished Integration at 2020-05-28 14:03:31.148933. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:03:31.177896, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.33372162665987, Fractional Error = 0.0008706540611037579Using core 855200:Started Integration at 2020-05-28 14:03:31.179897Using core 1733124:Finished Integration at 2020-05-28 14:03:32.413190. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:03:32.418188, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.526184515109053, Fractional Error = 0.0008532272340918388Using core 1733124:Started Integration at 2020-05-28 14:03:32.420187Using core 1733124:Running cross validation for 17 degree check and 6 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:03:32.935892Using core 1733124:Started Integration at 2020-05-28 14:03:32.936891Using core 855200:Running cross validation for 23 degree check and 6 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:03:36.674775Using core 855200:Started Integration at 2020-05-28 14:03:36.675755Using core 1733124:Finished Integration at 2020-05-28 14:03:41.740878. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:03:41.747878, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.353122984467692, Fractional Error = 0.0008533899514255686Using core 1733124:Started Integration at 2020-05-28 14:03:41.748875Using core 1733124:Running cross validation for 29 degree check and 6 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:03:42.588394Using core 1733124:Started Integration at 2020-05-28 14:03:42.589394Using core 1730828:Finished Integration at 2020-05-28 14:03:46.055413. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:03:46.090393, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.299605877176317, Fractional Error = 0.0008512553912572444Using core 1730828:Started Integration at 2020-05-28 14:03:46.093398Using core 1730828:Running cross validation for 35 degree check and 6 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:03:52.317815Using core 1730828:Started Integration at 2020-05-28 14:03:52.318815Using core 855200:Finished Integration at 2020-05-28 14:03:53.718014. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:03:53.726010, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.243770572984044, Fractional Error = 0.0008015571159343062Using core 855200:Started Integration at 2020-05-28 14:03:53.727009Using core 855200:Running cross validation for 41 degree check and 6 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:03:55.353080Using core 855200:Started Integration at 2020-05-28 14:03:55.354079Using core 857156:Finished Integration at 2020-05-28 14:04:03.621354. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:04:03.664330, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.265871375058107, Fractional Error = 0.0008478090227550986Using core 857156:Started Integration at 2020-05-28 14:04:03.667328Using core 1733124:Finished Integration at 2020-05-28 14:04:08.361645. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:04:08.370640, with 9 iterations.
+Sum of weights = 1.0000000000000002         
+LogLikelihood = -8.173078985322977, Fractional Error = 0.0009769856912487925Using core 1733124:Started Integration at 2020-05-28 14:04:08.372639Using core 857156:Running cross validation for 47 degree check and 6 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:04:08.529549Using core 857156:Started Integration at 2020-05-28 14:04:08.530549Using core 1733124:Running cross validation for 53 degree check and 6 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:04:10.814243Using core 1733124:Started Integration at 2020-05-28 14:04:10.816242Using core 1730828:Finished Integration at 2020-05-28 14:04:29.787418. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:04:29.799393, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.960593658073589, Fractional Error = 0.0009799312734299645Using core 1730828:Started Integration at 2020-05-28 14:04:29.800411Using core 855200:Finished Integration at 2020-05-28 14:04:30.206184. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:04:30.227147, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.913130287786273, Fractional Error = 0.0009436130712108671Using core 855200:Started Integration at 2020-05-28 14:04:30.229148Using core 1730828:Running cross validation for 60 degree check and 6 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:04:32.702758Using core 1730828:Started Integration at 2020-05-28 14:04:32.702758Using core 855200:Running cross validation for 5 degree check and 7 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:04:33.472313Using core 855200:Started Integration at 2020-05-28 14:04:33.472313Using core 855200:Finished Integration at 2020-05-28 14:04:35.634077. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:04:35.636074, with 7 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -9.261808040300556, Fractional Error = 0.0008931633042929842Using core 855200:Started Integration at 2020-05-28 14:04:35.638066Using core 855200:Running cross validation for 11 degree check and 7 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:04:35.959872Using core 855200:Started Integration at 2020-05-28 14:04:35.959872Using core 855200:Finished Integration at 2020-05-28 14:04:41.137932. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:04:41.143909, with 10 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -8.858777496242277, Fractional Error = 0.0008386166116310643Using core 855200:Started Integration at 2020-05-28 14:04:41.144910Using core 855200:Running cross validation for 17 degree check and 7 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:04:42.084372Using core 855200:Started Integration at 2020-05-28 14:04:42.085371Using core 857156:Finished Integration at 2020-05-28 14:04:51.453018. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:04:51.478003, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -7.875449482728892, Fractional Error = 0.0009194418996738173Using core 857156:Started Integration at 2020-05-28 14:04:51.481002Using core 1733124:Finished Integration at 2020-05-28 14:04:54.542252. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:04:54.573234, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.843758440203015, Fractional Error = 0.0009016909580270388Using core 1733124:Started Integration at 2020-05-28 14:04:54.575233Using core 857156:Running cross validation for 23 degree check and 7 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:04:55.200875Using core 857156:Started Integration at 2020-05-28 14:04:55.201875Using core 855200:Finished Integration at 2020-05-28 14:04:55.703588. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:04:55.710584, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.675002872868408, Fractional Error = 0.0008668528074824874Using core 855200:Started Integration at 2020-05-28 14:04:55.711584Using core 855200:Running cross validation for 29 degree check and 7 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:04:57.308672Using core 855200:Started Integration at 2020-05-28 14:04:57.310670Using core 1733124:Running cross validation for 35 degree check and 7 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:04:58.754864Using core 1733124:Started Integration at 2020-05-28 14:04:58.755863Using core 857156:Finished Integration at 2020-05-28 14:05:12.388053. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:05:12.395048, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.568845248899216, Fractional Error = 0.0009979280366722214Using core 857156:Started Integration at 2020-05-28 14:05:12.396049Using core 857156:Running cross validation for 41 degree check and 7 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:05:14.389928Using core 857156:Started Integration at 2020-05-28 14:05:14.390910Using core 1730828:Finished Integration at 2020-05-28 14:05:22.318377. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:05:22.357355, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.812212882937268, Fractional Error = 0.0009054873970300861Using core 1730828:Started Integration at 2020-05-28 14:05:22.360354Using core 855200:Finished Integration at 2020-05-28 14:05:22.593220. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:05:22.602215, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.489986071582527, Fractional Error = 0.0009386780532359924Using core 855200:Started Integration at 2020-05-28 14:05:22.604214Using core 855200:Running cross validation for 47 degree check and 7 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:05:25.601501Using core 855200:Started Integration at 2020-05-28 14:05:25.602500Using core 1730828:Running cross validation for 53 degree check and 7 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:05:27.077658Using core 1730828:Started Integration at 2020-05-28 14:05:27.078657Using core 1733124:Finished Integration at 2020-05-28 14:05:28.304956. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:05:28.316950, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.27610576378705, Fractional Error = 0.0009355833052266292Using core 1733124:Started Integration at 2020-05-28 14:05:28.317949Using core 1733124:Running cross validation for 60 degree check and 7 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:05:31.842934Using core 1733124:Started Integration at 2020-05-28 14:05:31.843933Using core 857156:Finished Integration at 2020-05-28 14:06:00.084793. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:06:00.104781, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.227764139780078, Fractional Error = 0.0008975694040691172Using core 857156:Started Integration at 2020-05-28 14:06:00.106780Using core 857156:Running cross validation for 5 degree check and 8 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:06:04.144491Using core 857156:Started Integration at 2020-05-28 14:06:04.145492Using core 855200:Finished Integration at 2020-05-28 14:06:04.438305. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:06:04.463290, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.18910726047528, Fractional Error = 0.0008752088105217773Using core 855200:Started Integration at 2020-05-28 14:06:04.466289Using core 857156:Finished Integration at 2020-05-28 14:06:07.010834. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:06:07.013834, with 7 iterations.
+Sum of weights = 1.0000000000000004         
+LogLikelihood = -8.83557048907909, Fractional Error = 0.0009347371828138638Using core 857156:Started Integration at 2020-05-28 14:06:07.014832Using core 857156:Running cross validation for 11 degree check and 8 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:06:07.189754Using core 857156:Started Integration at 2020-05-28 14:06:07.189754Using core 855200:Running cross validation for 17 degree check and 8 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:06:08.967741Using core 855200:Started Integration at 2020-05-28 14:06:08.968716Using core 1730828:Finished Integration at 2020-05-28 14:06:10.263995. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:06:10.294958, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.156044789125819, Fractional Error = 0.00086666991802696Using core 1730828:Started Integration at 2020-05-28 14:06:10.297956Using core 857156:Finished Integration at 2020-05-28 14:06:12.490722. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:06:12.495700, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.45623916661327, Fractional Error = 0.0008435550846926695Using core 857156:Started Integration at 2020-05-28 14:06:12.496699Using core 857156:Running cross validation for 23 degree check and 8 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:06:13.275254Using core 857156:Started Integration at 2020-05-28 14:06:13.276255Using core 1730828:Running cross validation for 29 degree check and 8 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:06:15.411034Using core 1730828:Started Integration at 2020-05-28 14:06:15.412035Using core 855200:Finished Integration at 2020-05-28 14:06:17.863632. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:06:17.870628, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.282466439485727, Fractional Error = 0.0008510313026550317Using core 855200:Started Integration at 2020-05-28 14:06:17.871628Using core 855200:Running cross validation for 35 degree check and 8 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:06:18.648184Using core 855200:Started Integration at 2020-05-28 14:06:18.649183Using core 1733124:Finished Integration at 2020-05-28 14:06:19.650611. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:06:19.689588, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.122557128253359, Fractional Error = 0.0008818137056961804Using core 1733124:Started Integration at 2020-05-28 14:06:19.692587Using core 1733124:Running cross validation for 41 degree check and 8 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:06:25.313374Using core 1733124:Started Integration at 2020-05-28 14:06:25.314374Using core 857156:Finished Integration at 2020-05-28 14:06:30.919170. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:06:30.927166, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.173601724436372, Fractional Error = 0.000801318053304459Using core 857156:Started Integration at 2020-05-28 14:06:30.928166Using core 857156:Running cross validation for 47 degree check and 8 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:06:32.452294Using core 857156:Started Integration at 2020-05-28 14:06:32.453294Using core 855200:Finished Integration at 2020-05-28 14:06:49.005834. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:06:49.016827, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.045505537246852, Fractional Error = 0.0009540611256193109Using core 855200:Started Integration at 2020-05-28 14:06:49.017827Using core 855200:Running cross validation for 53 degree check and 8 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:06:51.722281Using core 855200:Started Integration at 2020-05-28 14:06:51.723280Using core 1730828:Finished Integration at 2020-05-28 14:06:52.876621. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:06:52.885617, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.103160918656616, Fractional Error = 0.0009790792653191376Using core 1730828:Started Integration at 2020-05-28 14:06:52.887616Using core 1730828:Running cross validation for 60 degree check and 8 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:06:55.204318Using core 1730828:Started Integration at 2020-05-28 14:06:55.205311Using core 1733124:Finished Integration at 2020-05-28 14:07:00.145467. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:07:00.165466, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -7.9999965983497345, Fractional Error = 0.0009276865429836883Using core 1733124:Started Integration at 2020-05-28 14:07:00.167455Using core 1733124:Running cross validation for 5 degree check and 9 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:07:03.352634Using core 1733124:Started Integration at 2020-05-28 14:07:03.353653Using core 1733124:Finished Integration at 2020-05-28 14:07:05.058677. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:07:05.061678, with 7 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -9.27783917549448, Fractional Error = 0.0008610969716312792Using core 1733124:Started Integration at 2020-05-28 14:07:05.062675Using core 1733124:Running cross validation for 11 degree check and 9 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:07:05.370499Using core 1733124:Started Integration at 2020-05-28 14:07:05.371500Using core 1733124:Finished Integration at 2020-05-28 14:07:10.256707. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:07:10.259706, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.891122755675873, Fractional Error = 0.0008285392691409732Using core 1733124:Started Integration at 2020-05-28 14:07:10.260716Using core 1733124:Running cross validation for 17 degree check and 9 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:07:11.150207Using core 1733124:Started Integration at 2020-05-28 14:07:11.151197Using core 857156:Finished Integration at 2020-05-28 14:07:12.012704. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:07:12.037671, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.962899873251742, Fractional Error = 0.0009121184083050838Using core 857156:Started Integration at 2020-05-28 14:07:12.040670Using core 857156:Running cross validation for 23 degree check and 9 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:07:16.387184Using core 857156:Started Integration at 2020-05-28 14:07:16.388184Using core 1733124:Finished Integration at 2020-05-28 14:07:22.066938. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:07:22.073934, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.712898861976779, Fractional Error = 0.0008650307723304483Using core 1733124:Started Integration at 2020-05-28 14:07:22.074934Using core 1733124:Running cross validation for 29 degree check and 9 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:07:23.563103Using core 1733124:Started Integration at 2020-05-28 14:07:23.564101Using core 857156:Finished Integration at 2020-05-28 14:07:32.351079. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:07:32.359057, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.60314010663258, Fractional Error = 0.0007908842659659037Using core 857156:Started Integration at 2020-05-28 14:07:32.360081Using core 857156:Running cross validation for 35 degree check and 9 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:07:35.313368Using core 857156:Started Integration at 2020-05-28 14:07:35.314367Using core 855200:Finished Integration at 2020-05-28 14:07:35.718137. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:07:35.748119, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -7.931416386322835, Fractional Error = 0.000909316476840759Using core 855200:Started Integration at 2020-05-28 14:07:35.751118Using core 855200:Running cross validation for 41 degree check and 9 th-fold
+Using core 855200:=========
+Started MLE run at 2020-05-28 14:07:39.716851Using core 855200:Started Integration at 2020-05-28 14:07:39.717851Using core 1730828:Finished Integration at 2020-05-28 14:07:44.306248. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:07:44.344226, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.899750678763456, Fractional Error = 0.0009149531697852737Using core 1730828:Started Integration at 2020-05-28 14:07:44.347225Using core 1733124:Finished Integration at 2020-05-28 14:07:47.187601. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:07:47.196600, with 9 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -8.533965497711158, Fractional Error = 0.000942682488732099Using core 1733124:Started Integration at 2020-05-28 14:07:47.198576Using core 1730828:Running cross validation for 47 degree check and 9 th-fold
+Using core 1730828:=========
+Started MLE run at 2020-05-28 14:07:48.907599Using core 1730828:Started Integration at 2020-05-28 14:07:48.907599Using core 1733124:Running cross validation for 53 degree check and 9 th-fold
+Using core 1733124:=========
+Started MLE run at 2020-05-28 14:07:53.536953Using core 1733124:Started Integration at 2020-05-28 14:07:53.537952Using core 857156:Finished Integration at 2020-05-28 14:08:03.693148. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:08:03.704142, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.313837704912713, Fractional Error = 0.0009304748858699371Using core 857156:Started Integration at 2020-05-28 14:08:03.706141Using core 857156:Running cross validation for 60 degree check and 9 th-fold
+Using core 857156:=========
+Started MLE run at 2020-05-28 14:08:08.894176Using core 857156:Started Integration at 2020-05-28 14:08:08.894176Using core 855200:Finished Integration at 2020-05-28 14:08:11.686580. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 855200:Optimization run finished at 2020-05-28 14:08:11.706569, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.267958688580011, Fractional Error = 0.0008822777435590816Using core 855200:Started Integration at 2020-05-28 14:08:11.708567Using core 1730828:Finished Integration at 2020-05-28 14:08:25.357786. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730828:Optimization run finished at 2020-05-28 14:08:25.388749, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.231903033799787, Fractional Error = 0.0008506199288318482Using core 1730828:Started Integration at 2020-05-28 14:08:25.392766Using core 1733124:Finished Integration at 2020-05-28 14:08:40.235294. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1733124:Optimization run finished at 2020-05-28 14:08:40.268247, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.201144375073673, Fractional Error = 0.0008341116375095159Using core 1733124:Started Integration at 2020-05-28 14:08:40.271270Using core 857156:Finished Integration at 2020-05-28 14:08:54.289266. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 857156:Optimization run finished at 2020-05-28 14:08:54.344230, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.17094712556803, Fractional Error = 0.0008348949389578693Using core 857156:Started Integration at 2020-05-28 14:08:54.348226Using core 1730104:Finished CV. Picked {60} degrees by maximizing likelihoodUsing core 1730104:Finished CV. Picked 60 degrees by maximizing likelihood
+Using core 1730104:Running full dataset MLE before bootstrap
+Using core 1730104:=========
+Started MLE run at 2020-05-28 14:09:02.612504Using core 1730104:Started Integration at 2020-05-28 14:09:02.614504Using core 1730104:Finished Integration at 2020-05-28 14:09:57.261262. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1730104:Optimization run finished at 2020-05-28 14:09:57.314232, with 9 iterations.
+Sum of weights = 0.9999999999999998         
+LogLikelihood = -7.941060365769344, Fractional Error = 0.0008935314768255445Using core 1730104:Finished full dataset MLE run at 2020-05-28 14:11:18.483834
+Using core 1730104:
+
+==============
+Running 20 bootstraps for the MLE code with degree = 60, using 4 thread/s.
+==============
+
+Using core 1735948:=========
+Started MLE run at 2020-05-28 14:11:20.805505Using core 1734136:=========
+Started MLE run at 2020-05-28 14:11:20.805505Using core 1735948:Started Integration at 2020-05-28 14:11:20.806504Using core 1734136:Started Integration at 2020-05-28 14:11:20.807503Using core 1732484:=========
+Started MLE run at 2020-05-28 14:11:20.810502Using core 1732484:Started Integration at 2020-05-28 14:11:20.811501Using core 1735832:=========
+Started MLE run at 2020-05-28 14:11:20.830491Using core 1735832:Started Integration at 2020-05-28 14:11:20.831490Using core 1735948:Finished Integration at 2020-05-28 14:12:14.186015. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735948:Optimization run finished at 2020-05-28 14:12:14.228990, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.884877607219591, Fractional Error = 0.000796651338368036Using core 1734136:Finished Integration at 2020-05-28 14:12:14.784655. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1734136:Optimization run finished at 2020-05-28 14:12:14.832627, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.630071745111134, Fractional Error = 0.0008898927750973615Using core 1732484:Finished Integration at 2020-05-28 14:12:15.341337. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1732484:Optimization run finished at 2020-05-28 14:12:15.383313, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.279044358931827, Fractional Error = 0.0009748052816252588Using core 1735832:Finished Integration at 2020-05-28 14:12:15.881028. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735832:Optimization run finished at 2020-05-28 14:12:15.922005, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.884260155335975, Fractional Error = 0.0008388029505129623Using core 1734136:=========
+Started MLE run at 2020-05-28 14:13:15.435991Using core 1734136:Started Integration at 2020-05-28 14:13:15.437990Using core 1732484:=========
+Started MLE run at 2020-05-28 14:13:16.519372Using core 1732484:Started Integration at 2020-05-28 14:13:16.521371Using core 1735948:=========
+Started MLE run at 2020-05-28 14:13:19.576624Using core 1735948:Started Integration at 2020-05-28 14:13:19.578623Using core 1735832:=========
+Started MLE run at 2020-05-28 14:13:20.734962Using core 1735832:Started Integration at 2020-05-28 14:13:20.736961Using core 1734136:Finished Integration at 2020-05-28 14:14:08.338794. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1734136:Optimization run finished at 2020-05-28 14:14:08.380753, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -7.898787885981312, Fractional Error = 0.0009935014582765017Using core 1732484:Finished Integration at 2020-05-28 14:14:11.155190. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1732484:Optimization run finished at 2020-05-28 14:14:11.202159, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.126542178949054, Fractional Error = 0.0008499518017501569Using core 1735832:Finished Integration at 2020-05-28 14:14:12.530399. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735832:Optimization run finished at 2020-05-28 14:14:12.577354, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.704303464115864, Fractional Error = 0.0008601393533424028Using core 1735948:Finished Integration at 2020-05-28 14:14:13.016122. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735948:Optimization run finished at 2020-05-28 14:14:13.062077, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.398166449672694, Fractional Error = 0.0008401387928167273Using core 1734136:=========
+Started MLE run at 2020-05-28 14:15:07.794814Using core 1734136:Started Integration at 2020-05-28 14:15:07.796814Using core 1732484:=========
+Started MLE run at 2020-05-28 14:15:11.607637Using core 1732484:Started Integration at 2020-05-28 14:15:11.608636Using core 1735832:=========
+Started MLE run at 2020-05-28 14:15:13.634478Using core 1735832:Started Integration at 2020-05-28 14:15:13.636478Using core 1735948:=========
+Started MLE run at 2020-05-28 14:15:15.170580Using core 1735948:Started Integration at 2020-05-28 14:15:15.172579Using core 1734136:Finished Integration at 2020-05-28 14:16:02.181712. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1734136:Optimization run finished at 2020-05-28 14:16:02.218691, with 8 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -10.511913661654797, Fractional Error = 0.0009334279191645088Using core 1732484:Finished Integration at 2020-05-28 14:16:06.504242. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1732484:Optimization run finished at 2020-05-28 14:16:06.551215, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.238096733254728, Fractional Error = 0.0009149210544850443Using core 1735832:Finished Integration at 2020-05-28 14:16:07.720547. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735832:Optimization run finished at 2020-05-28 14:16:07.767520, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.591545231344173, Fractional Error = 0.0009042701829870723Using core 1735948:Finished Integration at 2020-05-28 14:16:10.239107. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735948:Optimization run finished at 2020-05-28 14:16:10.281083, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.640424153505406, Fractional Error = 0.0009854265415518825Using core 1734136:=========
+Started MLE run at 2020-05-28 14:17:02.748117Using core 1734136:Started Integration at 2020-05-28 14:17:02.750117Using core 1732484:=========
+Started MLE run at 2020-05-28 14:17:10.430706Using core 1732484:Started Integration at 2020-05-28 14:17:10.431705Using core 1735948:=========
+Started MLE run at 2020-05-28 14:17:11.184296Using core 1735948:Started Integration at 2020-05-28 14:17:11.186295Using core 1735832:=========
+Started MLE run at 2020-05-28 14:17:16.980964Using core 1735832:Started Integration at 2020-05-28 14:17:16.982962Using core 1734136:Finished Integration at 2020-05-28 14:17:55.277076. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1734136:Optimization run finished at 2020-05-28 14:17:55.319052, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.406053297087972, Fractional Error = 0.000954540676924386Using core 1732484:Finished Integration at 2020-05-28 14:18:03.416424. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1732484:Optimization run finished at 2020-05-28 14:18:03.458406, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.973712951290603, Fractional Error = 0.0009241553564544217Using core 1735948:Finished Integration at 2020-05-28 14:18:04.436841. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735948:Optimization run finished at 2020-05-28 14:18:04.478817, with 9 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.502863678157352, Fractional Error = 0.0009974159511621284Using core 1735832:Finished Integration at 2020-05-28 14:18:33.336366. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735832:Optimization run finished at 2020-05-28 14:18:33.388336, with 11 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -6.9283386134277185, Fractional Error = 0.0008589685892671844Using core 1734136:=========
+Started MLE run at 2020-05-28 14:18:55.129930Using core 1734136:Started Integration at 2020-05-28 14:18:55.131928Using core 1735948:=========
+Started MLE run at 2020-05-28 14:19:04.821391Using core 1735948:Started Integration at 2020-05-28 14:19:04.823370Using core 1732484:=========
+Started MLE run at 2020-05-28 14:19:05.829795Using core 1732484:Started Integration at 2020-05-28 14:19:05.831794Using core 1735832:=========
+Started MLE run at 2020-05-28 14:19:38.011422Using core 1735832:Started Integration at 2020-05-28 14:19:38.013419Using core 1734136:Finished Integration at 2020-05-28 14:19:50.915046. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1734136:Optimization run finished at 2020-05-28 14:19:50.962015, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.5745360970198705, Fractional Error = 0.0009460830391484673Using core 1732484:Finished Integration at 2020-05-28 14:19:58.932465. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1732484:Optimization run finished at 2020-05-28 14:19:58.974449, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -9.587133523533016, Fractional Error = 0.0008540024949067779Using core 1735948:Finished Integration at 2020-05-28 14:19:59.428163. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735948:Optimization run finished at 2020-05-28 14:19:59.470139, with 9 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -8.467200185283888, Fractional Error = 0.0009991255494957206Using core 1735832:Finished Integration at 2020-05-28 14:20:31.458857. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 1735832:Optimization run finished at 2020-05-28 14:20:31.505830, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -7.411376280963841, Fractional Error = 0.0009888857053758473Using core 1730104:Finished bootstrap at 2020-05-28 14:21:32.885781Using core 1730104:Ended run at 2020-05-28 14:21:32.885781Using core 1730104:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        

@@ -27,7 +27,7 @@ def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
     # Run optimization to find optimum value for each degree (weights). These are the coefficients for the beta densities being used as a linear basis.
     opt_result = fmin_slsqp(fn1, x0, bounds=bounds, f_eqcons=eqn, iter=250, full_output=True, iprint=1,
                             epsilon=1e-5, acc=1e-5)
-    message = 'Optimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
+    message = '\nOptimization run finished at {}, with {} iterations. Exit Code = {}\n\n'.format(datetime.datetime.now(),
             opt_result[2], opt_result[3], opt_result[4])
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
