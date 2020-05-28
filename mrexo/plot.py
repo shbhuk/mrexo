@@ -384,6 +384,9 @@ def plot_mle_weights(result_dir):
         Displays plot. No outputs
 
     """
+
+    fig = plt.figure(figsize=(8.5,6.5))
+
     output_location = os.path.join(result_dir, 'output')
 
     weights_mle = np.loadtxt(os.path.join(output_location,'weights.txt'))
@@ -397,3 +400,5 @@ def plot_mle_weights(result_dir):
     plt.colorbar()
     plt.title('Polynomial weights with {} degrees'.format(size))
     # plt.show()
+
+    return fig
