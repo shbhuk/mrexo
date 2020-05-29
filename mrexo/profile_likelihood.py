@@ -10,7 +10,7 @@ from .utils import _save_dictionary, _logging
 def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                         X_char='x', Y_char='y',
                         degree_max=None, degree_candidates=None,
-                        cores=1, save_path=os.path.dirname(__file__), logliketolerance=1e-2, verbose=2, abs_tol=1e-8):
+                        cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
     """
     \nINPUTS:
         Y: Numpy array of Y measurements. In LINEAR SCALE.
@@ -50,14 +50,34 @@ def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
     n = len(Y)
 
-    if degree_candidates is None:
-        if degree_max is None:
-            degree_candidates = (np.floor(n**np.arange(0.4, 0.76, 0.05))).astype(int)
+
+    # For small samples (<250), use a uniformly spaced grid for degrees, otherwise,
+    # uniformly spaced in powers of n.
+
+    if degree_candidates == None:
+        if n < 250:
+            if degree_max == None:
+                degree_max = int(n/np.log(n)) + 2
+            else:
+                degree_max = int(degree_max)
+            degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
         else:
-            degree_candidates = (np.floor(n**np.arange(0.4, np.log(degree_max)/np.log(n), 0.05))).astype(int)
+            if degree_max == None:
+                degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
+            else:
+                degree_max = int(degree_max)
+                degree_candidates = (np.floor(n**np.linspace(0.4, np.log(degree_max)/np.log(n), 10))).astype(int)
+
+
 
     message = 'Running profile likelihood method to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_candidates.max())
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+    # For profile likelihood to pick the optimum number of degrees,
+    # Define tolerance to 0.01 or 1/n whichever is smaller.
+    # Do not want arbitrarily small tolerances for large sample sizes, and
+    # for small samples 1% might never be met.
+    logliketolerance = min(0.01, 1/n)
 
     if cores>1:
         print("Running things in parallel")

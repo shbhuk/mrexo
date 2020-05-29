@@ -59,9 +59,22 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
     n = len(Y)
 
+    # For small samples (<250), use a uniformly spaced grid for degrees, otherwise,
+    # uniformly spaced in powers of n.
+
     if degree_candidates == None:
-        degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
-        # degree_candidates = (np.floor(n**np.arange(0.3, 0.76, 0.05))).astype(int)
+        if n < 250:
+            if degree_max == None:
+                degree_max = int(n/np.log(n)) + 2
+            else:
+                degree_max = int(degree_max)
+            degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
+        else:
+            if degree_max == None:
+                degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
+            else:
+                degree_max = int(degree_max)
+                degree_candidates = (np.floor(n**np.linspace(0.4, np.log(degree_max)/np.log(n), 10))).astype(int)
 
     message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
