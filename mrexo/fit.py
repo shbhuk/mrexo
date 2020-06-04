@@ -7,7 +7,7 @@ import datetime
 
 from .mle_utils import MLE_fit
 from .cross_validate import run_cross_validation
-from .profile_likelihood import RunProfileLikelihood
+from .profile_likelihood import run_profile_likelihood
 from .utils import _save_dictionary, _logging
 
 
@@ -287,13 +287,13 @@ def fit_xy_relation(Y, Y_sigma, X, X_sigma, save_path,
 
     elif select_deg == 'profile':
 
-        deg_choose = RunProfileLikelihood(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
+        deg_choose = run_profile_likelihood(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
                                         X_char=X_char, Y_char=Y_char,
                                         Y_bounds=Y_bounds, X_bounds=X_bounds,
                                         degree_max=degree_max,
                                         cores=cores, save_path=aux_output_location, abs_tol=abs_tol, verbose=verbose)
 
-        message = 'Finished Profile Likelihood. Picked {} degrees by maximizing likelihood\n'.format(deg_choose)
+        message = 'Finished Profile Likelihood. Picked {} degrees \n'.format(deg_choose)
         _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 

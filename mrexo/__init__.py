@@ -11,7 +11,7 @@ from .fit import fit_xy_relation
 from .mle_utils import MLE_fit, cond_density_quantile
 from .utils import _save_dictionary, _load_lookup_table, _logging
 from .cross_validate import run_cross_validation
-from .profile_likelihood import RunProfileLikelihood
+from .profile_likelihood import run_profile_likelihood
 from .Optimizers import optimizer
 
 __version__ = '0.2'

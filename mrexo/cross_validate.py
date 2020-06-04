@@ -74,7 +74,7 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                 degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
             else:
                 degree_max = int(degree_max)
-                degree_candidates = (np.floor(n**np.linspace(0.4, np.log(degree_max)/np.log(n), 10))).astype(int)
+                degree_candidates = (np.floor(n**np.linspace(0.3, np.log(degree_max)/np.log(n), 10))).astype(int)
 
     message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)

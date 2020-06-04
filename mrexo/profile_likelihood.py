@@ -7,7 +7,7 @@ from .mle_utils import MLE_fit, calc_C_matrix
 from .utils import _save_dictionary, _logging
 
 
-def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
+def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                         X_char='x', Y_char='y',
                         degree_max=None, degree_candidates=None,
                         cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
@@ -66,7 +66,9 @@ def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                 degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
             else:
                 degree_max = int(degree_max)
-                degree_candidates = (np.floor(n**np.linspace(0.4, np.log(degree_max)/np.log(n), 10))).astype(int)
+                degree_candidates = (np.floor(n**np.linspace(0.3, np.log(degree_max)/np.log(n), 10))).astype(int)
+    else:
+        degree_candidates = np.sort(degree_candidates)
 
 
 
@@ -80,31 +82,36 @@ def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
     logliketolerance = min(0.01, 1/n)
 
     if cores>1:
-        print("Running things in parallel")
+        message = "Running profile likelihood in parallel"
+        _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
         pl_input = ((Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char,
                     d, abs_tol, save_path, verbose) for d in degree_candidates)
 
-        # Run cross validation in parallel
+        # Run in parallel
         pool = Pool(processes = cores)
-        pl_result = list(pool.imap(_parallelize_profilelikelihood, pl_input))
+        pl_result = list(pool.imap(_profilelikelihood_parallelize, pl_input))
         loglike = np.array(pl_result)
 
         FractionalChange = np.diff(loglike)/np.abs(loglike[1:])
-        Mask = FractionalChange[1:] < logliketolerance
+        Mask = FractionalChange[1:] <= logliketolerance
 
         if len(degree_candidates[2:][Mask]) == 0:
             deg_choose = degree_candidates.max()
 
-            message = "Criteria not met for any of the degrees. Defaulting to maximum = " + str(deg_choose)
+            message = "Threshold not reached for maximum degree="+str(degree_candidates.max())
             _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
         else:
             deg_choose = np.min(degree_candidates[2:][Mask])
 
-
-        df = pd.DataFrame({"degree_candidates":degree_candidates[1:], "LogLikelihood":loglike[1:], "FractionalChange":FractionalChange})
-        df.to_csv(os.path.join(save_path, 'likelihood_per_degree.csv'), index=False)
+        FractionalChange = [1, *FractionalChange]
+        # df = pd.DataFrame({"degree_candidates":degree_candidates[1:], "LogLikelihood":loglike[1:], "FractionalChange":FractionalChange})
+        # df.to_csv(os.path.join(save_path, 'likelihood_per_degree.csv'), index=False)
 
     else:
+        message = "Running profile likelihood in serial"
+        _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
         loglike = np.zeros(len(degree_candidates))
         FractionalChange= np.ones(len(degree_candidates))
 
@@ -123,14 +130,17 @@ def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
 
             if t == len(degree_candidates)-1:
-                print("Threshold not reached for maximum degree="+str(degree_candidates.max()))
+                message = "Threshold not reached for maximum degree="+str(degree_candidates.max())
+                _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
                 break
             else:
                 t+=1
 
-        df = pd.DataFrame({"degree_candidates":degree_candidates, "LogLikelihood":loglike, "FractionalChange":FractionalChange})
-        df.to_csv(os.path.join(save_path, 'likelihood_per_degree.csv'), index=False)
-    # np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'),np.array([degree_candidates, loglike, FractionalChange]))
+
+    df = pd.DataFrame({"degree_candidates":degree_candidates, "LogLikelihood":loglike, "FractionalChange":FractionalChange})
+    df.to_csv(os.path.join(save_path, 'likelihood_per_degree.csv'), index=False)
+
     message='Finished Profile Likelihood. Picked {} degrees.'.format(deg_choose)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
@@ -140,7 +150,7 @@ def RunProfileLikelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
     return deg_choose
 
 
-def _parallelize_profilelikelihood(pl_input):
+def _profilelikelihood_parallelize(pl_input):
 
     Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg, abs_tol, save_path, verbose = pl_input
 
