@@ -60,7 +60,7 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                 degree_max = int(n/np.log(n)) + 2
             else:
                 degree_max = int(degree_max)
-            degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
+            degree_candidates = np.unique(np.linspace(5, degree_max, 10, dtype = int))
         else:
             if degree_max == None:
                 degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
@@ -94,15 +94,15 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
         loglike = np.array(pl_result)
 
         FractionalChange = np.diff(loglike)/np.abs(loglike[1:])
-        Mask = FractionalChange[1:] <= logliketolerance
+        Mask = FractionalChange[:] <= logliketolerance
 
-        if len(degree_candidates[2:][Mask]) == 0:
+        if len(degree_candidates[1:][Mask]) == 0:
             deg_choose = degree_candidates.max()
 
             message = "Threshold not reached for maximum degree="+str(degree_candidates.max())
             _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
         else:
-            deg_choose = np.min(degree_candidates[2:][Mask])
+            deg_choose = np.min(degree_candidates[1:][Mask])
 
         FractionalChange = [1, *FractionalChange]
         # df = pd.DataFrame({"degree_candidates":degree_candidates[1:], "LogLikelihood":loglike[1:], "FractionalChange":FractionalChange})
@@ -154,7 +154,7 @@ def _profilelikelihood_parallelize(pl_input):
 
     Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg, abs_tol, save_path, verbose = pl_input
 
-    message = "Running profile likelihhod for deg = "+str(deg)
+    message = "\nRunning profile likelihod for deg = "+str(deg)
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 

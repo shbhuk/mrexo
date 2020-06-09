@@ -52,8 +52,8 @@ Radius = np.array(t['pl_rade'])
 
 # Directory to store results in
 # result_dir = os.path.join(pwd,'Mdwarfs_20200520_cv50')
-result_dir = os.path.join(pwd,'Kepler127_cv60')
-result_dir = os.path.join(pwd, 'FGK_319_cv100')
+result_dir = os.path.join(pwd,'Kepler127_profile60')
+# result_dir = os.path.join(pwd, 'FGK_319_cv100')
 
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
@@ -63,26 +63,26 @@ MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_lab
 
 if __name__ == '__main__':
             initialfit_result, _ = fit_xy_relation(**RadiusDict, **MassDict,
-                                                save_path = result_dir, select_deg = 'cv',
-                                                num_boot = 20, cores = 4, degree_max=100)
+                                                save_path = result_dir, select_deg = 'profile',
+                                                num_boot = 20, cores = 3, degree_max=20)
 
-                        
+
             import matplotlib.pyplot as plt
             QueryRadii = [1, 3, 5, 8]
             ExistingMR = np.zeros((len(QueryRadii), 3))
             NewMR = np.zeros((len(QueryRadii), 3))
-            
+
             for i, r in enumerate(QueryRadii):
                 ExistingMR[i, 0], predictionquantile, _ = predict_from_measurement(measurement=r, measurement_sigma=0.1*r)
                 ExistingMR[i, 1:] = predictionquantile
                 NewMR[i, 0], predictionquantile, _ = predict_from_measurement(measurement=r, measurement_sigma=0.1*r,
                             result_dir=result_dir)
                 NewMR[i, 1:] = predictionquantile
-            
+
             df = pd.DataFrame({"Radii":QueryRadii, "Old127planetdeg55_50":ExistingMR[:,0], "Old127planetdeg55_16":ExistingMR[:,1], "Old127planetdeg55_84":ExistingMR[:,2],
                                 "New319planet_50":NewMR[:,0], "New319planet_16":NewMR[:,1], "New319planet_84":NewMR[:,2]})
             df.to_csv(os.path.join(result_dir, 'output', 'other_data_products', 'PredictRadii.csv'), index=False)
-            
+
             fig, _ = plot_joint_xy_distribution(result_dir=result_dir)
             fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'JointDist.png'))
             plt.close()
@@ -92,4 +92,3 @@ if __name__ == '__main__':
             fig, _, _ = plot_y_given_x_relation(result_dir=result_dir)
             fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'ConditionalDist.png'))
             plt.close()
-

@@ -69,7 +69,7 @@ def optimizer(C_pdf, deg, verbose, save_path, MaxIter=500, rtol=1e-3):
             break
 
     message = "Optimization run finished at {}, with {} iterations.\nSum of weights = {} \
-        \nLogLikelihood = {}, Fractional Error = {}".format(datetime.datetime.now(), t, np.sum(w), loglike[t-1], FractionalError[t-1])
+        \nLogLikelihood = {}, Fractional Error = {}\n\n".format(datetime.datetime.now(), t, np.sum(w), loglike[t-1], FractionalError[t-1])
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 

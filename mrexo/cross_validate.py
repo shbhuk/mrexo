@@ -68,7 +68,7 @@ def run_cross_validation(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
                 degree_max = int(n/np.log(n)) + 2
             else:
                 degree_max = int(degree_max)
-            degree_candidates = np.linspace(5, degree_max, 10, dtype = int)
+            degree_candidates = np.unique(np.linspace(5, degree_max, 10, dtype = int))
         else:
             if degree_max == None:
                 degree_candidates = (np.floor(n**np.linspace(0.3, 0.76, 10))).astype(int)
