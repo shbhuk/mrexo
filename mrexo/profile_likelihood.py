@@ -76,10 +76,10 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
     # For profile likelihood to pick the optimum number of degrees,
-    # Define tolerance to 0.01 or 1/n whichever is smaller.
+    # Define tolerance to 0.01 or 1/n whichever is larger.
     # Do not want arbitrarily small tolerances for large sample sizes, and
     # for small samples 1% might never be met.
-    logliketolerance = min(0.01, 1/n)
+    logliketolerance = max(0.01, 1/n)
 
     if cores>1:
         message = "Running profile likelihood in parallel"
