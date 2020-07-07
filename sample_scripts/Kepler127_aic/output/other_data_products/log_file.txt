@@ -1,0 +1,20 @@
+Using core 3219468:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 3219468:Started for aic degrees at 2020-07-07 17:27:07.410865, using 4 core/sUsing core 3219468:=========
+Started MLE run at 2020-07-07 17:27:07.425831Using core 3219468:Started Integration at 2020-07-07 17:27:07.427827Using core 3219468:Finished Integration at 2020-07-07 17:27:09.562600. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 3219468:Optimization run finished at 2020-07-07 17:27:09.566598, with 7 iterations.
+Sum of weights = 1.0000000000000002         
+LogLikelihood = -9.036684272442905, Fractional Error = 0.0009030429124495032
+
+Using core 3219468:=========
+Started MLE run at 2020-07-07 17:27:14.463826Using core 3219468:Started Integration at 2020-07-07 17:27:14.466819Using core 3219468:Finished Integration at 2020-07-07 17:27:23.364724. 
+Calculated the PDF for m and r for Integrated beta and normal density.Using core 3219468:Optimization run finished at 2020-07-07 17:27:23.377686, with 10 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -8.517199297959808, Fractional Error = 0.0009129058447960068
+
