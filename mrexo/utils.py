@@ -110,7 +110,7 @@ def _load_lookup_table(f_path):
 
     """
 
-    lookup_inter = np.load(f_path, encoding = 'bytes').item()
+    lookup_inter = np.load(f_path, encoding = 'bytes', allow_pickle=True).item()
     print('Loaded lookup table from {}'.format(f_path))
 
     return lookup_inter
