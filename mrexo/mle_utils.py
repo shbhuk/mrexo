@@ -142,8 +142,9 @@ def MLE_fit(X, X_sigma, Y, Y_sigma,
 
     else:
         # Calculate AIC and BIC
-        aic = n_log_lik*2 + 2*(deg**2 - 1)
-        bic = n_log_lik*2 + np.log(n)*(deg**2 - 1)
+        # aic = -n_log_lik*2 + 2*(deg**2 - 1)
+        aic = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
+        bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 
         Y_seq = np.linspace(Y_min,Y_max,100)
         X_seq = np.linspace(X_min,X_max,100)
@@ -415,3 +416,48 @@ def calculate_joint_distribution(X_points, X_min, X_max, Y_points, Y_min, Y_max,
                     joint[i,j] = np.matmul(np.matrix(y_beta_indv), intermediate)
 
     return joint.T
+
+
+
+def rank_FI_matrix(C_pdf, w):
+    """
+    INPUT:
+        C_pdf: 2d array with [n, (deg-2)^2]
+        w: 2D array with [deg-2, deg-2]
+
+    """
+    n = np.shape(C_pdf)[1] # number of data points
+
+    score = C_pdf/np.matmul(C_pdf.T, w)
+    FI = np.matmul(score, score.T/n)
+    Rank = np.linalg.matrix_rank(FI)
+
+    return Rank
+
+
+
+
+def _rank_FI_matrix(C_pdf, w):
+    """
+    INPUT:
+    C_pdf: 2d array with [n, (deg-2)^2]
+    w: 2D array with [deg-2, deg-2]
+
+    """
+    n = np.shape(C_pdf)[1] # number of data points
+    deg_min2_sq = np.shape(C_pdf)[0]
+
+    #C_pdf_transpose = transpose(C_pdf)
+
+    F = np.zeros((deg_min2_sq, deg_min2_sq))
+
+    start = datetime.datetime.now()
+    for i in range(n):
+        F += np.outer(C_pdf[:,i], C_pdf[:,i].T) / ((C_pdf[:,i].T * w)**2)
+    end = datetime.datetime.now()
+    print(end-start)
+   	#F += reshape(kron(C_pdf[:,i], C_pdf_transpose[i,:]), (deg_min2_sq, deg_min2_sq)) / sum(C_pdf_transpose[i,:] .* w)^2
+   	#println(i)
+
+    F = F/n
+    return F
