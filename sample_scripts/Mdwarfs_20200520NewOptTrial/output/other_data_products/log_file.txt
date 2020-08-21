@@ -1,0 +1,160 @@
+Using core 63904:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 63904:Started for 30 degrees at 2020-05-21 15:00:24.586764, using 1 core/sUsing core 63904:Running full dataset MLE before bootstrap
+Using core 63904:====
+Started run at 2020-05-21 15:00:24.598223
+Using core 63904:Started Integration at 2020-05-21 15:00:24.599218
+Using core 63904:Finished Integration at 2020-05-21 15:00:33.217838. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 12916:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 12916:Started for 30 degrees at 2020-05-21 15:01:16.132083, using 1 core/sUsing core 12916:Running full dataset MLE before bootstrap
+Using core 12916:====
+Started run at 2020-05-21 15:01:16.150002
+Using core 12916:Started Integration at 2020-05-21 15:01:16.150999
+Using core 12916:Finished Integration at 2020-05-21 15:01:28.162147. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 12916:Optimization run finished at 2020-05-21 15:03:13.883254, with 21 iterations. Exit Code = 0
+
+Using core 12916:Finished full dataset MLE run at 2020-05-21 15:03:54.593954
+Using core 12916:Bootstrap not run since num_boot = 0Using core 64036:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 64036:Started for 30 degrees at 2020-05-21 15:07:03.960415, using 1 core/sUsing core 64036:Running full dataset MLE before bootstrap
+Using core 64036:====
+Started run at 2020-05-21 15:07:03.971389
+Using core 64036:Started Integration at 2020-05-21 15:07:03.972380
+Using core 64036:Finished Integration at 2020-05-21 15:07:15.557376. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 64036:Optimization run finished at 2020-05-21 15:08:45.396946, with 21 iterations. Exit Code = 0
+
+Using core 64036:Finished full dataset MLE run at 2020-05-21 15:09:29.106690
+Using core 64036:Bootstrap not run since num_boot = 0Using core 99872:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 99872:Started for 30 degrees at 2020-05-22 13:04:47.036147, using 1 core/sUsing core 99872:Running full dataset MLE before bootstrap
+Using core 99872:====
+Started run at 2020-05-22 13:04:47.071053
+Using core 99872:Started Integration at 2020-05-22 13:04:47.086015
+Using core 99872:Finished Integration at 2020-05-22 13:04:57.311941. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 99872:Optimization run finished at 2020-05-22 13:06:53.032305, with 25 iterations. Exit Code = 0
+
+Using core 99872:Finished full dataset MLE run at 2020-05-22 13:07:35.275315
+Using core 99872:
+
+==============
+Running 1 bootstraps for the MLE code with degree = 30, using 1 thread/s.
+==============
+
+Using core 99832:====
+Started run at 2020-05-22 13:07:38.327234
+Using core 99832:Started Integration at 2020-05-22 13:07:38.328232
+Using core 99832:Finished Integration at 2020-05-22 13:07:46.810346. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 99832:Optimization run finished at 2020-05-22 13:09:00.171136, with 19 iterations. Exit Code = 0
+
+Using core 99872:Finished bootstrap at 2020-05-22 13:09:36.021665Using core 99872:Ended run at 2020-05-22 13:09:36.023660Using core 99872:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        Using core 100776:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 100776:Started for 30 degrees at 2020-05-22 13:27:45.747747, using 1 core/sUsing core 100776:Running full dataset MLE before bootstrap
+Using core 100776:====
+Started run at 2020-05-22 13:27:45.760712
+Using core 100776:Started Integration at 2020-05-22 13:27:45.761713
+Using core 100776:Finished Integration at 2020-05-22 13:27:53.948053. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 100776:Optimization run finished at 2020-05-22 13:29:28.636946, with 25 iterations. Exit Code = 0
+
+Using core 100776:Finished full dataset MLE run at 2020-05-22 13:30:09.296799
+Using core 100776:
+
+==============
+Running 1 bootstraps for the MLE code with degree = 30, using 1 thread/s.
+==============
+
+Using core 84568:====
+Started run at 2020-05-22 13:30:11.845181
+Using core 84568:Started Integration at 2020-05-22 13:30:11.846179
+Using core 84568:Finished Integration at 2020-05-22 13:30:20.615154. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 84568:Optimization run finished at 2020-05-22 13:31:33.384428, with 20 iterations. Exit Code = 0
+
+Using core 100776:Finished bootstrap at 2020-05-22 13:31:59.286825Using core 100776:Ended run at 2020-05-22 13:31:59.290826Using core 100776:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        Using core 114020:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||    /|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+    Using core 114020:Started for 30 degrees at 2020-05-22 13:32:02.619187, using 1 core/sUsing core 114020:Running full dataset MLE before bootstrap
+Using core 114020:====
+Started run at 2020-05-22 13:32:02.645123
+Using core 114020:Started Integration at 2020-05-22 13:32:02.646115
+Using core 114020:Finished Integration at 2020-05-22 13:32:10.419732. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 114020:Optimization run finished at 2020-05-22 13:33:49.003370, with 25 iterations. Exit Code = 0
+
+Using core 114020:Finished full dataset MLE run at 2020-05-22 13:34:28.807057
+Using core 114020:
+
+==============
+Running 1 bootstraps for the MLE code with degree = 30, using 1 thread/s.
+==============
+
+Using core 100540:====
+Started run at 2020-05-22 13:34:31.471027
+Using core 100540:Started Integration at 2020-05-22 13:34:31.472025
+Using core 100540:Finished Integration at 2020-05-22 13:34:40.071596. 
+Calculated the PDF for m and r for Integrated beta and normal density.
+Using core 100540:Optimization run finished at 2020-05-22 13:36:02.225760, with 20 iterations. Exit Code = 0
+
+Using core 114020:Finished bootstrap at 2020-05-22 13:36:42.361876Using core 114020:Ended run at 2020-05-22 13:36:42.362872Using core 114020:
+	 _______ _    _ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+	    | |  | |__| | |__    | |__  |  \| | |  | |
+	    | |  |  __  |  __|   |  __| | . ` | |  | |
+	    | |  | |  | | |____  | |____| |\  | |__| |
+	    |_|  |_|  |_|______| |______|_| \_|_____/
+        
