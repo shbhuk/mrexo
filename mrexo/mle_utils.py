@@ -14,6 +14,26 @@ from .Optimizers import optimizer
 ########################################
 ##### Main function: MLE_fit() #########
 ########################################
+#  NOTE NOTE NOTE Break off the new nd functions into a new .py file
+"""
+def InputData(ListofDictionaries):
+    '''
+    Input List of Dictionaries, where each dictionary corresponds to a dimension
+    Example dictionary
+    RadiusDict = {'Data': Radius, 'Sigma': Radius_sigma,
+        'Max':None, 'Min':None,
+        'Label':'Radius', 'Char':'r'}
+    MassDict = {'Data': Mass, 'Sigma': Mass_sigma,
+        'Max':None, 'Min':None,
+        'Label':'Mass', 'Char':'m'}
+
+    '''
+    ndim = len(ListofDictionaries)
+    for d in ListofDictionaries:
+
+"""
+
+
 
 def MLE_fit(X, X_sigma, Y, Y_sigma,
             X_bounds, Y_bounds, Y_char, X_char,

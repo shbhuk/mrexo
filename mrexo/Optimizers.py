@@ -37,16 +37,30 @@ def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
 
     return unpadded_weight, n_log_lik
 
-def optimizer(C_pdf, deg, verbose, save_path, MaxIter=500, rtol=1e-3):
+
+# Good for n dimensions #
+def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
     """
     Using MM algorithm
+    INPUTS:
+        C_pdf: 2 dimensional matrix. The nominal shape is ((d1-2)*(d2-2), n)
+            Assuming that each dimension has a different number of degrees.
+        deg_per_dim: A vector or 1D array with degrees corresponding to each dimension.
+            Example: deg_per_dim = [5, 7, 9] # Here the 1st, 2nd and 3rd dimensions have
+            5, 7, and 9 dimensions respectively.
+
+    20201123 - Adjusted for n dimensions
+
+
     """
 
-    ReducedDeg = deg-2
+    ReducedDegs = np.array(deg_per_dim) - 2
     n = np.shape(C_pdf)[1] # Sample size
 
+    DegProduct = np.product(ReducedDegs)
+
     # Initial value for weights
-    w = np.repeat(1./(ReducedDeg**2),ReducedDeg**2)
+    w = np.ones(DegProduct)/DegProduct
 
     # w_final = np.zeros(np.shape(x0))
 
