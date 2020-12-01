@@ -38,7 +38,7 @@ def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
     return unpadded_weight, n_log_lik
 
 
-# Good for n dimensions #
+# Ndim - 20201123
 def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
     """
     Using MM algorithm
@@ -50,8 +50,6 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
             5, 7, and 9 dimensions respectively.
 
     20201123 - Adjusted for n dimensions
-
-
     """
 
     ReducedDegs = np.array(deg_per_dim) - 2

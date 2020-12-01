@@ -12,7 +12,7 @@ import pandas as pd
 try :
     pwd = os.path.dirname(__file__)
 except NameError:
-    pwd = ''
+    pwd = 'C:\\\\Users\\\\shbhu\\\\Documents\\\\GitHub\\\\mrexo\\\\sample_scripts'
     print('Could not find pwd')
 
 
@@ -39,12 +39,14 @@ For more detailed guidelines read the docuemtnation for the fit_mr_relation() fu
 
 
 t = Table.read(os.path.join(pwd,'Cool_stars_20200520_exc_upperlim.csv'))
-t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
+# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
 # t = Table.read(os.path.join(pwd,'FGK_20190406.csv'))
 
 # Symmetrical errorbars
-Mass_sigma = (abs(t['pl_masseerr1'])) #+ abs(t['pl_masseerr2']))/2
-Radius_sigma = (abs(t['pl_radeerr1']))# + abs(t['pl_radeerr2']))/2
+Mass_sigma1 = abs(t['pl_masseerr1'])
+Mass_sigma2 = abs(t['pl_masseerr1'])
+Radius_sigma1 = abs(t['pl_radeerr1'])
+Radius_sigma2 = abs(t['pl_radeerr1'])
 
 # In Earth units
 Mass = np.array(t['pl_masse'])
@@ -58,8 +60,21 @@ result_dir = os.path.join(pwd,'Kepler127_aic')
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
 # find the optimum number of degrees.
 
-RadiusDict = {'X': Radius, 'X_sigma': Radius_sigma, 'X_max':None, 'X_min':None, 'X_label':'Radius', 'X_char':'r'}
-MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
+# RadiusDict = {'X': Radius, 'X_sigma': Radius_sigma, 'X_max':None, 'X_min':None, 'X_label':'Radius', 'X_char':'r'}
+# MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
+
+
+RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Radius', 'Char':'r'}
+MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Mass', 'Char':'m'}
+
+from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+DataDict = InputData([RadiusDict, MassDict])
+save_path = 'C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\sample_scripts\\Trial_nd'
+ 
+outputs = MLE_fit(InputData([RadiusDict, MassDict]), 
+	deg_per_dim=[12, 12], 
+	save_path=save_path, output_weights_only=True, calc_joint_dist=True)
+
 
 if __name__ == '__main__':
             initialfit_result, _ = fit_xy_relation(**RadiusDict, **MassDict,
