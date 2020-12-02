@@ -133,11 +133,14 @@ def MLE_fit(DataDict, deg_per_dim,
 	# np.savetxt(os.path.join(save_path, 'Cpdf{:.3f}.txt'.format(rand)), C_pdf)
 	# np.savetxt(os.path.join(save_path, 'IntermediateWeight{:.3f}.txt'.format(rand)), w_hat)
 
+
 	# Pad the weight array with zeros for the
 	w_sq = np.reshape(unpadded_weight, np.array(deg_per_dim)-2)
 	w_sq_padded = np.zeros(deg_per_dim)
 	w_sq_padded[[slice(1,-1) for i in range(ndim)]] = w_sq
 	w_hat = w_sq_padded.flatten()
+
+
 
 
 	if output_weights_only == True:
@@ -149,13 +152,13 @@ def MLE_fit(DataDict, deg_per_dim,
 		# aic = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
-		DataSeq = np.zeros((ndim, 10))
+		DataSeq = np.zeros((ndim, 100))
 		for dim in range(ndim):
 			DataSeq[dim] = np.linspace(DataDict['ndim_bounds'][dim][0], DataDict['ndim_bounds'][dim][1], DataSeq.shape[1]) 
 		
 		DataDict['DataSequence'] = DataSeq
 		
-		output = {"weights":w_hat,
+		output = {"unpadded_weights":unpadded_weight, "weights":w_hat,
 				"deg_per_dim":deg_per_dim,
 				"DataSequence":DataSeq}
 		
@@ -163,7 +166,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			joint_dist = calculate_joint_distribution(DataDict=DataDict, 
 				weights=w_hat, 
 				deg_per_dim=deg_per_dim, 
-				abs_tol=abs_tol)
+				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
 				
 			output['joint'] = joint_dist
 				
@@ -210,7 +213,6 @@ def MLE_fit(DataDict, deg_per_dim,
 		output['X_cond_Y_quantile'] = np.array(X_cond_Y_quantile)
 		"""
 
-			# output['joint_dist'] = joint_dist
 
 		
 		return output
@@ -225,7 +227,6 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	'''
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
-	
 	# For degree 'd', actually using d-2 since the boundaries are zero padded.
 	deg_vec_per_dim = [np.arange(1, deg-1) for deg in deg_per_dim] 
 	indv_pdf_per_dim = [np.zeros((n, deg-2)) for deg in deg_per_dim]
@@ -333,6 +334,22 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
+def calculate_conditional_distribution(ConditionString, DataDict):
+	"""
+	
+	"""
+	
+	
+	
+	Condition = ConditionString.split('|')
+	LHSTerms = Condition[0].split(',')
+	RHSTerms = Condition[1].split(',')
+	
+	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
+	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+	
+	return 1
+
 
 def _marginal_density(a, a_max, a_min, deg, w_hat):
 	'''
@@ -406,7 +423,7 @@ def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_
 	return mean, var, quantile, denominator, a_beta_indv
 
 
-def calculate_joint_distribution(DataDict, weights, deg_per_dim, abs_tol):
+def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
 	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
@@ -415,6 +432,11 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, abs_tol):
 	INPUT:
 	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
 	'''
+	
+	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NPoints = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -435,18 +457,20 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, abs_tol):
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
 				
+			# print(Indices, dim, np.sum(indv_pdf_per_dim[dim][i,:]))
+				
 			if dim == ndim-1:
 				temporary = np.reshape(weights, deg_per_dim)
-				# Print perform matrix multiplication to multiply the individual PDFs with the weights and obtain the Joint Distribution
+				# print('-----')
+				# Perform matrix multiplication to multiply the individual PDFs with the weights and obtain the Joint Distribution
 				for dd in range(ndim):
+					# print(Indices, dd, np.sum(indv_pdf_per_dim[dd][Indices[dd],:]), np.sum(temporary), joint[tuple(Indices)])
+					temporary = TensorMultiplication(indv_pdf_per_dim[dd][Indices[dd],:], temporary)
 					if dd == ndim-1:
-						print(indv_pdf_per_dim[dd][i,:])
-						temporary = TensorMultiplication(indv_pdf_per_dim[dd][i,:], temporary)
 						joint[tuple(Indices)] = temporary
-						print(Indices, joint[tuple(Indices)])
-					else:
-						temporary = TensorMultiplication(indv_pdf_per_dim[dd][i,:], temporary)
+						# print(joint[tuple(Indices)])
 			else:
+				# print("Init next loop for ", Indices, dim+1)
 				RecursiveMess(dim+1)
 				
 	RecursiveMess(0)
@@ -454,7 +478,7 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, abs_tol):
 	return joint
 
 
-def TensorMultiplication(A, B):
+def TensorMultiplication(A, B, Subscripts=None):
 	"""
 	Calculate the tensor contraction of A and B, along the last dimension of A, and the first dimension of B 
 	which must match in size.
@@ -467,9 +491,10 @@ def TensorMultiplication(A, B):
 	NdimA = A.ndim
 	NdimB = B.ndim
 	
-	Subscripts = ''.join(Alphabets[0:NdimA])+ ',' +\
-		''.join(Alphabets[NdimA-1:NdimA+NdimB-1]) + '->' +\
-		 ''.join(Alphabets[0:NdimA-1]+Alphabets[NdimA:NdimA+NdimB-1])
+	if Subscripts is None:
+		Subscripts = ''.join(Alphabets[0:NdimA])+ ',' +\
+			''.join(Alphabets[NdimA-1:NdimA+NdimB-1]) + '->' +\
+			 ''.join(Alphabets[0:NdimA-1]+Alphabets[NdimA:NdimA+NdimB-1])
 	return np.einsum(Subscripts, A, B)
 
 
