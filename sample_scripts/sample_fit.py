@@ -48,9 +48,13 @@ Mass_sigma2 = abs(t['pl_masseerr1'])
 Radius_sigma1 = abs(t['pl_radeerr1'])
 Radius_sigma2 = abs(t['pl_radeerr1'])
 
+
 # In Earth units
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
+Period = np.array(t['pl_orbper'])
+
+Period_sigma = np.repeat(np.nan, len(Period))
 
 # Directory to store results in
 # result_dir = os.path.join(pwd,'Mdwarfs_20200520_cv50')
@@ -64,46 +68,47 @@ result_dir = os.path.join(pwd,'Kepler127_aic')
 # MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
 
 
+FakePeriod = np.ones(len(Period))
+FakePeriodSigma = FakePeriod*0.01
+Period_sigma = FakePeriodSigma
+
 RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Radius', 'Char':'r'}
 MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Mass', 'Char':'m'}
+PeriodDict = {'Data': FakePeriod, 'SigmaLower': Period_sigma, "SigmaUpper":Period_sigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period', 'Char':'p'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
-DataDict = InputData([RadiusDict, MassDict])
+import matplotlib.pyplot as plt
+DataDict = InputData([RadiusDict, MassDict, PeriodDict])
 save_path = 'C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\sample_scripts\\Trial_nd'
  
-outputs = MLE_fit(InputData([RadiusDict, MassDict]), 
-	deg_per_dim=[12, 12], 
-	save_path=save_path, output_weights_only=True, calc_joint_dist=True)
+ndim = len(DataDict)
+deg_per_dim = [24, 24, 24]
+
+outputs = MLE_fit(DataDict, 
+	deg_per_dim=deg_per_dim,
+	save_path=save_path, output_weights_only=False, calc_joint_dist=False)
 
 
+
+x = outputs['DataSequence'][0]
+y = outputs['DataSequence'][1]
+# z = outputs['DataSequence'][2]
+joint = outputs['JointDist']
+weights = outputs['Weights']
+
+i = 10
+plt.imshow(joint_dist[:,:,i], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto'); 
+plt.plot(np.log10(Radius), np.log10(Mass), 'k.')
+plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
+plt.xlabel("Log10 Radius");
+plt.ylabel("Log10 Mass");
+plt.tight_layout()
+plt.show(block=False)
+
+"""
 if __name__ == '__main__':
             initialfit_result, _ = fit_xy_relation(**RadiusDict, **MassDict,
                                                 save_path = result_dir, select_deg = 'aic',
                                                 num_boot = 100, cores = 4, degree_max=100)
 
-
-            # import matplotlib.pyplot as plt
-            # QueryRadii = [1, 3, 5, 8]
-            # ExistingMR = np.zeros((len(QueryRadii), 3))
-            # NewMR = np.zeros((len(QueryRadii), 3))
-            #
-            # for i, r in enumerate(QueryRadii):
-            #     ExistingMR[i, 0], predictionquantile, _ = predict_from_measurement(measurement=r, measurement_sigma=0.1*r)
-            #     ExistingMR[i, 1:] = predictionquantile
-            #     NewMR[i, 0], predictionquantile, _ = predict_from_measurement(measurement=r, measurement_sigma=0.1*r,
-            #                 result_dir=result_dir)
-            #     NewMR[i, 1:] = predictionquantile
-            #
-            # df = pd.DataFrame({"Radii":QueryRadii, "Old127planetdeg55_50":ExistingMR[:,0], "Old127planetdeg55_16":ExistingMR[:,1], "Old127planetdeg55_84":ExistingMR[:,2],
-            #                     "New319planet_50":NewMR[:,0], "New319planet_16":NewMR[:,1], "New319planet_84":NewMR[:,2]})
-            # df.to_csv(os.path.join(result_dir, 'output', 'other_data_products', 'PredictRadii.csv'), index=False)
-            #
-            # fig, _ = plot_joint_xy_distribution(result_dir=result_dir)
-            # fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'JointDist.png'))
-            # plt.close()
-            # fig = plot_mle_weights(result_dir=result_dir)
-            # fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'Weights.png'))
-            # plt.close()
-            # fig, _, _ = plot_y_given_x_relation(result_dir=result_dir)
-            # fig.savefig(os.path.join(result_dir, 'output', 'other_data_products', 'ConditionalDist.png'))
-            # plt.close()
+"""

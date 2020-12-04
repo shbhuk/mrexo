@@ -158,18 +158,17 @@ def MLE_fit(DataDict, deg_per_dim,
 		
 		DataDict['DataSequence'] = DataSeq
 		
-		output = {"unpadded_weights":unpadded_weight, "weights":w_hat,
+		output = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
 				"deg_per_dim":deg_per_dim,
 				"DataSequence":DataSeq}
-		
-		if calc_joint_dist == True:
-			joint_dist = calculate_joint_distribution(DataDict=DataDict, 
-				weights=w_hat, 
-				deg_per_dim=deg_per_dim, 
-				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
-				
-			output['joint'] = joint_dist
-				
+	
+		JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 
+			weights=w_hat, 
+			deg_per_dim=deg_per_dim, 
+			save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+			
+		output['JointDist'] = JointDist
+			
 		"""
 		Y_seq = np.linspace(Y_min,Y_max,100)
 		X_seq = np.linspace(X_min,X_max,100)
@@ -302,7 +301,7 @@ def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs
 	Integrate the product of the normal and beta distribution.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	CHECK'''
+	'''
 	a_obs = data
 	a_std = data_std
 	shape1 = degree
@@ -314,13 +313,15 @@ def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs
 	return integration_product[0]
 
 # Ndim - 20201130
-def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=True):
+def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
 	'''
 	Find the individual probability density Function for a variable.
 	If the data has uncertainty, the joint distribution is modelled using a
 	convolution of beta and normal distributions.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
+
+	Always use with Log=False
 	'''
 
 
@@ -334,21 +335,212 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
-def calculate_conditional_distribution(ConditionString, DataDict):
-	"""
+
+def calculate_conditional_distribution(ConditionString, DataDict, 
+		weights, deg_per_dim, deg_vec_per_dim,
+		JointDist,
+		MeasurementDict):
+	'''
 	
-	"""
+	INPUTS:
+		ConditionString = Example 'x|y,z' or 'x,y|z', or 'm|r,p'
+		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
+		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
+		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
+			It is a list of 1-D vectors, where the number of elements in the list = ndim.
+			The number of elements in each vector is the number of degrees for that dimension
+		MeasurementDict: Example:
+			MeasurementDict = {}
+			MeasurementDict['r'] = [[1,2,3],[0.1, 0.2, 0.3]] # Vector of radius measurements, vector of radius measurement uncertainties
+			MeasurementDict['p'] = [[10, 20, 30], [1e-3, 1e-3, 1e-3]] # Likewise for period
+			
+			MeasurementDict['r'] = [[1], [np.nan]]
+			MeasurementDict['p'] = [[1], [np.nan]]
+			
+		MeasurementDict assumes linear values
+	'''
 	
+	# assuming it is x|y,z, i.e. there is only one dimension on the LHS
 	
+	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	
+	# NPoints = len(DataDict['DataSequence'][0])
 	Condition = ConditionString.split('|')
 	LHSTerms = Condition[0].split(',')
 	RHSTerms = Condition[1].split(',')
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	
 	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
 	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+
+	# Need to finalize exact structure of input
+	RHSMeasurements = []
+	RHSUncertainties = []
+	[RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
+	[RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
 	
-	return 1
+	NPoints = len(RHSMeasurements[0])
+	Denominator = np.zeros(NPoints)
+	Numerator = np.zeros(NPoints)
+	
+	# Initial values
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	ldim = LHSDimensions[0]
+	MeanBetaIndv_Numerator = (deg_vec_per_dim[ldim] * (DataDict['ndim_bounds'][ldim][1]-DataDict['ndim_bounds'][ldim][0]) / 
+		(deg_per_dim[ldim] + 1)) + DataDict['ndim_bounds'][ldim][0]
+	
+	
+	for i in range(len(RHSMeasurements[0])):
+		# temp_denominator = ReshapedWeights # For using Tensor Mult
+		temp_denominator =  np.ones(deg_per_dim[ldim])# For using kron
+		temp_numerator = MeanBetaIndv_Numerator
+		InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
+
+		for d in range(len(RHSDimensions)):
+			rdim = RHSDimensions[d]
+			indv_pdf = _find_indv_pdf(a=np.log10(RHSMeasurements[d][i]), 
+					a_std=RHSUncertainties[d][i]/RHSMeasurements[d][i]/np.log(10),
+					deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
+					a_max=DataDict["ndim_bounds"][rdim][1], 
+					a_min=DataDict["ndim_bounds"][rdim][0], 
+					Log=False)
+			
+			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+			Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+			# temp_denominator = TensorMultiplication(temp_denominator, indv_pdf, Subscripts)
+			# Need to figure out error on how to calculate denominator using np.kron for >2 dimensions
+			temp_denominator = np.kron(temp_denominator, indv_pdf)
+			
+			temp_numerator = np.kron(temp_numerator, indv_pdf)
+			
+			InputIndices = ProductIndices
+		Denominator[i] = np.sum(weights*temp_denominator)
+		Numerator[i] = np.sum(weights*temp_numerator)
+		
+	Mean = 10**(Numerator/Denominator)
+
+	
+	####################################
+	"""
+	Denominator = np.zeros([NPoints for i in range(ndim-1)])
+	Numerator = np.zeros([NPoints for i in range(ndim-1)])
+	Indices = np.zeros(ndim-1, dtype=int)	
+	
+	
+	InputIndices = ''.join(WeightIndices)
+	ProductIndices = InputIndices.replace(Alphabets[0], '')
+	temp_denominator=ReshapedWeights
+	temp_numerator = MeanBetaIndv_Numerator
+	
+
+	for rd in range(len(RHSDimensions)):
+		rdim = RHSDimensions[rd]
+		
+		if rd==0:
+			InputIndices = ''.join(WeightIndices)
+			temp_denominator = ReshapedWeights
+		ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+		Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+		
+		for i in range(NPoints):
+			print(d, Indices, InputIndices, ProductIndices, Subscripts)
+
+			temp_denominator = TensorMultiplication(temp_denominator, indv_pdf_per_dim[rdim][i,:], 
+				Subscripts =Subscripts)
+			
+			temp_numerator = np.kron(MeanBetaIndv_Numerator, indv_pdf_per_dim[rdim][i,:])
+			
+			InputIndices=ProductIndices
+			
+
+			if d==len(RHSDimensions)-1:
+				Denominator[tuple(Indices)] = temp_denominator
+				Numerator[tuple(Indices)] = temp_numerator
+
+	####################################
+
+	
+	def ConditionalRecursiveMess(d, InputIndices, ProductIndices, temp_denominator, temp_numerator):
+		for i in range(NPoints):
+			Indices[d] = i
+			rdim = RHSDimensions[d]
+			
+			if d==0:
+				temp_denominator = ReshapedWeights
+				temp_numerator = MeanBetaIndv_Numerator
+				InputIndices = ''.join(WeightIndices)
+
+			
+			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+			Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+			# print(d, Indices, InputIndices, ProductIndices, Subscripts)
+		
+			if d < len(RHSDimensions)-1:
+				# print(temp_denominator.shape, indv_pdf_per_dim[rdim][j,:].shape, Subscripts)
+
+				temp_denominator = TensorMultiplication(temp_denominator, indv_pdf_per_dim[rdim][i,:], 
+					Subscripts =Subscripts)
+				temp_numerator = np.kron(temp_numerator, indv_pdf_per_dim[rdim][i,:])
+				
+				InputIndices = ProductIndices
+				ConditionalRecursiveMess(d+1, InputIndices, ProductIndices, temp_denominator, temp_numerator)
+
+			else:
+				# print(temp_denominator, indv_pdf_per_dim[rdim][j,:])
+				print(np.sum(Denominator[tuple(Indices)]))
+				# print(d, temp_denominator.shape, indv_pdf_per_dim[rdim][j,:].shape, Subscripts)
+				Denominator[tuple(Indices)] = np.sum(TensorMultiplication(temp_denominator, indv_pdf_per_dim[rdim][j,:], 
+					Subscripts = Subscripts))
+				Numerator[tuple(Indices)] = np.sum(weights*np.kron(temp_numerator, indv_pdf_per_dim[rdim][j,:]))
+				# print(Denominator[tuple(Indices)], Numerator[tuple(Indices)] )
+				
+	ConditionalRecursiveMess(0, InputIndices, ProductIndices, temp_denominator, temp_numerator)
+	
+	####################################
+	
+	for i in range(NPoints):
+		rdim = RHSDimensions[0]
+		InputIndices = ''.join(WeightIndices)
+		ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+		Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+
+		temp_denominator = TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[rdim][i,:], 
+					Subscripts =Subscripts)
+		
+		temp_numerator = np.kron(MeanBetaIndv_Numerator, indv_pdf_per_dim[rdim][i,:])
+		InputIndices = ProductIndices
+
+		for j in range(NPoints):
+			rdim = RHSDimensions[1]
+			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+			Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+
+			Denominator[i,j] = np.sum(TensorMultiplication(temp_denominator, indv_pdf_per_dim[rdim][j,:], 
+				Subscripts = Subscripts))
+				
+			Numerator[i,j] = np.sum(weights*np.kron(temp_numerator, indv_pdf_per_dim[rdim][j,:]))
+			
+			# print(i, j, Denominator[i,j])
+
+	####################################
+
+	for i in range(NPoints):
+		temporary = np.reshape(weights, deg_per_dim)
+		InputIndices = ''.join(WeightIndices)
+		
+		for rdim in RHSDimensions:
+			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+
+			temporary = TensorMultiplication(temporary, indv_pdf_per_dim[rdim][i,:], 
+				Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices)
+			InputIndices = ProductIndices
+
+		Denominator[i] = np.sum(temporary)
+		print(i, np.sum(temporary))
+	"""
+	
+	return Numerator, Denominator
 
 
 def _marginal_density(a, a_max, a_min, deg, w_hat):
@@ -373,6 +565,8 @@ def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_
 	Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 10
+
+	b/a
 	'''
 	if type(a) == list:
 		a = np.array(a)
@@ -431,6 +625,12 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 	
 	INPUT:
 	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
+	
+	OUTPUT:
+	joint distribution = 
+	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
+		It is a list of 1-D vectors, where the number of elements in the list = ndim.
+		The number of elements in each vector is the number of degrees for that dimension
 	'''
 	
 	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
@@ -446,10 +646,12 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
 	Indices = np.zeros(ndim, dtype=int)
 	
-	def RecursiveMess(dim):
+	def JointRecursiveMess(dim):
 		for i in range(NPoints):
 			Indices[dim] =  i
 			
+			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
+			# distributed in log space (between Max and Min)
 			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
@@ -471,19 +673,22 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 						# print(joint[tuple(Indices)])
 			else:
 				# print("Init next loop for ", Indices, dim+1)
-				RecursiveMess(dim+1)
+				JointRecursiveMess(dim+1)
 				
-	RecursiveMess(0)
+	JointRecursiveMess(0)
 
-	return joint
+	return joint, indv_pdf_per_dim
 
 
 def TensorMultiplication(A, B, Subscripts=None):
 	"""
-	Calculate the tensor contraction of A and B, along the last dimension of A, and the first dimension of B 
-	which must match in size.
-	C[i,j,...,l,...,n] = A[i,j,...,k] * B[k,l,...n]
-	NOTE: if dimension n is length 1, C is reshaped to reduce that dimension.
+	Calculate the tensor contraction of A and B.
+	If Subscripts = None: Calculate along the last dimension of A, and the first dimension of B 
+		which must match in size.
+		C[i,j,...,l,...,n] = A[i,j,...,k] * B[k,l,...n]
+		NOTE: if dimension n is length 1, C is reshaped to reduce that dimension.
+	else:
+		Provide Subscripts example: 'ijk,klm -> ijlm'
 	"""
 	
 	
