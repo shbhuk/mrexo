@@ -3,6 +3,7 @@ from scipy.stats import beta,norm
 import scipy
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
+from scipy.interpolate import interpn
 import datetime,os
 from multiprocessing import current_process
 
@@ -139,8 +140,6 @@ def MLE_fit(DataDict, deg_per_dim,
 	w_sq_padded = np.zeros(deg_per_dim)
 	w_sq_padded[[slice(1,-1) for i in range(ndim)]] = w_sq
 	w_hat = w_sq_padded.flatten()
-
-
 
 
 	if output_weights_only == True:
@@ -337,7 +336,7 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 
 
 def calculate_conditional_distribution(ConditionString, DataDict, 
-		weights, deg_per_dim, deg_vec_per_dim,
+		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
 	'''
@@ -354,13 +353,13 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 			MeasurementDict['r'] = [[1,2,3],[0.1, 0.2, 0.3]] # Vector of radius measurements, vector of radius measurement uncertainties
 			MeasurementDict['p'] = [[10, 20, 30], [1e-3, 1e-3, 1e-3]] # Likewise for period
 			
-			MeasurementDict['r'] = [[1], [np.nan]]
-			MeasurementDict['p'] = [[1], [np.nan]]
+			MeasurementDict['r'] = [[4], [np.nan]]
+			MeasurementDict['p'] = [[0.9999], [np.nan]]
 			
 		MeasurementDict assumes linear values
 	'''
 	
-	# assuming it is x|y,z, i.e. there is only one dimension on the LHS
+	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
 	
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	
@@ -372,12 +371,15 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	
 	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
 	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+	####################################
 
 	# Need to finalize exact structure of input
 	RHSMeasurements = []
 	RHSUncertainties = []
-	[RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
-	[RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
+	_ = [RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
+	_ = [RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
+	
+	i=0 # Working on ith element of measurements
 	
 	NPoints = len(RHSMeasurements[0])
 	Denominator = np.zeros(NPoints)
@@ -386,12 +388,78 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	# Initial values
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
-	ldim = LHSDimensions[0]
+	ldim = LHSDimensions
+	rdim = RHSDimensions
+	
+	RHSSequence = DataDict['DataSequence'][rdim]
+	LHSSequence = DataDict['DataSequence'][ldim]
+	NSeq = len(RHSSequence[0])
+	
+	Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
+	InterpSlices = np.copy(DataDict['DataSequence'])
+	for j in range(len(RHSTerms)):
+		# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
+		InterpSlices[RHSDimensions[j]] = np.repeat(np.log10(MeasurementDict[RHSTerms[j]][0][i]), NSeq)
+		
+	# 20201215 - only works for 1 LHS Dimensions
+	SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, np.dstack(InterpSlices))
+	
+	
+	# RHSMeasurements = 10**RHSSequence[50]
+	# RHSIndex = np.argmin(np.abs(RHSSequence - np.log10(RHSMeasurements)))
+	
+	# Hardcoded 20201209
+	# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
+	# Slice is taken at the radius value that we're finding mass for
+	# Then calculate denominator by taking matrix multiplication
+	# Ratio of the two gives the PDF
+	# Expectation value of this PDF matches the mean from old (Ning et al. 2018) method
+	# Integral(conditionaldist * MassSequence) / Integral(conditionaldist) = Mean(f(m|r)) = Expectation value
+	# SliceofJoint = JointDist[RHSIndex, :]
+	
+	
+	temp_denominator = ReshapedWeights
+	InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
+	
+	for j in range(len(RHSTerms)):
+		rdim = RHSDimensions[j]
+		indv_pdf = _find_indv_pdf(a=np.log10(MeasurementDict[RHSTerms[j]][0][i]), 
+					a_std=MeasurementDict[RHSTerms[j]][1][i]/MeasurementDict[RHSTerms[j]][0][i]/np.log(10),
+					deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
+					a_max=DataDict["ndim_bounds"][rdim][1], 
+					a_min=DataDict["ndim_bounds"][rdim][0], 
+					Log=False) 
+
+		ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+		Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+
+		temp_denominator = TensorMultiplication(temp_denominator, indv_pdf, Subscripts=Subscripts)
+		InputIndices = ProductIndices
+
+	# Denominator = np.sum(weights * np.kron(np.ones(deg_per_dim[ldim]), indv_pdf))
+	# Denominator = np.sum(np.matmul(ReshapedWeights, indv_pdf))
+	
+	ConditionalDist = SliceofJoint/np.sum(temp_denominator)
+	
+	from scipy.interpolate import UnivariateSpline	
+	"""
+	Radius has d' degrees
+	Mass has d degrees
+	weights is a 2D matrix of shape d, d'
+	indv_pdf is a 1D matrix of shape 1,d'
+	
+	weights*indv_pdf = (1xd') x (d' x d) = (dx1)
+	f(r|theta) = np.sum((dx1))
+	"""
+	
+	
+
+	"""
 	MeanBetaIndv_Numerator = (deg_vec_per_dim[ldim] * (DataDict['ndim_bounds'][ldim][1]-DataDict['ndim_bounds'][ldim][0]) / 
 		(deg_per_dim[ldim] + 1)) + DataDict['ndim_bounds'][ldim][0]
 	
 	
-	for i in range(len(RHSMeasurements[0])):
+	for i in range(NPoints):
 		# temp_denominator = ReshapedWeights # For using Tensor Mult
 		temp_denominator =  np.ones(deg_per_dim[ldim])# For using kron
 		temp_numerator = MeanBetaIndv_Numerator
@@ -420,9 +488,9 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		
 	Mean = 10**(Numerator/Denominator)
 
-	
+
 	####################################
-	"""
+
 	Denominator = np.zeros([NPoints for i in range(ndim-1)])
 	Numerator = np.zeros([NPoints for i in range(ndim-1)])
 	Indices = np.zeros(ndim-1, dtype=int)	

@@ -78,11 +78,11 @@ PeriodDict = {'Data': FakePeriod, 'SigmaLower': Period_sigma, "SigmaUpper":Perio
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 import matplotlib.pyplot as plt
-DataDict = InputData([RadiusDict, MassDict, PeriodDict])
+DataDict = InputData([MassDict, RadiusDict])
 save_path = 'C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\sample_scripts\\Trial_nd'
  
 ndim = len(DataDict)
-deg_per_dim = [24, 24, 24]
+deg_per_dim = [24, 24]
 
 outputs = MLE_fit(DataDict, 
 	deg_per_dim=deg_per_dim,
@@ -90,20 +90,31 @@ outputs = MLE_fit(DataDict,
 
 
 
+
 x = outputs['DataSequence'][0]
 y = outputs['DataSequence'][1]
 # z = outputs['DataSequence'][2]
-joint = outputs['JointDist']
+JointDist = outputs['JointDist']
 weights = outputs['Weights']
 
 i = 10
-plt.imshow(joint_dist[:,:,i], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto'); 
-plt.plot(np.log10(Radius), np.log10(Mass), 'k.')
-plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-plt.xlabel("Log10 Radius");
-plt.ylabel("Log10 Mass");
+"""
+plt.imshow(JointDist, extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto', origin='lower'); 
+plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
+# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
+plt.ylabel("Log10 Radius");
+plt.xlabel("Log10 Mass");
 plt.tight_layout()
 plt.show(block=False)
+"""
+
+from mrexo.mle_utils_nd import cond_density_quantile
+
+results = cond_density_quantile(a=np.log10(4),
+	a_min=-0.173, a_max=1.37, 
+	b_max=2.487, b_min=-0.627, 
+	deg=24, deg_vec=np.arange(1,25), w_hat=weights)
+
 
 """
 if __name__ == '__main__':
