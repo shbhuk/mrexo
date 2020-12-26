@@ -6,6 +6,9 @@ import os
 from scipy.stats.mstats import mquantiles
 from astropy.table import Table
 
+def plot_joint_distribution():
+	return 1
+	
 
 def plot_y_given_x_relation(result_dir):
     """

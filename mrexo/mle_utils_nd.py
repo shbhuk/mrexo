@@ -61,12 +61,12 @@ def InputData(ListofDictionaries):
 		ndim_label.append(ListofDictionaries[d]['Label'])
 		
 		if not np.isfinite(ListofDictionaries[d]['Min']):
-			Min = np.log10(0.9*np.min(np.abs(ndim_data[d] - ndim_sigma[d])))
+			Min = np.log10(0.9*np.min(np.abs(ndim_data[d])))
 		else:
 			Min = ListofDictionaries[d]['Min']
 			
 		if not np.isfinite(ListofDictionaries[d]['Max']):
-			Max = np.log10(1.1*np.max(ndim_data[d] + ndim_sigma[d]))
+			Max = np.log10(1.1*np.max(ndim_data[d]))
 		else:
 			Max = ListofDictionaries[d]['Max']
 			 
@@ -245,11 +245,11 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		kron_temp = 1
 		for dim in range(0,ndim):
 			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["ndim_data"][dim][i], 
-															a_std=DataDict["ndim_sigma"][dim][i],
-															deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
-															a_max=DataDict["ndim_bounds"][dim][1], 
-															a_min=DataDict["ndim_bounds"][dim][0], 
-															Log=Log)
+				a_std=DataDict["ndim_sigma"][dim][i],
+				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
+				a_max=DataDict["ndim_bounds"][dim][1], 
+				a_min=DataDict["ndim_bounds"][dim][0], 
+				Log=Log)
 			
 			kron_temp = np.kron(indv_pdf_per_dim[dim][i,:], kron_temp)
 		C_pdf[i,:] = kron_temp
@@ -391,6 +391,8 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 
 	for i in range(NPoints):
 		Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
+	
+		# Values at which to perform interpolation
 		InterpSlices = np.copy(DataDict['DataSequence'])
 		for j in range(len(RHSTerms)):
 			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
@@ -521,7 +523,6 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
-	
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NPoints = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -561,6 +562,9 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 				JointRecursiveMess(dim+1)
 				
 	JointRecursiveMess(0)
+
+	message = 'Finished calculating Joint Distribution at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return joint, indv_pdf_per_dim
 

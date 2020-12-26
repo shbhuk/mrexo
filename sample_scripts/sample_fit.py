@@ -53,7 +53,6 @@ Radius_sigma2 = abs(t['pl_radeerr1'])
 Mass = np.array(t['pl_masse'])
 Radius = np.array(t['pl_rade'])
 Period = np.array(t['pl_orbper'])
-
 Period_sigma = np.repeat(np.nan, len(Period))
 
 # Directory to store results in
@@ -70,11 +69,12 @@ result_dir = os.path.join(pwd,'Kepler127_aic')
 
 FakePeriod = np.ones(len(Period))
 FakePeriodSigma = FakePeriod*0.01
-Period_sigma = FakePeriodSigma
+# Period_sigma = FakePeriodSigma
 
 RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Radius', 'Char':'r'}
 MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Mass', 'Char':'m'}
-PeriodDict = {'Data': FakePeriod, 'SigmaLower': Period_sigma, "SigmaUpper":Period_sigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period', 'Char':'p'}
+PeriodDict = {'Data': FakePeriod, 'SigmaLower': FakePeriodSigma, "SigmaUpper":FakePeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period', 'Char':'p'}
+PeriodDict = {'Data': Period, 'SigmaLower': Period_sigma, "SigmaUpper":Period_sigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period', 'Char':'p'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 import matplotlib.pyplot as plt
@@ -96,6 +96,21 @@ y = outputs['DataSequence'][1]
 # z = outputs['DataSequence'][2]
 JointDist = outputs['JointDist']
 weights = outputs['Weights']
+
+plt.imshow(JointDist[:,:,50], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto', origin='lower');
+plt.xlabel("log10 Mass")
+plt.ylabel("log10 Radius")
+
+
+from mrexo.mle_utils_nd import calculate_conditional_distribution
+
+ConditionString = 'm|r,p'
+DataDict = DataDict
+MeasurementDict = {'r':[[1.7, 1.7], [np.nan, np.nan]], 'p':[[1, 10], [np.nan, np.nan]]}
+LogMeasurementDict = {k:np.log10(MeasurementDict[k]) for k in MeasurementDict.keys()}
+
+results = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
+	JointDist, LogMeasurementDict)
 
 i = 10
 """
