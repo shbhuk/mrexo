@@ -87,7 +87,7 @@ def InputData(ListofDictionaries):
 
 def MLE_fit(DataDict, deg_per_dim, 
 			Log=True, abs_tol=1e-8, 
-			output_weights_only=False, calc_joint_dist = False, 
+			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2):
 	'''
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
@@ -143,7 +143,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	w_hat = w_sq_padded.flatten()
 
 
-	if output_weights_only == True:
+	if OutputWeightsOnly == True:
 		return unpadded_weight, n_log_lik
 
 	else:
@@ -161,13 +161,13 @@ def MLE_fit(DataDict, deg_per_dim,
 		output = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
 				"deg_per_dim":deg_per_dim,
 				"DataSequence":DataSeq}
-	
-		JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 
-			weights=w_hat, 
-			deg_per_dim=deg_per_dim, 
-			save_path=save_path, verbose=verbose, abs_tol=abs_tol)
-			
-		output['JointDist'] = JointDist
+		
+		if CalculateJointDist:
+			JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 
+				weights=w_hat, 
+				deg_per_dim=deg_per_dim, 
+				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+			output['JointDist'] = JointDist
 			
 		"""
 		Y_seq = np.linspace(Y_min,Y_max,100)
@@ -412,7 +412,7 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		
 		temp_denominator = ReshapedWeights
 		InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
-		
+		 
 		for j in range(len(RHSTerms)):
 			rdim = RHSDimensions[j]
 			indv_pdf = _find_indv_pdf(a=MeasurementDict[RHSTerms[j]][0][i], 
@@ -433,11 +433,11 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		
 		ConditionalDist[i] = SliceofJoint/np.sum(temp_denominator)
 		
-		# Find the integral of the Conditional Distribution 
+		# Find the integral of the Conditional Distribution => Integral of f(x) dx
 		ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
 			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
 		
-		# Find the integral of the product of the Conditional and LHSSequence
+		# Find the  integral of the product of the Conditional and LHSSequence => E[x]
 		MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
 			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
 
@@ -519,6 +519,171 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 		It is a list of 1-D vectors, where the number of elements in the list = ndim.
 		The number of elements in each vector is the number of degrees for that dimension
 	'''
+	ndim = DataDict['ndim']
+	
+	message = 'Calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	
+	if ndim==2:
+		Joint, indv_pdf_per_dim = CalculateJointDist2D(DataDict, weights, deg_per_dim)
+	elif ndim==3:
+		Joint, indv_pdf_per_dim = CalculateJointDist3D(DataDict, weights, deg_per_dim)
+	elif ndim==4:
+		Joint, indv_pdf_per_dim = CalculateJointDist4D(DataDict, weights, deg_per_dim)
+		
+	message = 'Finished calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	return Joint, indv_pdf_per_dim
+
+def CalculateJointDist2D(DataDict, weights, deg_per_dim):
+	"""
+	Calculate joint distribution for 2D distribution
+	"""
+	
+	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
+	NPoints = len(DataDict['DataSequence'][0])
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	ndim = DataDict['ndim']
+	Joint = np.zeros([NPoints for i in range(ndim)])
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+
+	# Quick loop to calculate individual PDFs
+	for dim in range(ndim):
+		for i in range(NPoints):
+			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+				a_std=np.nan,
+				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
+				a_max=DataDict["ndim_bounds"][dim][1], 
+				a_min=DataDict["ndim_bounds"][dim][0], 
+				Log=False)
+	
+	for i in range(NPoints):
+		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
+		for j in range(NPoints):
+			Joint[i,j] =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
+	return Joint, indv_pdf_per_dim
+	
+
+def CalculateJointDist3D(DataDict, weights, deg_per_dim):
+	"""
+	Calculate joint distribution for 3D distribution
+	"""
+	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
+	NPoints = len(DataDict['DataSequence'][0])
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	ndim = DataDict['ndim']
+	Joint = np.zeros([NPoints for i in range(ndim)])
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+
+	# Quick loop to calculate individual PDFs
+	for dim in range(ndim):
+		for i in range(NPoints):
+			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+				a_std=np.nan,
+				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
+				a_max=DataDict["ndim_bounds"][dim][1], 
+				a_min=DataDict["ndim_bounds"][dim][0], 
+				Log=False)
+	
+	for i in range(NPoints):
+		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
+		for j in range(NPoints):
+			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
+			for k in range(NPoints):
+				Joint[i,j,k] = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
+	
+	return Joint, indv_pdf_per_dim
+
+
+def CalculateJointDist4D(DataDict, weights, deg_per_dim):
+	"""
+	Calculate joint distribution for 4D distribution
+	"""
+	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
+	NPoints = len(DataDict['DataSequence'][0])
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	ndim = DataDict['ndim']
+	Joint = np.zeros([NPoints for i in range(ndim)])
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+
+	# Quick loop to calculate individual PDFs
+	for dim in range(ndim):
+		for i in range(NPoints):
+			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+				a_std=np.nan,
+				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
+				a_max=DataDict["ndim_bounds"][dim][1], 
+				a_min=DataDict["ndim_bounds"][dim][0], 
+				Log=False)
+	
+	for i in range(NPoints):
+		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
+		for j in range(NPoints):
+			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
+			for k in range(NPoints):
+				Intermediate3 = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
+				for l in range(NPoints):
+					Joint[i,j,k, l] = TensorMultiplication(indv_pdf_per_dim[3][l,:], Intermediate3)
+	
+	return Joint, indv_pdf_per_dim
+
+"""
+def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
+	'''
+	Much slower than the previous one
+	'''
+	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
+	NPoints = len(DataDict['DataSequence'][0])
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	ndim = DataDict['ndim']
+	Joint = np.zeros([NPoints for i in range(ndim)])
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+
+	for i in range(NPoints):
+		indv_pdf_per_dim[0][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][0][i], 
+			a_std=np.nan,
+			deg=deg_per_dim[0], deg_vec=deg_vec_per_dim[0],
+			a_max=DataDict["ndim_bounds"][0][1], 
+			a_min=DataDict["ndim_bounds"][0][0], 
+			Log=False)
+		for j in range(NPoints):
+			indv_pdf_per_dim[1][j,:] = _find_indv_pdf(a=DataDict["DataSequence"][1][j], 
+				a_std=np.nan,
+				deg=deg_per_dim[1], deg_vec=deg_vec_per_dim[0],
+				a_max=DataDict["ndim_bounds"][1][1], 
+				a_min=DataDict["ndim_bounds"][1][0], 
+				Log=False)
+			Intermediate = TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[1][j,:])
+			Joint[i,j] = TensorMultiplication(Intermediate, indv_pdf_per_dim[0][i,:])
+	
+	return Joint
+"""
+
+def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+	'''
+	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
+	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
+	Refer to Ning et al. 2018 Sec 2.1, Eq 7
+	
+	INPUT:
+	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
+	
+	OUTPUT:
+	joint distribution = 
+	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
+		It is a list of 1-D vectors, where the number of elements in the list = ndim.
+		The number of elements in each vector is the number of degrees for that dimension
+	'''
 	
 	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -549,14 +714,14 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 				
 			if dim == ndim-1:
 				temporary = np.reshape(weights, deg_per_dim)
-				# print('-----')
 				# Perform matrix multiplication to multiply the individual PDFs with the weights and obtain the Joint Distribution
 				for dd in range(ndim):
+					# 20201226 - Check if this multiplication is correct. Should it be Indices[dd] or something else?x
 					# print(Indices, dd, np.sum(indv_pdf_per_dim[dd][Indices[dd],:]), np.sum(temporary), joint[tuple(Indices)])
 					temporary = TensorMultiplication(indv_pdf_per_dim[dd][Indices[dd],:], temporary)
-					if dd == ndim-1:
-						joint[tuple(Indices)] = temporary
-						# print(joint[tuple(Indices)])
+
+				joint[tuple(Indices)] = temporary
+				# print(joint[tuple(Indices)])
 			else:
 				# print("Init next loop for ", Indices, dim+1)
 				JointRecursiveMess(dim+1)
@@ -567,6 +732,64 @@ def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verb
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return joint, indv_pdf_per_dim
+
+
+def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+	'''
+	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
+	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
+	Refer to Ning et al. 2018 Sec 2.1, Eq 7
+	
+	INPUT:
+	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
+	
+	OUTPUT:
+	joint distribution = 
+	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
+		It is a list of 1-D vectors, where the number of elements in the list = ndim.
+		The number of elements in each vector is the number of degrees for that dimension
+	'''
+	
+	# 20201226 - Try using a different method
+	
+	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
+	NPoints = len(DataDict['DataSequence'][0])
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	ndim = DataDict['ndim']
+
+	joint = np.zeros([NPoints for i in range(ndim)])
+	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+
+	Indices = np.zeros(ndim, dtype=int)
+	for i in range(NPoints):
+		for dim in range(ndim):
+			Indices[dim] = i
+			
+			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
+			# distributed in log space (between Max and Min)
+			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+				a_std=np.nan,
+				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
+				a_max=DataDict["ndim_bounds"][dim][1], 
+				a_min=DataDict["ndim_bounds"][dim][0], 
+				Log=False)
+
+		temporary = np.reshape(weights, deg_per_dim)
+		#Perform matrix multiplication to multiply the individual PDFs with the weights and obtain the Joint Distribution
+		for dd in range(ndim):
+			temporary = TensorMultiplication(indv_pdf_per_dim[dd][Indices[dd],:], temporary)
+
+		joint[tuple(Indices)] = temporary
+
+	message = 'Finished calculating Joint Distribution at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	return joint, indv_pdf_per_dim
+
+
 
 
 def TensorMultiplication(A, B, Subscripts=None):
