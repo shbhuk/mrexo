@@ -341,7 +341,7 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		JointDist,
 		MeasurementDict):
 	'''
-	
+	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
 	INPUTS:
 		ConditionString = Example 'x|y,z' or 'x,y|z', or 'm|r,p'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
