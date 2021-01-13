@@ -336,7 +336,7 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 	return a_beta_indv
 
 
-def calculate_conditional_distribution(ConditionString, DataDict, 
+def calculate_conditional_distribution1D(ConditionString, DataDict, 
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
@@ -360,8 +360,8 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
 	
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
+	ndim = DataDict['ndim']
 	
-	# NPoints = len(DataDict['DataSequence'][0])
 	Condition = ConditionString.split('|')
 	LHSTerms = Condition[0].split(',')
 	RHSTerms = Condition[1].split(',')
@@ -390,16 +390,28 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
 	for i in range(NPoints):
-		Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
+		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
 	
+		"""
 		# Values at which to perform interpolation
 		InterpSlices = np.copy(DataDict['DataSequence'])
 		for j in range(len(RHSTerms)):
 			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
-			InterpSlices[RHSDimensions[j]] = np.repeat(MeasurementDict[RHSTerms[j]][0][i], NSeq)
+			# InterpSlices[RHSDimensions[j]] = np.repeat(MeasurementDict[RHSTerms[j]][0][i], NSeq)
+			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
 			
 		# 20201215 - only works for 1 LHS Dimensions
 		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, np.dstack(InterpSlices))[0]
+		"""
+
+		InterpSlices = list(DataDict['DataSequence'])
+		for j in range(len(RHSTerms)):
+			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
+			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
+		
+		InterpMesh = np.array(np.meshgrid(*InterpSlices))
+		InterpPoints = np.rollaxis(InterpMesh, 0, 3) #.reshape((NSeq, ndim))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints)[0]
 		
 		# Hardcoded 20201209
 		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
@@ -446,6 +458,133 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
 			
 	return ConditionalDist, MeanPDF, VariancePDF
+
+
+def calculate_conditional_distribution2D(ConditionString, DataDict, 
+		weights, deg_per_dim, 
+		JointDist,
+		MeasurementDict):
+	'''
+	Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
+	INPUTS:
+		ConditionString = Example 'x|y,z' or 'x,y|z', or 'm|r,p'
+		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
+		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
+		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
+			It is a list of 1-D vectors, where the number of elements in the list = ndim.
+			The number of elements in each vector is the number of degrees for that dimension
+		MeasurementDict: Example:
+			MeasurementDict = {}
+			MeasurementDict['r'] = [[np.log10(4), np.log10(2)], [np.nan, np.nan]] # Vector of radius measurements, vector of radius measurement uncertainties
+			MeasurementDict['p'] = [[np.log10(0.9999), np.log10(1)], [np.nan, np.nan]] # Likewise for period
+			
+		MeasurementDict assumes log values
+	'''
+	
+	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
+	
+	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
+	ndim = DataDict['ndim']
+	
+	# NPoints = len(DataDict['DataSequence'][0])
+	Condition = ConditionString.split('|')
+	LHSTerms = Condition[0].split(',')
+	RHSTerms = Condition[1].split(',')
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	
+	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
+	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+	####################################
+
+	# Need to finalize exact structure of input
+	RHSMeasurements = []
+	RHSUncertainties = []
+	_ = [RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
+	_ = [RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
+	
+	RHSSequence = DataDict['DataSequence'][RHSDimensions]
+	LHSSequence = DataDict['DataSequence'][LHSDimensions]
+	NSeq = len(RHSSequence[0])
+	
+	NPoints = len(RHSMeasurements[0])
+	ConditionalDist = np.zeros(tuple([NPoints, *np.repeat(NSeq, len(LHSTerms))]))
+	MeanPDF = np.zeros((NPoints, len(LHSTerms)))
+	VariancePDF = np.zeros((NPoints, len(LHSTerms)))
+	
+	# Initial values
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	for i in range(NPoints):
+		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
+
+		"""
+		# Values at which to perform interpolation
+		InterpSlices = np.copy(DataDict['DataSequence'])
+		for j in range(len(RHSTerms)):
+			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
+			# InterpSlices[RHSDimensions[j]] = np.repeat(MeasurementDict[RHSTerms[j]][0][i], NSeq)
+			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
+			
+		# 20201215 - only works for 1 LHS Dimensions
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, np.dstack(InterpSlices))[0]
+		"""
+
+		InterpSlices = list(DataDict['DataSequence'])
+		for j in range(len(RHSTerms)):
+			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
+			InterpSlices[RHSDimensions[j]] = [MeasurementDict[RHSTerms[j]][0][i]]
+		
+		InterpMesh = np.array(np.meshgrid(*InterpSlices))
+		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
+		
+		# Hardcoded 20201209
+		# Then calculate denominator by taking matrix multiplication
+		# Ratio of the two gives the PDF
+		# Expectation value of this PDF matches the mean from old (Ning et al. 2018) method
+		# Integral(conditionaldist * MassSequence) / Integral(conditionaldist) = Mean(f(m|r)) = Expectation value
+		# SliceofJoint = JointDist[RHSIndex, :]
+		
+		temp_denominator = ReshapedWeights
+		InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
+		 
+		for j in range(len(RHSTerms)):
+			rdim = RHSDimensions[j]
+			indv_pdf = _find_indv_pdf(a=MeasurementDict[RHSTerms[j]][0][i], 
+						a_std=MeasurementDict[RHSTerms[j]][1][i],
+						deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
+						a_max=DataDict["ndim_bounds"][rdim][1], 
+						a_min=DataDict["ndim_bounds"][rdim][0], 
+						Log=False) 
+
+			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
+			Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+
+			temp_denominator = TensorMultiplication(temp_denominator, indv_pdf, Subscripts=Subscripts)
+			InputIndices = ProductIndices
+
+		# Denominator = np.sum(weights * np.kron(np.ones(deg_per_dim[ldim]), indv_pdf))
+		# Denominator = np.sum(np.matmul(ReshapedWeights, indv_pdf))
+		
+		ConditionalDist[i] = SliceofJoint/np.sum(temp_denominator)
+		
+		# Find the integral of the Conditional Distribution => Integral of f(x) dx
+		ConditionPDF = RectBivariateSpline(LHSSequence[0], LHSSequence[1], ConditionalDist[i]).integral(
+			xa=DataDict["ndim_bounds"][LHSDimensions[0]][0], xb=DataDict["ndim_bounds"][LHSDimensions[0]][1],
+			ya=DataDict["ndim_bounds"][LHSDimensions[1]][0], yb=DataDict["ndim_bounds"][LHSDimensions[1]][1])
+		
+		# Find the  integral of the product of the Conditional and LHSSequence => E[x1, x2] = (E[x1], E[x2])
+		MeanPDF[i] = np.array([RectBivariateSpline(LHSSequence[0], LHSSequence[1], ConditionalDist[i]*LHSSequence[j]).integral(
+			xa=DataDict["ndim_bounds"][LHSDimensions[0]][0], xb=DataDict["ndim_bounds"][LHSDimensions[0]][1],
+			ya=DataDict["ndim_bounds"][LHSDimensions[1]][0], yb=DataDict["ndim_bounds"][LHSDimensions[1]][1]) for j in range(np.shape(LHSSequence)[0])])/ConditionPDF
+		
+		# Variance = E[x^2] - E[x]^2
+		print("Variance not calculated")
+		# VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
+			
+	return ConditionalDist, MeanPDF, VariancePDF
+
 
 def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
 	'''
@@ -543,17 +682,17 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	"""
 	
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
-	Joint = np.zeros([NPoints for i in range(ndim)])
+	Joint = np.zeros([NSeq for i in range(ndim)])
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
-		for i in range(NPoints):
+		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
@@ -561,9 +700,9 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
 	
-	for i in range(NPoints):
+	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
-		for j in range(NPoints):
+		for j in range(NSeq):
 			Joint[i,j] =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
 	return Joint, indv_pdf_per_dim
 	
@@ -573,17 +712,17 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 	Calculate joint distribution for 3D distribution
 	"""
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
-	Joint = np.zeros([NPoints for i in range(ndim)])
+	Joint = np.zeros([NSeq for i in range(ndim)])
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
-		for i in range(NPoints):
+		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
@@ -591,11 +730,11 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
 	
-	for i in range(NPoints):
+	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
-		for j in range(NPoints):
+		for j in range(NSeq):
 			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
-			for k in range(NPoints):
+			for k in range(NSeq):
 				Joint[i,j,k] = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
 	
 	return Joint, indv_pdf_per_dim
@@ -606,17 +745,17 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 	Calculate joint distribution for 4D distribution
 	"""
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
-	Joint = np.zeros([NPoints for i in range(ndim)])
+	Joint = np.zeros([NSeq for i in range(ndim)])
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
-		for i in range(NPoints):
+		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
@@ -624,13 +763,13 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
 	
-	for i in range(NPoints):
+	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
-		for j in range(NPoints):
+		for j in range(NSeq):
 			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
-			for k in range(NPoints):
+			for k in range(NSeq):
 				Intermediate3 = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
-				for l in range(NPoints):
+				for l in range(NSeq):
 					Joint[i,j,k, l] = TensorMultiplication(indv_pdf_per_dim[3][l,:], Intermediate3)
 	
 	return Joint, indv_pdf_per_dim
@@ -641,22 +780,22 @@ def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	Much slower than the previous one
 	'''
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
-	Joint = np.zeros([NPoints for i in range(ndim)])
+	Joint = np.zeros([NSeq for i in range(ndim)])
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
-	for i in range(NPoints):
+	for i in range(NSeq):
 		indv_pdf_per_dim[0][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][0][i], 
 			a_std=np.nan,
 			deg=deg_per_dim[0], deg_vec=deg_vec_per_dim[0],
 			a_max=DataDict["ndim_bounds"][0][1], 
 			a_min=DataDict["ndim_bounds"][0][0], 
 			Log=False)
-		for j in range(NPoints):
+		for j in range(NSeq):
 			indv_pdf_per_dim[1][j,:] = _find_indv_pdf(a=DataDict["DataSequence"][1][j], 
 				a_std=np.nan,
 				deg=deg_per_dim[1], deg_vec=deg_vec_per_dim[0],
@@ -689,16 +828,16 @@ def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ver
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
 
-	joint = np.zeros([NPoints for i in range(ndim)])
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	joint = np.zeros([NSeq for i in range(ndim)])
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 	Indices = np.zeros(ndim, dtype=int)
 	
 	def JointRecursiveMess(dim):
-		for i in range(NPoints):
+		for i in range(NSeq):
 			Indices[dim] =  i
 			
 			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
@@ -756,15 +895,15 @@ def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ve
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
-	NPoints = len(DataDict['DataSequence'][0])
+	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	ndim = DataDict['ndim']
 
-	joint = np.zeros([NPoints for i in range(ndim)])
-	indv_pdf_per_dim = [np.zeros((NPoints, deg)) for deg in deg_per_dim]
+	joint = np.zeros([NSeq for i in range(ndim)])
+	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
 	Indices = np.zeros(ndim, dtype=int)
-	for i in range(NPoints):
+	for i in range(NSeq):
 		for dim in range(ndim):
 			Indices[dim] = i
 			
