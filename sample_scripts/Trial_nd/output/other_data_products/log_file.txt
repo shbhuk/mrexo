@@ -1,0 +1,672 @@
+Using core 36816:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 36816:Started for [25, 25] degrees at 2021-01-13 13:54:33.144462, using 1 core/sUsing core 18676:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18676:Started for [25, 25] degrees at 2021-01-13 13:59:43.607925, using 1 core/sUsing core 18676:Running full dataset MLE before bootstrap
+Using core 18676:Finished full dataset MLE run at 2021-01-13 13:59:48.227236
+Using core 25200:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 25200:Started for [25, 25] degrees at 2021-01-13 14:00:34.966284, using 1 core/sUsing core 25200:Running full dataset MLE before bootstrap
+Using core 25200:Finished full dataset MLE run at 2021-01-13 14:00:39.724018
+Using core 25200:
+	 _______ _	_ ______   ______ _   _ _____
+	 |__   __| |  | |  ____| |  ____| \ | |  __ |
+		| |  | |__| | |__	| |__  |  \| | |  | |
+		| |  |  __  |  __|   |  __| | . ` | |  | |
+		| |  | |  | | |____  | |____| |\  | |__| |
+		|_|  |_|  |_|______| |______|_| \_|_____/
+		Using core 25200:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 25200:Started for [25, 25] degrees at 2021-01-13 14:01:08.807369, using 1 core/sUsing core 25200:Running full dataset MLE before bootstrap
+Using core 25200:Finished full dataset MLE run at 2021-01-13 14:01:13.442447
+Using core 25200:Bootstrap not run since num_boot = 0Using core 25200:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 25200:Started for [25, 25] degrees at 2021-01-13 14:12:12.332910, using 1 core/sUsing core 25200:Running full dataset MLE before bootstrap
+Using core 25200:Finished full dataset MLE run at 2021-01-13 14:12:16.562293
+Using core 25200:Bootstrap not run since num_boot = 0Using core 30880:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 30880:Started for [25, 25] degrees at 2021-01-13 18:03:14.617608, using 1 core/sUsing core 30880:Running full dataset MLE before bootstrap
+Using core 30880:Finished full dataset MLE run at 2021-01-13 18:03:18.581737
+Using core 30880:Bootstrap not run since num_boot = 0Using core 28168:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 28168:Started for [25, 25] degrees at 2021-01-14 10:25:02.290812, using 1 core/sUsing core 28168:Running full dataset MLE before bootstrap
+Using core 28168:Finished full dataset MLE run at 2021-01-14 10:25:13.724918
+Using core 28168:Bootstrap not run since num_boot = 0Using core 28168:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 28168:Started for [25, 25, 25] degrees at 2021-01-14 10:27:35.357842, using 1 core/sUsing core 28168:Running full dataset MLE before bootstrap
+Using core 28168:Finished full dataset MLE run at 2021-01-14 10:27:44.689550
+Using core 28168:
+___  _________ _______   _______
+|  \/  || ___ \  ___\ \ / /  _  |
+| .  . || |_/ / |__  \ V /| | | |
+| |\/| ||    /|  __| /   \| | | |
+| |  | || |\ \| |___/ /^\ \ \_/ /
+\_|  |_/\_| \_\____/\/   \/\___/
+
+Using core 28168:Started for [25, 25, 25] degrees at 2021-01-14 10:29:59.093578, using 1 core/sUsing core 28168:Running full dataset MLE before bootstrap
+Using core 28168:Finished full dataset MLE run at 2021-01-14 10:30:17.460709
+Using core 28168:Finished full dataset MLE run at 2021-01-14 10:31:00.681483
+Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [25, 25, 25] degrees at 2021-01-14 10:33:31.960737, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 10:33:41.173664
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [25, 25, 25] degrees at 2021-01-14 12:18:14.940201, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:18:16.851145
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [25, 25] degrees at 2021-01-14 12:42:29.760155, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:42:29.888831
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [25, 25] degrees at 2021-01-14 12:43:37.971490, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:43:38.096417
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [25, 25] degrees at 2021-01-14 12:43:59.537659, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:43:59.666367
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 12:54:37.908092, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:54:38.138117
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 12:54:46.930120, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 12:54:47.138298
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 13:13:45.305174, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:13:49.829605
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 13:16:39.462407, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:16:39.703574
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 13:16:58.231624, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:17:05.132552
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 13:25:58.601982, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:25:58.861208
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 13:27:34.872867, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:27:35.518996
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 13:27:47.973820, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:27:48.234684
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 13:29:51.643016, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:29:56.339529
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 13:41:15.167461, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:41:15.421533
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 13:44:28.885891, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 13:44:40.861723
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 30] degrees at 2021-01-14 14:22:02.132197, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:22:02.361812
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 30] degrees at 2021-01-14 14:24:31.880691, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:24:32.112667
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 14:25:10.019766, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:25:10.274473
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 30] degrees at 2021-01-14 14:28:18.725906, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:28:18.952621
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 34] degrees at 2021-01-14 14:28:35.431254, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:28:35.694201
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35] degrees at 2021-01-14 14:30:56.046098, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35] degrees at 2021-01-14 14:31:14.599054, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 14:32:16.659134, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:32:23.390362
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 34, 33] degrees at 2021-01-14 14:32:28.686430, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:32:32.694365
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 14:36:16.597575, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:36:21.367686
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35] degrees at 2021-01-14 14:39:50.037079, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:39:50.287647
+Using core 3172:Bootstrap not run since num_boot = 0Using core 3172:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 3172:Started for [35, 35, 35] degrees at 2021-01-14 14:45:37.682168, using 1 core/sUsing core 3172:Running full dataset MLE before bootstrap
+Using core 3172:Finished full dataset MLE run at 2021-01-14 14:45:44.560072
+Using core 3172:Bootstrap not run since num_boot = 0Using core 30152:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 30152:Started for [35, 35, 35, 35] degrees at 2021-01-14 15:52:26.741713, using 1 core/sUsing core 30152:Running full dataset MLE before bootstrap
+Using core 30152:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||	/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 30152:Started for [25, 25, 25, 25] degrees at 2021-01-14 15:52:48.348675, using 1 core/sUsing core 30152:Running full dataset MLE before bootstrap
+Using core 4496:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| ||/|  __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 4496:Started for [25, 25, 25, 25] degrees at 2021-01-14 15:54:31.884611, using 1 core/sUsing core 4496:Running full dataset MLE before bootstrap
+Using core 4496:Finished full dataset MLE run at 2021-01-14 15:55:57.110073
+Using core 4496:Bootstrap not run since num_boot = 0Using core 18040:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18040:Started for [25, 25, 25] degrees at 2021-01-14 16:00:08.263713, using 1 core/sUsing core 18040:Running full dataset MLE before bootstrap
+Using core 18040:Finished full dataset MLE run at 2021-01-14 16:00:10.152794
+Using core 18040:Bootstrap not run since num_boot = 0Using core 18040:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18040:Started for [25, 25] degrees at 2021-01-14 18:20:45.478331, using 1 core/sUsing core 18040:Running full dataset MLE before bootstrap
+Using core 18040:Finished full dataset MLE run at 2021-01-14 18:20:45.603529
+Using core 18040:Bootstrap not run since num_boot = 0Using core 18040:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18040:Started for [25, 25] degrees at 2021-01-14 18:23:36.668744, using 1 core/sUsing core 18040:Running full dataset MLE before bootstrap
+Using core 18040:Finished full dataset MLE run at 2021-01-14 18:23:36.799116
+Using core 18040:Bootstrap not run since num_boot = 0Using core 18040:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18040:Started for [25, 25] degrees at 2021-01-14 18:23:52.503997, using 1 core/sUsing core 18040:Running full dataset MLE before bootstrap
+Using core 18040:Finished full dataset MLE run at 2021-01-14 18:23:52.617530
+Using core 18040:Bootstrap not run since num_boot = 0Using core 1280:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 1280:Started for [25, 25] degrees at 2021-01-14 18:29:05.467705, using 1 core/sUsing core 1280:Running full dataset MLE before bootstrap
+Using core 1280:Finished full dataset MLE run at 2021-01-14 18:29:05.583881
+Using core 1280:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 25] degrees at 2021-01-14 18:31:08.303632, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:31:08.426309
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 25, 25] degrees at 2021-01-14 18:35:03.972651, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:35:05.889352
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 24, 23] degrees at 2021-01-14 18:37:55.800613, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:37:57.735515
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 34, 33] degrees at 2021-01-14 18:38:42.451321, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:38:46.108530
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 35, 35] degrees at 2021-01-14 18:38:59.763554, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:39:04.016394
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 34, 33] degrees at 2021-01-14 18:39:46.507451, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:39:50.394027
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 34] degrees at 2021-01-14 18:42:32.753273, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:42:32.989798
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 35] degrees at 2021-01-14 18:42:51.866998, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:42:52.173554
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [34, 34] degrees at 2021-01-14 18:43:03.736895, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:43:04.005411
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [34, 36] degrees at 2021-01-14 18:43:18.717130, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:43:18.960065
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [34, 44] degrees at 2021-01-14 18:43:31.472128, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:43:31.764998
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 35] degrees at 2021-01-14 18:43:43.737853, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:43:43.980403
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 34] degrees at 2021-01-14 18:44:15.996117, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:44:16.214267
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 33] degrees at 2021-01-14 18:44:50.135191, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:44:50.380118
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35] degrees at 2021-01-14 18:45:20.379298, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [35, 35] degrees at 2021-01-14 18:45:37.107756, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:45:37.329141
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [33, 35] degrees at 2021-01-14 18:46:53.876700, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:46:54.195903
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [34, 35] degrees at 2021-01-14 18:47:24.236752, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 18:47:24.575721
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 25] degrees at 2021-01-14 20:00:57.731492, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 20:00:57.887278
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 25, 25] degrees at 2021-01-14 20:02:09.779261, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 20:02:11.678064
+Using core 33908:Bootstrap not run since num_boot = 0Using core 33908:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 33908:Started for [25, 25, 25] degrees at 2021-01-14 20:30:59.232573, using 1 core/sUsing core 33908:Running full dataset MLE before bootstrap
+Using core 33908:Finished full dataset MLE run at 2021-01-14 20:31:01.019034
+Using core 33908:Bootstrap not run since num_boot = 0Using core 18928:
+	___  _________ _______   _______
+	|  \/  || ___ \  ___\ \ / /  _  |
+	| .  . || |_/ / |__  \ V /| | | |
+	| |\/| || | / __| /   \| | | |
+	| |  | || |\ \| |___/ /^\ \ \_/ /
+	\_|  |_/\_| \_\____/\/   \/\___/
+
+	Using core 18928:Started for [25, 25, 25] degrees at 2021-01-14 20:42:53.375689, using 1 core/sUsing core 18928:Running full dataset MLE before bootstrap
+Using core 18928:Finished full dataset MLE run at 2021-01-14 20:42:55.106348
+Using core 18928:Bootstrap not run since num_boot = 0

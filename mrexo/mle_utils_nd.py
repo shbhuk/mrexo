@@ -5,6 +5,7 @@ from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.interpolate import interpn
 from scipy.interpolate import UnivariateSpline
+from scipy.interpolate import RectBivariateSpline
 import datetime,os
 from multiprocessing import current_process
 
@@ -152,7 +153,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		# aic = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
-		DataSeq = np.zeros((ndim, 100))
+		DataSeq = np.zeros((ndim, 50))
 		for dim in range(ndim):
 			DataSeq[dim] = np.linspace(DataDict['ndim_bounds'][dim][0], DataDict['ndim_bounds'][dim][1], DataSeq.shape[1]) 
 		
@@ -410,8 +411,8 @@ def calculate_conditional_distribution1D(ConditionString, DataDict,
 			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
 		
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
-		InterpPoints = np.rollaxis(InterpMesh, 0, 3) #.reshape((NSeq, ndim))
-		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints)[0]
+		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(NSeq)
 		
 		# Hardcoded 20201209
 		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
@@ -729,13 +730,21 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
-	
+	"""
 	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
 		for j in range(NSeq):
 			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
 			for k in range(NSeq):
 				Joint[i,j,k] = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
+	"""
+	
+	for i in range(NSeq):
+		Intermediate1 =  TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[2][i,:])
+		for j in range(NSeq):
+			Intermediate2 =  TensorMultiplication(Intermediate1, indv_pdf_per_dim[1][j,:])
+			for k in range(NSeq):
+				Joint[i,j,k] = TensorMultiplication(Intermediate2, indv_pdf_per_dim[0][k,:])
 	
 	return Joint, indv_pdf_per_dim
 
@@ -762,7 +771,7 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
-	
+
 	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
 		for j in range(NSeq):
@@ -771,7 +780,16 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 				Intermediate3 = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
 				for l in range(NSeq):
 					Joint[i,j,k, l] = TensorMultiplication(indv_pdf_per_dim[3][l,:], Intermediate3)
-	
+	"""
+	for i in range(NSeq):
+		Intermediate1 =  TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[1][i,:])
+		for j in range(NSeq):
+			Intermediate2 =  TensorMultiplication(Intermediate1, indv_pdf_per_dim[1][j,:])
+			for k in range(NSeq):
+				Intermediate3 =  TensorMultiplication(Intermediate2, indv_pdf_per_dim[1][k,:])
+				for l in range(NSeq):
+					Joint[i,j,k, l] = TensorMultiplication(Intermediate3, indv_pdf_per_dim[0][l,:])
+	"""		
 	return Joint, indv_pdf_per_dim
 
 """
