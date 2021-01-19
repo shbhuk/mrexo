@@ -336,8 +336,35 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
+def calculate_conditional_distribution(ConditionString, DataDict, 
+		weights, deg_per_dim, 
+		JointDist,
+		MeasurementDict):
+			
+	ndim = DataDict['ndim']
+	
+	Condition = ConditionString.split('|')
+	LHSTerms = Condition[0].split(',')
+	RHSTerms = Condition[1].split(',')
+	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+	
+	if len(LHSTerms) == 1:
+		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution1D(
+			ConditionString, DataDict, 
+			weights, deg_per_dim, 
+			JointDist,
+			MeasurementDict)
+	elif len(LHSTerms) == 2:
+		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution2D(
+			ConditionString, DataDict, 
+			weights, deg_per_dim, 
+			JointDist,
+			MeasurementDict)
+			
+	return ConditionalDist, MeanPDF, VariancePDF
+		
 
-def calculate_conditional_distribution1D(ConditionString, DataDict, 
+def CalculateConditionalDistribution1D(ConditionString, DataDict, 
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
@@ -412,7 +439,7 @@ def calculate_conditional_distribution1D(ConditionString, DataDict,
 		
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
-		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(NSeq)
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
 		# Hardcoded 20201209
 		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
@@ -461,7 +488,7 @@ def calculate_conditional_distribution1D(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 
 
-def calculate_conditional_distribution2D(ConditionString, DataDict, 
+def CalculateConditionalDistribution2D(ConditionString, DataDict, 
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
