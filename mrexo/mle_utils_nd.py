@@ -11,7 +11,7 @@ from multiprocessing import current_process
 
 
 from .utils import _logging
-from .Optimizers import optimizer
+from .Optimizers import optimizer, SLSQP_optimizer
 
 
 ########################################
@@ -130,6 +130,9 @@ def MLE_fit(DataDict, deg_per_dim,
 	# They can be reshaped into an `ndim` dimensional array 
 	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=deg_per_dim,
 		verbose=verbose, save_path=save_path)
+		
+	# unpadded_weight, n_log_lik = SLSQP_optimizer(C_pdf=C_pdf, deg=deg_per_dim[0], 
+		# verbose=verbose, save_path=save_path)
 	# print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
 	# rand = np.random.randn()
 	# np.savetxt(os.path.join(save_path, 'loglikelihoodtest{:.3f}.txt'.format(rand)), [n_log_lik])
@@ -371,7 +374,7 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 	'''
 	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
 	INPUTS:
-		ConditionString = Example 'x|y,z' or 'x,y|z', or 'm|r,p'
+		ConditionString = Example 'x,y|z or z|y'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
 		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
 		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
@@ -394,9 +397,9 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 	LHSTerms = Condition[0].split(',')
 	RHSTerms = Condition[1].split(',')
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
-	
-	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
-	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+
+	LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
+	RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
 	####################################
 
 	# Need to finalize exact structure of input
@@ -520,8 +523,8 @@ def CalculateConditionalDistribution2D(ConditionString, DataDict,
 	RHSTerms = Condition[1].split(',')
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	
-	LHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , LHSTerms)]
-	RHSDimensions = np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , RHSTerms)]
+	LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
+	RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
 	####################################
 
 	# Need to finalize exact structure of input
@@ -1038,3 +1041,15 @@ def _rank_FI_matrix(C_pdf, w):
 
 	F = F/n
 	return F
+	
+
+def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
+	"""
+	
+	
+	"""
+	
+	Integral = RectBivariateSpline(xarray, yarray, Matrix).integral(
+		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
+	# Integral2 = simps(simps(Matrix, xarray), yarray)
+	return Integral
