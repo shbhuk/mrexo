@@ -145,8 +145,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	w_sq_padded = np.zeros(deg_per_dim)
 	w_sq_padded[[slice(1,-1) for i in range(ndim)]] = w_sq
 	w_hat = w_sq_padded.flatten()
-
-
+	
 	if OutputWeightsOnly == True:
 		return unpadded_weight, n_log_lik
 
@@ -352,13 +351,13 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	
 	if len(LHSTerms) == 1:
-		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution1D(
+		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution1D_LHS(
 			ConditionString, DataDict, 
 			weights, deg_per_dim, 
 			JointDist,
 			MeasurementDict)
 	elif len(LHSTerms) == 2:
-		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution2D(
+		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution2D_LHS(
 			ConditionString, DataDict, 
 			weights, deg_per_dim, 
 			JointDist,
@@ -367,14 +366,14 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 		
 
-def CalculateConditionalDistribution1D(ConditionString, DataDict, 
+def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict, 
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
 	'''
 	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
 	INPUTS:
-		ConditionString = Example 'x,y|z or z|y'
+		ConditionString = Example 'x|z or z|y'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
 		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
 		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
@@ -387,9 +386,7 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 			
 		MeasurementDict assumes log values
 	'''
-	
-	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
-	
+		
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	ndim = DataDict['ndim']
 	
@@ -418,7 +415,7 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 	VariancePDF = np.zeros(NPoints)
 	
 	# Initial values
-	ReshapedWeights = np.reshape(weights, deg_per_dim)
+	ReshapedWeights = np.reshape(weights, deg_per_dim).T
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -442,7 +439,7 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 		
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
-		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist.T, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
 		# Hardcoded 20201209
 		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
@@ -491,14 +488,14 @@ def CalculateConditionalDistribution1D(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 
 
-def CalculateConditionalDistribution2D(ConditionString, DataDict, 
+def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict, 
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
 	'''
 	Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
 	INPUTS:
-		ConditionString = Example 'x|y,z' or 'x,y|z', or 'm|r,p'
+		ConditionString = Example 'x,y|z', or 'm|r,p'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
 		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
 		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
@@ -543,7 +540,7 @@ def CalculateConditionalDistribution2D(ConditionString, DataDict,
 	VariancePDF = np.zeros((NPoints, len(LHSTerms)))
 	
 	# Initial values
-	ReshapedWeights = np.reshape(weights, deg_per_dim)
+	ReshapedWeights = np.reshape(weights, deg_per_dim).T
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -558,6 +555,14 @@ def CalculateConditionalDistribution2D(ConditionString, DataDict,
 			
 		# 20201215 - only works for 1 LHS Dimensions
 		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, np.dstack(InterpSlices))[0]
+		
+		#20210310
+		We're adding a ~2% error in the ConditionalDistribution 
+		when we interpolate the joint distribution
+		to obtain the slice along a random measurement value.
+		This was tested by checking how close was the integral 
+		of the ConditionalDistribution to 1. 
+		
 		"""
 
 		InterpSlices = list(DataDict['DataSequence'])
@@ -599,10 +604,12 @@ def CalculateConditionalDistribution2D(ConditionString, DataDict,
 		
 		ConditionalDist[i] = SliceofJoint/np.sum(temp_denominator)
 		
-		# Find the integral of the Conditional Distribution => Integral of f(x) dx
+		# Find the integral of the Conditional Distribution => Double Integral of f(x,y) dx dy
 		ConditionPDF = RectBivariateSpline(LHSSequence[0], LHSSequence[1], ConditionalDist[i]).integral(
-			xa=DataDict["ndim_bounds"][LHSDimensions[0]][0], xb=DataDict["ndim_bounds"][LHSDimensions[0]][1],
-			ya=DataDict["ndim_bounds"][LHSDimensions[1]][0], yb=DataDict["ndim_bounds"][LHSDimensions[1]][1])
+			xa=DataDict["ndim_bounds"][LHSDimensions[0]][0], 
+			xb=DataDict["ndim_bounds"][LHSDimensions[0]][1],
+			ya=DataDict["ndim_bounds"][LHSDimensions[1]][0], 
+			yb=DataDict["ndim_bounds"][LHSDimensions[1]][1])
 		
 		# Find the  integral of the product of the Conditional and LHSSequence => E[x1, x2] = (E[x1], E[x2])
 		MeanPDF[i] = np.array([RectBivariateSpline(LHSSequence[0], LHSSequence[1], ConditionalDist[i]*LHSSequence[j]).integral(
@@ -735,6 +742,7 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
 		for j in range(NSeq):
 			Joint[i,j] =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
+			
 	return Joint, indv_pdf_per_dim
 	
 
