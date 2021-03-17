@@ -14,14 +14,17 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 	# Integral2 = simps(simps(Matrix, xarray), yarray)
 	return Integral
 
-_ = NumericalIntegrate2D(x, y, JointDist, [x.min(), x.max()], [y.min(), y.max()])
-_ = NumericalIntegrate2D(x, y, JointDist, [1.7, x.max()], [0.8, y.max()])
+# _ = NumericalIntegrate2D(x, y, JointDist, [x.min(), x.max()], [y.min(), y.max()])
+# _ = NumericalIntegrate2D(x, y, JointDist, [1.7, x.max()], [0.8, y.max()])
+# _ = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), y.max()])
 
 
-# interpn((x, y), JointDist, (0.5, 0.5))
+# 20210310 - Checked that the 2D and 3D joint distribution does integrate to 1 using 
+# RectBiVariateSpline and simpsons integrator
 
 
-ConditionString = 'm,r|feh'
+
+ConditionString = 'r,p|feh'
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
@@ -36,8 +39,12 @@ x = DataDict['DataSequence'][0]
 y = DataDict['DataSequence'][1]
 z = DataDict['DataSequence'][RHSDimensions[0]]
 
+
+simps(simps(simps(JointDist, z), y), x)
+
 PDFIntegralJup = np.zeros(50)
 PDFIntegralNep = np.zeros(50)
+PDFIntegralRocky = np.zeros(50)
 
 for i in range(50):
 
@@ -47,7 +54,7 @@ for i in range(50):
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(
 		ConditionString, DataDict, weights, deg_per_dim,
-		JointDist.T, MeasurementDict)
+		JointDist, MeasurementDict)
 		
 	"""
 	fig = plt.figure(figsize=(8.5,6.5))
@@ -83,15 +90,41 @@ for i in range(50):
 
 	###############################################
 
-	PDFIntegralJup[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [1.7, x.max()], [0.77, y.max()])
-	PDFIntegralNep[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [0.23, 0.6989])
-	
-plt.plot(z, PDFIntegralJup, label='Jupiter')
-plt.plot(z, PDFIntegralNep, label='Neptune')
-plt.xlabel("Stellar Metallicity")
+	# PDFIntegralJup[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [0.778, y.max()])
+	# PDFIntegralNep[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [0.3010, 0.778])
+	# PDFIntegralRocky[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), 0.3010])
+
+	print(NumericalIntegrate2D(x, y, ConditionalDist[0],[x.min(), x.max()], [y.min(), y.max()]))
+	PDFIntegralJup[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T,[0.778, x.max()], [y.min(), y.max()])
+	PDFIntegralNep[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [0.3010, 0.778], [y.min(), y.max()])
+	PDFIntegralRocky[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [x.min(), 0.3010], [y.min(), y.max()])
+
+plt.plot(10**z, PDFIntegralJup, label='Jupiter')
+plt.plot(10**z, PDFIntegralNep, label='Neptune')
+plt.plot(10**z, PDFIntegralRocky, label='Rocky')
+
+plt.xlabel(DataDict['ndim_label'][RHSDimensions[0]])
 plt.ylabel("Integrated PDF ")
 # plt.ylabel("Integrated PDF M>50M_E, R>6 R_E")
-plt.title("M dwarf sample")
+plt.title("St Teff < {} K".format(UTeff))
 plt.tight_layout()
 plt.legend()
 plt.show(block=False)
+
+
+#################################
+" Run Test case to figure out transposes nonsense "
+
+"""
+SampleZ = np.zeros((40, 10))
+Y = np.arange(40)
+X = np.arange(10)
+SampleZ[30:39, 6:10] = 1
+
+# For the integration, give y, x and the transpose of Z 
+print(NumericalIntegrate2D(X, Y, SampleZ.T, [5,10], [30,40]))
+
+# Whereas for the plotting we can plot Z, as is, and give extent as X, Y
+plt.imshow(SampleZ, origin='lower', extent=(X.min(), X.max(), Y.min(), Y.max()))
+plt.show(block=False)
+"""
