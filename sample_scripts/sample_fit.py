@@ -17,15 +17,24 @@ except NameError:
 
 
 DataDirectory = r'C:\Users\shbhu\Documents\GitHub\Mdwarf-Exploration\Data\MdwarfPlanets'
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4000_ExcUpperLimits_20210216.csv'))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4000_IncUpperLimits_20210216_Metallicity.csv'))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4000_ExcUpperLimits_20210216_Metallicity.csv'))
+
+UTeff = 6200
+
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv'.format(UTeff)))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
+
+
 
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127.csv'))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127_Metallicity.csv'))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_6000_ExcUpperLimits_20210216.csv'))
 
 t = t[t['st_mass'] < 10]
+# t= t[t['pl_hostname'] != 'TRAPPIST-1']
+# t = t[t['pl_masse'] < 50]
+print(len(t))
 # t = t[np.isfinite(t['pl_insol'])]
 # t = t[t['pl_insol'] > 1e-10]
 
@@ -90,33 +99,40 @@ Max, Min = np.nan, np.nan
 # Min -= 0.2
 
 RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':Max, 'Min':Min, 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.nan, 'Min':np.nan, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':Max, 'Min':np.nan, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 FakePeriodDict = {'Data': FakePeriod, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
 PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
 StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**(-Metallicity), 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+
 InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
-InputDictionaries = [MassDict, RadiusDict, PeriodDict]
-InputDictionaries = [MassDict, RadiusDict, StellarMassDict]
-InputDictionaries = [MassDict, RadiusDict, MetallicityDict]
+InputDictionaries = [RadiusDict, MassDict, PeriodDict]
+InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, MassDict, FakePeriodDict]
+# InputDictionaries = [RadiusDict, MassDict,  MetallicityDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-# InputDictionaries = [MassDict, RadiusDict]
-# InputDictionaries = [RadiusDict, StellarMassDict, MetallicityDict]
+# InputDictionaries = [RadiusDict, MassDict, ]
+# InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
 InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
+InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
+
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 save_path = 'C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\sample_scripts\\Trial_nd'
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
-deg_per_dim = [25] * ndim
-# deg_per_dim = [25, 3]
+deg_per_dim = [35] * ndim
+# deg_per_dim = [25, 26]
 """
 outputs = MLE_fit(DataDict, 
 	deg_per_dim=deg_per_dim,
@@ -140,26 +156,6 @@ plt.title(deg_per_dim)
 plt.colorbar()
 plt.show(block=False)
 
-"""
-from scipy.integrate import simps
-from scipy.interpolate import interpn
-
-def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
-	"""
-	
-	"""
-	
-	Integral = RectBivariateSpline(xarray, yarray, Matrix).integral(
-		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
-	# Integral2 = simps(simps(Matrix, xarray), yarray)
-	return Integral
-
-_ = NumericalIntegrate2D(x, y, JointDist, [x.min(), x.max()], [y.min(), y.max()])
-_ = NumericalIntegrate2D(x, y, JointDist, [1.7, x.max()], [0.8, y.max()])
-
-
-interpn((x, y), JointDist, (0.5, 0.5))
-"""
 
 ################ Plot Joint Distribution ################ 
 x = DataDict['DataSequence'][0]
@@ -171,17 +167,17 @@ im = plt.imshow(JointDist,
 	aspect='auto', origin='lower'); 
 plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
 # plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-# plt.ylabel("Log10 "+DataDict['ndim_label'][1]);
-# plt.xlabel("Log10 "+DataDict['ndim_label'][0]);
-plt.xlabel("Planetary Mass ($M_{\oplus}$)")
-plt.ylabel("Planetary Radius ($R_{\oplus}$)")
+plt.ylabel("Log10 "+DataDict['ndim_label'][1]);
+plt.xlabel("Log10 "+DataDict['ndim_label'][0]);
+# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
+# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
 plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
 plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
 plt.tight_layout()
-# XTicks = np.linspace(x.min(), x.max(), 5)
-XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
-# YTicks = np.linspace(y.min(), y.max(), 5)
-YTicks = np.log10(np.array([1, 3, 5, 10]))
+XTicks = np.linspace(x.min(), x.max(), 5)
+# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
+YTicks = np.linspace(y.min(), y.max(), 5)
+# YTicks = np.log10(np.array([1, 3, 5, 10]))
 
 
 XLabels = np.round(10**XTicks, 1)
@@ -207,10 +203,11 @@ x = RadiusDict
 y = MassDict
 
 x = RadiusDict
-y = MassDict
-c = MetallicityDict
+y = StellarMassDict
+c= PeriodDict
 
-plt.scatter(x['Data'], y['Data'], c=np.log10(c['Data']))
+# plt.scatter(x['Data'], y['Data'], c=np.log10(c['Data']))
+plt.scatter(x['Data'], y['Data'], c=c['Data'])
 # plt.scatter(np.log10(x['Data']), np.log10(y['Data']), c=np.log10(c['Data']))
 plt.colorbar(label=c['Label'])
 plt.xlabel(x['Label'])
@@ -223,27 +220,37 @@ plt.show(block=False)
 # plt.ylabel("log10 Radius")
 
 ################ Run Conditional Distribution ################ 
-from mrexo.mle_utils_nd import calculate_conditional_distribution1D, calculate_conditional_distribution2D
+from mrexo.mle_utils_nd import calculate_conditional_distribution
 
 ConditionString = 'm|r,p'
 # ConditionString = 'm|r'
 # ConditionString = 'm,r|p'
-ConditionString = 'm,r|stm'
+ConditionString = 'r,p|stm'
 # ConditionString = 'm|r,stm'
 # ConditionString = 'm,r|p,stm'
+# ConditionString = 'm,r|feh'
+# ConditionString = 'm,r|p'
+# ConditionString = 'r|stm'
+
 
 DataDict = DataDict
 MeasurementDict = {'r':[[1, 2], [np.nan, np.nan]], 'p':[[1, 1], [np.nan, np.nan]], 'stm':[[0.1, 0.3], [np.nan, np.nan]]}
 MeasurementDict = {'r':[[10**0.2, 10**0.4, 10**0.6], [np.nan, np.nan, np.nan]]}#, 'p':[[1, 1, 10], [np.nan, np.nan]], 'stm':[[0.5], [np.nan, np.nan]]}
 MeasurementDict = {'stm':[[0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.57, 0.6], [np.nan]*9]}#, 'r':[[1], [np.nan]]}
 # MeasurementDict = {'r':[[1, 1, 1], [np.nan, np.nan, np.nan]], 'p':[[1, 5, 10], [np.nan, np.nan, np.nan]]}
+MeasurementDict = {'feh':[[10**0.0], [np.nan]]}
+# MeasurementDict = {'r':[[1], [np.nan]]}
+
+MeasurementDict = {'stm':[[0.2], [np.nan]]}
 LogMeasurementDict = {k:np.log10(MeasurementDict[k]) for k in MeasurementDict.keys()}
 
-
+# 20210310
+# So for a 2D case, need to pass transpose of Joint Dist 
 
 ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
 	JointDist, LogMeasurementDict)
 
+# plt.plot(x, ConditionalDist[0], label=MeasurementDict['stm'][0])
 
 
 x = outputs['DataSequence'][0]
@@ -251,16 +258,17 @@ y = outputs['DataSequence'][1]
 z = outputs['DataSequence'][2]
 # t = outputs['DataSequence'][3]
 
-i=8
+i=0
 plt.imshow(ConditionalDist[i], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto', origin='lower'); 
-plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
-plt.title(DataDict['ndim_label'][2]+" = " + str(MeasurementDict['stm'][0][i]))
-plt.ylabel("Log10 Radius");
-plt.xlabel("Log10 Mass");
+# plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
+# plt.title(DataDict['ndim_label'][2]+" = " + str(np.log10(MeasurementDict['feh'][0][i])))
+# plt.xlabel(x['Label'])
+# plt.ylabel(y['Label'])
 plt.tight_layout()
 plt.show(block=False)
 
-
+_ = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), y.max()])
+print(_)
 
 """
 """

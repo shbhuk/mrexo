@@ -99,10 +99,16 @@ for i in range(50):
 	PDFIntegralNep[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [0.3010, 0.778], [y.min(), y.max()])
 	PDFIntegralRocky[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [x.min(), 0.3010], [y.min(), y.max()])
 
-plt.plot(10**z, PDFIntegralJup, label='Jupiter')
-plt.plot(10**z, PDFIntegralNep, label='Neptune')
-plt.plot(10**z, PDFIntegralRocky, label='Rocky')
 
+if RHSTerms[0] != 'feh':
+	plt.plot(10**z, PDFIntegralJup, label='Jupiter')
+	plt.plot(10**z, PDFIntegralNep, label='Neptune')
+	plt.plot(10**z, PDFIntegralRocky, label='Rocky')
+else:
+	plt.plot(z, PDFIntegralJup, label='Jupiter')
+	plt.plot(z, PDFIntegralNep, label='Neptune')
+	plt.plot(z, PDFIntegralRocky, label='Rocky')
+	
 plt.xlabel(DataDict['ndim_label'][RHSDimensions[0]])
 plt.ylabel("Integrated PDF ")
 # plt.ylabel("Integrated PDF M>50M_E, R>6 R_E")
