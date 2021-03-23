@@ -424,7 +424,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 	VariancePDF = np.zeros(NPoints)
 	
 	# Initial values
-	ReshapedWeights = np.reshape(weights, deg_per_dim).T
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -448,7 +448,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
-		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist.T, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
 		# Hardcoded 20201209
 		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
@@ -493,7 +493,12 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		# Variance = E[x^2] - E[x]^2
 		VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
 			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
-			
+
+		# from scipy.integrate import simps
+		# print(simps(SliceofJoint, LHSSequence[0]))
+		# print(np.sum(temp_denominator))
+		# print(ConditionPDF)
+		
 	return ConditionalDist, MeanPDF, VariancePDF
 
 
@@ -549,7 +554,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 	VariancePDF = np.zeros((NPoints, len(LHSTerms)))
 	
 	# Initial values
-	ReshapedWeights = np.reshape(weights, deg_per_dim).T
+	ReshapedWeights = np.reshape(weights, deg_per_dim)
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -581,7 +586,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 		
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
-		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
+		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist.T, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
 		# Hardcoded 20201209
 		# Then calculate denominator by taking matrix multiplication

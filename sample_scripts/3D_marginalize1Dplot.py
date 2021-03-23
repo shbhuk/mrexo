@@ -6,7 +6,7 @@ import imageio
 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
-ConditionString = 'r,m|stm'
+ConditionString = 'r,p|stm'
 
 ################ Run Conditional Distribution ################ 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
@@ -49,7 +49,7 @@ MeasurementDict = {RHSTerms[0]:[[10**0.0], [np.nan]]}
 # MeasurementDict = {'r':[[1], [np.nan]]}
 
 
-for k in np.arange(0, len(zseq), 1, dtype=int):
+for k in np.arange(0, len(zseq), 2, dtype=int):
 	
 	ChosenZ = zseq[k]
 	print(10**ChosenZ)
@@ -99,7 +99,7 @@ for k in np.arange(0, len(zseq), 1, dtype=int):
 	
 	
 ###############
-
+"""
 ListofPlots = glob.glob(os.path.join(PlotFolder, '3*.png'))
 ListofPlots.sort(key=os.path.getmtime)
 
@@ -109,3 +109,4 @@ for im in ListofPlots:
 		#print(order, im)
 		writer.append_data(imageio.imread(os.path.join(PlotFolder, im)))
 writer.close()
+"""

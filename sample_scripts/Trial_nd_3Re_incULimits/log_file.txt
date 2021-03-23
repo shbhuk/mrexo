@@ -112,4 +112,84 @@ Calculated the PDF for Integrated beta and normal density.Using core 5404:Optimi
 Sum of weights = 1.0         
 LogLikelihood = -165.0154293714134, Fractional Error = 0.0008997442498637647
 
-Using core 5404:Calculating Joint Distribution for 2 dimensions at 2021-03-23 13:24:37.337986Using core 5404:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 13:24:37.434310
+Using core 5404:Calculating Joint Distribution for 2 dimensions at 2021-03-23 13:24:37.337986Using core 5404:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 13:24:37.434310Using core 10648:=========
+Started MLE run at 2021-03-23 13:28:44.927752Using core 10648:Started Integration at 2021-03-23 13:28:44.929748Using core 10648:Finished Integration at 2021-03-23 13:29:04.793455. 
+Calculated the PDF for Integrated beta and normal density.Using core 10648:Optimization run finished at 2021-03-23 13:29:04.802961, with 15 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -165.0154293714134, Fractional Error = 0.0008997442498637647
+
+Using core 10648:Calculating Joint Distribution for 2 dimensions at 2021-03-23 13:29:04.804041Using core 10648:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 13:29:04.919217Using core 1964:=========
+Started MLE run at 2021-03-23 14:49:14.995234Using core 1964:Started Integration at 2021-03-23 14:49:14.996231Using core 1964:=========
+Started MLE run at 2021-03-23 14:52:06.600401Using core 1964:Started Integration at 2021-03-23 14:52:06.601400Using core 1964:Finished Integration at 2021-03-23 14:52:19.052520. 
+Calculated the PDF for Integrated beta and normal density.Using core 1964:Optimization run finished at 2021-03-23 14:52:19.987539, with 81 iterations.
+Sum of weights = 1.0         
+LogLikelihood = 6.37239034964408, Fractional Error = 0.0009802915110252652
+
+Using core 1964:Calculating Joint Distribution for 3 dimensions at 2021-03-23 14:52:19.991188Using core 1964:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 14:52:21.125899Using core 4428:=========
+Started MLE run at 2021-03-23 14:56:30.968589Using core 4428:Started Integration at 2021-03-23 14:56:30.969708Using core 4428:=========
+Started MLE run at 2021-03-23 14:56:51.040565Using core 4428:Started Integration at 2021-03-23 14:56:51.041562Using core 4428:Finished Integration at 2021-03-23 14:57:01.520075. 
+Calculated the PDF for Integrated beta and normal density.Using core 4428:Optimization run finished at 2021-03-23 14:57:01.538642, with 15 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -165.0154293714134, Fractional Error = 0.0008997442498637647
+
+Using core 4428:Calculating Joint Distribution for 2 dimensions at 2021-03-23 14:57:01.541607Using core 4428:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 14:57:01.676622Using core 10964:=========
+Started MLE run at 2021-03-23 14:58:49.750839Using core 10964:Started Integration at 2021-03-23 14:58:49.751833Using core 10964:Finished Integration at 2021-03-23 14:58:59.213086. 
+Calculated the PDF for Integrated beta and normal density.Using core 10964:Optimization run finished at 2021-03-23 14:58:59.222940, with 15 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -165.0154293714134, Fractional Error = 0.0008997442498637647
+
+Using core 10964:Calculating Joint Distribution for 2 dimensions at 2021-03-23 14:58:59.225236Using core 10964:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 14:58:59.312598Using core 11060:=========
+Started MLE run at 2021-03-23 15:34:35.345255Using core 11060:Started Integration at 2021-03-23 15:34:35.347250Using core 11060:Finished Integration at 2021-03-23 15:34:48.771851. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 15:34:50.209156, with 81 iterations.
+Sum of weights = 1.0         
+LogLikelihood = 6.37239034964408, Fractional Error = 0.0009802915110252652
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 15:34:50.215198Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 15:34:52.198314Using core 11060:=========
+Started MLE run at 2021-03-23 15:36:08.491336Using core 11060:Started Integration at 2021-03-23 15:36:08.491360Using core 11060:Finished Integration at 2021-03-23 15:36:21.172410. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 15:36:22.173846, with 70 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -10.51270596415897, Fractional Error = 0.0009698690349299354
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 15:36:22.180867Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 15:36:24.444366Using core 11060:=========
+Started MLE run at 2021-03-23 15:52:03.958940Using core 11060:Started Integration at 2021-03-23 15:52:03.959935Using core 11060:Finished Integration at 2021-03-23 15:52:15.589492. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 15:52:16.507164, with 81 iterations.
+Sum of weights = 1.0         
+LogLikelihood = 6.37239034964408, Fractional Error = 0.0009802915110252652
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 15:52:16.511132Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 15:52:17.619151Using core 11060:=========
+Started MLE run at 2021-03-23 15:56:30.112591Using core 11060:Started Integration at 2021-03-23 15:56:30.113588Using core 11060:Finished Integration at 2021-03-23 15:56:41.729688. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 15:56:42.744117, with 70 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -10.51270596415897, Fractional Error = 0.0009698690349299354
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 15:56:42.752867Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 15:56:44.809909Using core 11060:=========
+Started MLE run at 2021-03-23 15:59:15.968748Using core 11060:Started Integration at 2021-03-23 15:59:15.969738Using core 11060:Finished Integration at 2021-03-23 16:00:03.343841. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 16:00:03.707960, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -1495.5201580236455, Fractional Error = 0.0008528497198287923
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 16:00:03.715917Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 16:00:04.801237Using core 11060:=========
+Started MLE run at 2021-03-23 16:03:11.096493Using core 11060:Started Integration at 2021-03-23 16:03:11.097489Using core 11060:Finished Integration at 2021-03-23 16:04:01.033687. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 16:04:01.512985, with 10 iterations.
+Sum of weights = 1.0         
+LogLikelihood = -1491.3113186145763, Fractional Error = 0.0009043602399704499
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 16:04:01.521959Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 16:04:02.636955Using core 11060:=========
+Started MLE run at 2021-03-23 16:08:21.205953Using core 11060:Started Integration at 2021-03-23 16:08:21.205953Using core 11060:Finished Integration at 2021-03-23 16:08:35.321049. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 16:08:35.744963, with 40 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -28.23029643319945, Fractional Error = 0.0009786721573262413
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 16:08:35.748514Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 16:08:36.891581Using core 5324:=========
+Started MLE run at 2021-03-23 16:12:08.952930Using core 5324:Started Integration at 2021-03-23 16:12:08.952930Using core 5324:Finished Integration at 2021-03-23 16:12:17.771633. 
+Calculated the PDF for Integrated beta and normal density.Using core 5324:Optimization run finished at 2021-03-23 16:12:17.777775, with 17 iterations.
+Sum of weights = 0.9999999999999999         
+LogLikelihood = -83.72069955910892, Fractional Error = 0.0009101131923626258
+
+Using core 5324:Calculating Joint Distribution for 2 dimensions at 2021-03-23 16:12:17.779407Using core 5324:Finished calculating Joint Distribution for 2 dimensions at 2021-03-23 16:12:17.859598Using core 11060:=========
+Started MLE run at 2021-03-23 16:15:16.595545Using core 11060:Started Integration at 2021-03-23 16:15:16.598537Using core 11060:Finished Integration at 2021-03-23 16:15:26.789111. 
+Calculated the PDF for Integrated beta and normal density.Using core 11060:Optimization run finished at 2021-03-23 16:15:27.056493, with 27 iterations.
+Sum of weights = 1.0         
+LogLikelihood = 60.082032001990925, Fractional Error = 0.0009786135039218321
+
+Using core 11060:Calculating Joint Distribution for 3 dimensions at 2021-03-23 16:15:27.060267Using core 11060:Finished calculating Joint Distribution for 3 dimensions at 2021-03-23 16:15:28.248175

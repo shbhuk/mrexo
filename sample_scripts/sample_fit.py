@@ -131,7 +131,9 @@ InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
 InputDictionaries = [RadiusDict, MassDict, ]
-# InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict,  FakePeriodDict]
+
+
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
 # InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
 
@@ -143,7 +145,7 @@ save_path = os.path.join(pwd, 'Trial_nd_3Re_incULimits')
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
 deg_per_dim = [35] * ndim
-deg_per_dim = [35, 30]
+# deg_per_dim = [35, 30, 32]
 """
 outputs = MLE_fit(DataDict, 
 	deg_per_dim=deg_per_dim,
@@ -251,8 +253,8 @@ ConditionString = 'm|r'
 # ConditionString = 'm|r,stm'
 # ConditionString = 'm,r|p,stm'
 # ConditionString = 'm,r|feh'
-# ConditionString = 'm,r|p'
-# ConditionString = 'r|stm'
+ConditionString = 'm,r|p'
+# ConditionString = 'm,r|stm'
 
 
 DataDict = DataDict
@@ -263,17 +265,19 @@ MeasurementDict = {'stm':[[0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.57, 0.6], [
 MeasurementDict = {'feh':[[10**0.0], [np.nan]]}
 MeasurementDict = {'r':[[1], [np.nan]]}
 
+# ConditionString = 'r,p|stm'
+MeasurementDict = {'stm':[[0.5], [np.nan]]}
+MeasurementDict = {'p':[[1], [np.nan]]}
+
+
+
 # MeasurementDict = {'stm':[[0.2], [np.nan]]}
 LogMeasurementDict = {k:np.log10(MeasurementDict[k]) for k in MeasurementDict.keys()}
 
 ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
-	JointDist.T, LogMeasurementDict)
+	JointDist, LogMeasurementDict)
 
-x = DataDict['DataSequence'][0]
-
-plt.figure()
-plt.plot(x, ConditionalDist[0], label=MeasurementDict['r'][0])
-plt.show(block=False)
+x = DataDict['DataSequence'][1]
 
 from scipy.integrate import simps
 from scipy.interpolate import interpn
@@ -313,9 +317,9 @@ plt.tight_layout()
 
 XTicks = np.linspace(xseq.min(), xseq.max(), 5)
 # XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
-XTicks = np.log10(np.array([1, 3, 5, 10]))
+# XTicks = np.log10(np.array([1, 3, 5, 10]))
 YTicks = np.linspace(yseq.min(), yseq.max(), 5)
-YTicks = np.log10(np.array([1, 10, 30, 100, 300]))
+# YTicks = np.log10(np.array([1, 10, 30, 100, 300]))
 
 XLabels = np.round(10**XTicks, 1)
 YLabels = np.round(10**YTicks, 2)

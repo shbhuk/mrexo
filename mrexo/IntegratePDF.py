@@ -16,7 +16,7 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 
 # _ = NumericalIntegrate2D(x, y, JointDist, [x.min(), x.max()], [y.min(), y.max()])
 # _ = NumericalIntegrate2D(x, y, JointDist, [1.7, x.max()], [0.8, y.max()])
-# _ = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), y.max()])
+_ = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), y.max()])
 
 
 # 20210310 - Checked that the 2D and 3D joint distribution does integrate to 1 using 
