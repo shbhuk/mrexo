@@ -1,4 +1,4 @@
-import os
+import os, sys
 from astropy.table import Table
 import numpy as np
 from multiprocessing import cpu_count
@@ -9,21 +9,30 @@ from mrexo import fit_xy_relation
 from mrexo import predict_from_measurement
 import pandas as pd
 
+Platform = sys.platform
+
+if Platform == 'win32':
+	HomeDir =  'C:\\Users\\shbhu\\Documents\\\\GitHub\\'
+else:
+	HomeDir = r"/storage/home/szk381/work/"
+
+
 try :
 	pwd = os.path.dirname(__file__)
 except NameError:
-	pwd = 'C:\\\\Users\\\\shbhu\\\\Documents\\\\GitHub\\\\mrexo\\\\sample_scripts'
+	pwd = os.path.join(HomeDir, 'mrexo', 'sample_scripts')
 	print('Could not find pwd')
 
 
-DataDirectory = r'C:\Users\shbhu\Documents\GitHub\Mdwarf-Exploration\Data\MdwarfPlanets'
+DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlanets')
 
-UTeff = 6200
+
+UTeff = 4000
 
 t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv'.format(UTeff)))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
 
 
 
@@ -34,6 +43,8 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv
 t = t[t['st_mass'] < 10]
 # t= t[t['pl_hostname'] != 'TRAPPIST-1']
 # t = t[t['pl_masse'] < 50]
+# t = t[t['pl_rade'] < 4]
+# t = t[t['pl_rade'] > 0.8]
 print(len(t))
 # t = t[np.isfinite(t['pl_insol'])]
 # t = t[t['pl_insol'] > 1e-10]
@@ -119,20 +130,20 @@ InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-# InputDictionaries = [RadiusDict, MassDict, ]
+InputDictionaries = [RadiusDict, MassDict, ]
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
-InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
-InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
+# InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
 
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
 # InputDictionaries = [RadiusDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
-save_path = 'C:\\Users\\shbhu\\Documents\\GitHub\\mrexo\\sample_scripts\\Trial_nd'
+save_path = os.path.join(pwd, 'Trial_nd_3Re_incULimits')
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
 deg_per_dim = [35] * ndim
-# deg_per_dim = [25, 26]
+deg_per_dim = [35, 30]
 """
 outputs = MLE_fit(DataDict, 
 	deg_per_dim=deg_per_dim,
@@ -143,26 +154,36 @@ outputs, _ = fit_relation(DataDict, select_deg=deg_per_dim, save_path=save_path,
 
 JointDist = outputs['JointDist']
 weights = outputs['Weights']
+unpadded_weight = outputs['UnpaddedWeights']
 
+# C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
+# plt.figure()
+# plt.imshow(C_pdf_new, aspect='auto')
+# plt.title(deg_per_dim)
+# plt.show(block=False)
 
 plt.figure()
-size = int(np.sqrt(len(weights)))
-
-plt.imshow(np.reshape(weights , [size, size]), extent = [0, size, 0, size], origin = 'left')
-plt.xticks(np.arange(0,size), *[np.arange(0,size)])
-plt.yticks(np.arange(0,size), *[np.arange(0,size)])
+plt.imshow(np.reshape(weights , deg_per_dim), origin = 'left')
+# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
+# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
 plt.title(deg_per_dim)
 # plt.imshow(weights.reshape(deg_per_dim))
 plt.colorbar()
 plt.show(block=False)
 
+# unpadded_weight2d = np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T
+# unpadded_weight_T = unpadded_weight2d.flatten()
+
+plt.figure()
+plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2), origin='lower')
+plt.show(block=False)
 
 ################ Plot Joint Distribution ################ 
 x = DataDict['DataSequence'][0]
 y = DataDict['DataSequence'][1]
 
 fig = plt.figure(figsize=(8.5,6.5))
-im = plt.imshow(JointDist, 
+im = plt.imshow(JointDist.T, 
 	extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
 	aspect='auto', origin='lower'); 
 plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
@@ -215,6 +236,7 @@ plt.ylabel(y['Label'])
 plt.tight_layout()
 plt.show(block=False)
 
+# plt.figure()
 # plt.imshow(JointDist[:,:,50], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto', origin='lower');
 # plt.xlabel("log10 Mass")
 # plt.ylabel("log10 Radius")
@@ -223,9 +245,9 @@ plt.show(block=False)
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
 ConditionString = 'm|r,p'
-# ConditionString = 'm|r'
+ConditionString = 'm|r'
 # ConditionString = 'm,r|p'
-ConditionString = 'r,p|stm'
+# ConditionString = 'r,p|stm'
 # ConditionString = 'm|r,stm'
 # ConditionString = 'm,r|p,stm'
 # ConditionString = 'm,r|feh'
@@ -239,38 +261,82 @@ MeasurementDict = {'r':[[10**0.2, 10**0.4, 10**0.6], [np.nan, np.nan, np.nan]]}#
 MeasurementDict = {'stm':[[0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.57, 0.6], [np.nan]*9]}#, 'r':[[1], [np.nan]]}
 # MeasurementDict = {'r':[[1, 1, 1], [np.nan, np.nan, np.nan]], 'p':[[1, 5, 10], [np.nan, np.nan, np.nan]]}
 MeasurementDict = {'feh':[[10**0.0], [np.nan]]}
-# MeasurementDict = {'r':[[1], [np.nan]]}
+MeasurementDict = {'r':[[1], [np.nan]]}
 
-MeasurementDict = {'stm':[[0.2], [np.nan]]}
+# MeasurementDict = {'stm':[[0.2], [np.nan]]}
 LogMeasurementDict = {k:np.log10(MeasurementDict[k]) for k in MeasurementDict.keys()}
 
-# 20210310
-# So for a 2D case, need to pass transpose of Joint Dist 
-
 ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
-	JointDist, LogMeasurementDict)
+	JointDist.T, LogMeasurementDict)
 
-# plt.plot(x, ConditionalDist[0], label=MeasurementDict['stm'][0])
+x = DataDict['DataSequence'][0]
 
-
-x = outputs['DataSequence'][0]
-y = outputs['DataSequence'][1]
-z = outputs['DataSequence'][2]
-# t = outputs['DataSequence'][3]
-
-i=0
-plt.imshow(ConditionalDist[i], extent=(x.min(), x.max(), y.min(), y.max()), aspect='auto', origin='lower'); 
-# plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
-# plt.title(DataDict['ndim_label'][2]+" = " + str(np.log10(MeasurementDict['feh'][0][i])))
-# plt.xlabel(x['Label'])
-# plt.ylabel(y['Label'])
-plt.tight_layout()
+plt.figure()
+plt.plot(x, ConditionalDist[0], label=MeasurementDict['r'][0])
 plt.show(block=False)
 
-_ = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), y.max()])
+from scipy.integrate import simps
+from scipy.interpolate import interpn
+from scipy.interpolate import RectBivariateSpline
+
+_ = simps(ConditionalDist[0], x)
 print(_)
 
 """
+Condition = ConditionString.split('|')
+LHSTerms = Condition[0].split(',')
+RHSTerms = Condition[1].split(',')
+deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
+
+
+LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
+RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
+
+
+xseq = outputs['DataSequence'][0]
+yseq = outputs['DataSequence'][1]
+zseq = outputs['DataSequence'][2]
+# t = outputs['DataSequence'][3]
+
+i=0
+ChosenZ = MeasurementDict[RHSTerms[0]][0][i]
+fig = plt.figure(figsize=(8.5,6.5))
+im = plt.imshow(ConditionalDist[i], extent=(xseq.min(), xseq.max(), yseq.min(), yseq.max()), aspect='auto', origin='lower'); 
+# plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
+plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(MeasurementDict[RHSTerms[0]][0][i]))
+plt.xlabel(DataDict['ndim_label'][LHSDimensions[0]])
+plt.ylabel(DataDict['ndim_label'][LHSDimensions[1]])
+
+plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
+plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
+plt.tight_layout()
+
+XTicks = np.linspace(xseq.min(), xseq.max(), 5)
+# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
+XTicks = np.log10(np.array([1, 3, 5, 10]))
+YTicks = np.linspace(yseq.min(), yseq.max(), 5)
+YTicks = np.log10(np.array([1, 10, 30, 100, 300]))
+
+XLabels = np.round(10**XTicks, 1)
+YLabels = np.round(10**YTicks, 2)
+
+plt.xticks(XTicks, XLabels)
+plt.yticks(YTicks, YLabels)
+cbar = fig.colorbar(im, ticks=[np.min(ConditionalDist[i]), np.max(ConditionalDist[i])], fraction=0.037, pad=0.04)
+cbar.ax.set_yticklabels(['Min', 'Max'])
+plt.tight_layout()
+plt.show(block=False)
+
+
+ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
+PlotFolder = os.path.join(save_path, ConditionName)
+	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(ChosenZ,3))))
+"""
+
+_ = NumericalIntegrate2D(x, y, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
+print(_)
+
+
 """
 from mrexo.mle_utils import calculate_joint_distribution
 
@@ -291,12 +357,4 @@ mean, var, quantile, denominator, a_beta_indv = cond_density_quantile(a=np.log10
 	a_min=DataDict['ndim_bounds'][1][0], a_max=DataDict['ndim_bounds'][1][1], 
 	b_max=DataDict['ndim_bounds'][0][1], b_min=DataDict['ndim_bounds'][0][0], 
 	deg=deg_per_dim[0], deg_vec=np.arange(1,deg_per_dim[0]+1), w_hat=weights)
-"""
-
-"""
-if __name__ == '__main__':
-			initialfit_result, _ = fit_xy_relation(**RadiusDict, **MassDict,
-												save_path = result_dir, select_deg = 'aic',
-												num_boot = 100, cores = 4, degree_max=100)
-
 """

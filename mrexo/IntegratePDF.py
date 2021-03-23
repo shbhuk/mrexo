@@ -24,7 +24,7 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 
 
 
-ConditionString = 'r,p|feh'
+ConditionString = 'r,p|stm'
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
@@ -95,6 +95,7 @@ for i in range(50):
 	# PDFIntegralRocky[i] = NumericalIntegrate2D(x, y, ConditionalDist[0], [x.min(), x.max()], [y.min(), 0.3010])
 
 	print(NumericalIntegrate2D(x, y, ConditionalDist[0],[x.min(), x.max()], [y.min(), y.max()]))
+	# Giving transpose of ConditionalDist[0] due to Python Indexing order shenanigans # 20200321
 	PDFIntegralJup[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T,[0.778, x.max()], [y.min(), y.max()])
 	PDFIntegralNep[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [0.3010, 0.778], [y.min(), y.max()])
 	PDFIntegralRocky[i] = NumericalIntegrate2D(x, y, ConditionalDist[0].T, [x.min(), 0.3010], [y.min(), y.max()])

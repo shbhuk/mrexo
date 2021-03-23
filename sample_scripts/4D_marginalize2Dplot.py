@@ -134,7 +134,7 @@ for k in np.arange(0, len(z), 2, dtype=int):
 	plt.tight_layout()
 	plt.show(block=False)
 	
-	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(ChosenZ,3))))
+	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(10**ChosenZ,3))))
 	plt.close()
 
 """

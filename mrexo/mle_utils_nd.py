@@ -82,6 +82,12 @@ def InputData(ListofDictionaries):
 						"ndim_label":ndim_label,
 						"ndim":ndim,
 						"DataLength":np.shape(ndim_data)[1]}
+						
+	DataSeq = np.zeros((ndim, 50))
+	for dim in range(ndim):
+		DataSeq[dim] = np.linspace(DataDict['ndim_bounds'][dim][0], DataDict['ndim_bounds'][dim][1], DataSeq.shape[1]) 
+	
+	DataDict['DataSequence'] = DataSeq
 
 	return DataDict
 
@@ -106,13 +112,14 @@ def MLE_fit(DataDict, deg_per_dim,
 	ndim = DataDict["ndim"]
 	DataLength = DataDict["DataLength"]
 	
+	
 	########################################################################
 	# Integration to find C matrix (input for log likelihood maximization.)
 	########################################################################
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(DataDict=DataDict, 
-		deg_per_dim=deg_per_dim, 
+		deg_per_dim=np.array(deg_per_dim), 
 		abs_tol=abs_tol, 
 		save_path=save_path, 
 		Log=Log, 
@@ -128,9 +135,9 @@ def MLE_fit(DataDict, deg_per_dim,
 
 	# Weights are a 1D vector of length deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	# They can be reshaped into an `ndim` dimensional array 
-	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=deg_per_dim,
+	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=np.array(deg_per_dim),
 		verbose=verbose, save_path=save_path)
-		
+	
 	# unpadded_weight, n_log_lik = SLSQP_optimizer(C_pdf=C_pdf, deg=deg_per_dim[0], 
 		# verbose=verbose, save_path=save_path)
 	# print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
@@ -145,7 +152,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	w_sq_padded = np.zeros(deg_per_dim)
 	w_sq_padded[[slice(1,-1) for i in range(ndim)]] = w_sq
 	w_hat = w_sq_padded.flatten()
-	
+
 	if OutputWeightsOnly == True:
 		return unpadded_weight, n_log_lik
 
@@ -155,11 +162,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		# aic = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
-		DataSeq = np.zeros((ndim, 50))
-		for dim in range(ndim):
-			DataSeq[dim] = np.linspace(DataDict['ndim_bounds'][dim][0], DataDict['ndim_bounds'][dim][1], DataSeq.shape[1]) 
-		
-		DataDict['DataSequence'] = DataSeq
+		DataSeq = DataDict['DataSequence'] 
 		
 		output = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
 				"deg_per_dim":deg_per_dim,
@@ -254,7 +257,12 @@ def calc_C_matrix(DataDict, deg_per_dim,
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=Log)
 			
-			kron_temp = np.kron(indv_pdf_per_dim[dim][i,:], kron_temp)
+			# kron_temp = np.kron(indv_pdf_per_dim[dim][i,:], kron_temp) # Old method
+			
+			# Starting 20210323, we're flipping the order for the kron product
+			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
+			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+
 		C_pdf[i,:] = kron_temp
 
 	C_pdf = C_pdf.T
@@ -337,6 +345,7 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 	else:
 		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
+
 
 def calculate_conditional_distribution(ConditionString, DataDict, 
 		weights, deg_per_dim, 
