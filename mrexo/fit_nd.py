@@ -9,6 +9,7 @@ from .mle_utils_nd import MLE_fit
 from .cross_validate import run_cross_validation
 from .profile_likelihood import run_profile_likelihood
 from .utils_nd import _save_dictionary, _logging
+from .aic_nd import run_aic
 
 
 
@@ -215,7 +216,8 @@ def fit_relation(DataDict,
 	elif select_deg == 'profile':
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
-		print("AIC is not implemented yet")
+
+		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=6, save_path=save_path, verbose=verbose, abs_tol=abs_tol)
 	# elif isinstance(select_deg, (int,float)):
 	else:
 		# Use user defined value

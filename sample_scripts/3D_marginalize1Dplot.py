@@ -37,7 +37,7 @@ RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_ch
 
 xseq = outputs['DataSequence'][LHSDimensions[0]]
 yseq = outputs['DataSequence'][LHSDimensions[1]]
-zseq = outputs['DataSequence'][2]
+zseq = outputs['DataSequence'][RHSDimensions[0]]
 # t = outputs['DataSequence'][3]
 
 DataDict = DataDict
@@ -62,6 +62,9 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
 		JointDist, LogMeasurementDict)
 
+
+	_ = NumericalIntegrate2D(xseq, yseq, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
+	print(_)
 
 	i=0
 	fig = plt.figure(figsize=(8.5,6.5))

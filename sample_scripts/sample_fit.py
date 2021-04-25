@@ -30,6 +30,7 @@ DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlane
 UTeff = 4000
 
 t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv'.format(UTeff)))
+t = t.iloc[0:20]
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
@@ -40,7 +41,7 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127_Metallicity.csv'))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_6000_ExcUpperLimits_20210216.csv'))
 
-t = t[t['st_mass'] < 10]
+# t = t[t['st_mass'] < 10]
 # t= t[t['pl_hostname'] != 'TRAPPIST-1']
 # t = t[t['pl_masse'] < 50]
 # t = t[t['pl_rade'] < 4]
@@ -87,8 +88,14 @@ result_dir = os.path.join(pwd,'Mdwarfs_20200520_cv50')
 # find the optimum number of degrees.
 
 FakePeriod = np.ones(len(Period))
+# FakePeriod = Radius
+NPoints = len(Radius)
+# FakePeriod = np.concatenate([np.random.lognormal(0, 1, NPoints//2), \
+	# np.random.lognormal(5, 1, NPoints//2+1)])
+
 # FakePeriodSigma = FakePeriod*0.01
 # Period_sigma = FakePeriodSigma
+
 """
 # Simulation
 Radius = 10**np.linspace(0, 1)
@@ -125,26 +132,24 @@ from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 InputDictionaries = [RadiusDict, MassDict, PeriodDict]
 InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
-# InputDictionaries = [RadiusDict, MassDict, FakePeriodDict]
-# InputDictionaries = [RadiusDict, MassDict,  MetallicityDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
 InputDictionaries = [RadiusDict, MassDict, ]
-InputDictionaries = [RadiusDict, MassDict,  FakePeriodDict]
+InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
 
 
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
 # InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
 
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
-# InputDictionaries = [RadiusDict, StellarMassDict]
+
 DataDict = InputData(InputDictionaries)
-save_path = os.path.join(pwd, 'Trial_nd_3Re_incULimits')
+save_path = os.path.join(pwd, 'Sim3DRadMassFakePeriod')
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
-deg_per_dim = [35] * ndim
+deg_per_dim = [30] * ndim
 # deg_per_dim = [35, 30, 32]
 """
 outputs = MLE_fit(DataDict, 
@@ -152,11 +157,14 @@ outputs = MLE_fit(DataDict,
 	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
 """
 
-outputs, _ = fit_relation(DataDict, select_deg=deg_per_dim, save_path=save_path, num_boot=0)
+outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
+
+# outputs, _ = fit_relation(DataDict, select_deg=deg_per_dim, save_path=save_path, num_boot=0)
 
 JointDist = outputs['JointDist']
 weights = outputs['Weights']
 unpadded_weight = outputs['UnpaddedWeights']
+deg_per_dim = outputs['deg_per_dim']
 
 # C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
 # plt.figure()
@@ -165,20 +173,20 @@ unpadded_weight = outputs['UnpaddedWeights']
 # plt.show(block=False)
 
 plt.figure()
-plt.imshow(np.reshape(weights , deg_per_dim), origin = 'left')
+plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'left', aspect='auto')
 # plt.xticks(np.arange(0,size), *[np.arange(0,size)])
 # plt.yticks(np.arange(0,size), *[np.arange(0,size)])
 plt.title(deg_per_dim)
 # plt.imshow(weights.reshape(deg_per_dim))
 plt.colorbar()
-plt.show(block=False)
+plt.savefig(os.path.join(save_path, 'output', 'weights.png'))
+plt.close('all')
+# plt.show(block=False)
 
-# unpadded_weight2d = np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T
-# unpadded_weight_T = unpadded_weight2d.flatten()
 
-plt.figure()
-plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2), origin='lower')
-plt.show(block=False)
+# plt.figure()
+# plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T, origin='lower')
+# plt.show(block=False)
 
 ################ Plot Joint Distribution ################ 
 x = DataDict['DataSequence'][0]
@@ -212,9 +220,11 @@ plt.yticks(YTicks, YLabels)
 cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
 cbar.ax.set_yticklabels(['Min', 'Max'])
 plt.tight_layout()
-plt.show(block=False)
+plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
+plt.close("all")
+# plt.show(block=False)
 
-
+'''
 # plt.imshow(weights.reshape(deg_per_dim))
 # plt.show(block=False)
 
@@ -249,7 +259,7 @@ from mrexo.mle_utils_nd import calculate_conditional_distribution
 ConditionString = 'm|r,p'
 ConditionString = 'm|r'
 # ConditionString = 'm,r|p'
-# ConditionString = 'r,p|stm'
+ConditionString = 'r,stm|p'
 # ConditionString = 'm|r,stm'
 # ConditionString = 'm,r|p,stm'
 # ConditionString = 'm,r|feh'
@@ -285,8 +295,11 @@ from scipy.interpolate import RectBivariateSpline
 
 _ = simps(ConditionalDist[0], x)
 print(_)
+'''
 
-"""
+
+
+'''
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
 RHSTerms = Condition[1].split(',')
@@ -297,10 +310,9 @@ LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_ch
 RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
 
 
-xseq = outputs['DataSequence'][0]
-yseq = outputs['DataSequence'][1]
-zseq = outputs['DataSequence'][2]
-# t = outputs['DataSequence'][3]
+xseq = outputs['DataSequence'][LHSDimensions[0]]
+yseq = outputs['DataSequence'][LHSDimensions[1]]
+zseq = outputs['DataSequence'][RHSDimensions[0]]
 
 i=0
 ChosenZ = MeasurementDict[RHSTerms[0]][0][i]
@@ -335,13 +347,13 @@ plt.show(block=False)
 ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
 PlotFolder = os.path.join(save_path, ConditionName)
 	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(ChosenZ,3))))
-"""
+'''
 
-_ = NumericalIntegrate2D(x, y, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
-print(_)
+# _ = NumericalIntegrate2D(xseq, yseq, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
+# print(_)
 
 
-"""
+'''
 from mrexo.mle_utils import calculate_joint_distribution
 
 joint = calculate_joint_distribution(X_points=x, X_min=x.min(), X_max=x.max(), 
@@ -361,4 +373,4 @@ mean, var, quantile, denominator, a_beta_indv = cond_density_quantile(a=np.log10
 	a_min=DataDict['ndim_bounds'][1][0], a_max=DataDict['ndim_bounds'][1][1], 
 	b_max=DataDict['ndim_bounds'][0][1], b_min=DataDict['ndim_bounds'][0][0], 
 	deg=deg_per_dim[0], deg_vec=np.arange(1,deg_per_dim[0]+1), w_hat=weights)
-"""
+'''

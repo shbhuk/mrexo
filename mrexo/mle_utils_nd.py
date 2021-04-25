@@ -158,15 +158,21 @@ def MLE_fit(DataDict, deg_per_dim,
 
 	else:
 		# Calculate AIC and BIC
-		# aic = -n_log_lik*2 + 2*(deg**2 - 1)
-		# aic = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
+		deg_product = np.product(deg_per_dim)
+		NonZero = len(np.nonzero(w_hat)[0])
+		
+		aic = -n_log_lik*2 + 2*(NonZero/DataLength)
+		fi = rank_FI_matrix(C_pdf, unpadded_weight)
+		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
 		DataSeq = DataDict['DataSequence'] 
 		
 		output = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
+				"loglike":n_log_lik,
 				"deg_per_dim":deg_per_dim,
-				"DataSequence":DataSeq}
+				"DataSequence":DataSeq, 
+				"aic":aic, "fi":fi}
 		
 		if CalculateJointDist:
 			JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 

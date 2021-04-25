@@ -7,6 +7,24 @@ if sys.version_info.major==3:
 else:
 	from functools32 import lru_cache
 
+def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
+	"""
+	INPUTS:
+		degree_max = A np.array with number of elements equal to number of degrees, 
+			with each element corresponding to the maximum degree for each dimension.
+			Or else an integer
+		ndim = Number of dimensions
+		n = Size of dataset
+	"""
+	
+	if type(degree_max) == int:
+		degree_candidates = np.array([np.linspace(5, degree_max, ncandidates, dtype=int) for i in range(ndim)])
+	else:
+		degree_candidates =  np.array([np.linspace(5, d, ncandidates, dtype=int) for d in degree_max])
+
+	return degree_candidates
+
+
 def _save_dictionary(dictionary, output_location,
 		X_char, Y_char, X_label, Y_label,bootstrap=False):
 
