@@ -65,7 +65,7 @@ def RunAIC2D(DataDict, degree_candidates, NumCandidates, save_path):
 	Threshold = np.zeros(np.shape(AIC))
 	
 	for i in range(0, NumCandidates):
-		print("Running AIC:" + i)
+		print("Running AIC:" + str(i))
 		for j in range(0, NumCandidates):
 			
 		
@@ -140,7 +140,7 @@ def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path):
 	
 	for i in range(0, NumCandidates):
 		for j in range(0, NumCandidates):
-			print("Running AIC:" + i, j)
+			print("Running AIC:" + str(i)+','+str(j))
 			for k in range(0, NumCandidates):
 				
 				deg_per_dim = [degree_candidates[0][i], degree_candidates[1][j], degree_candidates[2][k]]
@@ -190,7 +190,7 @@ def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path):
 	for i in range(0, NumCandidates):
 		for j in range(0, NumCandidates):
 			for k in range(0, NumCandidates):
-				print("Running AIC:" + i, j, k)
+				print("Running AIC: {}{}{}".format(i,j,k))
 				for l in range(0, NumCandidates):
 						
 					deg_per_dim = [degree_candidates[0][i], degree_candidates[1][j], degree_candidates[2][k], degree_candidates[3][l]]

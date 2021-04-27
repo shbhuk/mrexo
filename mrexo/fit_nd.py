@@ -217,7 +217,7 @@ def fit_relation(DataDict,
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
 
-		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=6, save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, save_path=save_path, verbose=verbose, abs_tol=abs_tol)
 	# elif isinstance(select_deg, (int,float)):
 	else:
 		# Use user defined value

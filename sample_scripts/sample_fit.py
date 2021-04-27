@@ -80,7 +80,7 @@ InsolationSigma = np.array(t['pl_insolerr1'])
 
 
 # Directory to store results in
-result_dir = os.path.join(pwd,'Mdwarfs_20200520_cv50')
+result_dir = os.path.join(pwd, 'TestRuns','Mdwarfs_20200520_cv50')
 # result_dir = os.path.join(pwd,'Kepler127_aic')
 # result_dir = os.path.join(pwd, 'FGK_319_cv100')
 
@@ -145,7 +145,7 @@ InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
 
 DataDict = InputData(InputDictionaries)
-save_path = os.path.join(pwd, 'Sim3DRadMassFakePeriod')
+save_path = os.path.join(pwd, 'TestRuns', 'Sim3DRadMassFakePeriod')
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
