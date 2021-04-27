@@ -24,7 +24,7 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 
 
 
-ConditionString = 'r,p|feh'
+ConditionString = 'r,p|teff'
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
