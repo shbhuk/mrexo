@@ -30,7 +30,7 @@ DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlane
 UTeff = 4000
 
 t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv'.format(UTeff)))
-t = t.iloc[0:20]
+#t = t.iloc[0:20]
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
@@ -96,9 +96,9 @@ NPoints = len(Radius)
 # FakePeriodSigma = FakePeriod*0.01
 # Period_sigma = FakePeriodSigma
 
-"""
+# """
 # Simulation
-Radius = 10**np.linspace(0, 1)
+# Radius = 10**np.linspace(0, 1)
 Radius_sigma1 = 0.1*Radius# np.repeat(np.nan, len(Radius))
 Radius_sigma2 = np.copy(Radius_sigma1)
 Mass = 10**(2*np.log10(Radius)*np.log10(Radius) - 0.5*np.log10(Radius))
@@ -107,8 +107,8 @@ Mass_sigma1 = np.repeat(np.nan, len(Radius))
 Mass_sigma2 = np.repeat(np.nan, len(Radius))
 Period = np.ones(len(Radius))/2
 StellarMass_Sigma1 = np.repeat(np.nan, len(Radius))
-Period = Radius# np.linspace(0, 1, len(Radius))
-Period_sigma = 0.1*Period #np.repeat(np.nan, len(Radius))
+# Period = Radius# np.linspace(0, 1, len(Radius))
+PeriodSigma = 0.1*Period #np.repeat(np.nan, len(Radius))
 # """
 
 Max, Min = 1, 0
@@ -131,12 +131,12 @@ from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 InputDictionaries = [RadiusDict, MassDict, PeriodDict]
-InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
+InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-InputDictionaries = [RadiusDict, MassDict, ]
-InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
+InputDictionaries = [RadiusDict, PeriodDict]
+# InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
 
 
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
@@ -145,7 +145,9 @@ InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
 
 DataDict = InputData(InputDictionaries)
-save_path = os.path.join(pwd, 'TestRuns', 'Sim3DRadMassFakePeriod')
+DataDict = np.load(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\SimConstantDeg40\output\other_data_products\DataDict.npy", allow_pickle=True).item()
+
+save_path = os.path.join(pwd, 'TestRuns', 'SimConstant2D_AICmulti3')
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
@@ -157,10 +159,12 @@ outputs = MLE_fit(DataDict,
 	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
 """
 
-outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
+# outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
 
-# outputs, _ = fit_relation(DataDict, select_deg=deg_per_dim, save_path=save_path, num_boot=0)
+if __name__ == '__main__':
+	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=40, cores=4)
 
+'''
 JointDist = outputs['JointDist']
 weights = outputs['Weights']
 unpadded_weight = outputs['UnpaddedWeights']
@@ -223,6 +227,8 @@ plt.tight_layout()
 plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
 plt.close("all")
 # plt.show(block=False)
+'''
+
 
 '''
 # plt.imshow(weights.reshape(deg_per_dim))
@@ -235,12 +241,12 @@ c = StellarMassDict
 x = RadiusDict
 y = MassDict
 
-x = RadiusDict
+c = RadiusDict
 y = StellarMassDict
-c= PeriodDict
+x= PeriodDict
 
 # plt.scatter(x['Data'], y['Data'], c=np.log10(c['Data']))
-plt.scatter(x['Data'], y['Data'], c=c['Data'])
+plt.scatter(x['Data'], y['Data'], c=c['Data'], vmin=4, vmax=10)
 # plt.scatter(np.log10(x['Data']), np.log10(y['Data']), c=np.log10(c['Data']))
 plt.colorbar(label=c['Label'])
 plt.xlabel(x['Label'])

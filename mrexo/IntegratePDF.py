@@ -1,7 +1,7 @@
 from scipy.integrate import simps
 from scipy.interpolate import interpn
 from mrexo.mle_utils_nd import calculate_conditional_distribution
-from scipy.interpolate import RectBivariateSpline
+from scipy.interpolate import RectBivariateSpline, UnivariateSpline
 
 
 def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
@@ -13,11 +13,9 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
 	# Integral2 = simps(simps(Matrix, xarray), yarray)
 	return Integral
-
-# _ = NumericalIntegrate2D(x, y, JointDist, [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
-# _ = NumericalIntegrate2D(x, y, JointDist, [1.7, xseq.max()], [0.8, yseq.max()])
-# _ = NumericalIntegrate2D(x, y, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
-
+	
+def NumericalIntegrate1D(xarray, Matrix, xlimits)
+	Integral = UnivariateSpline(xarray, Matrix).integral(xa=xlimits[0], xb=xlimits[1])
 
 # 20210310 - Checked that the 2D and 3D joint distribution does integrate to 1 using 
 # RectBiVariateSpline and simpsons integrator
