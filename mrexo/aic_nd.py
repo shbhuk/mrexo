@@ -18,18 +18,25 @@ def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
 	message = 'Using AIC method to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_candidates.max())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 	
-	if ndim==2:
-		DegreeChosen = RunAIC2D(DataDict=DataDict, 
-			degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
-			save_path=save_path)
-	elif ndim==3:
-		DegreeChosen = RunAIC3D(DataDict=DataDict, 
-			degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
-			save_path=save_path)
-	elif ndim==4:
-		DegreeChosen = RunAIC4D(DataDict=DataDict, 
-			degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
-			save_path=save_path)	
+	if cores==1:
+			
+		if ndim==2:
+			DegreeChosen = RunAIC2D(DataDict=DataDict, 
+				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
+				save_path=save_path, verbose=verbose)
+		elif ndim==3:
+			DegreeChosen = RunAIC3D(DataDict=DataDict, 
+				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
+				save_path=save_path, verbose=verbose)
+		elif ndim==4:
+			DegreeChosen = RunAIC4D(DataDict=DataDict, 
+				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
+				save_path=save_path, verbose=verbose)
+	else:
+		DegreeChosen = RunAIC_flattened(DataDict=DataDict, 
+			degree_candidates=degree_candidates, 
+			NumCandidates=NumCandidates, 
+			cores=cores, save_path=save_path, verbose=verbose)
 	
 	message = 'Using AIC to select optimum degrees as = {}\n'.format(DegreeChosen)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -51,7 +58,8 @@ def MakePlot(Data, Title, degree_candidates):
 	
 	return fig
 
-def RunAIC2D(DataDict, degree_candidates, NumCandidates, save_path):
+def RunAIC2D(DataDict, degree_candidates, NumCandidates, 
+	save_path, verbose):
 	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
@@ -65,7 +73,9 @@ def RunAIC2D(DataDict, degree_candidates, NumCandidates, save_path):
 	Threshold = np.zeros(np.shape(AIC))
 	
 	for i in range(0, NumCandidates):
-		print("Running AIC:" + str(i))
+		message = "Running AIC: {}/{}".format(i, NumCandidates)
+		_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+	
 		for j in range(0, NumCandidates):
 			
 		
@@ -80,7 +90,7 @@ def RunAIC2D(DataDict, degree_candidates, NumCandidates, save_path):
 			loglike[i,j] = output['loglike']
 			DegProduct[i,j] = deg_product
 			AIC[i,j] = output['aic']
-			FI[i,j] = output['fi']
+			# FI[i,j] = output['fi']
 
 			NonZero[i,j] = len(np.nonzero(Weights)[0])
 			Threshold[i,j] = len(Weights[Weights > 1e-8])
@@ -89,43 +99,41 @@ def RunAIC2D(DataDict, degree_candidates, NumCandidates, save_path):
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AIC))
 	DegreeChosen = np.array([degree_candidates[i][MinAICIndex[i]] for i in range(ndim)], dtype=int)
 			
-	np.savetxt(os.path.join(save_path, 'output', 'other_data_products', 'degree_candidates.txt'), degree_candidates)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'AIC.npy'), AIC)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'loglike.npy'), loglike)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'FI.npy'), FI)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'DegProduct.npy'), DegProduct)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'NonZero.npy'), NonZero)
+	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
+	np.save(os.path.join(save_path, 'AIC.npy'), AIC)
+	np.save(os.path.join(save_path, 'loglike.npy'), loglike)
+	# np.save(os.path.join(save_path, 'FI.npy'), FI)
+	np.save(os.path.join(save_path, 'DegProduct.npy'), DegProduct)
+	np.save(os.path.join(save_path, 'NonZero.npy'), NonZero)
 	
 			
 	fig = MakePlot(loglike, Title='loglike', degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'loglike.png'))
+	fig.savefig(os.path.join(save_path, 'loglike.png'))
 	
 	fig = MakePlot(AIC, Title='AIC', degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'AIC.png'))
+	fig.savefig(os.path.join(save_path, 'AIC.png'))
 
-	fig = MakePlot(FI, Title='FI', degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'FI.png'))
+	fig = MakePlot(Threshold, Title='Threshold', degree_candidates=degree_candidates)
+	fig.savefig(os.path.join(save_path, 'FI.png'))
 
 	fig = MakePlot(DegProduct, Title='DegProduct', degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'DegProduct.png'))
+	fig.savefig(os.path.join(save_path, 'DegProduct.png'))
 
 	fig = MakePlot(2*(DegProduct/n - loglike), Title="AIC = 2*(DegProduct/n - LogLike)", degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'DegProducts_n_AIC.png'))
+	fig.savefig(os.path.join(save_path, 'DegProducts_n_AIC.png'))
 
 	fig = MakePlot(2*(NonZero/n - loglike), Title="AIC = 2*(NonZero/n - LogLike)", degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'NonZero_n_AIC.png'))
+	fig.savefig(os.path.join(save_path, 'NonZero_n_AIC.png'))
 
-	fig = MakePlot(2*(FI - loglike), Title="AIC = 2*(FI - LogLike)", degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'FI_AIC.png'))
+	# fig = MakePlot(2*(FI - loglike), Title="AIC = 2*(FI - LogLike)", degree_candidates=degree_candidates)
+	# fig.savefig(os.path.join(save_path, 'FI_AIC.png'))
 
-	fig = MakePlot(2*(FI/n - loglike), Title="AIC = 2*(FI/n - LogLike)", degree_candidates=degree_candidates)
-	fig.savefig(os.path.join(save_path, 'output', 'other_data_products', 'FI_n_AIC.png'))
+	# fig = MakePlot(2*(FI/n - loglike), Title="AIC = 2*(FI/n - LogLike)", degree_candidates=degree_candidates)
+	# fig.savefig(os.path.join(save_path, 'FI_n_AIC.png'))
 	
 	return DegreeChosen
 	
-	
-	
-def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path):
+def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
@@ -140,7 +148,9 @@ def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path):
 	
 	for i in range(0, NumCandidates):
 		for j in range(0, NumCandidates):
-			print("Running AIC:" + str(i)+','+str(j))
+			message = "Running AIC:" + str(i)+','+str(j)
+			_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+	
 			for k in range(0, NumCandidates):
 				
 				deg_per_dim = [degree_candidates[0][i], degree_candidates[1][j], degree_candidates[2][k]]
@@ -163,18 +173,18 @@ def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path):
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AIC))
 	DegreeChosen = np.array([degree_candidates[i][MinAICIndex[i]] for i in range(ndim)], dtype=int)
 
-	np.savetxt(os.path.join(save_path, 'output', 'other_data_products', 'degree_candidates.txt'), degree_candidates)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'AIC.npy'), AIC)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'loglike.npy'), loglike)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'FI.npy'), FI)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'DegProduct.npy'), DegProduct)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'NonZero.npy'), NonZero)
+	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
+	np.save(os.path.join(save_path, 'AIC.npy'), AIC)
+	np.save(os.path.join(save_path, 'loglike.npy'), loglike)
+	np.save(os.path.join(save_path, 'FI.npy'), FI)
+	np.save(os.path.join(save_path, 'DegProduct.npy'), DegProduct)
+	np.save(os.path.join(save_path, 'NonZero.npy'), NonZero)
 	
 			
 	return DegreeChosen
 	
 
-def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path):
+def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
@@ -190,7 +200,9 @@ def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path):
 	for i in range(0, NumCandidates):
 		for j in range(0, NumCandidates):
 			for k in range(0, NumCandidates):
-				print("Running AIC: {}{}{}".format(i,j,k))
+				message = "Running AIC: {}{}{}".format(i,j,k)
+				_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+	
 				for l in range(0, NumCandidates):
 						
 					deg_per_dim = [degree_candidates[0][i], degree_candidates[1][j], degree_candidates[2][k], degree_candidates[3][l]]
@@ -213,12 +225,130 @@ def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path):
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AIC))
 	DegreeChosen = np.array([degree_candidates[i][MinAICIndex[i]] for i in range(ndim)], dtype=int)
 
-	np.savetxt(os.path.join(save_path, 'output', 'other_data_products', 'degree_candidates.txt'), degree_candidates)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'AIC.npy'), AIC)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'loglike.npy'), loglike)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'FI.npy'), FI)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'DegProduct.npy'), DegProduct)
-	np.save(os.path.join(save_path, 'output', 'other_data_products', 'NonZero.npy'), NonZero)
+	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
+	np.save(os.path.join(save_path, 'AIC.npy'), AIC)
+	np.save(os.path.join(save_path, 'loglike.npy'), loglike)
+	np.save(os.path.join(save_path, 'FI.npy'), FI)
+	np.save(os.path.join(save_path, 'DegProduct.npy'), DegProduct)
+	np.save(os.path.join(save_path, 'NonZero.npy'), NonZero)
 	
 			
 	return DegreeChosen	
+
+def FlattenGrid(Inputs, ndim):
+	"""
+	Take n dimensions for Inputs.
+	Use meshgrid to combine them, and then flatten them.
+	Output long 1D vector with all the values, where each element of the vector has ndim elements.
+	
+	
+	Example: 
+	Inputs = [[1,2,3,4], [1,2,3,4], [1,2,3,4]] in the case of 3 dimensions with 4 points each
+	
+	Output:
+	[[1,1,1], [1,1,2], [1,1,3], [1,1,4], [1,2,1], [1,2,2],[1,2,3],....]
+
+	"""
+	
+	Mesh = np.meshgrid(*Inputs)
+	i_flat = [Mesh[i].flatten() for i in range(ndim)]
+	FlattenedMesh = [[(ix[i]) for ix in i_flat] for i in range(len(i_flat[0]))]
+	
+	return FlattenedMesh
+
+
+
+def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_path, verbose):
+	"""
+	
+	"""
+	
+	
+	n = DataDict['DataLength']
+	ndim = DataDict['ndim']
+
+	FlattenedDegrees = FlattenGrid(Inputs=[degree_candidates][0]*ndim, ndim=ndim)
+	FlattenedIndices = FlattenGrid(Inputs=[np.arange(NumCandidates)]*ndim, ndim=ndim)
+	
+	n_iter = len(FlattenedDegrees)
+	
+	inputs_aicpool = ((DataDict, FlattenedDegrees[i], FlattenedIndices[i], save_path, verbose) for i in range(n_iter))
+
+	# Parallelize the bootstraps
+	pool = Pool(processes=cores)
+	aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
+	
+	AIC = np.array([x['aic'] for x in aic_results])
+	Index = np.array([x['index'] for x in aic_results])
+	LogLike = np.array([x['loglike'] for x in aic_results])
+	Weights = [x['Weights'] for x in aic_results]
+	
+	AICgrid = np.zeros(([NumCandidates]*ndim))
+	LoglikeGrid = np.zeros(([NumCandidates]*ndim))
+	NonZeroGrid = np.zeros(([NumCandidates]*ndim))
+	ThresholdGrid8 = np.zeros(([NumCandidates]*ndim))
+	ThresholdGrid12 = np.zeros(([NumCandidates]*ndim))
+
+	
+	for i in range(n_iter):
+		
+		AICgrid[tuple(Index[i])] = AIC[i]
+		w = Weights[i]
+		
+		NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
+		LoglikeGrid[tuple(Index[i])] = LogLike[i]
+		ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
+		ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
+
+		
+	MinAICIndexFlat = np.argmin(AICgrid)
+	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AICgrid))
+	DegreeChosen = np.array([degree_candidates[i][MinAICIndex[i]] for i in range(ndim)], dtype=int)
+	
+	print(DegreeChosen)
+
+	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
+	np.save(os.path.join(save_path, 'AIC.npy'), AICgrid)
+	np.save(os.path.join(save_path, 'loglike.npy'), LoglikeGrid)
+	np.save(os.path.join(save_path, 'NonZero.npy'), NonZeroGrid)
+	np.save(os.path.join(save_path, 'Weights_AIC.npy'), Weights)
+	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid8)
+	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid12)
+
+	
+	if ndim==2:
+		fig = MakePlot(LoglikeGrid, Title='loglike', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'loglike.png'))
+		
+		fig = MakePlot(AICgrid, Title='AIC', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'AIC.png'))
+
+		fig = MakePlot(NonZeroGrid, Title='Nonzero', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'NonZero.png'))
+
+		fig = MakePlot(ThresholdGrid8, Title='ThresholdGrid8', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid8.png'))
+
+		fig = MakePlot(2*(ThresholdGrid8/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid8/n - LogLike)", degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid8_n_AIC.png'))
+
+		fig = MakePlot(2*(ThresholdGrid12/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid12/n - LogLike)", degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid12_n_AIC.png'))
+
+		fig = MakePlot(2*(NonZeroGrid/n - LoglikeGrid), Title="AIC = 2*(NonZero/n - LogLike)", degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'NonZero_n_AIC.png'))
+
+	return DegreeChosen
+	
+
+def _AIC_MLE(inputs):
+	
+	DataDict, deg_per_dim, index, save_path, verbose = inputs
+
+	output = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
+		save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=False, verbose=verbose)
+		
+	output['index'] = index
+	
+	return output
+		
