@@ -206,7 +206,7 @@ def fit_relation(DataDict,
 	# Y_sigma[(Y_sigma!=np.nan) & (Y_sigma[Y_sigma!=np.nan] < YSigmaLimit)] = np.nan
 	# X_sigma[(X_sigma!=np.nan) & (X_sigma[X_sigma!=np.nan] < XSigmaLimit)] = np.nan
 
-	np.save(os.path.join(aux_output_location, 'DataDict.npy'), DataDict)
+	np.save(os.path.join(input_location, 'DataDict.npy'), DataDict)
 	
 	###########################################################
 	## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
@@ -217,7 +217,8 @@ def fit_relation(DataDict,
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
 
-		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=10, cores=cores,
+			save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 	# elif isinstance(select_deg, (int,float)):
 	else:
 		# Use user defined value
