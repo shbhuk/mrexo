@@ -309,20 +309,20 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
 	else:
 		
-		for i in range(n_iter):
-			output = _AIC_MLE(inputs_aicpool[i])
+		for i, inputs in enumerate(inputs_aicpool):
+			output = _AIC_MLE(inputs)
 			Index = output['index']
-			AIC = output['AIC']
+			AIC = output['aic']
 			LogLike = output['loglike']
 			Weights = output['Weights']
 			
-			AICgrid[tuple(Index[i])] = AIC[i]
-			w = Weights[i]
+			AICgrid[Index] = AIC
+			w = Weights
 			
-			NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
-			LoglikeGrid[tuple(Index[i])] = LogLike[i]
-			ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
-			ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
+			NonZeroGrid[Index] = len(np.nonzero(w)[0])
+			LoglikeGrid[Index] = LogLike
+			ThresholdGrid8[Index] = len(w[w>1e-8])
+			ThresholdGrid12[Index] = len(w[w>1e-12])
 			
 		
 	MinAICIndexFlat = np.argmin(AICgrid)
