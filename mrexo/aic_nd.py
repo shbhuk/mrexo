@@ -18,6 +18,13 @@ def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
 	message = 'Using AIC method to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_candidates.max())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 	
+
+	DegreeChosen = RunAIC_flattened(DataDict=DataDict, 
+	degree_candidates=degree_candidates, 
+	NumCandidates=NumCandidates, 
+	cores=cores, save_path=save_path, verbose=verbose)
+	
+	"""
 	if cores==1:
 			
 		if ndim==2:
@@ -37,6 +44,7 @@ def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
 			degree_candidates=degree_candidates, 
 			NumCandidates=NumCandidates, 
 			cores=cores, save_path=save_path, verbose=verbose)
+	"""
 	
 	message = 'Using AIC to select optimum degrees as = {}\n'.format(DegreeChosen)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -274,32 +282,48 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	
 	inputs_aicpool = ((DataDict, FlattenedDegrees[i], FlattenedIndices[i], save_path, verbose) for i in range(n_iter))
 
-	# Parallelize the bootstraps
-	pool = Pool(processes=cores)
-	aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
-	
-	AIC = np.array([x['aic'] for x in aic_results])
-	Index = np.array([x['index'] for x in aic_results])
-	LogLike = np.array([x['loglike'] for x in aic_results])
-	Weights = [x['Weights'] for x in aic_results]
-	
 	AICgrid = np.zeros(([NumCandidates]*ndim))
 	LoglikeGrid = np.zeros(([NumCandidates]*ndim))
 	NonZeroGrid = np.zeros(([NumCandidates]*ndim))
 	ThresholdGrid8 = np.zeros(([NumCandidates]*ndim))
 	ThresholdGrid12 = np.zeros(([NumCandidates]*ndim))
 
-	
-	for i in range(n_iter):
+	if cores > 1:
+		# Parallelize the bootstraps
+		pool = Pool(processes=cores)
+		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
 		
-		AICgrid[tuple(Index[i])] = AIC[i]
-		w = Weights[i]
+		AIC = np.array([x['aic'] for x in aic_results])
+		Index = np.array([x['index'] for x in aic_results])
+		LogLike = np.array([x['loglike'] for x in aic_results])
+		Weights = [x['Weights'] for x in aic_results]
 		
-		NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
-		LoglikeGrid[tuple(Index[i])] = LogLike[i]
-		ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
-		ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
-
+		for i in range(n_iter):
+			
+			AICgrid[tuple(Index[i])] = AIC[i]
+			w = Weights[i]
+			
+			NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
+			LoglikeGrid[tuple(Index[i])] = LogLike[i]
+			ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
+			ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
+	else:
+		
+		for i in range(n_iter):
+			output = _AIC_MLE(inputs_aicpool[i])
+			Index = output['index']
+			AIC = output['AIC']
+			LogLike = output['loglike']
+			Weights = output['Weights']
+			
+			AICgrid[tuple(Index[i])] = AIC[i]
+			w = Weights[i]
+			
+			NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
+			LoglikeGrid[tuple(Index[i])] = LogLike[i]
+			ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
+			ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
+			
 		
 	MinAICIndexFlat = np.argmin(AICgrid)
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AICgrid))
