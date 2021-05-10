@@ -24,7 +24,7 @@ except NameError:
 	print('Could not find pwd')
 
 Dataset = 'Real'
-# Dataset = 'Simulated'
+#Dataset = 'Simulated'
 
 if Dataset == 'Real':
 	df = pd.read_csv(os.path.join(pwd, 'q1_q17_dr25_gaia_berger_fgk_HFR2020b_koi_cleaned.csv'))
@@ -35,7 +35,7 @@ else:
 
 
 RadiusBounds = None
-RadiusBounds = [3, 20]
+RadiusBounds = [0, 4]
 
 if RadiusBounds is not None:
 	df = df[df['koi_prad'] > RadiusBounds[0]]
@@ -79,7 +79,7 @@ from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
 if Dataset == 'Real':
-	RunName = 'Kepler'
+	RunName = 'TestKepler'
 else:
 	RunName = 'SimKepler'
 
@@ -92,7 +92,7 @@ if RadiusBounds is not None:
 print(RunName)
 print("========================")
 InputDictionaries = [PeriodDict, RadiusDict]
-# InputDictionaries = [PeriodDict, RadiusDict, StellarMassDict]
+#InputDictionaries = [PeriodDict, RadiusDict, StellarMassDict]
 # InputDictionaries = [StellarMassDict, RadiusDict]
 
 # InputDictionaries = [PeriodDict, RadiusDict, StellarMassDict]
@@ -103,8 +103,8 @@ save_path = os.path.join(pwd, 'TestRuns', RunName)
 ndim = len(InputDictionaries)
 
 
-# outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100)
-outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
+outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=150, cores=8)
+#outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
 
 
 JointDist = outputs['JointDist']
