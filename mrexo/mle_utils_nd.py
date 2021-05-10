@@ -2,6 +2,7 @@ import numpy as np
 from scipy.stats import beta,norm
 import scipy
 from scipy.stats import beta
+from decimal import Decimal
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.interpolate import interpn
@@ -300,9 +301,10 @@ def _int_gamma(a):
 
 def _beta_pdf(x,a,b):
 	if (a>=170) | (b>=170) | (a+b>170):
-		f = beta.pdf(x, a, b) 
+		f = float((Decimal(_int_gamma(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_int_gamma(a))*Decimal(_int_gamma(b))))
 	else:
-		f = (_int_gamma(a+b) * x**(a-1)*(1-x)**(b-1))/(_int_gamma(a)*_int_gamma(b))
+		f = (_int_gamma(a+b) * x**(a-1)*(1-x)**(b-1)) / (_int_gamma(a)*_int_gamma(b))
+
 	return f
 
 # Ndim - 20201130
