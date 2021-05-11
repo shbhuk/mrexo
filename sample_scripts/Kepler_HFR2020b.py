@@ -79,7 +79,7 @@ from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
 if Dataset == 'Real':
-	RunName = 'TestKepler'
+	RunName = 'Kepler'
 else:
 	RunName = 'SimKepler'
 
@@ -103,7 +103,7 @@ save_path = os.path.join(pwd, 'TestRuns', RunName)
 ndim = len(InputDictionaries)
 
 
-outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=150, cores=8)
+outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=6)
 #outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
 
 
