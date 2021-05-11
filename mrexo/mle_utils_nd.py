@@ -356,12 +356,7 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 			a_std = (np.log10(a) - a_min)/(a_max - a_min)
 		else:
 			a_std = (a - a_min)/(a_max - a_min)
-		try:
 			a_beta_indv = np.array([_beta_pdf(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
-		except OverflowError as e:
-			print(e)
-			print(a_std, deg, a_max, a_min, deg_vec)
-			raise Exception("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	else:
 		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
