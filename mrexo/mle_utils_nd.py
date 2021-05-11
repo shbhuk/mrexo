@@ -126,7 +126,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		save_path=save_path, 
 		Log=Log, 
 		verbose=verbose, 
-		SaveCMatrix=True)
+		SaveCMatrix=False)
 
 	message = 'Finished Integration at {}. \nCalculated the PDF for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)

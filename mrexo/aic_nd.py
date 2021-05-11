@@ -310,10 +310,6 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	else:
 		
 		for i, inputs in enumerate(inputs_aicpool):
-			print("________________________")
-			print(i)
-			_, deg, index, _, _ = inputs
-			print(deg, index)
 			output = _AIC_MLE(inputs)
 			Index = output['index']
 			AIC = output['aic']
@@ -372,6 +368,10 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 def _AIC_MLE(inputs):
 	
 	DataDict, deg_per_dim, index, save_path, verbose = inputs
+	
+	message = "Running degrees = {}".format(deg_per_dim)
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
 
 	output = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
 		save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=False, verbose=verbose)
