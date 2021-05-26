@@ -36,10 +36,19 @@ else:
 
 RadiusBounds = None
 RadiusBounds = [0, 4]
+SubSample = None
+SubSample = 100 # Subsampe the original dataset down to this number
 
 if RadiusBounds is not None:
 	df = df[df['koi_prad'] > RadiusBounds[0]]
 	df = df[df['koi_prad'] < RadiusBounds[1]]
+
+Indices = np.arange(len(df))
+IndicesSampled = np.random.choice(Indices, SubSample, replace=False)
+
+if SubSample is not None:
+	print("Sub sampling the original dataset down to {}".format(SubSample))
+	df = df.iloc[IndicesSampled]
 
 pl_orbper = np.array(df.koi_period)
 pl_orbpererr1 = np.repeat(np.nan, len(pl_orbper)) # np.array(df.period_upper)
@@ -82,12 +91,16 @@ if Dataset == 'Real':
 	RunName = 'Kepler'
 else:
 	RunName = 'SimKepler'
-
+	
 RunName = RunName + '_HFR2020b_'
 RunName = RunName + 'RP'
 
 if RadiusBounds is not None:
 	RunName = RunName + '_'+str(RadiusBounds[0])+'_'+str(RadiusBounds[1])
+
+if SubSample is not None:
+	RunName = RunName + '_SubSample_'+str(int(SubSample))
+
 	
 print(RunName)
 print("========================")

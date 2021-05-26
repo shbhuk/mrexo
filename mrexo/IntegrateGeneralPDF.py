@@ -224,7 +224,8 @@ def IntegrateConditionalDistribution(
 	DataDict, weights, deg_per_dim, JointDist
 	):
 	"""
-	
+	First marginalizes the joint distribution over the RHS terms
+	And then it integrates over the LHS terms.
 	
 	"""
 
