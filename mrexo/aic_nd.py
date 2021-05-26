@@ -337,7 +337,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	np.save(os.path.join(save_path, 'NonZero.npy'), NonZeroGrid)
 	np.save(os.path.join(save_path, 'Weights_AIC.npy'), Weights)
 	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid8)
-	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid12)
+	np.save(os.path.join(save_path, 'ThresholdGrid12.npy'), ThresholdGrid12)
 
 	
 	if ndim==2:
