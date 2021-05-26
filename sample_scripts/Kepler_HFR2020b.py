@@ -1,5 +1,5 @@
 import os, sys
-from astropy.table import Table
+#from astropy.table import Table
 import numpy as np
 from multiprocessing import cpu_count
 import numpy as np
@@ -93,7 +93,7 @@ else:
 	RunName = 'SimKepler'
 	
 RunName = RunName + '_HFR2020b_'
-RunName = RunName + 'RP'
+RunName = RunName + 'RP_deg1000'
 
 if RadiusBounds is not None:
 	RunName = RunName + '_'+str(RadiusBounds[0])+'_'+str(RadiusBounds[1])
@@ -116,7 +116,7 @@ save_path = os.path.join(pwd, 'TestRuns', RunName)
 ndim = len(InputDictionaries)
 
 
-outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=6)
+outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=1000, cores=6)
 #outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
 
 
