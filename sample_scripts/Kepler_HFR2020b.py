@@ -37,7 +37,7 @@ else:
 RadiusBounds = None
 RadiusBounds = [0, 4]
 SubSample = None
-SubSample = 100 # Subsampe the original dataset down to this number
+SubSample = 500 # Subsampe the original dataset down to this number
 
 if RadiusBounds is not None:
 	df = df[df['koi_prad'] > RadiusBounds[0]]
@@ -93,7 +93,7 @@ else:
 	RunName = 'SimKepler'
 	
 RunName = RunName + '_HFR2020b_'
-RunName = RunName + 'RP_deg1000'
+RunName = RunName + 'RP_deg500'
 
 if RadiusBounds is not None:
 	RunName = RunName + '_'+str(RadiusBounds[0])+'_'+str(RadiusBounds[1])
@@ -116,7 +116,7 @@ save_path = os.path.join(pwd, 'TestRuns', RunName)
 ndim = len(InputDictionaries)
 
 
-outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=1000, cores=6)
+outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=500, cores=6)
 #outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
 
 

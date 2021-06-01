@@ -1,3 +1,4 @@
+import numpy as np
 from scipy.integrate import simps
 from scipy.interpolate import interpn
 from mrexo.mle_utils_nd import calculate_conditional_distribution
@@ -54,8 +55,9 @@ def Marginalize2D(ConditionString,
 	"""
 		
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
-	xseq = outputs['DataSequence'][RHSDimensions[0]]
-	yseq = outputs['DataSequence'][RHSDimensions[1]]
+	ndim = DataDict['ndim']
+	xseq = DataDict['DataSequence'][RHSDimensions[0]]
+	yseq = DataDict['DataSequence'][RHSDimensions[1]]
 	
 	ConditionalDist = np.zeros(( [len(xseq)]*ndim ))
 	MeanPDF, VariancePDF = [np.zeros((len(xseq), len(yseq), len(LHSTerms))) for _ in range(2)]
@@ -85,8 +87,8 @@ def Marginalize1D(ConditionString,
 		
 		
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
-		
-	xseq = outputs['DataSequence'][RHSDimensions[0]]
+	ndim = DataDict['ndim']
+	xseq = DataDict['DataSequence'][RHSDimensions[0]]
 	
 	ConditionalDist = np.zeros(( [len(xseq)]*ndim ))
 	MeanPDF, VariancePDF = [np.zeros((len(xseq), len(LHSTerms))) for _ in range(2)]
@@ -288,13 +290,14 @@ def IntegrateConditionalDistribution(
 	# JointDist=JointDist
 	# )
 
-ResultDirectory = r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\Kepler_HFR2020b_RP_deg1000_0_4_SubSample_100"
+#ResultDirectory = r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\Kepler_HFR2020b_RP_deg1000_0_4_SubSample_100"
+ResultDirectory = "/storage/home/myh7/mrexo/sample_scripts/TestRuns/Kepler_HFR2020b_RP_deg200_0_4_SubSample_100"
 DataDict = np.load(os.path.join(ResultDirectory, 'input', 'DataDict.npy'), allow_pickle=True).item()
-JointDist = np.load(os.path.join(ResultDirectory, 'output', 'JointDist.npy'), allow_pickle=True).item()
+JointDist = np.load(os.path.join(ResultDirectory, 'output', 'JointDist.npy'), allow_pickle=True)
 weights = np.loadtxt(os.path.join(ResultDirectory, 'output', 'weights.txt'))
-deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt'))
+deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt')).astype(int)
 
-ConditionString = 'r|p,stm'
+ConditionString = 'r|p'
 IntegrationBounds = {
 	'r':[[np.log10(0), np.log10(2)], [np.log10(2), np.log10(4)], 
 	[np.log10(4), np.log10(16.4)], [np.log10(0), np.log10(16.4)]], 
@@ -306,6 +309,15 @@ RHSSeqList, IntegratedPDFList = IntegrateConditionalDistribution(
 	ConditionString, IntegrationBounds,
 	DataDict, weights, deg_per_dim, JointDist)
 
+for i in range(len(RHSSeqList)):
+	plt.figure()
+	plt.title('Integration bounds (Radius): %s' % 10. **np.array(IntegrationBounds['r'][i]))
+	plt.plot(RHSSeqList[i], IntegratedPDFList[i])
+	plt.xlabel('Log(Period (days))')
+	plt.ylabel('Integrated PDF')
+	plt.savefig(ResultDirectory + '/integratedPDF_bounds%s.png' % i)
+
+'''
 i = 3
 plt.figure()
 plt.imshow(IntegratedPDFList[i], 
@@ -329,6 +341,7 @@ plt.yticks(YTicks, YLabels)
 plt.xlabel(DataDict['ndim_label'][1])
 plt.ylabel(DataDict['ndim_label'][2])
 plt.show(block=False)
+'''
 	
 ################################################################
 """
