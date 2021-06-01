@@ -305,6 +305,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			
 			NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
 			LoglikeGrid[tuple(Index[i])] = LogLike[i]
+			ThresholdGrid6[tuple(Index[i])] = len(w[w>1e-6])
 			ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
 			ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
 	else:
@@ -321,6 +322,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			
 			NonZeroGrid[Index] = len(np.nonzero(w)[0])
 			LoglikeGrid[Index] = LogLike
+			ThresholdGrid6[Index] = len(w[w>1e-6])
 			ThresholdGrid8[Index] = len(w[w>1e-8])
 			ThresholdGrid12[Index] = len(w[w>1e-12])
 			
@@ -336,6 +338,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	np.save(os.path.join(save_path, 'loglike.npy'), LoglikeGrid)
 	np.save(os.path.join(save_path, 'NonZero.npy'), NonZeroGrid)
 	np.save(os.path.join(save_path, 'Weights_AIC.npy'), Weights)
+	np.save(os.path.join(save_path, 'ThresholdGrid6.npy'), ThresholdGrid6)
 	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid8)
 	np.save(os.path.join(save_path, 'ThresholdGrid12.npy'), ThresholdGrid12)
 
@@ -350,8 +353,17 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 		fig = MakePlot(NonZeroGrid, Title='Nonzero', degree_candidates=degree_candidates)
 		fig.savefig(os.path.join(save_path, 'NonZero.png'))
 
+		fig = MakePlot(ThresholdGrid8, Title='ThresholdGrid6', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid6.png'))
+
 		fig = MakePlot(ThresholdGrid8, Title='ThresholdGrid8', degree_candidates=degree_candidates)
 		fig.savefig(os.path.join(save_path, 'ThresholdGrid8.png'))
+
+		fig = MakePlot(ThresholdGrid12, Title='ThresholdGrid12', degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid12.png'))
+		
+		fig = MakePlot(2*(ThresholdGrid6/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid6/n - LogLike)", degree_candidates=degree_candidates)
+		fig.savefig(os.path.join(save_path, 'ThresholdGrid6_n_AIC.png'))
 
 		fig = MakePlot(2*(ThresholdGrid8/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid8/n - LogLike)", degree_candidates=degree_candidates)
 		fig.savefig(os.path.join(save_path, 'ThresholdGrid8_n_AIC.png'))
