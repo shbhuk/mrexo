@@ -288,6 +288,11 @@ def IntegrateConditionalDistribution(
 	# JointDist=JointDist
 	# )
 
+ResultDirectory = r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\Kepler_HFR2020b_RP_deg1000_0_4_SubSample_100"
+DataDict = np.load(os.path.join(ResultDirectory, 'input', 'DataDict.npy'), allow_pickle=True).item()
+JointDist = np.load(os.path.join(ResultDirectory, 'output', 'JointDist.npy'), allow_pickle=True).item()
+weights = np.loadtxt(os.path.join(ResultDirectory, 'output', 'weights.txt'))
+deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt'))
 
 ConditionString = 'r|p,stm'
 IntegrationBounds = {
