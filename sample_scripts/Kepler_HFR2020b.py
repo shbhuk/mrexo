@@ -26,24 +26,26 @@ except NameError:
 Dataset = 'Real'
 #Dataset = 'Simulated'
 
-if Dataset == 'Real':
-	df = pd.read_csv(os.path.join(pwd, 'q1_q17_dr25_gaia_berger_fgk_HFR2020b_koi_cleaned.csv'))
-	# df = df[df['koi_disposition'] == 'CONFIRMED']
-else:
-	df = pd.read_csv(os.path.join(pwd, 'observed_catalog.csv'))
-	df = df.loc[:len(df)//5 - 1]
-
-
-RadiusBounds = None
-RadiusBounds = [0, 4]
-SubSample = None
-SubSample = 100 # Subsampe the original dataset down to this number
-
-if RadiusBounds is not None:
-	df = df[df['koi_prad'] > RadiusBounds[0]]
-	df = df[df['koi_prad'] < RadiusBounds[1]]
-
 for i in range(20):
+
+
+	if Dataset == 'Real':
+		df = pd.read_csv(os.path.join(pwd, 'q1_q17_dr25_gaia_berger_fgk_HFR2020b_koi_cleaned.csv'))
+		# df = df[df['koi_disposition'] == 'CONFIRMED']
+	else:
+		df = pd.read_csv(os.path.join(pwd, 'observed_catalog.csv'))
+		df = df.loc[:len(df)//5 - 1]
+
+
+	RadiusBounds = None
+	RadiusBounds = [0, 4]
+	SubSample = None
+	SubSample = 100 # Subsampe the original dataset down to this number
+
+	if RadiusBounds is not None:
+		df = df[df['koi_prad'] > RadiusBounds[0]]
+		df = df[df['koi_prad'] < RadiusBounds[1]]
+
 
 	Indices = np.arange(len(df))
 	IndicesSampled = np.random.choice(Indices, SubSample, replace=False)
@@ -53,6 +55,10 @@ for i in range(20):
 		df = df.iloc[IndicesSampled]
 
 	pl_orbper = np.array(df.koi_period)
+
+	print("============================== Median Period = {} ========================".format(np.median(pl_orbper)))
+	print(IndicesSampled)
+
 	pl_orbpererr1 = np.repeat(np.nan, len(pl_orbper)) # np.array(df.period_upper)
 	pl_orbpererr2 = np.repeat(np.nan, len(pl_orbper)) # np.array(df.period_lower)
 
