@@ -60,7 +60,7 @@ def MakePlot(Data, Title, degree_candidates):
 	
 	plt.close("all")
 	fig = plt.figure()
-	plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
+	plt.imshow(Data[1:, 1:], extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
 	plt.title(Title)
 	plt.colorbar()
 	
@@ -285,6 +285,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	AICgrid = np.zeros(([NumCandidates]*ndim))
 	LoglikeGrid = np.zeros(([NumCandidates]*ndim))
 	NonZeroGrid = np.zeros(([NumCandidates]*ndim))
+	ThresholdGrid6 = np.zeros(([NumCandidates]*ndim))
 	ThresholdGrid8 = np.zeros(([NumCandidates]*ndim))
 	ThresholdGrid12 = np.zeros(([NumCandidates]*ndim))
 

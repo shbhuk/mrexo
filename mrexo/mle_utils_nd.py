@@ -165,8 +165,8 @@ def MLE_fit(DataDict, deg_per_dim,
 		
 		Threshold = 1e-8
 
-		aic = -n_log_lik*2 + 2*(len(w_hat[w_hat>Threshold])/DataLength)
-		# aic = -n_log_lik*2 + 2*(NonZero/DataLength)
+		#aic = -n_log_lik*2 + 2*(len(w_hat[w_hat>Threshold])/DataLength)
+		aic = -n_log_lik*2 + 2*(NonZero/DataLength)
 		# fi = rank_FI_matrix(C_pdf, unpadded_weight)
 		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
