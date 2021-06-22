@@ -26,7 +26,7 @@ except NameError:
 Dataset = 'Real'
 #Dataset = 'Simulated'
 
-for i in range(5):
+for i in range(20):
 
 
 	if Dataset == 'Real':
@@ -101,7 +101,7 @@ for i in range(5):
 		RunName = 'SimKepler'
 		
 	RunName = RunName + '_HFR2020b_'
-	RunName = RunName + 'RP_degchoose150'
+	#RunName = RunName + 'RP_degchoose150'
 
 	if RadiusBounds is not None:
 		RunName = RunName + '_'+str(RadiusBounds[0])+'_'+str(RadiusBounds[1])
@@ -124,7 +124,7 @@ for i in range(5):
 	ndim = len(InputDictionaries)
 
 
-	outputs, _ = fit_relation(DataDict, select_deg=[150,150], save_path=save_path, num_boot=0, degree_max=800, cores=6)
+	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=600, cores=6)
         #outputs, _ = fit_relation(DataDict, select_deg=[300,300], save_path=save_path, num_boot=0, degree_max=800, cores=6)
 
 	#outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)

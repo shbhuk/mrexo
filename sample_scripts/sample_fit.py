@@ -169,7 +169,7 @@ outputs = MLE_fit(DataDict,
 if __name__ == '__main__':
 	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=4)
 
-'''
+
 JointDist = outputs['JointDist']
 weights = outputs['Weights']
 unpadded_weight = outputs['UnpaddedWeights']
@@ -232,7 +232,7 @@ plt.tight_layout()
 plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
 plt.close("all")
 # plt.show(block=False)
-'''
+#'''
 
 
 '''
