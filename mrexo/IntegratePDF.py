@@ -14,9 +14,9 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 	# Integral2 = simps(simps(Matrix, xarray), yarray)
 	return Integral
 	
-def NumericalIntegrate1D(xarray, Matrix, xlimits)
-	Integral = UnivariateSpline(xarray, Matrix).integral(xa=xlimits[0], xb=xlimits[1])
-
+def NumericalIntegrate1D(xarray, Matrix, xlimits):
+	Integral = UnivariateSpline(xarray, Matrix).integral(xlimits[0], xlimits[1])
+	return Integral
 # 20210310 - Checked that the 2D and 3D joint distribution does integrate to 1 using 
 # RectBiVariateSpline and simpsons integrator
 

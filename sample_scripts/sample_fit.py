@@ -29,7 +29,7 @@ DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlane
 
 UTeff = 4000
 
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv'.format(UTeff)))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
 #t = t.iloc[0:20]
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
@@ -46,7 +46,7 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316.csv
 # t = t[t['pl_masse'] < 50]
 # t = t[t['pl_rade'] < 4]
 # t = t[t['pl_rade'] > 0.8]
-t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
+# t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 print(len(t))
 # t = t[np.isfinite(t['pl_insol'])]
 # t = t[t['pl_insol'] > 1e-10]
@@ -66,24 +66,24 @@ Radius = np.array(t['pl_rade'])
 Radius_sigma1 = np.array(abs(t['pl_radeerr1']))
 Radius_sigma2 = np.array(abs(t['pl_radeerr1']))
 
-"""
+# """
 Period = np.array(t['pl_orbper'])
 PeriodSigma = np.repeat(np.nan, len(Period))
 
 StellarMass = np.array(t['st_mass'])
 StellarMassSigma = np.array(t['st_masserr1'])
 
-Metallicity = np.array(t['st_metfe'])
-MetallicitySigma = np.array(t['st_metfeerr1'])
+# Metallicity = np.array(t['st_met'])
+# MetallicitySigma = np.array(t['st_meterr1'])
 
 Insolation = np.array(t['pl_insol'])
 InsolationSigma = np.array(t['pl_insolerr1'])
-"""
+# """
 
 
 # Directory to store results in
-#result_dir = os.path.join(pwd, 'TestRuns','Mdwarfs_20200520_cv50')
-result_dir = os.path.join(pwd,'TestRuns', 'Kepler127_aic')
+# result_dir = os.path.join(pwd, 'TestRuns','Mdwarfs_20200520_cv50')
+# result_dir = os.path.join(pwd,'TestRuns', 'Kepler127_aic')
 # result_dir = os.path.join(pwd, 'FGK_319_cv100')
 
 """
@@ -124,19 +124,19 @@ RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_
 MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':Max, 'Min':np.nan, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
 #FakePeriodDict = {'Data': FakePeriod, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
-#PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
-#StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
+StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 #MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**(-Metallicity), 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 
-#InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
-InputDictionaries = [RadiusDict, MassDict]
-#InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, MassDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
@@ -152,7 +152,7 @@ InputDictionaries = [RadiusDict, MassDict]
 DataDict = InputData(InputDictionaries)
 #DataDict = np.load(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\SimConstantDeg40\output\other_data_products\DataDict.npy", allow_pickle=True).item()
 
-save_path = os.path.join(pwd, 'TestRuns', 'Kepler_AIC127')
+save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20210823_M_R_S_StM')
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
@@ -167,72 +167,83 @@ outputs = MLE_fit(DataDict,
 # outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=4)
+	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=2)
+
+	JointDist = outputs['JointDist']
+	weights = outputs['Weights']
+	unpadded_weight = outputs['UnpaddedWeights']
+	deg_per_dim = outputs['deg_per_dim']
+
+	for n in range(ndim):
+		x = DataDict['ndim_data'][n]
+		plt.hist(x, bins=np.logspace(np.log10(x.min()), np.log10(x.max()), 20+1))
+		plt.xlabel(DataDict['ndim_label'][n])
+		plt.gca().set_xscale("log")
+		plt.title(RunName)
+		plt.tight_layout()
+		plt.savefig(os.path.join(save_path, 'output', 'Histogram_'+DataDict['ndim_char'][n]+'.png'))
+		plt.close("all")
+
+	if ndim==2:
+			
+		# C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
+		# plt.figure()
+		# plt.imshow(C_pdf_new, aspect='auto')
+		# plt.title(deg_per_dim)
+		# plt.show(block=False)
+
+		plt.figure()
+		plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'left', aspect='auto')
+		# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
+		# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
+		plt.title(deg_per_dim)
+		# plt.imshow(weights.reshape(deg_per_dim))
+		plt.colorbar()
+		plt.savefig(os.path.join(save_path, 'output', 'weights.png'))
+		plt.close('all')
+		# plt.show(block=False)
 
 
-JointDist = outputs['JointDist']
-weights = outputs['Weights']
-unpadded_weight = outputs['UnpaddedWeights']
-deg_per_dim = outputs['deg_per_dim']
+		# plt.figure()
+		# plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T, origin='lower')
+		# plt.show(block=False)
 
-# C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
-# plt.figure()
-# plt.imshow(C_pdf_new, aspect='auto')
-# plt.title(deg_per_dim)
-# plt.show(block=False)
+		################ Plot Joint Distribution ################ 
+		x = DataDict['DataSequence'][0]
+		y = DataDict['DataSequence'][1]
 
-plt.figure()
-plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'left', aspect='auto')
-# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
-# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
-plt.title(deg_per_dim)
-# plt.imshow(weights.reshape(deg_per_dim))
-plt.colorbar()
-plt.savefig(os.path.join(save_path, 'output', 'weights.png'))
-plt.close('all')
-# plt.show(block=False)
-
-
-# plt.figure()
-# plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T, origin='lower')
-# plt.show(block=False)
-
-################ Plot Joint Distribution ################ 
-x = DataDict['DataSequence'][0]
-y = DataDict['DataSequence'][1]
-
-fig = plt.figure(figsize=(8.5,6.5))
-im = plt.imshow(JointDist.T, 
-	extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
-	aspect='auto', origin='lower'); 
-plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
-# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-plt.ylabel("Log10 "+DataDict['ndim_label'][1]);
-plt.xlabel("Log10 "+DataDict['ndim_label'][0]);
-# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
-# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
-plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
-plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
-plt.tight_layout()
-XTicks = np.linspace(x.min(), x.max(), 5)
-# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
-YTicks = np.linspace(y.min(), y.max(), 5)
-# YTicks = np.log10(np.array([1, 3, 5, 10]))
+		fig = plt.figure(figsize=(8.5,6.5))
+		im = plt.imshow(JointDist.T, 
+			extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
+			aspect='auto', origin='lower'); 
+		plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
+		# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
+		plt.ylabel("Log10 "+DataDict['ndim_label'][1]);
+		plt.xlabel("Log10 "+DataDict['ndim_label'][0]);
+		# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
+		# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
+		plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
+		plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
+		plt.tight_layout()
+		XTicks = np.linspace(x.min(), x.max(), 5)
+		# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
+		YTicks = np.linspace(y.min(), y.max(), 5)
+		# YTicks = np.log10(np.array([1, 3, 5, 10]))
 
 
-XLabels = np.round(10**XTicks, 1)
+		XLabels = np.round(10**XTicks, 1)
 
-YLabels = np.round(10**YTicks, 2)
+		YLabels = np.round(10**YTicks, 2)
 
-plt.xticks(XTicks, XLabels)
-plt.yticks(YTicks, YLabels)
-cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
-cbar.ax.set_yticklabels(['Min', 'Max'])
-plt.tight_layout()
-plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
-plt.close("all")
-# plt.show(block=False)
-#'''
+		plt.xticks(XTicks, XLabels)
+		plt.yticks(YTicks, YLabels)
+		cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
+		cbar.ax.set_yticklabels(['Min', 'Max'])
+		plt.tight_layout()
+		plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
+		plt.close("all")
+		# plt.show(block=False)
+		#'''
 
 
 '''

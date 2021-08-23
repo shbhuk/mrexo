@@ -26,7 +26,7 @@ except NameError:
 Dataset = 'Real'
 #Dataset = 'Simulated'
 
-for i in range(20):
+for i in range(1):
 
 
 	if Dataset == 'Real':
@@ -40,7 +40,7 @@ for i in range(20):
 	RadiusBounds = None
 	RadiusBounds = [0, 4]
 	SubSample = None
-	SubSample = 1000 # Subsampe the original dataset down to this number
+	SubSample = 200 # Subsampe the original dataset down to this number
 
 	if RadiusBounds is not None:
 		df = df[df['koi_prad'] > RadiusBounds[0]]
@@ -57,7 +57,6 @@ for i in range(20):
 	pl_orbper = np.array(df.koi_period)
 
 	print("============================== Median Period = {} ========================".format(np.median(pl_orbper)))
-	print(IndicesSampled)
 
 	pl_orbpererr1 = np.repeat(np.nan, len(pl_orbper)) # np.array(df.period_upper)
 	pl_orbpererr2 = np.repeat(np.nan, len(pl_orbper)) # np.array(df.period_lower)
@@ -123,8 +122,8 @@ for i in range(20):
 	save_path = os.path.join(pwd, 'TestRuns', RunName)
 	ndim = len(InputDictionaries)
 
-
-	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=600, cores=6)
+if __name__ == '__main__':
+	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=2)
         #outputs, _ = fit_relation(DataDict, select_deg=[300,300], save_path=save_path, num_boot=0, degree_max=800, cores=6)
 
 	#outputs, _ = fit_relation(DataDict, select_deg=[25, 45], save_path=save_path, num_boot=0, degree_max=25)
