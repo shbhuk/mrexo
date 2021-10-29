@@ -168,7 +168,7 @@ def Integrate1D_Marginalize2D(
 	ndim == 3
 	Marginalize over 2 axes, and then integrate over 1.
 	Output will be a 2 dimensional array of PDFs as a function of RHS
-	x|z
+	x|y, z
 	"""
 	LHSSeq1 = DataDict['DataSequence'][LHSDimensions[0]]
 	RHSSeq1 = DataDict['DataSequence'][RHSDimensions[0]]
@@ -247,7 +247,9 @@ def IntegrateConditionalDistribution(
 
 
 	# Separate out the Integration bounds
+	# How many integrations to be performed in all? 
 	NumIntegrations = len(IntegrationBounds[list(IntegrationBounds.keys())[0]])
+	# Separate each integration into a separate dictionary
 	IntegrationRegions = [{k:IntegrationBounds[k][i] for k in IntegrationBounds.keys()} for i in range(NumIntegrations)]
 
 	RHSSeqList = []

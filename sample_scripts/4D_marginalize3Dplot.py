@@ -1,20 +1,26 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import numpy as np
-import imageio
-import glob
+# import imageio
+import glob, os
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
 ConditionString = 'r|stm,feh,p'
+ConditionString = 'm|insol,r,stm'
 ConditionName = '4D_'+ConditionString.replace('|', '_').replace(',', '_')
 
-PlotFolder = os.path.join(save_path, ConditionName)
+ResultDirectory = r'C:\\Users\\shbhu\\Documents\\GitHub\\PostDoc\\Data\\Mdwarf_4D_20210823_M_R_S_StM_30_Rp_lt4'
+PlotFolder = os.path.join(ResultDirectory, ConditionName)
 
 if not os.path.exists(PlotFolder):
 	print("4D Plot folder does not exist")
 	os.mkdir(PlotFolder)
 
-
+deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt'))
+DataDict = np.load(os.path.join(ResultDirectory, 'input', 'DataDict.npy'), allow_pickle=True).item()
+JointDist = np.load(os.path.join(ResultDirectory, 'output', 'JointDist.npy'), allow_pickle=True).T
+weights = np.loadtxt(os.path.join(ResultDirectory, 'output', 'weights.txt'))
+deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt')).astype(int)
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
@@ -36,11 +42,15 @@ zdata = DataDict['ndim_data'][RHSDimensions[2]]
 XTicks = np.linspace(x.min(), x.max(), 5)
 XLabels = np.round(10**XTicks, 2)
 # XLabels = np.array([0.7, 1, 3, 5, 10])
+XLabels = np.array([0.3, 1, 10, 50, 100])
 XTicks = np.log10(XLabels)
 
 YTicks = np.linspace(y.min(), y.max(), 5)
 YLabels = np.round(10**YTicks, 2)
-YLabels = np.round(YTicks, 2) # For Metallicity 
+YLabels = np.array([0.7, 1, 3, 5, 10])
+YLabels = np.array([1, 2, 3, 4])
+YTicks = np.log10(YLabels)
+# YLabels = np.round(YTicks, 2) # For Metallicity 
 
 for k in np.arange(0, len(z), 2, dtype=int):
 	
@@ -70,26 +80,30 @@ for k in np.arange(0, len(z), 2, dtype=int):
 	# ax1.set_title("{} = {} d".format( DataDict['ndim_label'][RHSDimensions[2]], str(np.round(10**ChosenZ,3))))
 	ax1.set_xlabel(DataDict['ndim_label'][RHSDimensions[0]]);
 	ax1.set_ylabel(DataDict['ndim_label'][RHSDimensions[1]]);
-	ax1.set_title('Rp|StM, Fe/H, P={} d'.format(int(10**ChosenZ)))
+	# ax1.set_title('Rp|StM, Fe/H, Insol={} S_earth'.format(int(10**ChosenZ)))
+	ax1.set_title('Mp|Rp, Insol, StM ={:.3f} M_sun'.format(10**ChosenZ))
+
 	
 	plt.colorbar(im, label=DataDict['ndim_label'][LHSDimensions[0]])
 	
 	# ZMask = (zdata > 0.5*(10**ChosenZ)) & (zdata < 2*(10**ChosenZ))
-	ZMask = zdata <= 5
+	ZMask = zdata <= 1
 	# ZMask = (zdata > 5) & (zdata <= 10)
-	Zmask = zdata >10
-	# ZMask = np.ones(len(zdata), dtype=bool)
+	# Zmask = zdata >10
+	ZMask = np.ones(len(zdata), dtype=bool)
 	xdataMasked = xdata[ZMask]
 	ydataMasked = ydata[ZMask]
 	Histogram = np.histogram2d(np.log10(xdataMasked), np.log10(ydataMasked))
 	HistogramMask = np.ones((np.shape(Histogram[0])))  
 	HistogramMask = np.ma.masked_where(Histogram[0] > 0, HistogramMask)
 
+	"""
 	ax1.imshow(HistogramMask, 
 		extent=(np.log10(xdata.min()), np.log10(xdata.max()), np.log10(ydata.min()), np.log10(ydata.max())),
 		# extent=(x.min(), x.max(), y.min(), y.max()),
 		 aspect='auto', origin='lower',
 		alpha=0.4, cmap='binary_r')	
+	"""
 
 	if RHSTerms[0] == 'stm':
 		XTicks = np.log10(np.array([0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]))
@@ -98,26 +112,26 @@ for k in np.arange(0, len(z), 2, dtype=int):
 		ax1.set_xticks(XTicks)
 		ax1.set_xticklabels(XLabels)
 		
-		ax1.set_xlim(np.log10(0.06), np.log10(0.6))
+		ax1.set_xlim(np.log10(0.08), np.log10(0.6))
 		
 		ax2 = ax1.twiny()
 		ax2.set_xlim(ax1.get_xlim())
 		# formatter = FuncFormatter(lambda x, pos: '{:0.2f}'.format(np.sqrt(x)))
 		# ax2.xaxis.set_major_formatter(formatter)
 
-		ax2Ticks = np.log10(np.array([0.6, 0.39, 0.2, 0.1, 0.077]))
-		ax2Labels = ['M0', 'M3', 'M5', 'M7', 'M9']
+		ax2Ticks = np.log10(np.array([0.6, 0.39, 0.2, 0.1]))
+		ax2Labels = ['M0', 'M3', 'M5', 'M7']
 		# ax2.set_xticks(XTicks)
 		# ax2.set_xticklabels(XLabels)
 		ax2.set_xticks(ax2Ticks)
 		ax2.set_xticklabels(ax2Labels)
 		
 	else:
-		XTicks = np.linspace(x.min(), x.max(), 5)
-		XLabels = np.round(10**XTicks, 2)
+		# XTicks = np.linspace(x.min(), x.max(), 5)
+		# XLabels = np.round(10**XTicks, 2)
 		plt.xticks(XTicks, XLabels)
-		
-		plt.xlim(np.log10(xdata.min()), np.log10(xdata.max()))
+		# plt.xlim(x.min(), x.max())
+		plt.xlim(np.log10(0.3), np.log10(100))
 
 	if RHSTerms[1] == 'feh':
 		YTicks = np.linspace(-0.5, 0.5, 5)
@@ -126,8 +140,8 @@ for k in np.arange(0, len(z), 2, dtype=int):
 		plt.ylim(-0.55, 0.45)
 
 	else:
-		YTicks = np.linspace(y.min(), y.max(), 5)
-		YLabels = np.round(10**YTicks, 2)
+		# YTicks = np.linspace(y.min(), y.max(), 5)
+		# YLabels = np.round(10**YTicks, 2)
 		plt.yticks(YTicks, YLabels)
 		plt.ylim(np.log10(ydata.min()), np.log10(ydata.max()))
 	
