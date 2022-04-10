@@ -27,10 +27,32 @@ except NameError:
 DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlanets')
 
 
-UTeff = 6500
+UTeff = 7000
 
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
-t = pd.read_csv(os.path.join(DataDirectory, 'Kepler_Teff_6500_ExcUpperLimits_20210908.csv'))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Kepler_Teff_6500_ExcUpperLimits_20210908.csv'))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_Thesis.csv'))
+# t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
+# t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
+
+RadiusBounds = [4, 15]
+MassBounds = [0, 3000]
+InsolationBounds = [0, 5000]
+StellarMassBounds = [0.2, 1.5]
+
+t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
+t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
+
+if InsolationBounds is not None:
+	t = t[(t.pl_insol > InsolationBounds[0]) & (t.pl_insol < InsolationBounds[1])]
+	
+if StellarMassBounds is not None:
+	t = t[(t.st_mass > StellarMassBounds[0]) & (t.st_mass < StellarMassBounds[1])]
+	
+
+RemovePlanets = ['Kepler-54 b', 'Kepler-54 c']
+t = t[~np.isin(t.pl_name, RemovePlanets)]
+
 #t = t.iloc[0:20]
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
@@ -67,9 +89,12 @@ Radius = np.array(t['pl_rade'])
 Radius_sigma1 = np.array(abs(t['pl_radeerr1']))
 Radius_sigma2 = np.array(abs(t['pl_radeerr1']))
 
-# """
+"""
 Period = np.array(t['pl_orbper'])
 PeriodSigma = np.repeat(np.nan, len(Period))
+
+"""
+
 
 StellarMass = np.array(t['st_mass'])
 StellarMassSigma = np.array(t['st_masserr1'])
@@ -79,8 +104,6 @@ StellarMassSigma = np.array(t['st_masserr1'])
 
 Insolation = np.array(t['pl_insol'])
 InsolationSigma = np.array(t['pl_insolerr1'])
-# """
-
 
 # Directory to store results in
 # result_dir = os.path.join(pwd, 'TestRuns','Mdwarfs_20200520_cv50')
@@ -121,23 +144,28 @@ Max, Min = np.nan, np.nan
 # Min -= 0.2
 
 
-RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':Max, 'Min':Min, 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':Max, 'Min':np.nan, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
 #FakePeriodDict = {'Data': FakePeriod, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
-PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
-StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+# PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
+StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 #MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**(-Metallicity), 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 
-InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
-# InputDictionaries = [RadiusDict, MassDict]
-InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+
+# RunName = 'Kepler_127_M_R_bounded'
+RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
+# RunName = 'Mdwarf_Kanodia2019_bounded'
+
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict , InsolationDict]#, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
@@ -153,11 +181,12 @@ InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 #DataDict = np.load(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\SimConstantDeg40\output\other_data_products\DataDict.npy", allow_pickle=True).item()
 
-save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20210823_M_R_S_StM')
+# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
+save_path = os.path.join(pwd, 'TestRuns', 'ThesisRuns', RunName)
  
 ndim = len(InputDictionaries)
 deg_per_dim = [25, 25, 25, 30]
-deg_per_dim = [30] * ndim
+# deg_per_dim = [30] * ndim
 # deg_per_dim = [35, 30, 32]
 """
 outputs = MLE_fit(DataDict, 
@@ -168,7 +197,8 @@ outputs = MLE_fit(DataDict,
 # outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=2)
+	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=2)
+	# outputs, _ = fit_relation(DataDict, select_deg=[35, 35], save_path=save_path, num_boot=0, degree_max=100, cores=2)
 
 	JointDist = outputs['JointDist']
 	weights = outputs['Weights']
@@ -219,25 +249,31 @@ if __name__ == '__main__':
 			aspect='auto', origin='lower'); 
 		plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
 		# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-		plt.ylabel("Log10 "+DataDict['ndim_label'][1]);
-		plt.xlabel("Log10 "+DataDict['ndim_label'][0]);
+		plt.ylabel(DataDict['ndim_label'][1]);
+		plt.xlabel(DataDict['ndim_label'][0]);
 		# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
 		# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
 		plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
 		plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
 		plt.tight_layout()
+		
+		"""
 		XTicks = np.linspace(x.min(), x.max(), 5)
 		# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
 		YTicks = np.linspace(y.min(), y.max(), 5)
 		# YTicks = np.log10(np.array([1, 3, 5, 10]))
-
-
 		XLabels = np.round(10**XTicks, 1)
-
 		YLabels = np.round(10**YTicks, 2)
+		"""
+		
+		XTicks = [0.5,1, 3, 10, 20]
+		YTicks = [0.1, 1, 3, 10, 30, 100, 300, 1000]
+		
+		XLabels = XTicks
+		YLabels = YTicks
 
-		plt.xticks(XTicks, XLabels)
-		plt.yticks(YTicks, YLabels)
+		plt.xticks(np.log10(XTicks), XLabels)
+		plt.yticks(np.log10(YTicks), YLabels)
 		cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
 		cbar.ax.set_yticklabels(['Min', 'Max'])
 		plt.tight_layout()

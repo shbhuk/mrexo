@@ -90,9 +90,9 @@ def plot_y_given_x_relation(result_dir):
     plt.ylim(10**Y_min, 10**Y_max)
     plt.xlim(10**X_min, 10**X_max)
     import matplotlib
-    matplotlib.rc('text', usetex=True) #use latex for text
+    # matplotlib.rc('text', usetex=True) #use latex for text
     plt.legend(handles = handles, prop={'size': 15})
-    plt.tight_layout()
+    # plt.tight_layout()
 
 
     return fig, ax1, handles
@@ -180,7 +180,7 @@ def plot_x_given_y_relation(result_dir):
     plt.xlim(10**Y_min, 10**Y_max)
     plt.ylim(10**X_min, 10**X_max)
     import matplotlib
-    matplotlib.rc('text', usetex=True) #use latex for text
+    # matplotlib.rc('text', usetex=True) #use latex for text
     plt.legend(handles = handles, prop={'size': 15})
     plt.tight_layout()
 
@@ -285,7 +285,7 @@ def plot_yx_and_xy(result_dir):
     plt.ylim(10**Y_min, 10**Y_max)
     plt.xlim(10**X_min, 10**X_max)
     import matplotlib
-    matplotlib.rc('text', usetex=True) #use latex for text
+    # matplotlib.rc('text', usetex=True) #use latex for text
     plt.legend(handles = handles, prop={'size': 15})
     plt.tight_layout()
 
