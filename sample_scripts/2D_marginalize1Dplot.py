@@ -33,15 +33,20 @@ RunName1 = 'Kepler_127_M_R_bounded'; d=0 # Original Ning 2018 Kepler sample with
 RunName2= 'Mdwarf_Kanodia2019_bounded'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
 RunName3 = 'Mdwarf_2D_20220325_M_R_bounded'; d=2 # Sample from 20220325 w/ 63 M dwarf planets
 
+RunName1 = 'FGK_2D_GiantPlanets_20220602' # FGK giant planet sample current w/ 348 planets
+RunName2= 'ThesisRuns/Mdwarf_Kanodia2019_bounded'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
+RunName3 = 'Mdwarf_2D_GiantPlanets_20220602' # M dwarf giant planet sample current w/ 15 planets
+
+
 Runs = [RunName1, RunName2, RunName3]
-Titles = ['Kepler (FGK) 2018: #127', 'M dwarf 2019: #24', 'M dwarf 2022: #63']
+Titles = ['FGK 2022: #348', 'M dwarf 2019: #4', 'M dwarf 2022: #18']
 TitlePos = [130, 270, 270]
 fig, ax = plt.subplots(3, sharex=True, sharey=True, figsize=(15,6.5))
 
 
 for d, RunName in enumerate(Runs):
 
-	save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', 'ThesisRuns', RunName)
+	save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
 
 
 
@@ -75,9 +80,9 @@ for d, RunName in enumerate(Runs):
 	MeasurementDict = {RHSTerms[0]:[[10**0.0], [np.nan]]}
 
 
-	r = [1.67, 3, 12]
-	colours = ["C0", "C1", "C2"]
-	MeasurementDict = {'r':[r, [np.nan, np.nan, np.nan]]}
+	r = [8, 12]
+	colours = ["C2", "C1", "C0"]
+	MeasurementDict = {'r':[r, np.repeat(np.nan, len(r))]}
 	LogMeasurementDict = {ke:np.log10(MeasurementDict[ke]) for ke in MeasurementDict.keys()}
 
 
@@ -115,7 +120,7 @@ for d, RunName in enumerate(Runs):
 
 	# plt.xlim(10**DataDict['ndim_bounds'][0][0], 10**DataDict['ndim_bounds'][0][1])
 	ax[d].set_xscale("log")
-	ax[d].set_xlim(0.1, 2000)
+	ax[d].set_xlim(10, 2000)
 	ax[d].set_ylim(0, 2.3)
 	ax[1].set_ylabel("Probability Density Function")
 
@@ -127,7 +132,7 @@ ax[0].set_title("Comparing Samples")
 plt.show(block=False)
 
 
-# """
+r"""
 ## Plot Joint Distribution 
 
 
@@ -192,4 +197,4 @@ for d, RunName in enumerate(Runs):
 	plt.tight_layout()
 	plt.savefig(os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', 'ThesisRuns', RunName+'_JointDist.png'))
 	plt.close("all")
-# """
+"""

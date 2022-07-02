@@ -38,7 +38,7 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 RadiusBounds = [4, 15]
 MassBounds = [0, 3000]
 InsolationBounds = [0, 5000]
-StellarMassBounds = [0.2, 1.5]
+StellarMassBounds = [0.2, 1.2]
 
 t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
 t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
@@ -105,10 +105,36 @@ StellarMassSigma = np.array(t['st_masserr1'])
 Insolation = np.array(t['pl_insol'])
 InsolationSigma = np.array(t['pl_insolerr1'])
 
-# Directory to store results in
-# result_dir = os.path.join(pwd, 'TestRuns','Mdwarfs_20200520_cv50')
-# result_dir = os.path.join(pwd,'TestRuns', 'Kepler127_aic')
-# result_dir = os.path.join(pwd, 'FGK_319_cv100')
+#############################
+### Fake Mass, Radius, Insolation
+#############################
+
+Radius = 10**np.linspace(-0.3, 2.5)
+# Symmetrical errorbars
+Radius_sigma1 = Radius*0.1
+Radius_sigma2 = Radius*0.1
+RadiusBounds = [0.1, 300]
+
+Mass = Radius*10
+# Symmetrical errorbars
+Mass_sigma1 = Mass*0.1
+Mass_sigma2 = Mass*0.1
+MassBounds = [1, 3000]
+
+Insolation = np.ones(len(Radius))
+InsolationSigma = np.ones(len(Radius))*0.1
+InsolationBounds = [0.9, 1.1]
+
+StellarMass = np.ones(len(Radius))*0.5
+StellarMassSigma = StellarMass*0.2
+StellarMassBounds = [0.25, 0.75]
+
+
+#############################
+#############################
+#############################
+
+
 
 """
 # Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
@@ -162,10 +188,11 @@ import matplotlib.pyplot as plt
 
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
+RunName = 'Fake_4D_MRSStM'
 # RunName = 'Mdwarf_Kanodia2019_bounded'
 
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict , InsolationDict]#, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
@@ -197,8 +224,8 @@ outputs = MLE_fit(DataDict,
 # outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=2)
-	# outputs, _ = fit_relation(DataDict, select_deg=[35, 35], save_path=save_path, num_boot=0, degree_max=100, cores=2)
+	# outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=2)
+	outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
 
 	JointDist = outputs['JointDist']
 	weights = outputs['Weights']
@@ -266,14 +293,14 @@ if __name__ == '__main__':
 		YLabels = np.round(10**YTicks, 2)
 		"""
 		
-		XTicks = [0.5,1, 3, 10, 20]
-		YTicks = [0.1, 1, 3, 10, 30, 100, 300, 1000]
+		# XTicks = [0.5,1, 3, 10, 20]
+		# YTicks = [0.1, 1, 3, 10, 30, 100, 300, 1000]
 		
-		XLabels = XTicks
-		YLabels = YTicks
+		# XLabels = XTicks
+		# YLabels = YTicks
 
-		plt.xticks(np.log10(XTicks), XLabels)
-		plt.yticks(np.log10(YTicks), YLabels)
+		# plt.xticks(np.log10(XTicks), XLabels)
+		# plt.yticks(np.log10(YTicks), YLabels)
 		cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
 		cbar.ax.set_yticklabels(['Min', 'Max'])
 		plt.tight_layout()

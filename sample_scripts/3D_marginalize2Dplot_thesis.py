@@ -8,7 +8,7 @@ import pandas as pd
 from scipy.interpolate import UnivariateSpline
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
-ConditionString = 'm|r,stm'
+ConditionString = 'm|r,insol'
 
 ################ Run Conditional Distribution ################ 
 from mrexo.mle_utils_nd import calculate_conditional_distribution, NumericalIntegrate2D
@@ -24,9 +24,9 @@ from mrexo.mle_utils_nd import calculate_conditional_distribution, NumericalInte
 # ConditionString = 'r|stm'
 
 
-RunName = "Mdwarf_3D_deg45_20220409_M_R_StM1.2_v2_bounded"
+RunName = "Mdwarf_3D_MRS_GiantPlanets_20220602"
 # RunName = "Fake_3D_MRS"
-save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', 'ThesisRuns', RunName)
+save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
 
 deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt'), dtype=int)
 DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
@@ -55,7 +55,7 @@ zseq = DataSequences[RHSDimensions[1]]
 DataDict = DataDict
 MeasurementDict = {'r':[[1, 2], [np.nan, np.nan]], 'p':[[1, 1], [np.nan, np.nan]], 'stm':[[0.1, 0.3], [np.nan, np.nan]]}
 MeasurementDict = {'r':[[10**0.2, 10**0.4, 10**0.6], [np.nan, np.nan, np.nan]]}#, 'p':[[1, 1, 10], [np.nan, np.nan]], 'stm':[[0.5], [np.nan, np.nan]]}
-MeasurementDict = {'stm':[[0.55, 0.6, 0.75, 1.0], [np.nan]*4], 'r':[[12], [np.nan]]}
+MeasurementDict = {'insol':[[10, 100, 1000], [np.nan]*4], 'r':[[12], [np.nan]]}
 # MeasurementDict = {'st':[[1.05], [np.nan]], 'r':[[12], [np.nan]]}
 # MeasurementDict = {'r':[[10], [np.nan]], 'm':[[100], [np.nan]]}
 
@@ -69,7 +69,7 @@ fig, ax = plt.subplots()#1, sharex=True, sharey=True, figsize=(1,6.5))
 
 cmap =matplotlib.cm.Spectral
 # Establish colour range based on variable
-norm = matplotlib.colors.Normalize(vmin=0.5, vmax=1.15)
+norm = matplotlib.colors.Normalize(vmin=0, vmax=3)
 
 
 
@@ -77,7 +77,7 @@ for j in range(len(MeasurementDict[RHSTerms[0]][0])):
 	for k in range(len(MeasurementDict[RHSTerms[1]][0])):
 		# print(j, k)
 		
-		colour = cmap(norm(MeasurementDict[RHSTerms[1]][0][k]))
+		colour = cmap(norm(np.log10(MeasurementDict[RHSTerms[1]][0][k])))
 		LogMeasurementDict = {RHSTerms[0]:[[np.log10(MeasurementDict[RHSTerms[0]][0][j])], [np.nan]], RHSTerms[1]:[[np.log10(MeasurementDict[RHSTerms[1]][0][k])], [np.nan]]}
 	
 		ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
@@ -86,7 +86,7 @@ for j in range(len(MeasurementDict[RHSTerms[0]][0])):
 		ConditionPDF = UnivariateSpline(xseq, ConditionalDist[0]).integral(
 			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
 			
-		ax.plot(10**xseq, ConditionalDist[0]/ConditionPDF, label=r'St. Mass = {:.2f} '.format(MeasurementDict[RHSTerms[1]][0][k])+' M$_{\odot}$', c=colour)
+		ax.plot(10**xseq, ConditionalDist[0]/ConditionPDF, label=r'Insol = {:.2f} '.format(MeasurementDict[RHSTerms[1]][0][k])+' S $_{\oplus}$', c=colour)
 		ax.axvline(10**MeanPDF[0], linestyle='dashed', c=colour)
 
 
@@ -98,7 +98,7 @@ print(MeasurementDict)
 plt.xlabel("Planet Mass ($M_{\oplus}$)")
 plt.ylabel("Probability Density Function")
 plt.legend()
-plt.title("Expected Planetary Mass for 12 Re vs Host Star Mass\n f(pl_masse|pl_rade=12, stm)", fontsize=15)
+plt.title("Expected Planetary Mass for 12 Re vs Insolation \n f(pl_masse|pl_rade=12, insol)", fontsize=15)
 plt.tight_layout()
 plt.grid(alpha=0.3)
 plt.show(block=False)
