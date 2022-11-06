@@ -63,7 +63,7 @@ MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, '
 PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
 
 
-from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 InputDictionaries = [RadiusDict, MassDict, PeriodDict]

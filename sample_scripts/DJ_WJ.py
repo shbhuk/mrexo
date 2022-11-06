@@ -48,7 +48,7 @@ PeriodDict = {'Data': pl_orbper, 'SigmaLower': pl_orbpererr2,  "SigmaUpper":pl_o
 EccenDict = {'Data': eccen, 'SigmaLower': eccenerr2,  "SigmaUpper":eccenerr1, 'Max':Max, 'Min':Min, 'Label': 'Eccentricity', 'Char':'e'}
 
 
-from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 

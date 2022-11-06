@@ -148,7 +148,7 @@ MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(
 DensityDict = {'Data': Density, 'SigmaLower':DensitySigma, 'SigmaUpper':DensitySigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Density (g/cm3)', 'Char':'dens'}
 InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
-from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 # InputDictionaries = [RadiusDict, MassDict]

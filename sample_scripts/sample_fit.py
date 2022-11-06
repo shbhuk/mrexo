@@ -182,7 +182,7 @@ StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUp
 
 InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
-from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 

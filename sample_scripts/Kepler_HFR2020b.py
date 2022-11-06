@@ -90,7 +90,7 @@ for i in range(1):
 	# TeffDict = {'Data': st_teff, 'SigmaLower': st_tefferr1, "SigmaUpper":st_tefferr2, 'Max':np.nan, 'Min':np.nan, 'Label':'Stellar Teff (K)', 'Char':'teff'}
 
 
-	from mrexo.mle_utils_nd import InputData, MLE_fit, _find_indv_pdf
+	from mrexo.mle_utils_nd import InputData, MLE_fit
 	from mrexo.fit_nd import fit_relation
 	import matplotlib.pyplot as plt
 
