@@ -238,6 +238,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		abs_tol, save_path, Log, verbose, SaveCMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
+	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
 	'''
@@ -261,7 +262,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	for i in range(0,n):
 		kron_temp = 1
 		for dim in range(0,ndim):
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["ndim_data"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["ndim_data"][dim][i], 
 				a_std=DataDict["ndim_sigma"][dim][i],
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -308,9 +309,9 @@ def _beta_pdf(x,a,b):
 	return f
 
 # Ndim - 20201130
-def _pdfnorm_beta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
+def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 	'''
-	Product of normal and beta distribution
+	Product of Normal and beta distribution
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
@@ -321,8 +322,18 @@ def _pdfnorm_beta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 		norm_beta = _norm_pdf(a_obs, loc=a, scale=a_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
 	return norm_beta
 
+def _PDF_UniformBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
+	'''
+	Product of Uniform and beta distribution
+	INCOMPLETE 20221106
+	
+	'''
+
+	return norm_beta
+
+
 # Ndim - 20201130
-def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
+def IntegrateFunction(data, data_std, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
 	'''
 	Integrate the product of the normal and beta distribution.
 
@@ -334,20 +345,28 @@ def integrate_function(data, data_std, deg, degree, a_max, a_min, Log=False, abs
 	shape2 = deg - degree + 1
 	Log = Log
 
-	integration_product = quad(_pdfnorm_beta, a=a_min, b=a_max,
+	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
 						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
 	return integration_product[0]
 
 # Ndim - 20201130
-def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
+def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
 	'''
-	Find the individual probability density Function for a variable.
+	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
+
 	If the data has uncertainty, the joint distribution is modelled using a
 	convolution of beta and normal distributions.
 
+	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
+	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
+	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in linear space. 
+	Therefore, while calculating the C_pdf, log=True, so that for the PDF of the normal function, everything is in linear space. 
+
+	Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for x between log(x_min) and log(x_max), and there is no measurement uncertainty. 
+	It is taking the weights (already computed considering the measurement uncertainty) and computing the underlying PDF. Therefore, everything is in logspace.
+
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 
-	Always use with Log=False
 	'''
 
 
@@ -358,7 +377,7 @@ def _find_indv_pdf(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Lo
 			a_std = (a - a_min)/(a_max - a_min)
 		a_beta_indv = np.array([_beta_pdf(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
-		a_beta_indv = np.array([integrate_function(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+		a_beta_indv = np.array([IntegrateFunction(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
 
@@ -479,7 +498,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		 
 		for j in range(len(RHSTerms)):
 			rdim = RHSDimensions[j]
-			indv_pdf = _find_indv_pdf(a=MeasurementDict[RHSTerms[j]][0][i], 
+			indv_pdf = _ComputeConvolvedPDF(a=MeasurementDict[RHSTerms[j]][0][i], 
 						a_std=MeasurementDict[RHSTerms[j]][1][i],
 						deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
 						a_max=DataDict["ndim_bounds"][rdim][1], 
@@ -615,7 +634,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 		 
 		for j in range(len(RHSTerms)):
 			rdim = RHSDimensions[j]
-			indv_pdf = _find_indv_pdf(a=MeasurementDict[RHSTerms[j]][0][i], 
+			indv_pdf = _ComputeConvolvedPDF(a=MeasurementDict[RHSTerms[j]][0][i], 
 						a_std=MeasurementDict[RHSTerms[j]][1][i],
 						deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
 						a_max=DataDict["ndim_bounds"][rdim][1], 
@@ -664,7 +683,7 @@ def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_
 	if type(a) == list:
 		a = np.array(a)
 
-	a_beta_indv = _find_indv_pdf(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=a_std, abs_tol=abs_tol, Log=False)
+	a_beta_indv = _ComputeConvolvedPDF(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=a_std, abs_tol=abs_tol, Log=False)
 	a_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),a_beta_indv)
 
 	# Equation 10b Ning et al 2018
@@ -760,7 +779,7 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
 		for i in range(NSeq):
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -791,7 +810,7 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
 		for i in range(NSeq):
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -832,7 +851,7 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 	# Quick loop to calculate individual PDFs
 	for dim in range(ndim):
 		for i in range(NSeq):
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -874,14 +893,14 @@ def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	indv_pdf_per_dim = [np.zeros((NSeq, deg)) for deg in deg_per_dim]
 
 	for i in range(NSeq):
-		indv_pdf_per_dim[0][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][0][i], 
+		indv_pdf_per_dim[0][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][0][i], 
 			a_std=np.nan,
 			deg=deg_per_dim[0], deg_vec=deg_vec_per_dim[0],
 			a_max=DataDict["ndim_bounds"][0][1], 
 			a_min=DataDict["ndim_bounds"][0][0], 
 			Log=False)
 		for j in range(NSeq):
-			indv_pdf_per_dim[1][j,:] = _find_indv_pdf(a=DataDict["DataSequence"][1][j], 
+			indv_pdf_per_dim[1][j,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][1][j], 
 				a_std=np.nan,
 				deg=deg_per_dim[1], deg_vec=deg_vec_per_dim[0],
 				a_max=DataDict["ndim_bounds"][1][1], 
@@ -893,6 +912,7 @@ def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	return Joint
 """
 
+"""
 def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
@@ -927,7 +947,7 @@ def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ver
 			
 			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
 			# distributed in log space (between Max and Min)
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -994,7 +1014,7 @@ def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ve
 			
 			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
 			# distributed in log space (between Max and Min)
-			indv_pdf_per_dim[dim][i,:] = _find_indv_pdf(a=DataDict["DataSequence"][dim][i], 
+			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
 				a_std=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
@@ -1012,7 +1032,7 @@ def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ve
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return joint, indv_pdf_per_dim
-
+"""
 
 
 

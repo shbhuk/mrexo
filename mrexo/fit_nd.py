@@ -18,19 +18,14 @@ def fit_relation(DataDict,
 	select_deg=None, degree_max=None, k_fold=None, num_boot=100,
 	cores=1, abs_tol=1e-8, verbose=2):
 	"""
-	Fit a Y and X relationship using a non parametric approach with beta densities
+	Fit an n-dimensional relationship using a non parametric approach with beta densities
 
 	\nINPUTS:
 
 		save_path: Folder name (+path) to save results in.
 				   Eg. save_path = '~/mrexo_working/trial_result' will create the
 				   'trial_result' results folder in mrexo_working
-		YSigmaLimit: The lower limit on sigma value for Y. If the sigmas are
-				lower than this limit, they get changed to None. This is because,
-				the Standard normal distribution blows up if the sigma values are
-				too small (~1e-4). Then the distribution is no longer a convolution
-				of Normal and Beta distributions, but is just a Beta distribution.
-		XSigmaLimit: The lower limit on sigma value for X. If the sigmas are
+		SigmaLimit: The lower limit on sigma value for all dimensions. If the sigmas are
 				lower than this limit, they get changed to None. This is because,
 				the Standard normal distribution blows up if the sigma values are
 				too small (~1e-4). Then the distribution is no longer a convolution
@@ -46,8 +41,9 @@ def fit_relation(DataDict,
 								optimization process to find the number of degrees.
 							NOTE: Use AIC or BIC optimization only for
 								large (> 200) sample sizes.
-		degree_max: Maximum degree used for cross-validation/AIC/BIC. Type:Integer.
-					Default=None. If None, uses: n/np.log10(n),
+		degree_max: Maximum degree checked during degree selection. 
+					Type:Integer. 	Default=None. 
+					If None, uses: n/np.log10(n),
 					where n is the number of data points.
 		k_fold: If using cross validation method, use k_fold (Integer)
 				number of folds.
@@ -188,15 +184,15 @@ def fit_relation(DataDict,
 	np.savetxt(os.path.join(aux_output_location, 'NDimChar.txt'), Char, fmt="%s", comments="#Dimension Character")
 
 
-	message = """
+    message = """
 	___  _________ _______   _______
 	|  \/  || ___ \  ___\ \ / /  _  |
 	| .  . || |_/ / |__  \ V /| | | |
-	| |\/| || | / __| /   \| | | |
+	| |\/| ||    /|  __| /   \| | | |
 	| |  | || |\ \| |___/ /^\ \ \_/ /
 	\_|  |_/\_| \_\____/\/   \/\___/
+    """
 
-	"""
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
