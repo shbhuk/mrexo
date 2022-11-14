@@ -8,6 +8,7 @@ from scipy.optimize import brentq as root
 from scipy.interpolate import interpn
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
+from scipy.special import erfinv
 import datetime,os
 from multiprocessing import current_process
 
@@ -23,43 +24,58 @@ from .Optimizers import optimizer, SLSQP_optimizer
 # Ndim - 20201130
 def InputData(ListofDictionaries):
 	'''
-	Input List of Dictionaries, where each dictionary corresponds to a dimension
-	Example dictionary
-	RadiusDict = {'Data': Radius, 'Sigma': Radius_sigma,
-		'Max':None, 'Min':None,
-		'Label':'Radius', 'Char':'r'}
-	MassDict = {'Data': Mass, 'Sigma': Mass_sigma,
-		'Max':None, 'Min':None,
-		'Label':'Mass', 'Char':'m'}
+	Input List of Dictionaries of length 'd' where d is the number of dimensions, where each dictionary corresponds to a dimension
+	Example:
+		ListofDictionaries = [RadiusDict, MassDict, etc.,]
 
-	The number of 'Data' entries and 'Sigma' entries in each dictionary must be equal
+	Here each dictionary has the following keys:
+		Data: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'
+		The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
+		LSigma: Sigma value for the lower normal distribution. Same scale as Data (log/linear). Length 'L'
+		USigma: Sigma value for the upper normal distribution. Same scale as Data (log/linear). Length 'L'
+		Max: log10 of the upper bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(1.1*np.max(ndim_data[d]))
+		Min: log10 of the lower bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(0.9*np.min(ndim_data[d]))
+		Label: Axes label (string) to be used for this dimension. E.g. 'Radius ($R_{\oplus}$)' or 'Pl Insol ($S_{\oplus}$)'
+		'Char': Symbol (character) to be used for this dimension. E.g. 'r' or 's'
+
+	The number of 'Data' entries and 'USigma'/'LSigma' entries in each dictionary must be equal
 	
 	Output:
-		DataDict with attributes - 
-			'ndim_data', 'ndim_sigma', 'ndim_bounds', 'ndim_char', 'ndim_label'
+		DataDict with keys - 
+			ndim_data: 2D numpy array of size d x L with the observed data
+			ndim_LSigma: 2D numpy array of size d x L with the lower sigma value
+			ndim_USigma: 2D numpy array of size d x L with the upper sigma value
+			ndim_sigma: 2D numpy array of size d x L with the sigma value averaged across upper and lower normals [DEPRECATED]
+			ndim_bounds: 2D numpy array of size  d x 2 with the lower and upper bounds (log10) for each dimension
+			ndim_char: List of 'd' characters denoting each dimension
+			ndim_label: List of 'd' axes labels denoting each dimension
+			ndim: Integer with the number of dimensions (d)
+			DataLength: Integer with the size of the dataset (L)s
+			DataSequence: 2D numpy array of size d x 50 with a uniform sequence for each dimension between the lower and upper bounds. 
+					Note: This is uniform in log10-space since the bounds are in log10 space.
 		
 	'''
 	
 	ndim = len(ListofDictionaries)
 	ndim_data = np.zeros((ndim, len(ListofDictionaries[0]['Data'])))
-	ndim_sigmaL  = np.zeros((ndim, len(ListofDictionaries[0]['SigmaLower'])))
-	ndim_sigmaU  = np.zeros((ndim, len(ListofDictionaries[0]['SigmaUpper'])))
-	ndim_sigma = np.zeros((ndim, len(ListofDictionaries[0]['SigmaUpper'])))
+	ndim_LSigma  = np.zeros((ndim, len(ListofDictionaries[0]['LSigma'])))
+	ndim_USigma  = np.zeros((ndim, len(ListofDictionaries[0]['USigma'])))
+	ndim_sigma = np.zeros((ndim, len(ListofDictionaries[0]['USigma'])))
 	ndim_bounds = np.zeros((ndim, 2))
 	ndim_char = []
 	ndim_label = []
 	
 	for d in range(len(ListofDictionaries)):
 		assert len(ListofDictionaries[d]['Data']) == np.shape(ndim_data)[1], "Data entered for dimension {} does not match length for dimension 0".format(d)
-		assert len(ListofDictionaries[d]['SigmaLower']) == np.shape(ndim_sigmaL)[1], "Length of Sigma Lower entered for dimension {} does not match length for dimension 0".format(d)
-		assert len(ListofDictionaries[d]['SigmaUpper']) == np.shape(ndim_sigmaU)[1], "Length of Sigma Upper entered for dimension {} does not match length for dimension 0".format(d)
-		assert len(ListofDictionaries[d]['SigmaUpper']) == len(ListofDictionaries[d]['SigmaLower']), "Length of Sigma Upper entered for dimension {} does not match length for Sigma Lower".format(d)
-		assert len(ListofDictionaries[d]['Data']) == len(ListofDictionaries[d]['SigmaLower']), 'Data and Sigma for dimension {} are not of same length'.format(d)
+		assert len(ListofDictionaries[d]['LSigma']) == np.shape(ndim_LSigma)[1], "Length of Sigma Lower entered for dimension {} does not match length for dimension 0".format(d)
+		assert len(ListofDictionaries[d]['USigma']) == np.shape(ndim_USigma)[1], "Length of Sigma Upper entered for dimension {} does not match length for dimension 0".format(d)
+		assert len(ListofDictionaries[d]['USigma']) == len(ListofDictionaries[d]['LSigma']), "Length of Sigma Upper entered for dimension {} does not match length for Sigma Lower".format(d)
+		assert len(ListofDictionaries[d]['Data']) == len(ListofDictionaries[d]['LSigma']), 'Data and Sigma for dimension {} are not of same length'.format(d)
 		
 		ndim_data[d] = ListofDictionaries[d]['Data']
-		ndim_sigmaL[d] = ListofDictionaries[d]['SigmaLower']
-		ndim_sigmaU[d] = ListofDictionaries[d]['SigmaUpper']
-		ndim_sigma[d] = np.average([np.abs(ndim_sigmaL[d]), np.abs(ndim_sigmaU[d])], axis=0)
+		ndim_LSigma[d] = ListofDictionaries[d]['LSigma']
+		ndim_USigma[d] = ListofDictionaries[d]['USigma']
+		ndim_sigma[d] = np.average([np.abs(ndim_LSigma[d]), np.abs(ndim_USigma[d])], axis=0)
 		ndim_char.append(ListofDictionaries[d]['Char'])
 		ndim_label.append(ListofDictionaries[d]['Label'])
 		
@@ -77,8 +93,8 @@ def InputData(ListofDictionaries):
 		
 	DataDict = {"ndim_data":ndim_data, 
 						"ndim_sigma":ndim_sigma,
-						"ndim_sigmaL":ndim_sigmaL,
-						"ndim_sigmaU":ndim_sigmaU,
+						"ndim_LSigma":ndim_LSigma,
+						"ndim_USigma":ndim_USigma,
 						"ndim_bounds":ndim_bounds,
 						"ndim_char":ndim_char,
 						"ndim_label":ndim_label,
@@ -263,7 +279,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		kron_temp = 1
 		for dim in range(0,ndim):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["ndim_data"][dim][i], 
-				a_std=DataDict["ndim_sigma"][dim][i],
+				a_LSigma=DataDict["ndim_LSigma"][dim][i], a_USigma=DataDict["ndim_USigma"][dim][i],
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -288,7 +304,30 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	return C_pdf
 
 
-def _norm_pdf(a, loc, scale):
+def InvertHalfNormalPDF(x, p, loc=0):
+	"""
+	Invert the normal PDF to find the sigma that gives '1 - (1-p/2)' as the cumulative probability at 'x'.
+	In other words, P(> x) = 1-p
+
+	For example, if you care about 99.7% upper limits, p=0.997. Then we will invert the normal distribution to find the 
+	quantile at 1 - (1-0.997/2) = 0.9985, because the upper limits are being approximated as a half-normal,  centered at 0.
+	
+
+	INPUTS:
+		x: Point at which  P(> x) = 1-p
+		p: Probability (decimal)
+		loc: Median value of Gaussian Distribution
+	OUTPUTS:
+		scale: Sigma of Gaussian Distribution
+	"""
+
+	p = 1 - (1-p)/2
+
+	scale =  (x-loc)/(erfinv(p*2-1)*np.sqrt(2))
+	return scale
+
+
+def _PDF_Normal(a, loc, scale):
 	'''
 	Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
 	Runs much quicker without the generic function handling.
@@ -296,15 +335,15 @@ def _norm_pdf(a, loc, scale):
 	N = (a - loc)/scale
 	return np.exp(-N*N/2)/(np.sqrt(2*np.pi))/scale
 
-def _int_gamma(a):
+def _GammaFunction(a):
 	return scipy.math.factorial(a-1)
 
 
-def _beta_pdf(x,a,b):
+def _PDF_Beta(x,a,b):
 	if (a>=170) | (b>=170) | (a+b>170):
-		f = float((Decimal(_int_gamma(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_int_gamma(a))*Decimal(_int_gamma(b))))
+		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
 	else:
-		f = (_int_gamma(a+b) * x**(a-1)*(1-x)**(b-1)) / (_int_gamma(a)*_int_gamma(b))
+		f = (_GammaFunction(a+b) * x**(a-1)*(1-x)**(b-1)) / (_GammaFunction(a)*_GammaFunction(b))
 
 	return f
 
@@ -317,30 +356,21 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 	'''
 
 	if Log == True:
-		norm_beta = _norm_pdf(a_obs, loc=10**a, scale=a_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
+		norm_beta = _PDF_Normal(a_obs, loc=10**a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
 	else:
-		norm_beta = _norm_pdf(a_obs, loc=a, scale=a_std) * _beta_pdf((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
-	return norm_beta
-
-def _PDF_UniformBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
-	'''
-	Product of Uniform and beta distribution
-	INCOMPLETE 20221106
-	
-	'''
-
+		norm_beta = _PDF_Normal(a_obs, loc=a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
 	return norm_beta
 
 
 # Ndim - 20201130
-def IntegrateFunction(data, data_std, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
+def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
 	'''
 	Integrate the product of the normal and beta distribution.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
 	a_obs = data
-	a_std = data_std
+	a_std = data_Sigma
 	shape1 = degree
 	shape2 = deg - degree + 1
 	Log = Log
@@ -349,13 +379,62 @@ def IntegrateFunction(data, data_std, deg, degree, a_max, a_min, Log=False, abs_
 						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
 	return integration_product[0]
 
+
+def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
+		deg, degree, 
+		a_max, a_min, Log=False, abs_tol=1e-8):
+	'''
+	Integrate the product of the two half normal and beta distribution.
+
+	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
+	'''
+	a_obs = data
+	shape1 = degree
+	shape2 = deg - degree + 1
+	Log = Log
+
+	integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
+						  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+	integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
+						  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+	return integration_product_L[0] + integration_product_U[0]
+
+
 # Ndim - 20201130
-def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
+def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
+	'''
+	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
+	If the data has uncertainty, the joint distribution is modelled using a
+	convolution of beta and normal distributions.
+	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
+	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
+	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in linear space. 
+	Therefore, while calculating the C_pdf, log=True, so that for the PDF of the normal function, everything is in linear space. 
+	Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for x between log(x_min) and log(x_max), and there is no measurement uncertainty. 
+	It is taking the weights (already computed considering the measurement uncertainty) and computing the underlying PDF. Therefore, everything is in logspace.
+	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
+	'''
+
+
+	if np.isnan(a_std):
+		if Log:
+			a_std = (np.log10(a) - a_min)/(a_max - a_min)
+		else:
+			a_std = (a - a_min)/(a_max - a_min)
+		a_beta_indv = np.array([_PDF_Beta(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
+	else:
+		a_beta_indv = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+	return a_beta_indv
+
+def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
+	a_LSigma=np.nan, a_USigma=np.nan,
+	abs_tol=1e-8, Log=False):
 	'''
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 
 	If the data has uncertainty, the joint distribution is modelled using a
-	convolution of beta and normal distributions.
+	convolution of beta and normal distributions. Whereas for data without uncertainty, the convolution basically decomposes to the value of the beta function
+	at x = x_obs.
 
 	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
 	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
@@ -370,15 +449,16 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e
 	'''
 
 
-	if np.isnan(a_std):
+	if np.isnan(a_USigma) | np.isnan(a_LSigma):
 		if Log:
-			a_std = (np.log10(a) - a_min)/(a_max - a_min)
+			a_norm = (np.log10(a) - a_min)/(a_max - a_min)
 		else:
-			a_std = (a - a_min)/(a_max - a_min)
-		a_beta_indv = np.array([_beta_pdf(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
+			a_norm = (a - a_min)/(a_max - a_min)
+		PDF = np.array([_PDF_Beta(a_norm, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
-		a_beta_indv = np.array([IntegrateFunction(data=a, data_std=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
-	return a_beta_indv
+		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+
+	return PDF
 
 
 def calculate_conditional_distribution(ConditionString, DataDict, 
@@ -499,7 +579,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		for j in range(len(RHSTerms)):
 			rdim = RHSDimensions[j]
 			indv_pdf = _ComputeConvolvedPDF(a=MeasurementDict[RHSTerms[j]][0][i], 
-						a_std=MeasurementDict[RHSTerms[j]][1][i],
+						a_LSigma=MeasurementDict[RHSTerms[j]][1][i][0], a_USigma=MeasurementDict[RHSTerms[j]][1][i][1],
 						deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
 						a_max=DataDict["ndim_bounds"][rdim][1], 
 						a_min=DataDict["ndim_bounds"][rdim][0], 
@@ -635,7 +715,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 		for j in range(len(RHSTerms)):
 			rdim = RHSDimensions[j]
 			indv_pdf = _ComputeConvolvedPDF(a=MeasurementDict[RHSTerms[j]][0][i], 
-						a_std=MeasurementDict[RHSTerms[j]][1][i],
+						a_LSigma=MeasurementDict[RHSTerms[j]][1][i][0], a_USigma=MeasurementDict[RHSTerms[j]][1][i][1],
 						deg=deg_per_dim[rdim], deg_vec=deg_vec_per_dim[rdim],
 						a_max=DataDict["ndim_bounds"][rdim][1], 
 						a_min=DataDict["ndim_bounds"][rdim][0], 
@@ -672,7 +752,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 
 
-def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
+def Oldcond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
 	'''
 	Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
 
@@ -684,10 +764,10 @@ def cond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_
 		a = np.array(a)
 
 	a_beta_indv = _ComputeConvolvedPDF(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=a_std, abs_tol=abs_tol, Log=False)
-	a_beta_pdf = np.kron(np.repeat(1,np.max(deg_vec)),a_beta_indv)
+	a_PDF_Beta = np.kron(np.repeat(1,np.max(deg_vec)),a_beta_indv)
 
 	# Equation 10b Ning et al 2018
-	denominator = np.sum(w_hat * a_beta_pdf)
+	denominator = np.sum(w_hat * a_PDF_Beta)
 
 	if denominator == 0:
 		denominator = np.nan
@@ -780,7 +860,7 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	for dim in range(ndim):
 		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -811,7 +891,7 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 	for dim in range(ndim):
 		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -852,7 +932,7 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 	for dim in range(ndim):
 		for i in range(NSeq):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -878,8 +958,8 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 	"""		
 	return Joint, indv_pdf_per_dim
 
-"""
-def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
+
+def _OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
 	'''
 	Much slower than the previous one
 	'''
@@ -894,14 +974,14 @@ def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
 
 	for i in range(NSeq):
 		indv_pdf_per_dim[0][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][0][i], 
-			a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 			deg=deg_per_dim[0], deg_vec=deg_vec_per_dim[0],
 			a_max=DataDict["ndim_bounds"][0][1], 
 			a_min=DataDict["ndim_bounds"][0][0], 
 			Log=False)
 		for j in range(NSeq):
 			indv_pdf_per_dim[1][j,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][1][j], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[1], deg_vec=deg_vec_per_dim[0],
 				a_max=DataDict["ndim_bounds"][1][1], 
 				a_min=DataDict["ndim_bounds"][1][0], 
@@ -910,10 +990,10 @@ def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
 			Joint[i,j] = TensorMultiplication(Intermediate, indv_pdf_per_dim[0][i,:])
 	
 	return Joint
-"""
 
-"""
-def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+
+
+def _Oldcalculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
 	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
@@ -948,7 +1028,7 @@ def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ver
 			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
 			# distributed in log space (between Max and Min)
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -978,7 +1058,7 @@ def _calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ver
 	return joint, indv_pdf_per_dim
 
 
-def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __Oldcalculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
 	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
@@ -1015,7 +1095,7 @@ def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ve
 			# Here log is false, since the measurements are drawn from DataSequence which is uniformly 
 			# distributed in log space (between Max and Min)
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["DataSequence"][dim][i], 
-				a_std=np.nan,
+				a_LSigma=np.nan, a_USigma=np.nan,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
@@ -1032,7 +1112,6 @@ def __calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, ve
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return joint, indv_pdf_per_dim
-"""
 
 
 

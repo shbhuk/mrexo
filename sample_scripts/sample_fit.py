@@ -12,7 +12,7 @@ import pandas as pd
 Platform = sys.platform
 
 if Platform == 'win32':
-	HomeDir =  'C:\\Users\\shbhu\\Documents\\\\GitHub\\'
+	HomeDir =  'C:\\Users\\skanodia\\Documents\\\\GitHub\\'
 else:
 	HomeDir = r"/storage/home/szk381/work/"
 
@@ -170,17 +170,17 @@ Max, Min = np.nan, np.nan
 # Min -= 0.2
 
 
-RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+RadiusDict = {'Data': Radius, 'LSigma': Radius_sigma1,  "USigma":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'LSigma': Mass_sigma1, "USigma":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
-#FakePeriodDict = {'Data': FakePeriod, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
-# PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
-StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
-#MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**(-Metallicity), 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+#FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
+# PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
+StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassSigma, "USigma":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+#MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**(-Metallicity), 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 
-InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
