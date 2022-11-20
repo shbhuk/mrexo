@@ -13,149 +13,106 @@ from .aic_nd import run_aic, run_aic_symmetric
 
 
 
-def fit_relation(DataDict,
-	SigmaLimit = 1e-3, save_path=None,
-	select_deg=None, degree_max=None, k_fold=None, num_boot=100,
-	cores=1, abs_tol=1e-8, verbose=2):
+def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, degree_max=None, k_fold=None, num_boot=100, cores=1, abs_tol=1e-8, verbose=2):
 	"""
-	Fit an n-dimensional relationship using a non parametric approach with beta densities
+	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
-	\nINPUTS:
+    Parameters
+    ----------
+    save_path : str
+        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+    SigmaLimit : int, default=1e-3
+        The lower limit on the sigma values for all dimensions. Sigma values lower than this limit will be changed to None. This is required because the standard normal distribution blows up if the sigma values are too small (~1e-4). Then the distribution is no longer a convolution of normal and beta distributions, but is just a beta distribution.
+    select_deg : {'cv', 'aic', 'bic'} or int, optional
+        The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
+    degree_max : int, optional
+        The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
+    k_fold : int, optional
+        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
+    num_boot : int, default=100
+        The number of bootstraps to perform (must be greater than 1).
+    cores : int, default=1
+        The number of cores to use for parallel processing. This is used in the
+           bootstrap and the cross validation. To use all the cores in the CPU,
+           set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
+    abs_tol : float, default=1e-8
+        The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
+    verbose : int, default=2
+        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
 
-		save_path: Folder name (+path) to save results in.
-				   Eg. save_path = '~/mrexo_working/trial_result' will create the
-				   'trial_result' results folder in mrexo_working
-		SigmaLimit: The lower limit on sigma value for all dimensions. If the sigmas are
-				lower than this limit, they get changed to None. This is because,
-				the Standard normal distribution blows up if the sigma values are
-				too small (~1e-4). Then the distribution is no longer a convolution
-				of Normal and Beta distributions, but is just a Beta distribution.
-		select_deg: The number of degrees for the beta densities.
-							if select_deg= "cv": Use cross validation to find the
-								optimal number of  degrees.
-							if select_deg= "aic": Use AIC minimization to find the
-								optimal number of degrees.
-							if select_deg= "bic": Use BIC minimization to find the
-								optimal number of degrees.
-							if select_deg= Integer: Use that number and skip the
-								optimization process to find the number of degrees.
-							NOTE: Use AIC or BIC optimization only for
-								large (> 200) sample sizes.
-		degree_max: Maximum degree checked during degree selection. 
-					Type:Integer. 	Default=None. 
-					If None, uses: n/np.log10(n),
-					where n is the number of data points.
-		k_fold: If using cross validation method, use k_fold (Integer)
-				number of folds.
-				Default=None.
-				If None, uses: 10 folds for n > 60, 5 folds otherwise.
-				Eg. k_fold=12
-		num_boot: Number of bootstraps to perform. Default=100. num_boot
-				must be greater than 1.
-		cores: Number of cores for parallel processing. This is used in the
-			   bootstrap and the cross validation. Default=1.
-			   To use all the cores in the CPU,
-			   cores=cpu_count() #from multiprocessing import cpu_count
-		abs_tol: Absolute tolerance to be used for the numerical integration
-				for product of normal and beta distribution.
-				Default : 1e-8
-		verbose: Integer specifying verbosity for logging.
-					If 0: Will not log in the log file or print statements.
-					If 1: Will write log file only.
-					If 2: Will write log file and print statements.
+	Returns
+    -------
+    initialfit_result : dict
+        Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
+    bootstrap_results : dict
+        Output dictionary from bootstrap run using Maximum Likelihood Estimation. Only returned if ``num_boot`` > 2.
+    
+    
+    The output dictionary ``initialfit_result`` contains the following fields:
+    
+	- `weights`: The weights for the beta densities from initial fitting w/o bootstrap.
+    - `aic`: The Akaike Information Criterion from initial fitting w/o bootstrap.
+    - `bic`: The Bayesian Information Criterion from initial fitting w/o bootstrap.
+    - `Y_points`: The sequence of Y points for initial fitting w/o bootstrap.
+	- `X_points`: The sequence of X points for initial fitting w/o bootstrap.
+    - `Y_cond_X`: The conditional distribution of Y given X from initial fitting w/o bootstrap.
+	- `Y_cond_X_var`: The variance for the conditional distribution of Y given X from initial fitting w/o bootstrap.
+	- `Y_cond_X_quantile`: The quantiles for the conditional distribution of Y given X from initial fitting w/o bootstrap.
+	- `X_cond_Y`: The conditional distribution of X given Y from initial fitting w/o bootstrap.
+	- `X_cond_Y_var`: The variance for the conditional distribution of X given Y from initial fitting w/o bootstrap.
+    - `X_cond_Y_quantile`: The quantiles for the conditional distribution of X given Y from initial fitting w/o bootstrap.
+	- `joint_dist`: The joint distribution of Y and X.
 
-	OUTPUTS:
+    The output dictionary ``bootstrap_results`` contains the following fields:
+    
+    - `weights`: The weights for beta densities from bootstrap run.
+	- `aic`: The Akaike Information Criterion from bootstrap run.
+	- `bic`: The Bayesian Information Criterion from bootstrap run.
+	- `Y_points`: The sequence of Y points for initial fitting w/o bootstrap.
+    - `X_points`: The sequence of X points for initial fitting w/o bootstrap.
+    - `Y_cond_X`: The conditional distribution of Y given X from bootstrap run.
+    - `Y_cond_X_var`: The variance for the conditional distribution of Y given X from bootstrap run.
+    - `Y_cond_X_quantile`: The quantiles for the conditional distribution of Y given X from bootstrap run.
+    - `X_cond_Y`: The conditional distribution of X given Y from bootstrap run.
+    - `X_cond_Y_var`: The variance for the conditional distribution of X given Y from bootstrap run.
+    - `X_cond_Y_quantile`: The quantiles for the conditional distribution of X given Y from bootstrap run.
 
-		initialfit_result: Output dictionary from initial fitting without bootstrap
-							using Maximum Likelihood Estimation.
-							The keys in the dictionary are -
-							'weights' : Weights for Beta densities from initial
-								fitting w/o bootstrap.
-							'aic' : Akaike Information Criterion from initial
-								fitting w/o bootstrap.
-							'bic' : Bayesian Information Criterion from initial
-								fitting w/o bootstrap.
-							'Y_points' : Sequence of Y points for initial
-								fitting w/o bootstrap.
-							'X_points' : Sequence of X points for initial
-								fitting w/o bootstrap.
-							'Y_cond_X' : Conditional distribution of Y given
-								 X from initial fitting w/o bootstrap.
-							'Y_cond_X_var' : Variance for the Conditional
-								distribution of Y given X from initial
-								fitting w/o bootstrap.
-							'Y_cond_X_quantile' : Quantiles for the Conditional
-								 distribution of Y given X from initial
-								 fitting w/o bootstrap.
-							'X_cond_Y' : Conditional distribution of X given
-								 Y from initial fitting w/o bootstrap.
-							'X_cond_Y_var' : Variance for the Conditional
-								distribution of X given Y from initial
-								fitting w/o bootstrap.
-							'X_cond_Y_quantile' : Quantiles for the Conditional
-								 distribution of X given Y from initial
-								 fitting w/o bootstrap.
-							'joint_dist' : Joint distribution of Y AND X.
+	Examples
+    --------
 
+	Example to fit a Y X relationship with 2 CPU cores,
+			using 12 degrees, and 50 bootstraps:
 
-		if num_boot > 2:
-		bootstrap_results: Output dictionary from bootstrap run using Maximum
-							Likelihood Estimation.
-							'weights' : Weights for Beta densities from bootstrap run.
-							'aic' : Akaike Information Criterion from bootstrap run.
-							'bic' : Bayesian Information Criterion from bootstrap run.
-							'Y_points' : Sequence of Y points for initial
-								fitting w/o bootstrap.
-							'X_points' : Sequence of X points for initial
-								 fitting w/o bootstrap.
-							'Y_cond_X' : Conditional distribution of Y given
-								 X from bootstrap run.
-							'Y_cond_X_var' : Variance for the Conditional
-								 distribution of Y given X from bootstrap run.
-							'Y_cond_X_quantile' : Quantiles for the Conditional
-								 distribution of Y given X from bootstrap run.
-							'X_cond_Y' : Conditional distribution of X given
-								Y from bootstrap run.
-							'X_cond_Y_var' : Variance for the Conditional
-								distribution of X given Y from bootstrap run.
-							'X_cond_Y_quantile' : Quantiles for the Conditional
-								 distribution of X given Y from bootstrap run.
+    # import os
+    # from astropy.table import Table
+	# import numpy as np
+    # from mrexo import fit_mr_relation
 
+    >>> pwd = '~/mrexo_working/'
 
-	EXAMPLE:
+    >>> t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
 
-		# Example to fit a Y X relationship with 2 CPU cores,
-			using 12 degrees, and 50 bootstraps.
+    # Symmetrical errorbars
+	>>> Y_sigma = (abs(t['pl_Yeerr1']) + abs(t['pl_Yeerr2']))/2
+    >>> X_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
 
-		import os
-		from astropy.table import Table
-		import numpy as np
-		from mrexo import fit_mr_relation
+    # In Earth units
+    >>> Y = np.array(t['pl_Ye'])
+    >>> X = np.array(t['pl_rade'])
 
-		pwd = '~/mrexo_working/'
+    # Directory to store results in
+    >>> result_dir = os.path.join(pwd,'Results_deg_12')
 
-		t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
+    ##FINDME
 
-		# Symmetrical errorbars
-		Y_sigma = (abs(t['pl_Yeerr1']) + abs(t['pl_Yeerr2']))/2
-		X_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
-
-		# In Earth units
-		Y = np.array(t['pl_Ye'])
-		X = np.array(t['pl_rade'])
-
-		# Directory to store results in
-		result_dir = os.path.join(pwd,'Results_deg_12')
-
-		##FINDME
-
-		initialfit_result, bootstrap_results = fit_mr_relation(Y=Y,
-												Y_sigma=Y_sigma,
-												X=X,
-												X_sigma=X_sigma,
-												save_path=result_dir,
-												select_deg=12,
-												num_boot=50, cores=2)
+    >>> initialfit_result, bootstrap_results = fit_mr_relation(Y=Y,
+    ...										    Y_sigma=Y_sigma,
+    ... 										X=X,
+    ...											X_sigma=X_sigma,
+    ...											save_path=result_dir,
+    ...											select_deg=12,
+    ...											num_boot=50, cores=2)
+    
 	"""
 
 	starttime = datetime.datetime.now()
