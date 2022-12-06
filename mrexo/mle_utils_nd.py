@@ -177,12 +177,17 @@ def MLE_fit(DataDict, deg_per_dim,
 	else:
 		# Calculate AIC and BIC
 		deg_product = np.product(deg_per_dim)
-		NonZero = len(np.nonzero(w_hat)[0])
 		
+		NonZero = len(np.nonzero(w_hat)[0])
 		Threshold = 1e-8
-
 		#aic = -n_log_lik*2 + 2*(len(w_hat[w_hat>Threshold])/DataLength)
-		aic = -n_log_lik*2 + 2*(NonZero/DataLength)
+		# aic = -n_log_lik*2 + 2*(NonZero/DataLength)
+
+		# Effective number of weights based on Kish's effective sample size
+		EffectiveDOF = (np.sum(w_hat)**2)/np.sum(w_hat**2)
+		aic = -n_log_lik*2 + 2*(EffectiveDOF/DataLength)
+
+
 		# fi = rank_FI_matrix(C_pdf, unpadded_weight)
 		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
@@ -193,6 +198,7 @@ def MLE_fit(DataDict, deg_per_dim,
 				"loglike":n_log_lik,
 				"deg_per_dim":deg_per_dim,
 				"DataSequence":DataSeq, 
+				"EffectiveDOF": EffectiveDOF,
 				"aic":aic}#, "fi":fi}
 		
 		if CalculateJointDist:
@@ -201,51 +207,6 @@ def MLE_fit(DataDict, deg_per_dim,
 				deg_per_dim=deg_per_dim, 
 				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
 			output['JointDist'] = JointDist
-			
-		"""
-		Y_seq = np.linspace(Y_min,Y_max,100)
-		X_seq = np.linspace(X_min,X_max,100)
-
-		output = {'weights': w_hat,
-				  'aic': aic,
-				  'bic': bic,
-				  'Y_points': Y_seq,
-				  'X_points': X_seq}
-
-
-		deg_vec = np.arange(1,deg+1)
-
-		Y_cond_X_median, Y_cond_X_var, Y_cond_X_quantile = [], [], []
-		X_cond_Y_median, X_cond_Y_var, X_cond_Y_quantile = [], [], []
-
-		for i in range(0,len(X_seq)):
-			# Conditional Densities with 16% and 84% quantile
-			Y_cond_X = cond_density_quantile(a = X_seq[i], a_max = X_max, a_min = X_min,
-							b_max = Y_max, b_min = Y_min, deg = deg, deg_vec = deg_vec, w_hat = w_hat, qtl = [0.5,0.16,0.84])[0:3]
-			Y_cond_X_median.append(Y_cond_X[2][0])
-			Y_cond_X_var.append(Y_cond_X[1])
-			Y_cond_X_quantile.append(Y_cond_X[2][1:])
-
-			X_cond_Y = cond_density_quantile(a = Y_seq[i], a_max=Y_max, a_min=Y_min,
-								b_max=X_max, b_min=X_min, deg=deg, deg_vec = deg_vec,
-								w_hat=np.reshape(w_hat,(deg,deg)).T.flatten(), qtl = [0.5,0.16,0.84])[0:3]
-			X_cond_Y_median.append(X_cond_Y[2][0])
-			X_cond_Y_var.append(X_cond_Y[1])
-			X_cond_Y_quantile.append(X_cond_Y[2][1:])
-
-
-
-		# Output everything as dictionary
-
-		output['Y_cond_X'] = Y_cond_X_median
-		output['Y_cond_X_var'] = Y_cond_X_var
-		output['Y_cond_X_quantile'] = np.array(Y_cond_X_quantile)
-		output['X_cond_Y'] = X_cond_Y_median
-		output['X_cond_Y_var'] = X_cond_Y_var
-		output['X_cond_Y_quantile'] = np.array(X_cond_Y_quantile)
-		"""
-
-
 		
 		return output
 
@@ -312,7 +273,6 @@ def InvertHalfNormalPDF(x, p, loc=0):
 	For example, if you care about 99.7% upper limits, p=0.997. Then we will invert the normal distribution to find the 
 	quantile at 1 - (1-0.997/2) = 0.9985, because the upper limits are being approximated as a half-normal,  centered at 0.
 	
-
 	INPUTS:
 		x: Point at which  P(> x) = 1-p
 		p: Probability (decimal)
