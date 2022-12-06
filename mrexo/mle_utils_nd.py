@@ -22,23 +22,33 @@ from .Optimizers import optimizer, SLSQP_optimizer
 
 # Ndim - 20201130
 def InputData(ListofDictionaries):
-	'''
-	Input List of Dictionaries, where each dictionary corresponds to a dimension
-	Example dictionary
-	RadiusDict = {'Data': Radius, 'Sigma': Radius_sigma,
-		'Max':None, 'Min':None,
-		'Label':'Radius', 'Char':'r'}
-	MassDict = {'Data': Mass, 'Sigma': Mass_sigma,
-		'Max':None, 'Min':None,
-		'Label':'Mass', 'Char':'m'}
+	"""
+    Compile a dictionary of the data and metadata given a list of dictionaries.
+    
+    Parameters
+    ----------
+    ListofDictionaries : list[dict]
+        A list of dictionaries, where each dictionary corresponds to a dimension of the data. Each dictionary must have the following fields: 'Data', 'SigmaLower', 'SigmaUpper', 'Char', 'Min', 'Max'.
+    
+    Returns
+    -------
+    DataDict : dict
+        A dictionary containing all of the data and metadata.
+    
+    
+    The output dictionary ``DataDict`` contains the following fields:
+    
+    - `ndim_data`: A 2-d array of size (number of dimensions, number of data points) containing the data.
+    - `ndim_sigma`: A 2-d array containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
+    - `ndim_sigmaL`: A 2-d array containing the lower uncertainties of each data point.
+    - `ndim_sigmaU`: A 2-d array containing the upper uncertainties of each data point.
+    - `ndim_bounds`: A 2-d array of size (number of dimensions, 2) containing the bounds of the data in each dimension.
+    - `ndim_char`: A list of character strings representing the variable in each dimension.
+    - `ndim_label`: A list of character strings for labeling the variable in each dimension.
+    - `ndim`: The number of dimensions.
+    - `DataLength`: The number of data points.
 
-	The number of 'Data' entries and 'Sigma' entries in each dictionary must be equal
-	
-	Output:
-		DataDict with attributes - 
-			'ndim_data', 'ndim_sigma', 'ndim_bounds', 'ndim_char', 'ndim_label'
-		
-	'''
+	"""
 	
 	ndim = len(ListofDictionaries)
 	ndim_data = np.zeros((ndim, len(ListofDictionaries[0]['Data'])))

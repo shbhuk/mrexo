@@ -19,10 +19,12 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 
     Parameters
     ----------
-    save_path : str
-        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
     SigmaLimit : int, default=1e-3
         The lower limit on the sigma values for all dimensions. Sigma values lower than this limit will be changed to None. This is required because the standard normal distribution blows up if the sigma values are too small (~1e-4). Then the distribution is no longer a convolution of normal and beta distributions, but is just a beta distribution.
+    save_path : str, optional
+        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
     select_deg : {'cv', 'aic', 'bic'} or int, optional
         The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
     degree_max : int, optional
@@ -43,41 +45,12 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	Returns
     -------
     initialfit_result : dict
-        Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation.
+        Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
     bootstrap_results : dict
-        Output dictionary from bootstrap run using Maximum Likelihood Estimation. Only returned if ``num_boot`` > 2.
+        TBD. Only returned if ``num_boot`` > 0.
     
-    
-    The output dictionary ``initialfit_result`` contains the following fields:
-    
-	- `weights`: The weights for the beta densities from initial fitting w/o bootstrap.
-    - `aic`: The Akaike Information Criterion from initial fitting w/o bootstrap.
-    - `bic`: The Bayesian Information Criterion from initial fitting w/o bootstrap.
-    - `Y_points`: The sequence of Y points for initial fitting w/o bootstrap.
-	- `X_points`: The sequence of X points for initial fitting w/o bootstrap.
-    - `Y_cond_X`: The conditional distribution of Y given X from initial fitting w/o bootstrap.
-	- `Y_cond_X_var`: The variance for the conditional distribution of Y given X from initial fitting w/o bootstrap.
-	- `Y_cond_X_quantile`: The quantiles for the conditional distribution of Y given X from initial fitting w/o bootstrap.
-	- `X_cond_Y`: The conditional distribution of X given Y from initial fitting w/o bootstrap.
-	- `X_cond_Y_var`: The variance for the conditional distribution of X given Y from initial fitting w/o bootstrap.
-    - `X_cond_Y_quantile`: The quantiles for the conditional distribution of X given Y from initial fitting w/o bootstrap.
-	- `joint_dist`: The joint distribution of Y and X.
 
-    The output dictionary ``bootstrap_results`` contains the following fields:
-    
-    - `weights`: The weights for beta densities from bootstrap run.
-	- `aic`: The Akaike Information Criterion from bootstrap run.
-	- `bic`: The Bayesian Information Criterion from bootstrap run.
-	- `Y_points`: The sequence of Y points for initial fitting w/o bootstrap.
-    - `X_points`: The sequence of X points for initial fitting w/o bootstrap.
-    - `Y_cond_X`: The conditional distribution of Y given X from bootstrap run.
-    - `Y_cond_X_var`: The variance for the conditional distribution of Y given X from bootstrap run.
-    - `Y_cond_X_quantile`: The quantiles for the conditional distribution of Y given X from bootstrap run.
-    - `X_cond_Y`: The conditional distribution of X given Y from bootstrap run.
-    - `X_cond_Y_var`: The variance for the conditional distribution of X given Y from bootstrap run.
-    - `X_cond_Y_quantile`: The quantiles for the conditional distribution of X given Y from bootstrap run.
-
-	Examples
+	Examples ### FINDME: is this still valid?
     --------
 
 	Example to fit a Y X relationship with 2 CPU cores,
