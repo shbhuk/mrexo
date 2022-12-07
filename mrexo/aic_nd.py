@@ -30,10 +30,10 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 	
 	DegreeChosen = RunAIC_flattened(DataDict=DataDict, 
-	degree_candidates=degree_candidates, 
-	NumCandidates=NumCandidates, 
-	cores=cores, save_path=save_path, verbose=verbose, 
-	SymmetricDegreePerDimension=True)
+		degree_candidates=degree_candidates, 
+		NumCandidates=NumCandidates, 
+		cores=cores, save_path=save_path, verbose=verbose, 
+		SymmetricDegreePerDimension=True)
 	
 	message = 'Using AIC to select optimum degrees as = {}\n'.format(DegreeChosen)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -56,10 +56,10 @@ def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
 	
 
 	DegreeChosen = RunAIC_flattened(DataDict=DataDict, 
-	degree_candidates=degree_candidates, 
-	NumCandidates=NumCandidates, 
-	cores=cores, save_path=save_path, verbose=verbose,
-	SymmetricDegreePerDimension=False)
+		degree_candidates=degree_candidates, 
+		NumCandidates=NumCandidates, 
+		cores=cores, save_path=save_path, verbose=verbose,
+		SymmetricDegreePerDimension=False)
 	
 	"""
 	if cores==1:
@@ -311,6 +311,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	i.e. (d, d, d, ..) and not (d, d', d'',..)
 	
 	"""
+
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
 
@@ -327,11 +328,12 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	AICgrid = np.zeros(([NumCandidates]*ndim))
 	AICgrid[:] = np.nan
+	AIC_FIgrid = np.zeros(([NumCandidates]*ndim))
+	AIC_FIgrid[:] = np.nan
 	LoglikeGrid = np.zeros(([NumCandidates]*ndim))
 	NonZeroGrid = np.zeros(([NumCandidates]*ndim))
-	# ThresholdGrid6 = np.zeros(([NumCandidates]*ndim))
 	ThresholdGrid8 = np.zeros(([NumCandidates]*ndim))
-	# ThresholdGrid12 = np.zeros(([NumCandidates]*ndim))
+	ESSGrid = np.zeros(([NumCandidates]*ndim))
 
 	if cores > 1:
 		# Parallelize the bootstraps
@@ -339,38 +341,46 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
 		
 		AIC = np.array([x['aic'] for x in aic_results])
+		AIC_FI = np.array([x['aic_fi'] for x in aic_results])
+
 		Index = np.array([x['index'] for x in aic_results])
 		LogLike = np.array([x['loglike'] for x in aic_results])
 		Weights = [x['Weights'] for x in aic_results]
+		ESS = [x['EffectiveDOF'] for x in aic_results]
 		
 		for i in range(n_iter):
 			
 			AICgrid[tuple(Index[i])] = AIC[i]
+			AIC_FIgrid[tuple(Index[i])] = AIC_FI[i]
+
 			w = Weights[i]
 			
 			NonZeroGrid[tuple(Index[i])] = len(np.nonzero(w)[0])
 			LoglikeGrid[tuple(Index[i])] = LogLike[i]
-			# ThresholdGrid6[tuple(Index[i])] = len(w[w>1e-6])
 			ThresholdGrid8[tuple(Index[i])] = len(w[w>1e-8])
-			# ThresholdGrid12[tuple(Index[i])] = len(w[w>1e-12])
+			ESSGrid[tuple(Index[i])] = ESS[i]
+
 	else:
 		
 		for i, inputs in enumerate(inputs_aicpool):
 			output = _AIC_MLE(inputs)
 			Index = output['index']
 			AIC = output['aic']
+			AIC_FI = output['aic_fi']
 			LogLike = output['loglike']
 			Weights = output['Weights']
+			ESS = outputs['EffectiveDOF']
 			
 			AICgrid[tuple(Index)] = AIC
+			AIC_FIgrid[tuple(Index)] = AIC_FI
+
 			w = Weights
 			
 			NonZeroGrid[Index] = len(np.nonzero(w)[0])
 			LoglikeGrid[Index] = LogLike
-			# ThresholdGrid6[Index] = len(w[w>1e-6])
 			ThresholdGrid8[Index] = len(w[w>1e-8])
-			# ThresholdGrid12[Index] = len(w[w>1e-12])
-			
+			ESSGrid[Index] = ESS
+
 		
 	MinAICIndexFlat = np.nanargmin(AICgrid)
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AICgrid))
@@ -380,12 +390,13 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
 	np.save(os.path.join(save_path, 'AIC.npy'), AICgrid)
+	np.save(os.path.join(save_path, 'AIC_FI.npy'), AIC_FIgrid)
 	np.save(os.path.join(save_path, 'loglike.npy'), LoglikeGrid)
 	np.save(os.path.join(save_path, 'NonZero.npy'), NonZeroGrid)
 	np.save(os.path.join(save_path, 'Weights_AIC.npy'), Weights)
-	# np.save(os.path.join(save_path, 'ThresholdGrid6.npy'), ThresholdGrid6)
 	np.save(os.path.join(save_path, 'ThresholdGrid8.npy'), ThresholdGrid8)
-	# np.save(os.path.join(save_path, 'ThresholdGrid12.npy'), ThresholdGrid12)
+	np.save(os.path.join(save_path, 'EffectiveSampleSize.npy'), ESSGrid)
+
 
 	if not SymmetricDegreePerDimension:
 		# Make 2D plots in the case of asymmetric degrees for each dimension
@@ -396,26 +407,17 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			fig = MakePlot(AICgrid, Title='AIC', degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'AIC.png'))
 
+			fig = MakePlot(AIC_FIgrid, Title='AIC_FI', degree_candidates=degree_candidates)
+			fig.savefig(os.path.join(save_path, 'AIC_FI.png'))
+
 			fig = MakePlot(NonZeroGrid, Title='Nonzero', degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'NonZero.png'))
-
-			# fig = MakePlot(ThresholdGrid8, Title='ThresholdGrid6', degree_candidates=degree_candidates)
-			# fig.savefig(os.path.join(save_path, 'ThresholdGrid6.png'))
 
 			fig = MakePlot(ThresholdGrid8, Title='ThresholdGrid8', degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'ThresholdGrid8.png'))
 
-			# fig = MakePlot(ThresholdGrid12, Title='ThresholdGrid12', degree_candidates=degree_candidates)
-			# fig.savefig(os.path.join(save_path, 'ThresholdGrid12.png'))
-			
-			# fig = MakePlot(2*(ThresholdGrid6/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid6/n - LogLike)", degree_candidates=degree_candidates)
-			# fig.savefig(os.path.join(save_path, 'ThresholdGrid6_n_AIC.png'))
-
 			fig = MakePlot(2*(ThresholdGrid8/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid8/n - LogLike)", degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'ThresholdGrid8_n_AIC.png'))
-
-			# fig = MakePlot(2*(ThresholdGrid12/n - LoglikeGrid), Title="AIC = 2*(ThresholdGrid12/n - LogLike)", degree_candidates=degree_candidates)
-			# fig.savefig(os.path.join(save_path, 'ThresholdGrid12_n_AIC.png'))
 
 			fig = MakePlot(2*(NonZeroGrid/n - LoglikeGrid), Title="AIC = 2*(NonZero/n - LogLike)", degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'NonZero_n_AIC.png'))
@@ -430,13 +432,12 @@ def _AIC_MLE(inputs):
 	message = "Running degrees = {}".format(deg_per_dim)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
-
-	output = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
+	outputs = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
 		save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=False, verbose=verbose)
 		
-	output['index'] = index
+	outputs['index'] = index
 	
-	return output
+	return outputs
 	
 
 	
