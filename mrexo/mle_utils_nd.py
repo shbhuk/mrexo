@@ -120,6 +120,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	Ning et al. 2018 Sec 2.2, Eq 9.
 
 	'''
+
 	starttime = datetime.datetime.now()
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
@@ -185,30 +186,31 @@ def MLE_fit(DataDict, deg_per_dim,
 
 		# Effective number of weights based on Kish's effective sample size
 		EffectiveDOF = (np.sum(w_hat)**2)/np.sum(w_hat**2)
-		aic = -n_log_lik*2 + 2*(EffectiveDOF/DataLength)
+		aic = -n_log_lik*2 + 2*(EffectiveDOF)
 
 
 		# fi = rank_FI_matrix(C_pdf, unpadded_weight)
-		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight)/n)
+		aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight))
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
 		DataSeq = DataDict['DataSequence'] 
 		
-		output = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
+		outputs = {"UnpaddedWeights":unpadded_weight, "Weights":w_hat,
 				"loglike":n_log_lik,
 				"deg_per_dim":deg_per_dim,
 				"DataSequence":DataSeq, 
+				"C_pdf":C_pdf,
 				"EffectiveDOF": EffectiveDOF,
-				"aic":aic}#, "fi":fi}
+				"aic":aic, "aic_fi":aic_fi}
 		
 		if CalculateJointDist:
 			JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 
 				weights=w_hat, 
 				deg_per_dim=deg_per_dim, 
 				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
-			output['JointDist'] = JointDist
+			outputs['JointDist'] = JointDist
 		
-		return output
+		return outputs
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
@@ -219,6 +221,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
 	'''
+
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
 	# For degree 'd', actually using d-2 since the boundaries are zero padded.
@@ -353,10 +356,16 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 	shape2 = deg - degree + 1
 	Log = Log
 
-	integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
-						  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
-	integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
-						  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+	if Log:
+		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+		integration_product_U = quad(_PDF_NormalBeta, a=np.log10(a_obs), b=a_max,
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+	else:
+		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+		integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
 	return integration_product_L[0] + integration_product_U[0]
 
 
