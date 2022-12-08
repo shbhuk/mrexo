@@ -24,43 +24,43 @@ from .Optimizers import optimizer, SLSQP_optimizer
 # Ndim - 20201130
 def InputData(ListofDictionaries):
 	"""
-    Compile a dictionary of the data and metadata given a list of dictionaries.
-    
-    Parameters
-    ----------
-    ListofDictionaries : list[dict]
-        A list of dictionaries of length 'd', where each dictionary corresponds to a dimension of the data. For example, ``ListofDictionaries = [RadiusDict, MassDict,...]``.
-    
-    
-    The input list should contain dictionaries, each of which contains the following fields:
-    
-    - `Data`: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'. The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
+	Compile a dictionary of the data and metadata given a list of dictionaries.
+	
+	Parameters
+	----------
+	ListofDictionaries : list[dict]
+		A list of dictionaries of length 'd', where each dictionary corresponds to a dimension of the data. For example, ``ListofDictionaries = [RadiusDict, MassDict,...]``.
+	
+	
+	The input list should contain dictionaries, each of which contains the following fields:
+	
+	- `Data`: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'. The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
 	- `LSigma`: Sigma value for the lower normal distribution. Same scale as Data (log/linear). Length 'L'
 	- `USigma`: Sigma value for the upper normal distribution. Same scale as Data (log/linear). Length 'L'
 	- `Max`: log10 of the upper bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(1.1*np.max(ndim_data[d]))
 	- `Min`: log10 of the lower bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(0.9*np.min(ndim_data[d]))
 	- `Label`: Axes label (string) to be used for this dimension. E.g. 'Radius ($R_{\oplus}$)' or 'Pl Insol ($S_{\oplus}$)'
 	- `Char`: Symbol (character) to be used for this dimension. E.g. 'r' or 's'
-    
-    
-    Returns
-    -------
-    DataDict : dict
-        A dictionary containing all of the data and metadata.
-    
-    
-    The output dictionary ``DataDict`` contains the following fields:
-    
-    - `ndim_data`: A 2-d array of size (d = number of dimensions, L = number of data points) containing the data.
-    - `ndim_sigma`: A 2-d array of size (d, L) containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
-    - `ndim_LSigma`: A 2-d array of size (d, L) containing the lower uncertainties of each data point.
-    - `ndim_USigma`: A 2-d array of size (d, L) containing the upper uncertainties of each data point.
-    - `ndim_bounds`: A 2-d array of size (d, L) of size (number of dimensions, 2) containing the bounds of the data in each dimension.
-    - `ndim_char`: A list of character strings representing the variable in each dimension.
-    - `ndim_label`: A list of character strings for labeling the variable in each dimension.
-    - `ndim`: The number of dimensions.
-    - `DataLength`: The number of data points.
-    - `DataSequence`: A 2-d array of size (d, 50) with a uniform sequence for each dimension between the lower and upper bounds. Note: This is uniform in log10-space since the bounds are in log10 space.
+	
+	
+	Returns
+	-------
+	DataDict : dict
+		A dictionary containing all of the data and metadata.
+	
+	
+	The output dictionary ``DataDict`` contains the following fields:
+	
+	- `ndim_data`: A 2-d array of size (d = number of dimensions, L = number of data points) containing the data.
+	- `ndim_sigma`: A 2-d array of size (d, L) containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
+	- `ndim_LSigma`: A 2-d array of size (d, L) containing the lower uncertainties of each data point.
+	- `ndim_USigma`: A 2-d array of size (d, L) containing the upper uncertainties of each data point.
+	- `ndim_bounds`: A 2-d array of size (d, L) of size (number of dimensions, 2) containing the bounds of the data in each dimension.
+	- `ndim_char`: A list of character strings representing the variable in each dimension.
+	- `ndim_label`: A list of character strings for labeling the variable in each dimension.
+	- `ndim`: The number of dimensions.
+	- `DataLength`: The number of data points.
+	- `DataSequence`: A 2-d array of size (d, 50) with a uniform sequence for each dimension between the lower and upper bounds. Note: This is uniform in log10-space since the bounds are in log10 space.
 
 	"""
 	
@@ -153,7 +153,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		verbose=verbose, 
 		SaveCMatrix=False)
 
-	message = 'Finished Integration at {}. \nCalculated the PDF for Integrated beta and normal density.'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
@@ -1117,10 +1117,13 @@ def TensorMultiplication(A, B, Subscripts=None):
 
 def rank_FI_matrix(C_pdf, w):
 	"""
+	Compute the Rank of the Fisher Information Matrix as an estimate of the DoFs for AIC.
+
 	INPUT:
 		C_pdf: 2d array with [n, (deg-2)^2]
 		w: 2D array with [deg-2, deg-2]
-
+	OUTPUT:
+		Rank (Integer)
 	"""
 	n = np.shape(C_pdf)[1] # number of data points
 
