@@ -23,14 +23,25 @@ from .Optimizers import optimizer, SLSQP_optimizer
 
 # Ndim - 20201130
 def InputData(ListofDictionaries):
-<<<<<<< n_dimensions_generalization
 	"""
     Compile a dictionary of the data and metadata given a list of dictionaries.
     
     Parameters
     ----------
     ListofDictionaries : list[dict]
-        A list of dictionaries, where each dictionary corresponds to a dimension of the data. Each dictionary must have the following fields: 'Data', 'SigmaLower', 'SigmaUpper', 'Char', 'Min', 'Max'.
+        A list of dictionaries of length 'd', where each dictionary corresponds to a dimension of the data. For example, ``ListofDictionaries = [RadiusDict, MassDict,...]``.
+    
+    
+    The input list should contain dictionaries, each of which contains the following fields:
+    
+    - `Data`: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'. The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
+	- `LSigma`: Sigma value for the lower normal distribution. Same scale as Data (log/linear). Length 'L'
+	- `USigma`: Sigma value for the upper normal distribution. Same scale as Data (log/linear). Length 'L'
+	- `Max`: log10 of the upper bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(1.1*np.max(ndim_data[d]))
+	- `Min`: log10 of the lower bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(0.9*np.min(ndim_data[d]))
+	- `Label`: Axes label (string) to be used for this dimension. E.g. 'Radius ($R_{\oplus}$)' or 'Pl Insol ($S_{\oplus}$)'
+	- `Char`: Symbol (character) to be used for this dimension. E.g. 'r' or 's'
+    
     
     Returns
     -------
@@ -40,51 +51,18 @@ def InputData(ListofDictionaries):
     
     The output dictionary ``DataDict`` contains the following fields:
     
-    - `ndim_data`: A 2-d array of size (number of dimensions, number of data points) containing the data.
-    - `ndim_sigma`: A 2-d array containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
-    - `ndim_sigmaL`: A 2-d array containing the lower uncertainties of each data point.
-    - `ndim_sigmaU`: A 2-d array containing the upper uncertainties of each data point.
-    - `ndim_bounds`: A 2-d array of size (number of dimensions, 2) containing the bounds of the data in each dimension.
+    - `ndim_data`: A 2-d array of size (d = number of dimensions, L = number of data points) containing the data.
+    - `ndim_sigma`: A 2-d array of size (d, L) containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
+    - `ndim_LSigma`: A 2-d array of size (d, L) containing the lower uncertainties of each data point.
+    - `ndim_USigma`: A 2-d array of size (d, L) containing the upper uncertainties of each data point.
+    - `ndim_bounds`: A 2-d array of size (d, L) of size (number of dimensions, 2) containing the bounds of the data in each dimension.
     - `ndim_char`: A list of character strings representing the variable in each dimension.
     - `ndim_label`: A list of character strings for labeling the variable in each dimension.
     - `ndim`: The number of dimensions.
     - `DataLength`: The number of data points.
+    - `DataSequence`: A 2-d array of size (d, 50) with a uniform sequence for each dimension between the lower and upper bounds. Note: This is uniform in log10-space since the bounds are in log10 space.
 
 	"""
-=======
-	'''
-	Input List of Dictionaries of length 'd' where d is the number of dimensions, where each dictionary corresponds to a dimension
-	Example:
-		ListofDictionaries = [RadiusDict, MassDict, etc.,]
-
-	Here each dictionary has the following keys:
-		Data: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'
-		The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
-		LSigma: Sigma value for the lower normal distribution. Same scale as Data (log/linear). Length 'L'
-		USigma: Sigma value for the upper normal distribution. Same scale as Data (log/linear). Length 'L'
-		Max: log10 of the upper bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(1.1*np.max(ndim_data[d]))
-		Min: log10 of the lower bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(0.9*np.min(ndim_data[d]))
-		Label: Axes label (string) to be used for this dimension. E.g. 'Radius ($R_{\oplus}$)' or 'Pl Insol ($S_{\oplus}$)'
-		'Char': Symbol (character) to be used for this dimension. E.g. 'r' or 's'
-
-	The number of 'Data' entries and 'USigma'/'LSigma' entries in each dictionary must be equal
-	
-	Output:
-		DataDict with keys - 
-			ndim_data: 2D numpy array of size d x L with the observed data
-			ndim_LSigma: 2D numpy array of size d x L with the lower sigma value
-			ndim_USigma: 2D numpy array of size d x L with the upper sigma value
-			ndim_sigma: 2D numpy array of size d x L with the sigma value averaged across upper and lower normals [DEPRECATED]
-			ndim_bounds: 2D numpy array of size  d x 2 with the lower and upper bounds (log10) for each dimension
-			ndim_char: List of 'd' characters denoting each dimension
-			ndim_label: List of 'd' axes labels denoting each dimension
-			ndim: Integer with the number of dimensions (d)
-			DataLength: Integer with the size of the dataset (L)s
-			DataSequence: 2D numpy array of size d x 50 with a uniform sequence for each dimension between the lower and upper bounds. 
-					Note: This is uniform in log10-space since the bounds are in log10 space.
-		
-	'''
->>>>>>> n_dimensions_generalization
 	
 	ndim = len(ListofDictionaries)
 	ndim_data = np.zeros((ndim, len(ListofDictionaries[0]['Data'])))
