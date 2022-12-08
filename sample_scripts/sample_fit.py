@@ -12,7 +12,7 @@ import pandas as pd
 Platform = sys.platform
 
 if Platform == 'win32':
-	HomeDir =  'C:\\Users\\shbhu\\Documents\\\\GitHub\\'
+	HomeDir =  'C:\\Users\\skanodia\\Documents\\\\GitHub\\'
 else:
 	HomeDir = r"/storage/home/szk381/work/"
 
@@ -82,12 +82,12 @@ print(len(t))
 Mass = np.array(t['pl_masse'])
 # Symmetrical errorbars
 Mass_sigma1 = np.array(abs(t['pl_masseerr1']))
-Mass_sigma2 = np.array(abs(t['pl_masseerr1']))
+Mass_sigma2 = np.array(abs(t['pl_masseerr2']))
 
 Radius = np.array(t['pl_rade'])
 # Symmetrical errorbars
 Radius_sigma1 = np.array(abs(t['pl_radeerr1']))
-Radius_sigma2 = np.array(abs(t['pl_radeerr1']))
+Radius_sigma2 = np.array(abs(t['pl_radeerr2']))
 
 """
 Period = np.array(t['pl_orbper'])
@@ -105,6 +105,7 @@ StellarMassSigma = np.array(t['st_masserr1'])
 Insolation = np.array(t['pl_insol'])
 InsolationSigma = np.array(t['pl_insolerr1'])
 
+"""
 #############################
 ### Fake Mass, Radius, Insolation
 #############################
@@ -133,7 +134,7 @@ StellarMassBounds = [0.25, 0.75]
 #############################
 #############################
 #############################
-
+"""
 
 
 """
@@ -164,23 +165,24 @@ StellarMass_Sigma1 = np.repeat(np.nan, len(Radius))
 PeriodSigma = 0.1*Period #np.repeat(np.nan, len(Radius))
 
 """
+
 Max, Min = 1, 0
 Max, Min = np.nan, np.nan
 # Max += 0.2
 # Min -= 0.2
 
 
-RadiusDict = {'Data': Radius, 'SigmaLower': Radius_sigma1,  "SigmaUpper":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'SigmaLower': Mass_sigma1, "SigmaUpper":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+RadiusDict = {'Data': Radius, 'LSigma': Radius_sigma1,  "USigma":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'LSigma': Mass_sigma1, "USigma":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
-#FakePeriodDict = {'Data': FakePeriod, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
-# PeriodDict = {'Data': Period, 'SigmaLower': PeriodSigma, "SigmaUpper":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
-StellarMassDict = {'Data': StellarMass, 'SigmaLower': StellarMassSigma, "SigmaUpper":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
-#MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**Metallicity, 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**(-Metallicity), 'SigmaLower': np.repeat(np.nan, len(Metallicity)), "SigmaUpper":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+#FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
+# PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
+StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassSigma, "USigma":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+#MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
+# MetallicityDict = {'Data': 10**(-Metallicity), 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 
-InsolationDict = {'Data': Insolation, 'SigmaLower': InsolationSigma, "SigmaUpper":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
@@ -189,10 +191,10 @@ import matplotlib.pyplot as plt
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 RunName = 'Fake_4D_MRSStM'
-# RunName = 'Mdwarf_Kanodia2019_bounded'
+RunName = 'Trial_FGKM_2D_MR'
 
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict]#, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
@@ -209,10 +211,10 @@ DataDict = InputData(InputDictionaries)
 #DataDict = np.load(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\SimConstantDeg40\output\other_data_products\DataDict.npy", allow_pickle=True).item()
 
 # save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
-save_path = os.path.join(pwd, 'TestRuns', 'ThesisRuns', RunName)
+save_path = os.path.join(pwd, 'TestRuns',  RunName)
  
 ndim = len(InputDictionaries)
-deg_per_dim = [25, 25, 25, 30]
+# deg_per_dim = [25, 25, 25, 30]
 # deg_per_dim = [30] * ndim
 # deg_per_dim = [35, 30, 32]
 """
@@ -221,11 +223,11 @@ outputs = MLE_fit(DataDict,
 	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
 """
 
-# outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=15)
+# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	# outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=200, cores=2)
-	outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
+	outputs, _ = fit_relation(DataDict, select_deg=[34, 34], save_path=save_path, num_boot=0, degree_max=50, cores=2)
+	# outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
 
 	JointDist = outputs['JointDist']
 	weights = outputs['Weights']
@@ -251,7 +253,7 @@ if __name__ == '__main__':
 		# plt.show(block=False)
 
 		plt.figure()
-		plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'left', aspect='auto')
+		plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'lower', aspect='auto')
 		# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
 		# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
 		plt.title(deg_per_dim)
@@ -284,23 +286,23 @@ if __name__ == '__main__':
 		plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
 		plt.tight_layout()
 		
-		"""
+		# """
 		XTicks = np.linspace(x.min(), x.max(), 5)
-		# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
+		XTicks = np.log10(np.array([3, 10, 30, 100, 300]))
 		YTicks = np.linspace(y.min(), y.max(), 5)
-		# YTicks = np.log10(np.array([1, 3, 5, 10]))
+		YTicks = np.log10(np.array([1, 3, 5, 10]))
 		XLabels = np.round(10**XTicks, 1)
 		YLabels = np.round(10**YTicks, 2)
-		"""
+		# """
 		
-		# XTicks = [0.5,1, 3, 10, 20]
-		# YTicks = [0.1, 1, 3, 10, 30, 100, 300, 1000]
+		XTicks = [4, 6, 8, 10, 15]
+		YTicks = [3, 10, 30, 100, 300, 1000]
 		
-		# XLabels = XTicks
-		# YLabels = YTicks
+		XLabels = XTicks
+		YLabels = YTicks
 
-		# plt.xticks(np.log10(XTicks), XLabels)
-		# plt.yticks(np.log10(YTicks), YLabels)
+		plt.xticks(np.log10(XTicks), XLabels)
+		plt.yticks(np.log10(YTicks), YLabels)
 		cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
 		cbar.ax.set_yticklabels(['Min', 'Max'])
 		plt.tight_layout()
