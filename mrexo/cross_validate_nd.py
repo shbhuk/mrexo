@@ -1,0 +1,103 @@
+# -*- coding: utf-8 -*-
+import numpy as np
+import os
+from multiprocessing import Pool
+from .mle_utils_nd import MLE_fit, calc_C_matrix
+from .utils import _save_dictionary, _logging, GiveDegreeCandidates
+from .Optimizers import LogLikelihood
+
+
+def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
+	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+	"""
+
+	"""
+
+	n = DataDict['DataLength']
+	ndim = DataDict['ndim']
+
+	degree_candidates = GiveDegreeCandidates(degree_max=degree_max, n=n, ndim=ndim, ncandidates=NumCandidates)
+
+	message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	RandGen = np.random.choice(n, n, replace = False)
+	RowSize = np.int(np.floor(n/k_fold))
+	a = np.arange(n)
+	IndicesFolded = [a[i*RowSize:(i+1)*RowSize] if i is not k_fold-1 else a[i*RowSize:] for i in range(k_fold) ]
+
+	## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
+	# Iterator input to parallelize
+	cv_input = ((i,j, IndicesFolded,n, RandGen, DataDict, 
+		abs_tol, save_path, verbose) for i in range(k_fold) for j in degree_candidates)
+
+	# Run cross validation in parallel
+	pool = Pool(processes = cores)
+	cv_result = list(pool.imap(_cv_parallelize,cv_input))
+
+	# Find the log-likelihood for each degree candidatea
+	likelihood_matrix = np.split(np.array(cv_result) , k_fold)
+	likelihood_per_degree = np.sum(likelihood_matrix, axis=0)
+
+	# Save likelihood file
+	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'),np.array([degree_candidates,likelihood_per_degree]))
+	deg_choose = degree_candidates[np.argmax(likelihood_per_degree)]
+
+	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	return deg_choose
+
+
+def _cv_parallelize(cv_input):
+	"""
+	Serves as input finction for parallelizing.
+
+
+	OUTPUT:
+
+		like_pred : Predicted log likelihood for the i-th dataset and test_degree
+	"""
+
+	i_fold, deg_per_dim, IndicesFolded, n, RandGen,DataDict, \
+		abs_tol, save_path,  verbose = cv_input
+
+	SplitInterval = IndicesFolded[i_fold]
+
+	# Mask = Training set
+	# InvertMask = Testing Set
+	Mask = np.repeat(False, n)
+	Mask[rand_gen[SplitInterval]] = True
+	InvertMask = np.invert(Mask)
+
+	# Test dataset - sth subset.
+	TestDataDict = DataDict.copy()
+	for k in ['ndim_data', 'ndim_sigma', 'ndim_LSigma', 'ndim_USigma']:
+		TestDataDict[k] = DataDict[k][:,Mask] 
+	TestDataDict['DataLength'] = len(TestDataDict['ndim_data'][1])
+
+	# Corresponding training dataset k-1 in size
+	TrainDataDict = DataDict.copy()
+	for k in ['ndim_data', 'ndim_sigma', 'ndim_LSigma', 'ndim_USigma']:
+		TrainDataDict[k] = DataDict[k][:,InvertMask] 
+	TrainDataDict['DataLength'] = len(TrainDataDict['ndim_data'][1])
+
+	message='Running cross validation for {} degree check and {} th-fold\n'.format(test_degree, i_fold)
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	unpadded_weight, n_log_like = MLE_fit(TrainDataDict,  deg_per_dim=np.array(deg_per_dim), 
+		Log=True, abs_tol=abs_tol,
+		save_path=save_path,  verbose=verbose, 
+		OutputWeightsOnly=True, CalculateJointDist=False)
+
+	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
+	C_pdf = calc_C_matrix(TestDataDict, deg_per_dim=np.array(deg_per_dim), 
+		Log=True, abs_tol=abs_tol, 
+		save_path=save_path, 
+		verbose=verbose, 
+		SaveCMatrix=False)
+
+	# Calculate the final loglikelihood
+	like_pred = LogLikelihood(C_pdf, weights, TestDataDict['DataLength'])
+
+	return like_pred
