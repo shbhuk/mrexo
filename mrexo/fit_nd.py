@@ -126,7 +126,8 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	initialfit_result = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
-	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
+	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	OutputWeightsOnly=False, CalculateJointDist=True)
 
 
 	message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())

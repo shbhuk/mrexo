@@ -6,7 +6,7 @@ import os
 
 
 def LogLikelihood(Cpdf, w, n):
-    return np.sum(np.log(np.matmul(w,Cpdf)))
+    return np.sum(np.log(np.matmul(w, Cpdf)))
 
 def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
 

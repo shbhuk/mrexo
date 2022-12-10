@@ -222,7 +222,7 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
-		abs_tol, save_path, Log, verbose, SaveCMatrix=False):
+		Log, abs_tol, save_path, verbose, SaveCMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
