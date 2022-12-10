@@ -7,16 +7,17 @@ from .mle_utils_nd import MLE_fit, calc_C_matrix
 from .utils import _save_dictionary, _logging, GiveDegreeCandidates
 import matplotlib.pyplot as plt
 
+"""
 def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 	save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
-	"""
+	'''
 	Symmetric version of degree optimization using the AIC method. 
 	Here instead of n different degrees chosen for 'n' dimensions, each dimension
 	will have the same number of degrees, i.e.
 
 	[d, d, ...] instead of [d, d', ...]
 
-	"""
+	'''
 
 	message = 'Choosing degree with AIC in symmetric mode'
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -40,11 +41,12 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 	
 	
 	return DegreeChosen
+"""
 
 
-
-def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
-	save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+def run_aic(DataDict, degree_max, NumCandidates=20, 
+	SymmetricDegreePerDimension=True,
+	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
 
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
@@ -59,7 +61,7 @@ def run_aic(DataDict, degree_max, NumCandidates=20, cores=1,
 		degree_candidates=degree_candidates, 
 		NumCandidates=NumCandidates, 
 		cores=cores, save_path=save_path, verbose=verbose,
-		SymmetricDegreePerDimension=False)
+		SymmetricDegreePerDimension=SymmetricDegreePerDimension)
 	
 	"""
 	if cores==1:
@@ -317,14 +319,14 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	if not SymmetricDegreePerDimension:
 		FlattenedDegrees = FlattenGrid(Inputs=[degree_candidates][0], ndim=ndim)
-		FlattenedIndices = FlattenGrid(Inputs=[np.arange(NumCandidates)]*ndim, ndim=ndim)
+		FlattenedDegreeIndices = FlattenGrid(Inputs=[np.arange(NumCandidates)]*ndim, ndim=ndim)
 	else:
 		FlattenedDegrees = np.reshape(np.repeat(degree_candidates[0], ndim), (NumCandidates,ndim))
-		FlattenedIndices = np.reshape(np.repeat(np.arange(NumCandidates), ndim), (NumCandidates, ndim))
+		FlattenedDegreeIndices = np.reshape(np.repeat(np.arange(NumCandidates), ndim), (NumCandidates, ndim))
 	
 	n_iter = len(FlattenedDegrees)
 	
-	inputs_aicpool = ((DataDict, FlattenedDegrees[i], FlattenedIndices[i], save_path, verbose) for i in range(n_iter))
+	inputs_aicpool = ((DataDict, FlattenedDegrees[i], FlattenedDegreeIndices[i], save_path, verbose) for i in range(n_iter))
 
 	AICgrid = np.zeros(([NumCandidates]*ndim))
 	AICgrid[:] = np.nan

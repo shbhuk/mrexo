@@ -6,14 +6,16 @@ from astropy.table import Table
 import datetime
 
 from .mle_utils_nd import MLE_fit
-from .cross_validate import run_cross_validation
+from .cross_validate_nd import run_cross_validation
 from .profile_likelihood import run_profile_likelihood
 from .utils_nd import _save_dictionary, _logging
-from .aic_nd import run_aic, run_aic_symmetric
+from .aic_nd import run_aic
 
 
 
-def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, degree_max=None, k_fold=None, num_boot=100, cores=1, abs_tol=1e-8, verbose=2):
+def fit_relation(DataDict, SigmaLimit=1e-3, 
+		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
+		k_fold=None, num_boot=100, cores=1, abs_tol=1e-8, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
@@ -29,6 +31,10 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 		The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
 	degree_max : int, optional
 		The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
+	SymmetricDegreePerDimension: boolean, default=True
+		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
+		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
+		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
 	k_fold : int, optional
 		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	num_boot : int, default=100
@@ -101,16 +107,18 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
 	print(select_deg)
 	if select_deg == 'cv':
-		print("Hasn't been implemented yet")
+
+		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
+			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
+			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+
 	elif select_deg == 'profile':
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
 
-		# deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, cores=cores,
-			# save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
-
-		deg_per_dim = run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=cores,
-			save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, 
+			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
+			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 
 	else:
 		# Use user defined value
