@@ -4,10 +4,12 @@ import os
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
 from .utils import _save_dictionary, _logging, GiveDegreeCandidates
+from .aic_nd import FlattenGrid
 from .Optimizers import LogLikelihood
 
 
 def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
+	SymmetricDegreePerDimension=True,
 	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
 	"""
 
@@ -24,12 +26,21 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 	RandGen = np.random.choice(n, n, replace = False)
 	RowSize = np.int(np.floor(n/k_fold))
 	a = np.arange(n)
-	IndicesFolded = [a[i*RowSize:(i+1)*RowSize] if i is not k_fold-1 else a[i*RowSize:] for i in range(k_fold) ]
+	DataIndicesFolded = [a[i*RowSize:(i+1)*RowSize] if i is not k_fold-1 else a[i*RowSize:] for i in range(k_fold) ]
+
+	if not SymmetricDegreePerDimension:
+		FlattenedDegrees = FlattenGrid(Inputs=[degree_candidates][0], ndim=ndim)
+		FlattenedDegreeIndices = FlattenGrid(Inputs=[np.arange(NumCandidates)]*ndim, ndim=ndim)
+	else:
+		FlattenedDegrees = np.reshape(np.repeat(degree_candidates[0], ndim), (NumCandidates,ndim))
+		FlattenedDegreeIndices = np.reshape(np.repeat(np.arange(NumCandidates), ndim), (NumCandidates, ndim))
+
+	n_iter = len(FlattenedDegrees)
 
 	## Map the inputs to the cross validation function. Then convert to numpy array and split in k_fold separate arrays
 	# Iterator input to parallelize
-	cv_input = ((i,j, IndicesFolded,n, RandGen, DataDict, 
-		abs_tol, save_path, verbose) for i in range(k_fold) for j in degree_candidates)
+	cv_input = ((i_fold,FlattenedDegrees[j], FlattenedDegreeIndices[j], DataIndicesFolded,n, RandGen, DataDict, 
+		abs_tol, save_path, verbose) for i_fold in range(k_fold) for j in range(n_iter))
 
 	# Run cross validation in parallel
 	pool = Pool(processes = cores)
@@ -40,10 +51,10 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 	likelihood_per_degree = np.sum(likelihood_matrix, axis=0)
 
 	# Save likelihood file
-	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'),np.array([degree_candidates,likelihood_per_degree]))
-	deg_choose = degree_candidates[np.argmax(likelihood_per_degree)]
+	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'), likelihood_per_degree)
+	deg_choose = degree_candidates[:,np.argmax(likelihood_per_degree)]
 
-	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({deg_choose})
+	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({str(deg_choose)})
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return deg_choose
@@ -59,15 +70,15 @@ def _cv_parallelize(cv_input):
 		like_pred : Predicted log likelihood for the i-th dataset and test_degree
 	"""
 
-	i_fold, deg_per_dim, IndicesFolded, n, RandGen,DataDict, \
+	i_fold, deg_per_dim, DegreeIndex, DataIndicesFolded, n, RandGen,DataDict, \
 		abs_tol, save_path,  verbose = cv_input
 
-	SplitInterval = IndicesFolded[i_fold]
+	SplitInterval = DataIndicesFolded[i_fold]
 
 	# Mask = Training set
 	# InvertMask = Testing Set
 	Mask = np.repeat(False, n)
-	Mask[rand_gen[SplitInterval]] = True
+	Mask[RandGen[SplitInterval]] = True
 	InvertMask = np.invert(Mask)
 
 	# Test dataset - sth subset.
@@ -82,7 +93,7 @@ def _cv_parallelize(cv_input):
 		TrainDataDict[k] = DataDict[k][:,InvertMask] 
 	TrainDataDict['DataLength'] = len(TrainDataDict['ndim_data'][1])
 
-	message='Running cross validation for {} degree check and {} th-fold\n'.format(test_degree, i_fold)
+	message='Running cross validation for {} degree check and {} th-fold\n'.format(deg_per_dim, i_fold)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	unpadded_weight, n_log_like = MLE_fit(TrainDataDict,  deg_per_dim=np.array(deg_per_dim), 
@@ -98,6 +109,9 @@ def _cv_parallelize(cv_input):
 		SaveCMatrix=False)
 
 	# Calculate the final loglikelihood
-	like_pred = LogLikelihood(C_pdf, weights, TestDataDict['DataLength'])
+	like_pred = LogLikelihood(C_pdf, unpadded_weight, TestDataDict['DataLength'])
+
+	message='Running cross validation for {} degree check and {} th-fold. LogLike = {}\n'.format(deg_per_dim, i_fold, like_pred)
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return like_pred
