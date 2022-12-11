@@ -19,6 +19,7 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 	ndim = DataDict['ndim']
 
 	degree_candidates = GiveDegreeCandidates(degree_max=degree_max, n=n, ndim=ndim, ncandidates=NumCandidates)
+	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
 
 	message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -52,10 +53,23 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 
 	# Save likelihood file
 	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'), likelihood_per_degree)
-	deg_choose = degree_candidates[:,np.argmax(likelihood_per_degree)]
+	deg_choose = FlattenedDegrees[np.argmax(likelihood_per_degree)]
 
 	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({str(deg_choose)})
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	if ndim == 2:
+		if not SymmetricDegreePerDimension:
+			fig = MakePlot(np.reshape(likelihood_per_degree, (NumCandidates, NumCandidates)), Title='LogLike', degree_candidates=degree_candidates)
+			fig.savefig(os.path.join(save_path, 'LogLike_CV.png'))
+	elif SymmetricDegreePerDimension:
+			fig = plt.figure()
+			plt.plot(degree_candidates[0], likelihood_per_degree)
+			plt.xlabel("Degrees"); plt.ylabel("Log Likelihood")
+			plt.axvline(deg_choose[0], linestyle='dashed', c='k')
+			plt.tight_layout()
+			fig.savefig(os.path.join(save_path, 'LogLike_CV.png'))
+
 
 	return deg_choose
 
