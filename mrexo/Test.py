@@ -16,3 +16,29 @@ for i in range(1000):
         abs_tol=1e-8, Log=False)
 end = datetime.datetime.now()
 print(end-start)
+
+
+start = datetime.datetime.now()
+for i in range(10000):
+	_ = stats.norm.pdf(i, i, 100)
+end = datetime.datetime.now()
+print(end-start)
+
+start = datetime.datetime.now()
+for i in range(1000000):
+	_ = _PDF_Normal(i, i, 100)
+end = datetime.datetime.now()
+print(end-start)
+
+
+start = datetime.datetime.now()
+for i in range(1000000):
+	_ = _GammaFunction(323)
+end = datetime.datetime.now()
+print(end-start)
+
+start = datetime.datetime.now()
+for i in range(1000000):
+	_ = Factorial(323)
+end = datetime.datetime.now()
+print(end-start)

@@ -15,7 +15,7 @@ from .aic_nd import run_aic
 
 def fit_relation(DataDict, SigmaLimit=1e-3, 
 		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
-		k_fold=None, num_boot=100, cores=1, abs_tol=1e-8, verbose=2):
+		k_fold=None, num_boot=0, cores=1, abs_tol=1e-8, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
@@ -108,7 +108,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	print(select_deg)
 	if select_deg == 'cv':
 
-		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
+		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
 			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
 			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 
@@ -126,9 +126,6 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	###########################################################
 	## Step 2: Estimate the full model without bootstrap
-
-	print('Running full dataset MLE before bootstrap')
-
 
 	message = 'Running full dataset MLE before bootstrap\n'
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -151,15 +148,16 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		return initialfit_result, _
 	else:
 		print("Bootstrapping hasn't been coded up")
-		message = """
-	 _______ _	_ ______   ______ _   _ _____
-	 |__   __| |  | |  ____| |  ____| \ | |  __ |
-		| |  | |__| | |__	| |__  |  \| | |  | |
-		| |  |  __  |  __|   |  __| | . ` | |  | |
-		| |  | |  | | |____  | |____| |\  | |__| |
-		|_|  |_|  |_|______| |______|_| \_|_____/
-		"""
-		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+	# message = """
+	 # _______ _	_ ______   ______ _   _ _____
+	 # |__   __| |  | |  ____| |  ____| \ | |  __ |
+		# | |  | |__| | |__	| |__  |  \| | |  | |
+		# | |  |  __  |  __|   |  __| | . ` | |  | |
+		# | |  | |  | | |____  | |____| |\  | |__| |
+		# |_|  |_|  |_|______| |______|_| \_|_____/
+	# """
+	# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		return initialfit_result, bootstrap_results
 

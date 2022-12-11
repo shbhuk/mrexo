@@ -4,10 +4,11 @@ import numpy as np
 from multiprocessing import cpu_count
 import numpy as np
 
-
-from mrexo import fit_xy_relation
-from mrexo import predict_from_measurement
 import pandas as pd
+
+import cProfile
+import pstats
+
 
 Platform = sys.platform
 
@@ -191,10 +192,10 @@ import matplotlib.pyplot as plt
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 RunName = 'Fake_4D_MRSStM'
-RunName = 'Trial_FGKM_2D_MR'
+RunName = 'Trial_FGKM_2D_MR_cv_asymm'
 
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict]#, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict]#, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
@@ -208,26 +209,52 @@ InputDictionaries = [RadiusDict, MassDict]#, InsolationDict, StellarMassDict]
 # InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
 
 DataDict = InputData(InputDictionaries)
-#DataDict = np.load(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts\TestRuns\SimConstantDeg40\output\other_data_products\DataDict.npy", allow_pickle=True).item()
 
 # save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 save_path = os.path.join(pwd, 'TestRuns',  RunName)
  
 ndim = len(InputDictionaries)
 # deg_per_dim = [25, 25, 25, 30]
-# deg_per_dim = [30] * ndim
-# deg_per_dim = [35, 30, 32]
+
 """
 outputs = MLE_fit(DataDict, 
 	deg_per_dim=deg_per_dim,
 	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
+
+from mrexo.utils import _logging
+from multiprocessing import Pool
+
+verbose=2
+select_deg = 'cv'
+num_boot=0
+degree_max=40
+cores=1
+k_fold=10
+NumCandidates=10
 """
 
 # outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	outputs, _ = fit_relation(DataDict, select_deg=[34, 34], save_path=save_path, num_boot=0, degree_max=50, cores=2)
-	# outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
+	with cProfile.Profile() as pr:
+
+		outputs, _ = fit_relation(DataDict, select_deg='cv', save_path=save_path, num_boot=0, 
+			degree_max=40, cores=1, SymmetricDegreePerDimension=False)
+		# outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
+	pr.dump_stats(os.path.join(save_path, 'Profile.prof'))
+
+
+	file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
+	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
+	profile.sort_stats('cumulative') # Sorts the result according to the supplied criteria
+	profile.print_stats(30) # Prints the first 15 lines of the sorted report
+	file.close()
+
+	file = open(os.path.join(save_path, 'FormattedTimeProfile.txt'), 'w')
+	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
+	profile.sort_stats('time') # Sorts the result according to the supplied criteria
+	profile.print_stats(30) # Prints the first 15 lines of the sorted report
+	file.close()
 
 	JointDist = outputs['JointDist']
 	weights = outputs['Weights']
