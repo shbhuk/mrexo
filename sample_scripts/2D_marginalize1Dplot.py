@@ -37,23 +37,26 @@ RunName1 = 'FGK_2D_GiantPlanets_20220602' # FGK giant planet sample current w/ 3
 RunName2= 'ThesisRuns/Mdwarf_Kanodia2019_bounded'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
 RunName3 = 'Mdwarf_2D_GiantPlanets_20220602' # M dwarf giant planet sample current w/ 15 planets
 
+RunName1 = 'Sim_2D_N50_USigma0.5_LSigma0.5_aic_asymm' 
+RunName2 = 'Sim_2D_N50_USigma0.1_LSigma0.1_aic_asymm'
 
-Runs = [RunName1, RunName2, RunName3]
-Titles = ['FGK 2022: #348', 'M dwarf 2019: #4', 'M dwarf 2022: #18']
-TitlePos = [130, 270, 270]
-fig, ax = plt.subplots(3, sharex=True, sharey=True, figsize=(15,6.5))
+Runs = [RunName1, RunName2]
+Titles = ['Sigma = 50%', 'Sigma=10%']
+TitlePos = [130, 130, 270]
+fig, ax = plt.subplots(2, sharex=True, sharey=True, figsize=(6, 9))
 
 
 for d, RunName in enumerate(Runs):
 
-	save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+	# save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+	save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
 
 
 
-	ConditionName = '2D_1Re_'+ConditionString.replace('|', '_').replace(',', '_')
+	ConditionName = '2D_8Re_'+ConditionString.replace('|', '_').replace(',', '_')
 	PlotFolder = os.path.join(save_path, ConditionName)
 
-	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt'), dtype=int)
+	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
 	DataSequences = np.loadtxt(os.path.join(save_path, 'output', 'other_data_products', 'DataSequences.txt'))
 	weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
@@ -80,15 +83,19 @@ for d, RunName in enumerate(Runs):
 	MeasurementDict = {RHSTerms[0]:[[10**0.0], [np.nan]]}
 
 
-	r = [8, 12]
+	r = [10]
 	colours = ["C2", "C1", "C0"]
 	MeasurementDict = {'r':[r, np.repeat(np.nan, len(r))]}
-	LogMeasurementDict = {ke:np.log10(MeasurementDict[ke]) for ke in MeasurementDict.keys()}
+	LogMeasurementDict = {
+		'r':[np.log10(r),  np.reshape(np.repeat(np.nan, 2*len(r)), (len(r), 2))]
+	}
 
 
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
 		JointDist, LogMeasurementDict)
+
+
 		
 	# LinearVariancePDF = (10**MeanPDF * np.log(10))**2 * VariancePDF
 	# LinearSigmaPDF = np.sqrt(LinearVariancePDF)
@@ -124,7 +131,7 @@ for d, RunName in enumerate(Runs):
 	ax[d].set_ylim(0, 2.3)
 	ax[1].set_ylabel("Probability Density Function")
 
-ax[2].set_xlabel(DataDict['ndim_label'][LHSDimensions[0]], size=25)
+ax[-1].set_xlabel(DataDict['ndim_label'][LHSDimensions[0]], size=25)
 ax[0].legend(loc=2, fontsize=15)
 fig.subplots_adjust(hspace=0.01)
 # plt.tight_layout()

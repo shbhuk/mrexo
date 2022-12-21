@@ -37,8 +37,8 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
 RadiusBounds = [4, 15]
-MassBounds = [0, 3000]
-InsolationBounds = [0, 5000]
+MassBounds = [4, 3000]
+InsolationBounds = [0.01, 5000]
 StellarMassBounds = [0.2, 1.2]
 
 t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
@@ -192,15 +192,15 @@ import matplotlib.pyplot as plt
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 RunName = 'Fake_4D_MRSStM'
-RunName = 'Trial_FGKM_2D_MR_cv_asymm'
+RunName = 'Trial_FGKM_2D_MR_'
 
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict]#, StellarMassDict]
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-#InputDictionaries = [RadiusDict, PeriodDict]
-# InputDictionaries = [RadiusDict,  MassDict, FakePeriodDict]
+# InputDictionaries = [RadiusDict, InsolationDict]
+InputDictionaries = [RadiusDict,  MassDict]
 
 
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
@@ -236,13 +236,8 @@ NumCandidates=10
 # outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
 if __name__ == '__main__':
-	with cProfile.Profile() as pr:
 
-		outputs, _ = fit_relation(DataDict, select_deg='cv', save_path=save_path, num_boot=0, 
-			degree_max=40, cores=1, SymmetricDegreePerDimension=False)
-		# outputs, _ = fit_relation(DataDict, select_deg=[50, 50, 20, 20], save_path=save_path, num_boot=0, degree_max=100, cores=2)
-	pr.dump_stats(os.path.join(save_path, 'Profile.prof'))
-
+	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0,degree_max=60, cores=20, SymmetricDegreePerDimension=False)", os.path.join(save_path, 'Profile.prof'))
 
 	file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
