@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils import _save_dictionary, _logging, GiveDegreeCandidates
+from .utils_nd import _save_dictionary, _logging, GiveDegreeCandidates
 import matplotlib.pyplot as plt
 
 """
@@ -92,16 +92,24 @@ def run_aic(DataDict, degree_max, NumCandidates=20,
 	return DegreeChosen
 
 
-def MakePlot(Data, Title, degree_candidates):
+def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False):
 	"""
 	
 	"""
 	
 	plt.close("all")
 	fig = plt.figure()
-	plt.imshow(Data[1:, 1:], extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
+	if Interpolate:
+		im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower', interpolation='bicubic')
+	else:
+		im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
+
+	if AddContour:
+		contours = plt.contour(degree_candidates[0], degree_candidates[1], Data, 20, colors='black')
+		plt.clabel(contours, inline=1, fontsize=10)
+
 	plt.title(Title)
-	plt.colorbar()
+	plt.colorbar(im)
 	
 	return fig
 
@@ -338,7 +346,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	ESSGrid = np.zeros(([NumCandidates]*ndim))
 
 	if cores > 1:
-		# Parallelize the bootstraps
+		# Parallelize the AIC
 		pool = Pool(processes=cores)
 		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
 		
@@ -388,8 +396,6 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	MinAICIndex = np.unravel_index(MinAICIndexFlat, np.shape(AICgrid))
 	DegreeChosen = np.array([degree_candidates[i][MinAICIndex[i]] for i in range(ndim)], dtype=int)
 	
-	print(DegreeChosen)
-
 	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
 	np.save(os.path.join(save_path, 'AIC.npy'), AICgrid)
 	np.save(os.path.join(save_path, 'AIC_FI.npy'), AIC_FIgrid)
@@ -424,6 +430,14 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			fig = MakePlot(2*(NonZeroGrid/n - LoglikeGrid), Title="AIC = 2*(NonZero/n - LogLike)", degree_candidates=degree_candidates)
 			fig.savefig(os.path.join(save_path, 'NonZero_n_AIC.png'))
 
+	else:
+		fig = plt.figure()
+		plt.plot(degree_candidates[0], np.diag(AICgrid))
+		plt.xlabel("Degrees"); plt.ylabel("AIC")
+		plt.axvline(DegreeChosen[0], linestyle='dashed', c='k')
+		plt.tight_layout()
+		fig.savefig(os.path.join(save_path, 'AIC.png'))
+
 	return DegreeChosen
 	
 
@@ -431,7 +445,7 @@ def _AIC_MLE(inputs):
 	
 	DataDict, deg_per_dim, index, save_path, verbose = inputs
 	
-	message = "Running degrees = {}".format(deg_per_dim)
+	message = "Running degrees = {}\n".format(deg_per_dim)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	outputs = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
