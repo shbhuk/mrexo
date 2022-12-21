@@ -1,0 +1,18 @@
+#PBS -A open   should use our allocation
+#PBS -l nodes=1:ppn=24    # requests your job to be allocated 1 processor core
+#PBS -l walltime=48:00:00 # specifies a maximum run time in format of hh:mm:ss
+#PBS -l pmem=4gb          # this requests 1GB of memory per process
+#PBS -j oe                # combine the stdout and stderr into one file
+#PBS -m abe               # tells PBS to send an email on abort, begin and/or exit
+## *** TODO *** : modify the below line to have your email address ***
+#PBS -M szk381@psu.edu    # send email to this address
+
+#module purge             # If uncommented, clears out any modules loaded by default
+module load python/3.6.3-anaconda5.0.1          # If uncommented, would load the module git, etc.
+source activate pyvenv
+
+cd /storage/home/szk381/work/mrexo/sample_scripts         # change into same directory as job was submitted from
+
+# start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
+
+python sample_predict.py> 'mdwarfs_1_genlookup.txt'
