@@ -30,15 +30,25 @@ for i in range(1000000):
 end = datetime.datetime.now()
 print(end-start)
 
+n = 103
 
 start = datetime.datetime.now()
 for i in range(1000000):
-	_ = _GammaFunction(323)
+	_ = _GammaFunction(n)
+end = datetime.datetime.now()
+print(end-start)
+
+from math import factorial, gamma
+
+start = datetime.datetime.now()
+for i in range(1000000):
+	_ = factorial(n-1)
 end = datetime.datetime.now()
 print(end-start)
 
 start = datetime.datetime.now()
 for i in range(1000000):
-	_ = Factorial(323)
+	_ = scipy.math.factorial(n-1)
 end = datetime.datetime.now()
 print(end-start)
+
