@@ -4,7 +4,7 @@ import os
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
 from .utils import _save_dictionary, _logging, GiveDegreeCandidates
-from .aic_nd import FlattenGrid
+from .aic_nd import FlattenGrid, MakePlot
 from .Optimizers import LogLikelihood
 
 
