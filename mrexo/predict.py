@@ -6,10 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from multiprocessing import Pool,cpu_count
 
-from .mle_utils import cond_density_quantile
-from .utils import _load_lookup_table
-from .plot import plot_x_given_y_relation, plot_y_given_x_relation
-
 pwd = os.path.dirname(__file__)
 np.warnings.filterwarnings('ignore')
 
