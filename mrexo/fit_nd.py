@@ -7,8 +7,8 @@ import datetime
 
 from .mle_utils_nd import MLE_fit
 from .cross_validate_nd import run_cross_validation
-from .profile_likelihood import run_profile_likelihood
-from .utils_nd import _save_dictionary, _logging
+# from .profile_likelihood import run_profile_likelihood
+from .utils_nd import _logging, _save_dictionary
 from .aic_nd import run_aic
 
 
@@ -137,7 +137,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
-
+	
 	_save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
 	###########################################################

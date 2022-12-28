@@ -7,6 +7,27 @@ if sys.version_info.major==3:
 else:
 	from functools32 import lru_cache
 
+def _save_dictionary(dictionary, output_location,
+	bootstrap=False):
+
+	"""
+	Need to update
+	Save the keys in the dictionary as separate data .txt files.
+	"""
+	aux_output_location = os.path.join(output_location, 'other_data_products')
+
+	if not bootstrap:
+		unpadded_weights = dictionary['UnpaddedWeights']
+		weights = dictionary['Weights']
+		deg_per_dim = dictionary['deg_per_dim']
+		DataSequences = dictionary['DataSequence']
+		JointDist = dictionary['JointDist']
+
+		np.savetxt(os.path.join(output_location,'weights.txt'),weights, comments='#', header='Weights for Beta densities from initial fitting w/o bootstrap')
+		np.savetxt(os.path.join(output_location,'unpadded_weights.txt'),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from initial fitting w/o bootstrap')
+		np.savetxt(os.path.join(output_location,'deg_per_dim.txt'), deg_per_dim, comments='#', header='Degrees per dimensions')
+		np.save(os.path.join(output_location,'JointDist.npy'), JointDist)
+		np.savetxt(os.path.join(aux_output_location,'DataSequences.txt'), DataSequences, comments='#', header='Data Sequence for each dimensions')
 
 def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
 	"""

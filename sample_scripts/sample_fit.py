@@ -36,13 +36,15 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 # t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
-RadiusBounds = [4, 15]
-MassBounds = [4, 3000]
-InsolationBounds = [0.01, 5000]
-StellarMassBounds = [0.2, 1.2]
+RadiusBounds = [0.5, 15]
+MassBounds = [0.5, 3000]
+InsolationBounds = None# [0.01, 5000]
+StellarMassBounds = None# [0.2, 1.2]
 
 t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
 t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
+t = t[t.pl_eqt < 950]
+
 
 if InsolationBounds is not None:
 	t = t[(t.pl_insol > InsolationBounds[0]) & (t.pl_insol < InsolationBounds[1])]
@@ -82,13 +84,13 @@ print(len(t))
 # In Earth units
 Mass = np.array(t['pl_masse'])
 # Symmetrical errorbars
-Mass_sigma1 = np.array(abs(t['pl_masseerr1']))
-Mass_sigma2 = np.array(abs(t['pl_masseerr2']))
+MassUSigma = np.array(abs(t['pl_masseerr1']))
+MassLSigma = np.array(abs(t['pl_masseerr2']))
 
 Radius = np.array(t['pl_rade'])
 # Symmetrical errorbars
-Radius_sigma1 = np.array(abs(t['pl_radeerr1']))
-Radius_sigma2 = np.array(abs(t['pl_radeerr2']))
+RadiusUSigma = np.array(abs(t['pl_radeerr1']))
+RadiusLSigma = np.array(abs(t['pl_radeerr2']))
 
 """
 Period = np.array(t['pl_orbper'])
@@ -98,13 +100,16 @@ PeriodSigma = np.repeat(np.nan, len(Period))
 
 
 StellarMass = np.array(t['st_mass'])
-StellarMassSigma = np.array(t['st_masserr1'])
+StellarMassUSigma = np.array(t['st_masserr1'])
+StellarMassLSigma = np.array(t['st_masserr2'])
 
 # Metallicity = np.array(t['st_met'])
 # MetallicitySigma = np.array(t['st_meterr1'])
 
 Insolation = np.array(t['pl_insol'])
-InsolationSigma = np.array(t['pl_insolerr1'])
+InsolationUSigma = np.array(t['pl_insolerr1'])
+InsolationLSigma = np.array(t['pl_insolerr2'])
+
 
 """
 #############################
@@ -173,17 +178,17 @@ Max, Min = np.nan, np.nan
 # Min -= 0.2
 
 
-RadiusDict = {'Data': Radius, 'LSigma': Radius_sigma1,  "USigma":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'LSigma': Mass_sigma1, "USigma":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+RadiusDict = {'Data': Radius, 'LSigma': RadiusLSigma,  "USigma":RadiusUSigma, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'LSigma': MassLSigma, "USigma":MassUSigma, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
 #FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
 # PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
-StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassSigma, "USigma":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassLSigma, "USigma":StellarMassUSigma, 'Max':Max, 'Min':Min, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 #MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 # MetallicityDict = {'Data': 10**(-Metallicity), 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
 
-InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+InsolationDict = {'Data': Insolation, 'LSigma': InsolationLSigma, "USigma":InsolationUSigma, 'Max':Max, 'Min':Min,  'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
@@ -192,15 +197,15 @@ import matplotlib.pyplot as plt
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 RunName = 'Fake_4D_MRSStM'
-RunName = 'Trial_FGKM_2D_MR_'
+RunName = 'NotHot_le950K_3D_MRS_25x3'
 
-# InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict]
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
 # InputDictionaries = [RadiusDict, InsolationDict]
-InputDictionaries = [RadiusDict,  MassDict]
+# InputDictionaries = [RadiusDict,  MassDict]
 
 
 # InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
@@ -237,7 +242,7 @@ NumCandidates=10
 
 if __name__ == '__main__':
 
-	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0,degree_max=60, cores=20, SymmetricDegreePerDimension=False)", os.path.join(save_path, 'Profile.prof'))
+	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=[25, 25, 25], save_path=save_path, num_boot=0, degree_max=80, cores=4, SymmetricDegreePerDimension=False)", os.path.join(save_path, 'Profile.prof'))
 
 	file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

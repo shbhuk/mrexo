@@ -8,7 +8,7 @@
 #PBS -m abe               # tells PBS to send an email on abort, begin and/or exit
 ##PBS -l feature=rhel7.
 #PBS -M szk381@psu.edu    # send email to this address
-#PBS -N AIC_2d
+#PBS -N AIC_cool3
 
 #module purge             # If uncommented, clears out any modules loaded by default
 
@@ -21,5 +21,5 @@ which python
 ### start Python and run Python commands in the subsequent filename (you'll need to copy/create that file in the directory you submit this job from)
 
 #python Kepler_HFR2020b.py > 'KeplerRP.txt'
-python sample_fit_2d.py > 2dasym.txt
+python sample_fit.py > CoolMRS.txt
 #python SimFit.py > SimFit_AIC.txt

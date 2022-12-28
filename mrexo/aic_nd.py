@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils_nd import _save_dictionary, _logging, GiveDegreeCandidates
+from .utils_nd import _logging, GiveDegreeCandidates
 import matplotlib.pyplot as plt
 
 """
