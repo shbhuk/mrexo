@@ -45,7 +45,7 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 
 	# Run cross validation in parallel
 	pool = Pool(processes = cores)
-	cv_result = list(pool.imap(_cv_parallelize,cv_input))
+	cv_result = list(pool.imap_unordered(_cv_parallelize,cv_input))
 
 	# Find the log-likelihood for each degree candidatea
 	likelihood_matrix = np.split(np.array(cv_result) , k_fold)

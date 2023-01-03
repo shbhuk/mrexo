@@ -110,6 +110,8 @@ def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False
 
 	plt.title(Title)
 	plt.colorbar(im)
+	plt.xlabel("Degrees ($d_1$)")
+	plt.ylabel("Degrees ($d_2$)")
 	
 	return fig
 
@@ -348,7 +350,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 	if cores > 1:
 		# Parallelize the AIC
 		pool = Pool(processes=cores)
-		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
+		aic_results = list(pool.imap_unordered(_AIC_MLE, inputs_aicpool))
 		
 		AIC = np.array([x['aic'] for x in aic_results])
 		AIC_FI = np.array([x['aic_fi'] for x in aic_results])
