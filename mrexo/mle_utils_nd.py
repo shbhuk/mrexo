@@ -5,7 +5,7 @@ from scipy.stats import beta
 from decimal import Decimal
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
-from scipy.interpolate import interpn
+from scipy.interpolate import interpn, interp1d	
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
 from scipy.special import erfinv
@@ -15,7 +15,7 @@ from functools import lru_cache
 
 
 from .utils_nd import _logging
-from .Optimizers import optimizer, SLSQP_optimizer
+from .Optimizers import optimizer
 
 
 ########################################
@@ -479,6 +479,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		MeasurementDict):
 	'''
 	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
+	Based on Eqn 10 from Ning et al. 2018
 	INPUTS:
 		ConditionString = Example 'x|z or z|y'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
@@ -544,18 +545,16 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
 			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
 		
+		# Interpolate the joint distribution on to a 1-D grid of points corresponding to the given RHS term to condition on, and sequence of LHS terms that we're querying for.
+		# For example to get f(m|r=5), the joint distribution will be interpolated on to (5, m_max), ...,  (5, m_min)
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
 		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
-		# Hardcoded 20201209
-		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
-		# Slice is taken at the radius value that we're finding mass for
 		# Then calculate denominator by taking matrix multiplication
 		# Ratio of the two gives the PDF
 		# Expectation value of this PDF matches the mean from old (Ning et al. 2018) method
 		# Integral(conditionaldist * MassSequence) / Integral(conditionaldist) = Mean(f(m|r)) = Expectation value
-		# SliceofJoint = JointDist[RHSIndex, :]
 		
 		temp_denominator = ReshapedWeights
 		InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
@@ -580,17 +579,32 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		
 		ConditionalDist[i] = SliceofJoint/np.sum(temp_denominator)
 		
-		# Find the integral of the Conditional Distribution => Integral of f(x) dx
-		ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
-		
+		# Find the integral of the Conditional Distribution => Integral of f(x) dx.
+		# Should basically -> 1. 
+		# 20230102 - Univariate spline is not giving good enough results. Switching to interp1d
+		# ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
+		ConditionPDF = quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0]
+
 		# Find the  integral of the product of the Conditional and LHSSequence => E[x]
-		MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
+		# MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
+		MeanPDF[i] = quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0] / ConditionPDF
 
 		# Variance = E[x^2] - E[x]^2
-		VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
+		# VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
+		VariancePDF[i] = (quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0] / ConditionPDF) - (MeanPDF[i]**2)
+
 
 		# from scipy.integrate import simps
 		# print(simps(SliceofJoint, LHSSequence[0]))
