@@ -3,8 +3,8 @@ import numpy as np
 import os
 import pandas as pd
 from multiprocessing import Pool
-from .mle_utils import MLE_fit, calc_C_matrix
-from .utils import _save_dictionary, _logging, GiveDegreeCandidates
+from .mle_utils_nd import MLE_fit, calc_C_matrix
+from .utils_nd import _logging, GiveDegreeCandidates
 
 """
 def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,

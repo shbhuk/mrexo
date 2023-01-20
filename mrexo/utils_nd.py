@@ -11,29 +11,8 @@ def _save_dictionary(dictionary, output_location,
 	bootstrap=False):
 
 	"""
+	Need to update
 	Save the keys in the dictionary as separate data .txt files.
-
-	INPUTS:
-		dictionary : Output dictionary from fitting without bootstrap using Maximum Likelihood Estimation.
-					 The keys in the dictionary are:
-							'weights' : Weights for Beta densities.
-							'aic' : Akaike Information Criterion.
-							'bic' : Bayesian Information Criterion.
-							'Y_points' : Sequence of Y points for initial fitting w/o bootstrap.
-							'X_points' : Sequence of X points for initial fitting w/o bootstrap.
-							'Y_cond_X' : Conditional distribution of Y given X.
-							'Y_cond_X_var' : Variance for the Conditional distribution of Y given X.
-							'Y_cond_X_quantile' : Quantiles for the Conditional distribution of Y given X.
-							'X_cond_Y' : Conditional distribution of X given Y.
-							'X_cond_Y_var' : Variance for the Conditional distribution of X given Y.
-							'X_cond_Y_quantile' : Quantiles for the Conditional distribution of X given Y.
-							if bootstrap == False:
-							'joint_dist' : Joint distribution of Y AND X.
-		output_location : The output subdirectory within save_path where the files are stored
-		bootstrap : If False, will save files with initial fitting names. Else the files will be saved with bootstrap header and file name.
-
-	OUTPUTS:
-		Returns nothing. Saves the contents of the dictionary
 	"""
 	aux_output_location = os.path.join(output_location, 'other_data_products')
 
@@ -49,36 +28,23 @@ def _save_dictionary(dictionary, output_location,
 		np.savetxt(os.path.join(output_location,'deg_per_dim.txt'), deg_per_dim, comments='#', header='Degrees per dimensions')
 		np.save(os.path.join(output_location,'JointDist.npy'), JointDist)
 		np.savetxt(os.path.join(aux_output_location,'DataSequences.txt'), DataSequences, comments='#', header='Data Sequence for each dimensions')
-		
+
+def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
+	"""
+	INPUTS:
+		degree_max = A np.array with number of elements equal to number of degrees, 
+			with each element corresponding to the maximum degree for each dimension.
+			Or else an integer
+		ndim = Number of dimensions
+		n = Size of dataset
+	"""
+	
+	if type(degree_max) == int:
+		degree_candidates = np.array([np.linspace(5, degree_max, ncandidates, dtype=int) for i in range(ndim)])
 	else:
-		weights_boot = np.array([x['weights'] for x in dictionary])
-		aic_boot = np.array([x['aic'] for x in dictionary])
-		bic_boot = np.array([x['bic'] for x in dictionary])
-		Y_points_boot =  np.array([x['Y_points'] for x in dictionary])
-		X_points_boot = np.array([x['X_points'] for x in dictionary])
-		Y_cond_X_boot = np.array([x['Y_cond_X'] for x in dictionary])
-		Y_cond_X_var_boot = np.array([x['Y_cond_X_var'] for x in dictionary])
-		Y_cond_X_lower_boot = np.array([x['Y_cond_X_quantile'][:,0] for x in dictionary])
-		Y_cond_X_upper_boot = np.array([x['Y_cond_X_quantile'][:,1] for x in dictionary])
-		X_cond_Y_boot = np.array([x['X_cond_Y'] for x in dictionary])
-		X_cond_Y_var_boot = np.array([x['X_cond_Y_var'] for x in dictionary])
-		X_cond_Y_lower_boot = np.array([x['X_cond_Y_quantile'][:,0] for x in dictionary])
-		X_cond_Y_upper_boot = np.array([x['X_cond_Y_quantile'][:,1] for x in dictionary])
+		degree_candidates =  np.array([np.linspace(5, d, ncandidates, dtype=int) for d in degree_max])
 
-		np.savetxt(os.path.join(output_location,'weights_boot.txt'),weights_boot, comments='#', header='Weights for Beta densities from bootstrap run')
-		np.savetxt(os.path.join(aux_output_location,'aic_boot.txt'),aic_boot, comments='#', header='Akaike Information Criterion from bootstrap run')
-		np.savetxt(os.path.join(aux_output_location,'bic_boot.txt'),bic_boot, comments='#', header='Bayesian Information Criterion from bootstrap run')
-		np.savetxt(os.path.join(aux_output_location,'Y_points_boot.txt'),Y_points_boot, comments='#', header='Sequence of Y points for bootstrap run')
-		np.savetxt(os.path.join(aux_output_location,'X_points_boot.txt'),X_points_boot, comments='#', header='Sequence of X points for bootstrap run')
-		np.savetxt(os.path.join(output_location,'Y_cond_X_boot.txt'),Y_cond_X_boot, comments='#', header='Conditional distribution of {} given {} from bootstrap run'.format(Y_label, X_label))
-		np.savetxt(os.path.join(aux_output_location,'Y_cond_X_var_boot.txt'),Y_cond_X_var_boot, comments='#', header='Variance for the Conditional distribution of {} given {} from bootstrap run'.format(Y_label, X_label))
-		np.savetxt(os.path.join(aux_output_location,'Y_cond_X_lower_boot.txt'),Y_cond_X_lower_boot, comments='#', header='Lower limit for the Conditional distribution of {} given {} from bootstrap run'.format(Y_label, X_label))
-		np.savetxt(os.path.join(aux_output_location,'Y_cond_X_upper_boot.txt'),Y_cond_X_upper_boot, comments='#', header='Upper limit for the Conditional distribution of {} given {} from bootstrap run'.format(Y_label, X_label))
-		np.savetxt(os.path.join(output_location,'X_cond_Y_boot.txt'),X_cond_Y_boot, comments='#', header='Conditional distribution of {} given {} from bootstrap run'.format(X_label, Y_label))
-		np.savetxt(os.path.join(aux_output_location,'X_cond_Y_var_boot.txt'),X_cond_Y_var_boot, comments='#', header='Variance for the Conditional distribution of {} given {} from bootstrap run'.format(X_label, Y_label))
-		np.savetxt(os.path.join(aux_output_location,'X_cond_Y_lower_boot.txt'),X_cond_Y_lower_boot, comments='#', header='Lower limit for the Conditional distribution of {} given {} from bootstrap run'.format(X_label, Y_label))
-		np.savetxt(os.path.join(aux_output_location,'X_cond_Y_upper_boot.txt'),X_cond_Y_upper_boot, comments='#', header='Upper limit for the Conditional distribution of {} given {} from bootstrap run'.format(X_label, Y_label))
-
+	return degree_candidates
 
 @lru_cache(maxsize=200)
 def _load_lookup_table(f_path):

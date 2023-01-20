@@ -6,86 +6,55 @@ from astropy.table import Table
 import datetime
 
 from .mle_utils_nd import MLE_fit
-from .cross_validate import run_cross_validation
-from .profile_likelihood import run_profile_likelihood
-from .utils_nd import _save_dictionary, _logging
-from .aic_nd import run_aic, run_aic_symmetric
+from .cross_validate_nd import run_cross_validation
+# from .profile_likelihood import run_profile_likelihood
+from .utils_nd import _logging, _save_dictionary
+from .aic_nd import run_aic
 
 
 
-def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, degree_max=None, k_fold=None, num_boot=100, cores=1, abs_tol=1e-8, verbose=2):
+def fit_relation(DataDict, SigmaLimit=1e-3, 
+		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
+		k_fold=None, num_boot=0, cores=1, abs_tol=1e-8, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
-    Parameters
-    ----------
-    DataDict : dict
-        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
-    SigmaLimit : int, default=1e-3
-        The lower limit on the sigma values for all dimensions. Sigma values lower than this limit will be changed to None. This is required because the standard normal distribution blows up if the sigma values are too small (~1e-4). Then the distribution is no longer a convolution of normal and beta distributions, but is just a beta distribution.
-    save_path : str, optional
-        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
-    select_deg : {'cv', 'aic', 'bic'} or int, optional
-        The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
-    degree_max : int, optional
-        The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
-    k_fold : int, optional
-        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
-    num_boot : int, default=100
-        The number of bootstraps to perform (must be greater than 1).
-    cores : int, default=1
-        The number of cores to use for parallel processing. This is used in the
-           bootstrap and the cross validation. To use all the cores in the CPU,
-           set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
-    abs_tol : float, default=1e-8
-        The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
-    verbose : int, default=2
-        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+	Parameters
+	----------
+	DataDict : dict
+		The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+	SigmaLimit : int, default=1e-3
+		The lower limit on the sigma values for all dimensions. Sigma values lower than this limit will be changed to None. This is required because the standard normal distribution blows up if the sigma values are too small (~1e-4). Then the distribution is no longer a convolution of normal and beta distributions, but is just a beta distribution.
+	save_path : str, optional
+		The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+	select_deg : {'cv', 'aic', 'bic'} or int, optional
+		The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
+	degree_max : int, optional
+		The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
+	SymmetricDegreePerDimension: boolean, default=True
+		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
+		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
+		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+	k_fold : int, optional
+		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
+	num_boot : int, default=100
+		The number of bootstraps to perform (must be greater than 1).
+	cores : int, default=1
+		The number of cores to use for parallel processing. This is used in the
+		   bootstrap and the cross validation. To use all the cores in the CPU,
+		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
+	abs_tol : float, default=1e-8
+		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
+	verbose : int, default=2
+		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
 
 	Returns
-    -------
-    initialfit_result : dict
-        Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
-    bootstrap_results : dict
-        TBD. Only returned if ``num_boot`` > 0.
-    
-
-	Examples ### FINDME: is this still valid?
-    --------
-
-	Example to fit a Y X relationship with 2 CPU cores,
-			using 12 degrees, and 50 bootstraps:
-
-    # import os
-    # from astropy.table import Table
-	# import numpy as np
-    # from mrexo import fit_mr_relation
-
-    >>> pwd = '~/mrexo_working/'
-
-    >>> t = Table.read(os.path.join(pwd,'Cool_stars_20181109.csv'))
-
-    # Symmetrical errorbars
-	>>> Y_sigma = (abs(t['pl_Yeerr1']) + abs(t['pl_Yeerr2']))/2
-    >>> X_sigma = (abs(t['pl_radeerr1']) + abs(t['pl_radeerr2']))/2
-
-    # In Earth units
-    >>> Y = np.array(t['pl_Ye'])
-    >>> X = np.array(t['pl_rade'])
-
-    # Directory to store results in
-    >>> result_dir = os.path.join(pwd,'Results_deg_12')
-
-    ##FINDME
-
-    >>> initialfit_result, bootstrap_results = fit_mr_relation(Y=Y,
-    ...										    Y_sigma=Y_sigma,
-    ... 										X=X,
-    ...											X_sigma=X_sigma,
-    ...											save_path=result_dir,
-    ...											select_deg=12,
-    ...											num_boot=50, cores=2)
-    
+	-------
+	initialfit_result : dict
+		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
+	bootstrap_results : dict
+		TBD. Only returned if ``num_boot`` > 0.
+	
 	"""
 
 	starttime = datetime.datetime.now()
@@ -114,14 +83,14 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	np.savetxt(os.path.join(aux_output_location, 'NDimChar.txt'), Char, fmt="%s", comments="#Dimension Character")
 
 
-    message = """
-	___  _________ _______   _______
-	|  \/  || ___ \  ___\ \ / /  _  |
-	| .  . || |_/ / |__  \ V /| | | |
-	| |\/| ||    /|  __| /   \| | | |
-	| |  | || |\ \| |___/ /^\ \ \_/ /
-	\_|  |_/\_| \_\____/\/   \/\___/
-    """
+	message = """
+	___  _________  _____              
+	|  \/  || ___ \|  ___|             
+	| .  . || |_/ /| |__  __  __  ___  
+	| |\/| ||    / |  __| \ \/ / / _ \ 
+	| |  | || |\ \ | |___  >  < | (_) |
+	\_|  |_/\_| \_|\____/ /_/\_\ \___/ 
+	"""
 
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
@@ -138,16 +107,18 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	## Step 1: Select number of degrees based on cross validation (CV), AIC or BIC methods.
 	print(select_deg)
 	if select_deg == 'cv':
-		print("Hasn't been implemented yet")
+
+		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
+			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
+			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+
 	elif select_deg == 'profile':
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
 
-		# deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, cores=cores,
-			# save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
-
-		deg_per_dim = run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=cores,
-			save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, 
+			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
+			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 
 	else:
 		# Use user defined value
@@ -156,19 +127,17 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 	###########################################################
 	## Step 2: Estimate the full model without bootstrap
 
-	print('Running full dataset MLE before bootstrap')
-
-
 	message = 'Running full dataset MLE before bootstrap\n'
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	initialfit_result = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
-	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
+	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	OutputWeightsOnly=False, CalculateJointDist=True)
 
 
 	message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
-
+	
 	_save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
 	###########################################################
@@ -179,15 +148,16 @@ def fit_relation(DataDict, SigmaLimit=1e-3, save_path=None, select_deg=None, deg
 		return initialfit_result, _
 	else:
 		print("Bootstrapping hasn't been coded up")
-		message = """
-	 _______ _	_ ______   ______ _   _ _____
-	 |__   __| |  | |  ____| |  ____| \ | |  __ |
-		| |  | |__| | |__	| |__  |  \| | |  | |
-		| |  |  __  |  __|   |  __| | . ` | |  | |
-		| |  | |  | | |____  | |____| |\  | |__| |
-		|_|  |_|  |_|______| |______|_| \_|_____/
-		"""
-		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+	# message = """
+	 # _____  _   _  _____   _____  _   _ ______ 
+	# |_   _|| | | ||  ___| |  ___|| \ | ||  _  \
+	  # | |  | |_| || |__   | |__  |  \| || | | |
+	  # | |  |  _  ||  __|  |  __| | . ` || | | |
+	  # | |  | | | || |___  | |___ | |\  || |/ / 
+	  # \_/  \_| |_/\____/  \____/ \_| \_/|___/  
+	# """
+	# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		return initialfit_result, bootstrap_results
 

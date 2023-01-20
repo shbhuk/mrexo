@@ -5,16 +5,17 @@ from scipy.stats import beta
 from decimal import Decimal
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
-from scipy.interpolate import interpn
+from scipy.interpolate import interpn, interp1d	
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
 from scipy.special import erfinv
 import datetime,os
 from multiprocessing import current_process
+from functools import lru_cache
 
 
-from .utils import _logging
-from .Optimizers import optimizer, SLSQP_optimizer
+from .utils_nd import _logging
+from .Optimizers import optimizer
 
 
 ########################################
@@ -24,43 +25,43 @@ from .Optimizers import optimizer, SLSQP_optimizer
 # Ndim - 20201130
 def InputData(ListofDictionaries):
 	"""
-    Compile a dictionary of the data and metadata given a list of dictionaries.
-    
-    Parameters
-    ----------
-    ListofDictionaries : list[dict]
-        A list of dictionaries of length 'd', where each dictionary corresponds to a dimension of the data. For example, ``ListofDictionaries = [RadiusDict, MassDict,...]``.
-    
-    
-    The input list should contain dictionaries, each of which contains the following fields:
-    
-    - `Data`: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'. The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
+	Compile a dictionary of the data and metadata given a list of dictionaries.
+	
+	Parameters
+	----------
+	ListofDictionaries : list[dict]
+		A list of dictionaries of length 'd', where each dictionary corresponds to a dimension of the data. For example, ``ListofDictionaries = [RadiusDict, MassDict,...]``.
+	
+	
+	The input list should contain dictionaries, each of which contains the following fields:
+	
+	- `Data`: Data (observables) that are modelled assuming an asymmetric normal distribution.  Length 'L'. The normal distribution consists of two half normals, unnormalized, where the observed measurement sits at the 50% percentile
 	- `LSigma`: Sigma value for the lower normal distribution. Same scale as Data (log/linear). Length 'L'
 	- `USigma`: Sigma value for the upper normal distribution. Same scale as Data (log/linear). Length 'L'
 	- `Max`: log10 of the upper bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(1.1*np.max(ndim_data[d]))
 	- `Min`: log10 of the lower bound for the dimension to be fit. Can leave as np.nan, in which case  = np.log10(0.9*np.min(ndim_data[d]))
 	- `Label`: Axes label (string) to be used for this dimension. E.g. 'Radius ($R_{\oplus}$)' or 'Pl Insol ($S_{\oplus}$)'
 	- `Char`: Symbol (character) to be used for this dimension. E.g. 'r' or 's'
-    
-    
-    Returns
-    -------
-    DataDict : dict
-        A dictionary containing all of the data and metadata.
-    
-    
-    The output dictionary ``DataDict`` contains the following fields:
-    
-    - `ndim_data`: A 2-d array of size (d = number of dimensions, L = number of data points) containing the data.
-    - `ndim_sigma`: A 2-d array of size (d, L) containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
-    - `ndim_LSigma`: A 2-d array of size (d, L) containing the lower uncertainties of each data point.
-    - `ndim_USigma`: A 2-d array of size (d, L) containing the upper uncertainties of each data point.
-    - `ndim_bounds`: A 2-d array of size (d, L) of size (number of dimensions, 2) containing the bounds of the data in each dimension.
-    - `ndim_char`: A list of character strings representing the variable in each dimension.
-    - `ndim_label`: A list of character strings for labeling the variable in each dimension.
-    - `ndim`: The number of dimensions.
-    - `DataLength`: The number of data points.
-    - `DataSequence`: A 2-d array of size (d, 50) with a uniform sequence for each dimension between the lower and upper bounds. Note: This is uniform in log10-space since the bounds are in log10 space.
+	
+	
+	Returns
+	-------
+	DataDict : dict
+		A dictionary containing all of the data and metadata.
+	
+	
+	The output dictionary ``DataDict`` contains the following fields:
+	
+	- `ndim_data`: A 2-d array of size (d = number of dimensions, L = number of data points) containing the data.
+	- `ndim_sigma`: A 2-d array of size (d, L) containing the uncertainties of each data point (assuming symmetric error bars, taken as the average of the upper and lower uncertainties).
+	- `ndim_LSigma`: A 2-d array of size (d, L) containing the lower uncertainties of each data point.
+	- `ndim_USigma`: A 2-d array of size (d, L) containing the upper uncertainties of each data point.
+	- `ndim_bounds`: A 2-d array of size (d, L) of size (number of dimensions, 2) containing the bounds of the data in each dimension.
+	- `ndim_char`: A list of character strings representing the variable in each dimension.
+	- `ndim_label`: A list of character strings for labeling the variable in each dimension.
+	- `ndim`: The number of dimensions.
+	- `DataLength`: The number of data points.
+	- `DataSequence`: A 2-d array of size (d, 50) with a uniform sequence for each dimension between the lower and upper bounds. Note: This is uniform in log10-space since the bounds are in log10 space.
 
 	"""
 	
@@ -153,7 +154,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		verbose=verbose, 
 		SaveCMatrix=False)
 
-	message = 'Finished Integration at {}. \nCalculated the PDF for Integrated beta and normal density.'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
@@ -212,7 +213,7 @@ def MLE_fit(DataDict, deg_per_dim,
 				"aic":aic, "aic_fi":aic_fi}
 		
 		if CalculateJointDist:
-			JointDist, indv_pdf_per_dim = calculate_joint_distribution(DataDict=DataDict, 
+			JointDist, indv_pdf_per_dim = CalculateJointDistribution(DataDict=DataDict, 
 				weights=w_hat, 
 				deg_per_dim=deg_per_dim, 
 				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
@@ -222,7 +223,7 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
-		abs_tol, save_path, Log, verbose, SaveCMatrix=False):
+		Log, abs_tol, save_path, verbose, SaveCMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
@@ -304,13 +305,18 @@ def _PDF_Normal(a, loc, scale):
 	Runs much quicker without the generic function handling.
 	'''
 	N = (a - loc)/scale
-	return np.exp(-N*N/2)/(np.sqrt(2*np.pi))/scale
+	return (np.e**(-N*N/2))/((2*np.pi)**0.5)/scale # 6x faster
+	# return (np.exp(-N*N/2))/(np.sqrt(2*np.pi))/scale
 
+@lru_cache(maxsize=200)
 def _GammaFunction(a):
 	return scipy.math.factorial(a-1)
 
 
 def _PDF_Beta(x,a,b):
+	'''
+	About 50x faster than scipy.stats.beta.pdf
+	'''
 	if (a>=170) | (b>=170) | (a+b>170):
 		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
 	else:
@@ -403,6 +409,7 @@ def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol
 		a_beta_indv = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
+
 def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
 	a_LSigma=np.nan, a_USigma=np.nan,
 	abs_tol=1e-8, Log=False):
@@ -472,6 +479,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		MeasurementDict):
 	'''
 	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
+	Based on Eqn 10 from Ning et al. 2018
 	INPUTS:
 		ConditionString = Example 'x|z or z|y'
 		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
@@ -537,18 +545,16 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
 			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
 		
+		# Interpolate the joint distribution on to a 1-D grid of points corresponding to the given RHS term to condition on, and sequence of LHS terms that we're querying for.
+		# For example to get f(m|r=5), the joint distribution will be interpolated on to (5, m_max), ...,  (5, m_min)
 		InterpMesh = np.array(np.meshgrid(*InterpSlices))
 		InterpPoints = np.rollaxis(InterpMesh, 0, ndim+1).reshape((NSeq**(len(LHSTerms)), ndim))
 		SliceofJoint = interpn(tuple(DataDict['DataSequence']), JointDist, InterpPoints).reshape(tuple(np.repeat(NSeq, len(LHSTerms))))
 		
-		# Hardcoded 20201209
-		# Take a slice of the joitn distribution (in reality would perhaps need to interpolate this
-		# Slice is taken at the radius value that we're finding mass for
 		# Then calculate denominator by taking matrix multiplication
 		# Ratio of the two gives the PDF
 		# Expectation value of this PDF matches the mean from old (Ning et al. 2018) method
 		# Integral(conditionaldist * MassSequence) / Integral(conditionaldist) = Mean(f(m|r)) = Expectation value
-		# SliceofJoint = JointDist[RHSIndex, :]
 		
 		temp_denominator = ReshapedWeights
 		InputIndices = ''.join(Alphabets[0:DataDict['ndim']])
@@ -573,17 +579,32 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		
 		ConditionalDist[i] = SliceofJoint/np.sum(temp_denominator)
 		
-		# Find the integral of the Conditional Distribution => Integral of f(x) dx
-		ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
-		
+		# Find the integral of the Conditional Distribution => Integral of f(x) dx.
+		# Should basically -> 1. 
+		# 20230102 - Univariate spline is not giving good enough results. Switching to interp1d
+		# ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
+		ConditionPDF = quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0]
+
 		# Find the  integral of the product of the Conditional and LHSSequence => E[x]
-		MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
+		# MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
+		MeanPDF[i] = quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0] / ConditionPDF
 
 		# Variance = E[x^2] - E[x]^2
-		VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
-			DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
+		# VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
+			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
+		VariancePDF[i] = (quad(
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)), 
+			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
+		)[0] / ConditionPDF) - (MeanPDF[i]**2)
+
 
 		# from scipy.integrate import simps
 		# print(simps(SliceofJoint, LHSSequence[0]))
@@ -728,65 +749,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 			
 	return ConditionalDist, MeanPDF, VariancePDF
 
-
-def Oldcond_density_quantile(a, a_max, a_min, b_max, b_min, deg, deg_vec, w_hat, a_std=np.nan, qtl=[0.16,0.84], abs_tol=1e-8):
-	'''
-	Calculate 16% and 84% quantiles of a conditional density, along with the mean and variance.
-
-	Refer to Ning et al. 2018 Sec 2.2, Eq 10
-
-	b/a
-	'''
-	if type(a) == list:
-		a = np.array(a)
-
-	a_beta_indv = _ComputeConvolvedPDF(a=a, deg=deg, deg_vec=deg_vec, a_max=a_max, a_min=a_min, a_std=a_std, abs_tol=abs_tol, Log=False)
-	a_PDF_Beta = np.kron(np.repeat(1,np.max(deg_vec)),a_beta_indv)
-
-	# Equation 10b Ning et al 2018
-	denominator = np.sum(w_hat * a_PDF_Beta)
-
-	if denominator == 0:
-		denominator = np.nan
-
-	# Mean
-	mean_beta_indv = (deg_vec * (b_max - b_min) / (deg + 1)) + b_min
-	mean_beta = np.kron(mean_beta_indv,a_beta_indv)
-	mean_numerator = np.sum(w_hat * mean_beta)
-	mean = mean_numerator / denominator
-
-	# Variance
-	var_beta_indv = (deg_vec * (deg - deg_vec + 1) * (b_max - b_min)**2 / ((deg + 2)*(deg + 1)**2))
-	var_beta = np.kron(var_beta_indv,a_beta_indv)
-	var_numerator = np.sum(w_hat * var_beta)
-	var = var_numerator / denominator
-
-	# Quantile
-
-	def pbeta_conditional_density(j):
-		if type(j) == np.ndarray:
-			j = j[0]
-		b_indv_cdf = np.array([beta.cdf((j - b_min)/(b_max - b_min), a=d, b=deg - d + 1) for d in deg_vec])
-		quantile_numerator = np.sum(w_hat * np.kron(b_indv_cdf,a_beta_indv))
-		p_beta = quantile_numerator / denominator
-
-		return p_beta
-
-
-	def conditional_quantile(q):
-		def g(x):
-			return pbeta_conditional_density(x) - q
-		return root(g, a=b_min, b=b_max, xtol=1e-8, rtol=1e-12)
-
-
-	if np.size(qtl) == 1:
-		qtl = [qtl]
-	quantile = [conditional_quantile(i) for i in qtl]
-
-	return mean, var, quantile, denominator, a_beta_indv
-
-
-def calculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
 	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
@@ -970,20 +933,8 @@ def _OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
 
 
 
-def _Oldcalculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def _OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
-	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
-	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
-	Refer to Ning et al. 2018 Sec 2.1, Eq 7
-	
-	INPUT:
-	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-	
-	OUTPUT:
-	joint distribution = 
-	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-		It is a list of 1-D vectors, where the number of elements in the list = ndim.
-		The number of elements in each vector is the number of degrees for that dimension
 	'''
 	
 	message = 'Calculating Joint Distribution at {}'.format(datetime.datetime.now())
@@ -1035,20 +986,9 @@ def _Oldcalculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, 
 	return joint, indv_pdf_per_dim
 
 
-def __Oldcalculate_joint_distribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
-	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
-	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
-	Refer to Ning et al. 2018 Sec 2.1, Eq 7
-	
-	INPUT:
-	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-	
-	OUTPUT:
-	joint distribution = 
-	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-		It is a list of 1-D vectors, where the number of elements in the list = ndim.
-		The number of elements in each vector is the number of degrees for that dimension
+
 	'''
 	
 	# 20201226 - Try using a different method
@@ -1117,10 +1057,13 @@ def TensorMultiplication(A, B, Subscripts=None):
 
 def rank_FI_matrix(C_pdf, w):
 	"""
+	Compute the Rank of the Fisher Information Matrix as an estimate of the DoFs for AIC.
+
 	INPUT:
 		C_pdf: 2d array with [n, (deg-2)^2]
 		w: 2D array with [deg-2, deg-2]
-
+	OUTPUT:
+		Rank (Integer)
 	"""
 	n = np.shape(C_pdf)[1] # number of data points
 
