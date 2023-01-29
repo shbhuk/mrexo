@@ -197,9 +197,9 @@ import matplotlib.pyplot as plt
 # RunName = 'Kepler_127_M_R_bounded'
 RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 RunName = 'Fake_4D_MRSStM'
-RunName = 'NotHot_le950K_3D_MRS_25x3'
+RunName = 'Test_aic_imap_2d'
 
-InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict]
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 
 # InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
@@ -242,7 +242,7 @@ NumCandidates=10
 
 if __name__ == '__main__':
 
-	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=[25, 25, 25], save_path=save_path, num_boot=0, degree_max=80, cores=4, SymmetricDegreePerDimension=False)", os.path.join(save_path, 'Profile.prof'))
+	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=30, cores=4, SymmetricDegreePerDimension=True)", os.path.join(save_path, 'Profile.prof'))
 
 	file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib
+import os
 import numpy as np
 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
@@ -7,7 +8,21 @@ from mrexo.mle_utils_nd import calculate_conditional_distribution
 ConditionString = 'm|r,p'
 ConditionString = 'r|stm,feh'
 ConditionString = 'r|p,stm'
-ConditionString = 'm|r,stm'
+ConditionString = 'm|r,insol'
+
+RunName = r"Trial_FGKM_3D_MRS"
+
+
+save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+
+ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
+PlotFolder = os.path.join(save_path, ConditionName)
+
+deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
+DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
+DataSequences = np.loadtxt(os.path.join(save_path, 'output', 'other_data_products', 'DataSequences.txt'))
+weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
+JointDist = np.load(os.path.join(save_path, 'output', 'JointDist.npy'), allow_pickle=True)
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
@@ -32,7 +47,11 @@ VariancePDF = np.zeros((len(x), len(y)))
 
 for i in range(len(x)):
 	for j in range(len(y)):
-		MeasurementDict = {RHSTerms[0]:[[x[i]], [np.nan]], RHSTerms[1]:[[y[j]], [np.nan]]}#, 'p':[[np.log10(30)],[np.nan]]}
+		MeasurementDict = \
+		{
+			RHSTerms[0]:[[x[i]], [[np.nan, np.nan]]], 
+			RHSTerms[1]:[[y[j]], [[np.nan, np.nan]]]
+		}#, 'p':[[np.log10(30)],[np.nan]]}
 
 
 		ConditionalDist, MeanPDF[i,j], VariancePDF[i,j] = calculate_conditional_distribution(
@@ -42,14 +61,12 @@ for i in range(len(x)):
 
 
 XTicks = np.linspace(x.min(), x.max(), 5)
-XTicks =np.log10([1, 3, 10, 30, 100])
+# XTicks =np.log10([1, 3, 10, 30, 100])
 XLabels = np.round(10**XTicks, 2)
 # XLabels = np.array([0.7, 1, 3, 5, 10])
 XTicks = np.log10(XLabels)
 
 YTicks = np.linspace(y.min(), y.max(), 5)
-YTicks = np.log10(np.array([0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]))
-YTicks = np.log10(np.array([0.1, 0.2, 0.4, 0.6, 1.0, 1.5, 2.0]))
 # YTicks = np.log10(np.array([0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]))
 YLabels = np.round(10**YTicks, 2)
 # YLabels = np.round(YTicks, 2) # For Metallicity 

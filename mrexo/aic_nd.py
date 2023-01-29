@@ -440,6 +440,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 		plt.axvline(DegreeChosen[0], linestyle='dashed', c='k')
 		plt.tight_layout()
 		fig.savefig(os.path.join(save_path, 'AIC.png'))
+		plt.close("all")
 
 	return DegreeChosen
 	

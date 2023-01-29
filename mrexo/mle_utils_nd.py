@@ -120,7 +120,7 @@ def InputData(ListofDictionaries):
 
 
 def MLE_fit(DataDict, deg_per_dim, 
-			Log=True, abs_tol=1e-8, 
+			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2):
 	'''
@@ -134,7 +134,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
 
-	message = '=========\nStarted MLE run at {}'.format(starttime)
+	message = '=========Started MLE run at {}\n'.format(starttime)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = DataDict["ndim"]
@@ -150,11 +150,10 @@ def MLE_fit(DataDict, deg_per_dim,
 		deg_per_dim=np.array(deg_per_dim), 
 		abs_tol=abs_tol, 
 		save_path=save_path, 
-		Log=Log, 
 		verbose=verbose, 
 		SaveCMatrix=False)
 
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.\n'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
@@ -223,7 +222,7 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
-		Log, abs_tol, save_path, verbose, SaveCMatrix=False):
+		abs_tol, save_path, verbose, SaveCMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
@@ -244,7 +243,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		
 	C_pdf = np.zeros((n, deg_product))
 	
-	message = 'Started Integration at {}'.format(datetime.datetime.now())
+	message = 'Started Integration at {}\n'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	# Loop across each data point.
@@ -256,7 +255,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
-				Log=Log)
+				Log=True)
 			
 			# kron_temp = np.kron(indv_pdf_per_dim[dim][i,:], kron_temp) # Old method
 			
@@ -332,9 +331,9 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
 
-	if Log == True:
+	if Log == True: # Integrating in Log Space
 		norm_beta = _PDF_Normal(a_obs, loc=10**a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
-	else:
+	else: # Integrating in Linear Space
 		norm_beta = _PDF_Normal(a_obs, loc=a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
 	return norm_beta
 
@@ -370,7 +369,7 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 	shape2 = deg - degree + 1
 	Log = Log
 
-	if Log:
+	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
 							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=np.log10(a_obs), b=a_max,
@@ -422,7 +421,7 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 
 	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
 	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
-	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in linear space. 
+	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in log space. 
 	Therefore, while calculating the C_pdf, log=True, so that for the PDF of the normal function, everything is in linear space. 
 
 	Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for x between log(x_min) and log(x_max), and there is no measurement uncertainty. 
@@ -766,7 +765,7 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 	'''
 	ndim = DataDict['ndim']
 	
-	message = 'Calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
+	message = 'Calculating Joint Distribution for {} dimensions at {}\n'.format(ndim, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	
@@ -777,7 +776,7 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 	elif ndim==4:
 		Joint, indv_pdf_per_dim = CalculateJointDist4D(DataDict, weights, deg_per_dim)
 		
-	message = 'Finished calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
+	message = 'Finished calculating Joint Distribution for {} dimensions at {}\n'.format(ndim, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return Joint, indv_pdf_per_dim

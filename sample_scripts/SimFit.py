@@ -37,29 +37,37 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 
 # Try = [[], []]
 
-for n in [50]:
-	for LSigma in [0.5]:
-		for USigma in [0.5]:
+for N in [200]:
+	for LSigma in [0.1, 0.2, 0.25, 0.33]:
+		for USigma in [LSigma]:
 		
 			#############################
 			### Fake Mass, Radius, Insolation
 			#############################
 
-			Radius_n = 10**np.linspace(-0.3, 1.2, n)
+			Radius_n = 10**np.linspace(-0.3, 1.2, N)
 			# Symmetrical errorbars
-			Radius_sigma1 = Radius_n*LSigma
-			Radius_sigma2 = Radius_n*USigma
-			Radius = np.random.normal(loc=Radius_n, scale=np.average([Radius_sigma1, Radius_sigma2], axis=0))
-			
-			RadiusBounds = [np.nan, np.nan]#[0.1, 20]
+			Radius_sigma1 = Radius_n*1*LSigma
+			Radius_sigma2 = Radius_n*1*USigma
+			Radius = np.abs(np.random.normal(loc=Radius_n, scale=np.average([Radius_sigma1, Radius_sigma2], axis=0)))
 
-			Mass_n = Radius_n*10
-			# Symmetrical errorbars
-			Mass_sigma1 = Mass_n*LSigma
-			Mass_sigma2 = Mass_n*USigma
+			# Radius_sigma1, Radius_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
+			# Radius = Radius_n
+
+			
+			RadiusBounds = [0.1, 20]
+
+			Mass_n = np.repeat(10, N)
+			# Symmetrical errorbarsG
+			Mass_sigma1 = Mass_n*1*LSigma
+			Mass_sigma2 = Mass_n*1*USigma
 			Mass = np.random.normal(loc=Mass_n, scale=np.average([Mass_sigma1, Mass_sigma2], axis=0))
 
-			MassBounds = [np.nan, np.nan]# [1, 250]
+			# Mass_sigma1, Mass_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
+			# Mass = Mass_n
+
+
+			MassBounds = [1, 200]
 
 			Insolation = np.ones(len(Radius))
 			InsolationSigma = np.ones(len(Radius))*0.1
@@ -82,19 +90,19 @@ for n in [50]:
 			# StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassSigma, "USigma":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 			# InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
-			RunName = 'Sim_2D_N{}_USigma{}_LSigma{}_aic_asymm'.format(n, USigma, LSigma)
+			RunName = 'Sim_ConstantY_N{}_USigma{}_LSigma{}_aic_symm'.format(N, USigma, LSigma)
 			print(RunName)
 	
 			InputDictionaries = [RadiusDict, MassDict]#, StellarMassDict]
 			DataDict = InputData(InputDictionaries)
 
-			save_path = os.path.join(pwd, 'TestRuns',  RunName)
+			save_path = os.path.join(pwd, 'TestRuns',  'Simulation', RunName)
 			 
 			ndim = len(InputDictionaries)
 
 			if __name__ == '__main__':
 
-				cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=100, cores=4, SymmetricDegreePerDimension=False)", os.path.join(save_path, 'Profile.prof'))
+				cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=40, cores=4, SymmetricDegreePerDimension=True)", os.path.join(save_path, 'Profile.prof'))
 
 				file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 				profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
