@@ -2,13 +2,16 @@ import numpy as np
 from scipy.stats import beta,norm
 import scipy
 from scipy.stats import beta
+
 from decimal import Decimal
+from scipy.stats import rv_continuous
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.interpolate import interpn, interp1d	
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
 from scipy.special import erfinv
+
 import datetime,os
 from multiprocessing import current_process
 from functools import lru_cache
@@ -352,7 +355,7 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 	Log = Log
 
 	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
-						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	return integration_product[0]
 
 
@@ -371,19 +374,19 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 
 	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=np.log10(a_obs), b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	else:
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	return integration_product_L[0] + integration_product_U[0]
 
 
 # Ndim - 20201130
-def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
+def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, abs_tol=1e-8, Log=False):
 	'''
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 	If the data has uncertainty, the joint distribution is modelled using a
@@ -397,6 +400,7 @@ def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
 
+	a_std = a_LSigma
 
 	if np.isnan(a_std):
 		if Log:
@@ -440,6 +444,8 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 		PDF = np.array([_PDF_Beta(a_norm, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
 		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+		# PDF = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+
 
 	return PDF
 
@@ -1108,3 +1114,27 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
 	# Integral2 = simps(simps(Matrix, xarray), yarray)
 	return Integral
+
+
+def ObtainScipyPDF(xseq, PDF):
+	"""
+	Take PDF as a function of xseq and convert it into a scipy class object in rv_continuous
+
+	"""
+
+	Inter = interp1d(xseq, PDF, bounds_error=False)
+	class pdf_gen(rv_continuous):
+		def _pdf(self, x):
+			return Inter(x)
+
+	CustomPDF = pdf_gen("CustomPDF")
+
+	# Re-define the bounds to not be +- inf
+	CustomPDF.a = xseq[0]
+	CustomPDF.b = xseq[-1]
+
+	# Can then obtain a random sample as follows
+	# sample = CustomPDF.rvs(size=500)
+
+	return CustomPDF
+	
