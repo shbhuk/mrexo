@@ -17,7 +17,7 @@ def _save_dictionary(dictionary, output_location,
 	aux_output_location = os.path.join(output_location, 'other_data_products')
 
 
-	if ~(Num_MonteCarlo):
+	if Num_MonteCarlo is not False:
 		unpadded_weights = dictionary['UnpaddedWeights']
 		weights = dictionary['Weights']
 		JointDist = dictionary['JointDist']
