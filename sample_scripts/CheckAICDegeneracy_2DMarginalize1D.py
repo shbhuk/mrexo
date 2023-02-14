@@ -20,6 +20,9 @@ from mrexo.mle_utils_nd import calculate_conditional_distribution
 ConditionString = 'm|r'
 # ConditionString = 'm,r|p'
 
+# Script to check AIC, and generate conditional distributions for all the models in the lowest contour in the AIC 2D plot
+# Before running this, need to run CheckAICDegeneracy_Fit2D.py
+
 AsymmResultDirectory = r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts\TestRuns\Trial_FGKM_2D_MR_aic_asymm_degmin10_20c"
 AIC = np.load(os.path.join(AsymmResultDirectory, 'output', 'other_data_products', 'AIC.npy'))
 DegreeCandidates = np.loadtxt(os.path.join(AsymmResultDirectory, 'output', 'other_data_products', 'degree_candidates.txt')).astype(int)
