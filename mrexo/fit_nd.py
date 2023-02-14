@@ -221,8 +221,8 @@ def _RunMonteCarlo_MLE(Inputs):
 
 	for dim in range(ndim):
 		# If the Monte-Carlo perturbs any of the data outside the bounds, set them to the bounds value.
-		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] < NewDataDict['ndim_bounds'][dim][0]] = NewDataDict['ndim_bounds'][dim][0]
-		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] > NewDataDict['ndim_bounds'][dim][1]] = NewDataDict['ndim_bounds'][dim][1]
+		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] < 10**NewDataDict['ndim_bounds'][dim][0]] = 10**NewDataDict['ndim_bounds'][dim][0]
+		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] > 10**NewDataDict['ndim_bounds'][dim][1]] = 10**NewDataDict['ndim_bounds'][dim][1]
 
 	MonteCarloResult = MLE_fit(NewDataDict,  deg_per_dim=deg_per_dim,
 	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
