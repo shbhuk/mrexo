@@ -87,6 +87,11 @@ def InputData(ListofDictionaries):
 		ndim_data[d] = ListofDictionaries[d]['Data']
 		ndim_LSigma[d] = ListofDictionaries[d]['LSigma']
 		ndim_USigma[d] = ListofDictionaries[d]['USigma']
+
+		# Anything greater than 50 sigma significance  will use only the Beta function with the sigma values set to NaN
+		ndim_LSigma[d][(np.abs(ndim_data[d]/ndim_LSigma[d]) > 50)] = np.nan
+		ndim_USigma[d][(np.abs(ndim_data[d]/ndim_USigma[d]) > 50)] = np.nan
+
 		ndim_sigma[d] = np.average([np.abs(ndim_LSigma[d]), np.abs(ndim_USigma[d])], axis=0)
 		ndim_char.append(ListofDictionaries[d]['Char'])
 		ndim_label.append(ListofDictionaries[d]['Label'])
@@ -271,7 +276,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	C_pdf = C_pdf.T
 
 	# Log of 0 throws weird errors
-	C_pdf[C_pdf == 0] = 1e-300
+	C_pdf[C_pdf <= 0] = 1e-300
 	C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
 
 	if SaveCMatrix:

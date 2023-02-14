@@ -216,7 +216,7 @@ def _RunMonteCarlo_MLE(Inputs):
 	ndim = OriginalDataDict["ndim"]
 	NewDataDict = OriginalDataDict.copy()
 
-	AveragedSigma = np.mean([OriginalDataDict['ndim_LSigma'], OriginalDataDict['ndim_USigma']], axis=0)
+	AveragedSigma = np.mean([np.abs(OriginalDataDict['ndim_LSigma']), np.abs(OriginalDataDict['ndim_USigma'])], axis=0)
 	NewDataDict['ndim_data']  = np.random.normal(OriginalDataDict['ndim_data'], AveragedSigma)
 
 	for dim in range(ndim):
