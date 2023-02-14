@@ -15,6 +15,7 @@ from .aic_nd import run_aic
 
 def fit_relation(DataDict, SigmaLimit=1e-3, 
 		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
+		Num_MonteCarlo=0,
 		k_fold=None, num_boot=0, cores=1, abs_tol=1e-8, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
@@ -35,6 +36,8 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
 		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+	Num_MonteCarlo: Integer, default=0
+		Number of Monte-Carlo simulations to run
 	k_fold : int, optional
 		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	num_boot : int, default=100
@@ -141,7 +144,39 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	_save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
 
 	###########################################################
-	## Step 3: Run Bootstrap
+	## Step 3: Run Monte-Carlo
+
+	if Num_MonteCarlo > 0:
+		message = '=========Started Monte-Carlo Simulation at {}\n'.format(starttime)
+		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+		MonteCarloDirectory = os.path.join(aux_output_location, 'MonteCarlo')
+		if not os.path.exists(MonteCarloDirectory): os.mkdir(MonteCarloDirectory)
+
+		Inputs_MonteCarloPool = ((i, DataDict, deg_per_dim, MonteCarloDirectory, verbose, abs_tol) for i in range(Num_MonteCarlo))
+
+		if cores > 1:
+			# Parallelize the Monte-Carlo
+			pool = Pool(processes=cores)
+			MonteCarloResultList = list(pool.imap(_RunMonteCarlo_MLE, Inputs_MonteCarloPool))
+
+		else:
+			MonteCarloResultList = []
+			for mc, inputs in enumerate(Inputs_MonteCarloPool):
+				MonteCarloResultList.append(_RunMonteCarlo_MLE(inputs))
+
+		message = '=========Finished Monte-Carlo Simulation at {}\n'.format(starttime)
+		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+		for mc, MonteCarloDict in enumerate(MonteCarloResultList):
+			_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, bootstrap=False, Num_MonteCarlo=mc)
+
+		message = '=========Finished Saving Monte-Carlo Simulation at {}\n'.format(starttime)
+		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+
+	###########################################################
+	## Step 4: Run Bootstrap
 	if num_boot == 0:
 		message='Bootstrap not run since num_boot = 0'
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -161,3 +196,39 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 		return initialfit_result, bootstrap_results
 
+
+def _RunMonteCarlo_MLE(Inputs):
+	"""
+	1. Randomly perturb the input dataset using an average of LSigma and USigma
+	2. Rerun the MLE fit on this new dataset using the same number of degrees as before and generate new joint distribution
+	"""
+	
+	MonteCarloIndex = Inputs[0]
+	OriginalDataDict = Inputs[1]
+	deg_per_dim = Inputs[2]
+	save_path = Inputs[3]
+	verbose = Inputs[4]
+	abs_tol = Inputs[5]
+
+	message = 'Started Running Monte-Carlo Sim # {} at {}\n'.format(MonteCarloIndex, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	ndim = OriginalDataDict["ndim"]
+	NewDataDict = OriginalDataDict.copy()
+
+	AveragedSigma = np.mean([OriginalDataDict['ndim_LSigma'], OriginalDataDict['ndim_USigma']], axis=0)
+	NewDataDict['ndim_data']  = np.random.normal(OriginalDataDict['ndim_data'], AveragedSigma)
+
+	for dim in range(ndim):
+		# If the Monte-Carlo perturbs any of the data outside the bounds, set them to the bounds value.
+		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] < NewDataDict['ndim_bounds'][dim][0]] = NewDataDict['ndim_bounds'][dim][0]
+		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] > NewDataDict['ndim_bounds'][dim][1]] = NewDataDict['ndim_bounds'][dim][1]
+
+	MonteCarloResult = MLE_fit(NewDataDict,  deg_per_dim=deg_per_dim,
+	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	OutputWeightsOnly=False, CalculateJointDist=True)
+
+	message = 'Finished Running Monte-Carlo Sim # {} at {}\n'.format(MonteCarloIndex, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	return MonteCarloResult
