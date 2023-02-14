@@ -36,8 +36,10 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 # t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
-RadiusBounds = [0.5, 15]
-MassBounds = [0.5, 3000]
+t = t[~np.isnan(t['pl_insolerr1'])]
+
+RadiusBounds = [5, 15]
+MassBounds = [5, 3000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
 
@@ -194,149 +196,133 @@ from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
-# RunName = 'Kepler_127_M_R_bounded'
-RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
-RunName = 'Fake_4D_MRSStM'
-RunName = 'AIC_4real_MonteCarlo_2D'
-
 InputDictionaries = [RadiusDict, MassDict]
-# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
-
-# InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
-# InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-# InputDictionaries = [RadiusDict, InsolationDict]
-# InputDictionaries = [RadiusDict,  MassDict]
-
-
-# InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
-# InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
-
-# InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
-
+# InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
-# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
-save_path = os.path.join(pwd, 'TestRuns',  RunName)
- 
 ndim = len(InputDictionaries)
-# deg_per_dim = [25, 25, 25, 30]
 
-"""
-outputs = MLE_fit(DataDict, 
-	deg_per_dim=deg_per_dim,
-	save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
 
-from mrexo.utils import _logging
-from multiprocessing import Pool
 
-verbose=2
-select_deg = 'cv'
-num_boot=0
-degree_max=40
-cores=1
-k_fold=10
-NumCandidates=10
-"""
 
-# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
-if __name__ == '__main__':
 
-	cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=30, cores=4, SymmetricDegreePerDimension=True, Num_MonteCarlo=100)", os.path.join(save_path, 'Profile.prof'))
+# for d in (20, 40, 100, 500):
+for d in [1000]:
+	# print(d)
 
-	file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
-	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
-	profile.sort_stats('cumulative') # Sorts the result according to the supplied criteria
-	profile.print_stats(30) # Prints the first 15 lines of the sorted report
-	file.close()
+	# RunName = 'Kepler_127_M_R_bounded'
+	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
+	RunName = 'Fake_4D_MRSStM'
+	RunName = 'd{}_MR_MC50_2D'.format(str(d))
 
-	file = open(os.path.join(save_path, 'FormattedTimeProfile.txt'), 'w')
-	profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
-	profile.sort_stats('time') # Sorts the result according to the supplied criteria
-	profile.print_stats(30) # Prints the first 15 lines of the sorted report
-	file.close()
+	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
+	save_path = os.path.join(pwd, 'TestRuns',  RunName)
+	 
+	# deg_per_dim = [25, 25, 25, 30]
 
-	JointDist = outputs['JointDist']
-	weights = outputs['Weights']
-	unpadded_weight = outputs['UnpaddedWeights']
-	deg_per_dim = outputs['deg_per_dim']
 
-	for n in range(ndim):
-		x = DataDict['ndim_data'][n]
-		plt.hist(x, bins=np.logspace(np.log10(x.min()), np.log10(x.max()), 20+1))
-		plt.xlabel(DataDict['ndim_label'][n])
-		plt.gca().set_xscale("log")
-		plt.title(RunName)
-		plt.tight_layout()
-		plt.savefig(os.path.join(save_path, 'output', 'Histogram_'+DataDict['ndim_char'][n]+'.png'))
-		plt.close("all")
+	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
-	if ndim==2:
+	select_deg = np.repeat(d, ndim)
+
+	if __name__ == '__main__':
+
+		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, num_boot=0, degree_max=30, cores=2, SymmetricDegreePerDimension=True, Num_MonteCarlo=50)", os.path.join(save_path, 'Profile.prof'))
+
+		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
+		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
+		profile.sort_stats('cumulative') # Sorts the result according to the supplied criteria
+		profile.print_stats(30) # Prints the first 15 lines of the sorted report
+		file.close()
+
+		file = open(os.path.join(save_path, 'FormattedTimeProfile.txt'), 'w')
+		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
+		profile.sort_stats('time') # Sorts the result according to the supplied criteria
+		profile.print_stats(30) # Prints the first 15 lines of the sorted report
+		file.close()
+
+		JointDist = outputs['JointDist']
+		weights = outputs['Weights']
+		unpadded_weight = outputs['UnpaddedWeights']
+		deg_per_dim = outputs['deg_per_dim']
+
+		for n in range(ndim):
+			x = DataDict['ndim_data'][n]
+			plt.hist(x, bins=np.logspace(np.log10(x.min()), np.log10(x.max()), 20+1))
+			plt.xlabel(DataDict['ndim_label'][n])
+			plt.gca().set_xscale("log")
+			plt.title(RunName)
+			plt.tight_layout()
+			plt.savefig(os.path.join(save_path, 'output', 'Histogram_'+DataDict['ndim_char'][n]+'.png'))
+			plt.close("all")
+
+		if ndim==2:
+				
+			# C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
+			# plt.figure()
+			# plt.imshow(C_pdf_new, aspect='auto')
+			# plt.title(deg_per_dim)
+			# plt.show(block=False)
+
+			plt.figure()
+			plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'lower', aspect='auto')
+			# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
+			# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
+			plt.title(deg_per_dim)
+			# plt.imshow(weights.reshape(deg_per_dim))
+			plt.colorbar()
+			# plt.savefig(os.path.join(save_path, 'output', 'weights.png'))
+			# plt.close('all')
+			plt.show(block=False)
+
+
+			# plt.figure()
+			# plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T, origin='lower')
+			# plt.show(block=False)
+
+			################ Plot Joint Distribution ################ 
+			x = DataDict['DataSequence'][0]
+			y = DataDict['DataSequence'][1]
+
+			fig = plt.figure(figsize=(8.5,6.5))
+			im = plt.imshow(JointDist.T, 
+				extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
+				aspect='auto', origin='lower'); 
+			plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
+			# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
+			plt.ylabel(DataDict['ndim_label'][1]);
+			plt.xlabel(DataDict['ndim_label'][0]);
+			# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
+			# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
+			plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
+			plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
+			plt.tight_layout()
 			
-		# C_pdf_new = np.loadtxt(os.path.join(save_path, 'C_pdf.txt'))
-		# plt.figure()
-		# plt.imshow(C_pdf_new, aspect='auto')
-		# plt.title(deg_per_dim)
-		# plt.show(block=False)
+			# """
+			XTicks = np.linspace(x.min(), x.max(), 5)
+			XTicks = np.log10(np.array([3, 10, 30, 100, 300]))
+			YTicks = np.linspace(y.min(), y.max(), 5)
+			YTicks = np.log10(np.array([1, 3, 5, 10]))
+			XLabels = np.round(10**XTicks, 1)
+			YLabels = np.round(10**YTicks, 2)
+			# """
+			
+			XTicks = [4, 6, 8, 10, 15]
+			YTicks = [3, 10, 30, 100, 300, 1000]
+			
+			XLabels = XTicks
+			YLabels = YTicks
 
-		plt.figure()
-		plt.imshow(np.reshape(weights , deg_per_dim).T, origin = 'lower', aspect='auto')
-		# plt.xticks(np.arange(0,size), *[np.arange(0,size)])
-		# plt.yticks(np.arange(0,size), *[np.arange(0,size)])
-		plt.title(deg_per_dim)
-		# plt.imshow(weights.reshape(deg_per_dim))
-		plt.colorbar()
-		plt.savefig(os.path.join(save_path, 'output', 'weights.png'))
-		plt.close('all')
-		# plt.show(block=False)
-
-
-		# plt.figure()
-		# plt.imshow(np.reshape(unpadded_weight, np.array(deg_per_dim)-2).T, origin='lower')
-		# plt.show(block=False)
-
-		################ Plot Joint Distribution ################ 
-		x = DataDict['DataSequence'][0]
-		y = DataDict['DataSequence'][1]
-
-		fig = plt.figure(figsize=(8.5,6.5))
-		im = plt.imshow(JointDist.T, 
-			extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
-			aspect='auto', origin='lower'); 
-		plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
-		# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-		plt.ylabel(DataDict['ndim_label'][1]);
-		plt.xlabel(DataDict['ndim_label'][0]);
-		# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
-		# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
-		plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
-		plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
-		plt.tight_layout()
-		
-		# """
-		XTicks = np.linspace(x.min(), x.max(), 5)
-		XTicks = np.log10(np.array([3, 10, 30, 100, 300]))
-		YTicks = np.linspace(y.min(), y.max(), 5)
-		YTicks = np.log10(np.array([1, 3, 5, 10]))
-		XLabels = np.round(10**XTicks, 1)
-		YLabels = np.round(10**YTicks, 2)
-		# """
-		
-		XTicks = [4, 6, 8, 10, 15]
-		YTicks = [3, 10, 30, 100, 300, 1000]
-		
-		XLabels = XTicks
-		YLabels = YTicks
-
-		plt.xticks(np.log10(XTicks), XLabels)
-		plt.yticks(np.log10(YTicks), YLabels)
-		cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
-		cbar.ax.set_yticklabels(['Min', 'Max'])
-		plt.tight_layout()
-		plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
-		plt.close("all")
-		# plt.show(block=False)
-		#'''
+			plt.xticks(np.log10(XTicks), XLabels)
+			plt.yticks(np.log10(YTicks), YLabels)
+			cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
+			cbar.ax.set_yticklabels(['Min', 'Max'])
+			plt.tight_layout()
+			plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
+			plt.close("all")
+			# plt.show(block=False)
+			#'''
 
 
 '''

@@ -100,10 +100,6 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-	print("Currently not including sigma limit")
-	# Y_sigma[(Y_sigma!=np.nan) & (Y_sigma[Y_sigma!=np.nan] < YSigmaLimit)] = np.nan
-	# X_sigma[(X_sigma!=np.nan) & (X_sigma[X_sigma!=np.nan] < XSigmaLimit)] = np.nan
-
 	np.save(os.path.join(input_location, 'DataDict.npy'), DataDict)
 	
 	###########################################################
