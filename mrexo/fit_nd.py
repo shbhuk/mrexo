@@ -62,9 +62,6 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	starttime = datetime.datetime.now()
 
-
-	print('Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores))
-
 	# Create subdirectories for results
 	input_location = os.path.join(save_path, 'input')
 	output_location = os.path.join(save_path, 'output')
@@ -124,26 +121,25 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		deg_per_dim = select_deg
 
 	###########################################################
-	## Step 2: Estimate the full model without bootstrap
+	## Step 2: Fit model to full original dataset
 
 	message = 'Running full dataset MLE before bootstrap\n'
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-	initialfit_result = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
+	FullFitResult = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
 	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
 	OutputWeightsOnly=False, CalculateJointDist=True)
-
 
 	message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 	
-	_save_dictionary(dictionary=initialfit_result, output_location=output_location, bootstrap=False)
+	_save_dictionary(dictionary=FullFitResult, output_location=output_location, NumBootstrap=False, NumMonteCarlo=False)
 
 	###########################################################
-	## Step 3: Run Monte-Carlo
+	## Step 3: Run Monte-Carlo simulation
 
 	if NumMonteCarlo > 0:
-		message = '=========Started Monte-Carlo Simulation at {}\n'.format(starttime)
+		message = '=========Started Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		MonteCarloDirectory = os.path.join(aux_output_location, 'MonteCarlo')
@@ -161,24 +157,25 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 			for mc, inputs in enumerate(Inputs_MonteCarloPool):
 				MonteCarloResultList.append(_RunMonteCarlo_MLE(inputs))
 
-		message = '=========Finished Monte-Carlo Simulation at {}\n'.format(starttime)
+		message = '=========Finished Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		for mc, MonteCarloDict in enumerate(MonteCarloResultList):
-			_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, NumMonteCarlo=mc)
+			_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, NumBootstrap=False, NumMonteCarlo=mc)
 
-		message = '=========Finished Saving Monte-Carlo Simulation at {}\n'.format(starttime)
+		message = '=========Finished Saving Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
 	###########################################################
 	## Step 4: Run Bootstrap
-	if NumBootstrap == 0:
-		message='Bootstrap not run since NumBootstrap = 0'
+
+	if NumBootstrap > 0:
+		message='=========Started Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		BootstrapDirectory = os.path.join(aux_output_location, 'Bootstrap')
-		if not os.path.exists(MonteCarloDirectory): os.mkdir(BootstrapDirectory)
+		if not os.path.exists(BootstrapDirectory): os.mkdir(BootstrapDirectory)
 
 		Inputs_BootstrapPool = ((i, DataDict, deg_per_dim, BootstrapDirectory, verbose, abs_tol) for i in range(NumBootstrap))
 
@@ -192,31 +189,27 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 			for mc, inputs in enumerate(Inputs_BootstrapPool):
 				BootstrapResultList.append(_RunBootstrap_MLE(inputs))
 
-		message = '=========Finished Bootstraps at {}\n'.format(starttime)
+		message = '=========Finished Bootstraps at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		for bs, BootstrapDict in enumerate(BootstrapResultList):
-			_save_dictionary(dictionary=BootstrapDict, output_location=BootstrapDirectory, NumBootstrap=bs)
+			_save_dictionary(dictionary=BootstrapDict, output_location=BootstrapDirectory, NumBootstrap=bs, NumMonteCarlo=False)
 
-		message = '=========Finished Saving Bootstraps at {}\n'.format(starttime)
+		message = '=========Finished Saving Bootstraps at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
-		return initialfit_result, _
-	else:
-		print("Bootstrapping hasn't been coded up")
+	return FullFitResult
 
-	# message = """
-	 # _____  _   _  _____   _____  _   _ ______ 
-	# |_   _|| | | ||  ___| |  ___|| \ | ||  _  \
-	  # | |  | |_| || |__   | |__  |  \| || | | |
-	  # | |  |  _  ||  __|  |  __| | . ` || | | |
-	  # | |  | | | || |___  | |___ | |\  || |/ / 
-	  # \_/  \_| |_/\____/  \____/ \_| \_/|___/  
-	# """
-	# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
-
-		return initialfit_result, bootstrap_results
+# message = """
+ # _____  _   _  _____   _____  _   _ ______ 
+# |_   _|| | | ||  ___| |  ___|| \ | ||  _  \
+  # | |  | |_| || |__   | |__  |  \| || | | |
+  # | |  |  _  ||  __|  |  __| | . ` || | | |
+  # | |  | | | || |___  | |___ | |\  || |/ / 
+  # \_/  \_| |_/\____/  \____/ \_| \_/|___/  
+# """
+# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
 def _RunMonteCarlo_MLE(Inputs):
@@ -232,7 +225,7 @@ def _RunMonteCarlo_MLE(Inputs):
 	verbose = Inputs[4]
 	abs_tol = Inputs[5]
 
-	message = 'Started Running Monte-Carlo Sim # {} at {}\n'.format(MonteCarloIndex, datetime.datetime.now())
+	message = 'Started Running Monte-Carlo Sim # {} at {}'.format(MonteCarloIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = OriginalDataDict["ndim"]
@@ -268,8 +261,19 @@ def _RunBootstrap_MLE(Inputs):
 	verbose = Inputs[4]
 	abs_tol = Inputs[5]
 
-	message = 'Started Running Bootstrap # {} at {}\n'.format(BootstrapIndex, datetime.datetime.now())
+	message = 'Started Running Bootstrap # {} at {}'.format(BootstrapIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	DataLength = OriginalDataDict['DataLength']
+	n_boot_iter = np.random.choice(DataLength, DataLength, replace=True)
+
+	ndim = OriginalDataDict["ndim"]
+	NewDataDict = OriginalDataDict.copy()
+	for k in ['ndim_data', 'ndim_sigma', 'ndim_LSigma', 'ndim_USigma']: NewDataDict[k] = OriginalDataDict[k][:, n_boot_iter]
+
+	BootstrapResult = MLE_fit(NewDataDict,  deg_per_dim=deg_per_dim,
+	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	OutputWeightsOnly=False, CalculateJointDist=True)
 
 	message = 'Finished Running Bootstrap # {} at {}\n'.format(BootstrapIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)

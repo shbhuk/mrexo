@@ -196,8 +196,8 @@ from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
-# InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict]#, InsolationDict]
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)
@@ -212,6 +212,7 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
 	RunName = 'GiantPlanet_AIC_MC100_4D_MRSStM'
+	RunName = 'Test_2d_Bootstrap'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -221,11 +222,11 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = 'aic'
+	select_deg = [20, 20]
 
 	if __name__ == '__main__':
 
-		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, NumBootstrap=0, degree_max=120, cores=15, SymmetricDegreePerDimension=True, NumMonteCarlo=100)", os.path.join(save_path, 'Profile.prof'))
+		cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=3, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=20)", os.path.join(save_path, 'Profile.prof'))
 
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

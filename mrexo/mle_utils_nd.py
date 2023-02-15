@@ -251,7 +251,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		
 	C_pdf = np.zeros((n, deg_product))
 	
-	message = 'Started Integration at {}\n'.format(datetime.datetime.now())
+	message = 'Started Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	# Loop across each data point.
