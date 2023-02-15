@@ -153,7 +153,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 		if cores > 1:
 			# Parallelize the Monte-Carlo
-			pool = Pool(processes=cores)
+			pool = Pool(processes=cores, initializer=np.random.seed)
 			MonteCarloResultList = list(pool.imap(_RunMonteCarlo_MLE, Inputs_MonteCarloPool))
 
 		else:

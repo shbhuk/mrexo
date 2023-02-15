@@ -349,7 +349,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	if cores > 1:
 		# Parallelize the AIC
-		pool = Pool(processes=cores)
+		pool = Pool(processes=cores, initializer=np.random.seed)
 		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
 
 		
