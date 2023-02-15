@@ -94,7 +94,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
-	message = 'Started for {} degrees at {}, using {} core/s'.format(select_deg, starttime, cores)
+	message = 'Started for {} degrees at {}, using {} core/s \n'.format(select_deg, starttime, cores)
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	np.save(os.path.join(input_location, 'DataDict.npy'), DataDict)

@@ -206,7 +206,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 
 		# fi = rank_FI_matrix(C_pdf, unpadded_weight)
-		aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight))
+		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight))
+		aic_fi = 0 # Matrix multiplication to calculate FI is expensive.
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
 		DataSeq = DataDict['DataSequence'] 
