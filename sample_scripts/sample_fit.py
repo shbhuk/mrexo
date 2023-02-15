@@ -31,21 +31,21 @@ DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlane
 UTeff = 7000
 
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Kepler_Teff_6500_ExcUpperLimits_20210908.csv'))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_Thesis.csv'))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230214_RpGt20.csv'))
+# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_Thesis.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
 t = t[~np.isnan(t['pl_insolerr1'])]
 
-RadiusBounds = [5, 15]
+RadiusBounds = [5, 20]
 MassBounds = [5, 3000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
 
 t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
 t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
-t = t[t.pl_eqt < 950]
+# t = t[t.pl_eqt < 950]
 
 
 if InsolationBounds is not None:
@@ -196,8 +196,8 @@ from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
-InputDictionaries = [RadiusDict, MassDict]
-# InputDictionaries = [RadiusDict, MassDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)
@@ -205,16 +205,13 @@ ndim = len(InputDictionaries)
 
 
 
-
-
-# for d in (20, 40, 100, 500):
-for d in [1000]:
+for d in [20]:#, 40, 80, 100, 500, 1000]:
 	# print(d)
 
 	# RunName = 'Kepler_127_M_R_bounded'
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
-	RunName = 'd{}_MR_MC50_2D'.format(str(d))
+	RunName = 'GiantPlanet_AIC_MC100_4D_MRSStM'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -224,11 +221,11 @@ for d in [1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
-	select_deg = np.repeat(d, ndim)
+	select_deg = 'aic'
 
 	if __name__ == '__main__':
 
-		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, num_boot=0, degree_max=30, cores=2, SymmetricDegreePerDimension=True, Num_MonteCarlo=50)", os.path.join(save_path, 'Profile.prof'))
+		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, num_boot=0, degree_max=120, cores=15, SymmetricDegreePerDimension=True, Num_MonteCarlo=100)", os.path.join(save_path, 'Profile.prof'))
 
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

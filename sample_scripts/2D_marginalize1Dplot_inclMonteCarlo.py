@@ -18,21 +18,21 @@ ConditionString = 'm|r'
 
 UseMonteCarlo = True
 Runs = ['AIC_4real_MonteCarlo_2D']#, 'AIC_4real_MonteCarlo_2D']
-Runs = ['d20_MR_MC50_2D', 'd40_MR_MC50_2D']#, 'd100_MR_MC50_2D'
+Runs = ['d20_MR_MC100_2D', 'd40_MR_MC100_2D', 'd80_MR_MC100_2D']
 SupTitle = 'Testing Monte-Carlo'
 
 Titles = np.repeat('', len(Runs))
 # Titles = ["{}$\sigma$".format(str(np.round(1/s, 1))) for s in np.array(Sigma).astype(float)] #np.round(1/np.array(Sigma).astype(float), 2)
-Titles = ['20x20', '40x40']
-TitlePos = np.repeat(300, len(Runs))
+Titles = ['20x20', '40x40', '80x80']
+TitlePos = np.repeat(100, len(Runs))
 
 
 fig, ax = plt.subplots(len(Runs), sharex=True, sharey=True, figsize=(6, 6))
 if np.size(ax) == 1: ax=[ax]
 
 for d, RunName in enumerate(Runs):
-	save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
-	# save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
+	# save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+	save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
 
 	ConditionName = '2D_Re_'+ConditionString.replace('|', '_').replace(',', '_')
 	PlotFolder = os.path.join(save_path, ConditionName)
@@ -58,7 +58,7 @@ for d, RunName in enumerate(Runs):
 	yseq = DataSequences[RHSDimensions[0]]
 
 
-	r = [6, 12]
+	r = [8, 12]
 	colours = ["C3", "C2", "C1", "C0"]
 	MeasurementDict = {'r':[r, np.repeat(np.nan, len(r))]}
 	LogMeasurementDict = {
@@ -77,6 +77,7 @@ for d, RunName in enumerate(Runs):
 		for mc in range(Num_MonteCarlo):
 				weights_mc = np.loadtxt(os.path.join(MonteCarloFolder, 'weights_MCSim{}.txt'.format(str(mc))))
 				JointDist_mc = np.load(os.path.join(MonteCarloFolder, 'JointDist_MCSim{}.npy'.format(str(mc))), allow_pickle=True)
+				# print(JointDist_mc.sum(), np.percentile(weights_mc, 95))
 				ConditionalMC[mc], MeanMC[mc], VarianceMC[mc] = calculate_conditional_distribution(ConditionString, DataDict, weights_mc, deg_per_dim,
 					JointDist_mc, LogMeasurementDict)
 
@@ -116,7 +117,7 @@ for d, RunName in enumerate(Runs):
 
 	# plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(MeasurementDict[RHSTerms[0]][0][i]))
 
-	ax[d].text(TitlePos[d], 1.9, Titles[d], fontsize=22)
+	ax[d].text(TitlePos[d], 1, Titles[d], fontsize=22)
 
 	# XTicks = np.linspace(xseq.min(), xseq.max(), 5)
 	# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
