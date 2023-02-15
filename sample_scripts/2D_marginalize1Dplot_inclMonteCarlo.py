@@ -38,7 +38,7 @@ for d, RunName in enumerate(Runs):
 	PlotFolder = os.path.join(save_path, ConditionName)
 	MonteCarloFolder = os.path.join(save_path, 'output', 'other_data_products', 'MonteCarlo')
 	UseMonteCarlo = os.path.exists(MonteCarloFolder)
-	Num_MonteCarlo =  len(glob.glob(os.path.join(MonteCarloFolder, 'JointDist_MCSim*.npy')))
+	NumMonteCarlo =  len(glob.glob(os.path.join(MonteCarloFolder, 'JointDist_MCSim*.npy')))
 
 	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
@@ -69,12 +69,12 @@ for d, RunName in enumerate(Runs):
 		JointDist, LogMeasurementDict)
 
 	if UseMonteCarlo:
-		ConditionalMC = np.zeros((Num_MonteCarlo, *np.shape(ConditionalDist)))
-		MeanMC = np.zeros((Num_MonteCarlo, *np.shape(MeanPDF)))
-		VarianceMC = np.zeros((Num_MonteCarlo, *np.shape(VariancePDF)))
+		ConditionalMC = np.zeros((NumMonteCarlo, *np.shape(ConditionalDist)))
+		MeanMC = np.zeros((NumMonteCarlo, *np.shape(MeanPDF)))
+		VarianceMC = np.zeros((NumMonteCarlo, *np.shape(VariancePDF)))
 	
 		print("Conditioning the model from each Monte-Carlo simulation")
-		for mc in range(Num_MonteCarlo):
+		for mc in range(NumMonteCarlo):
 				weights_mc = np.loadtxt(os.path.join(MonteCarloFolder, 'weights_MCSim{}.txt'.format(str(mc))))
 				JointDist_mc = np.load(os.path.join(MonteCarloFolder, 'JointDist_MCSim{}.npy'.format(str(mc))), allow_pickle=True)
 				# print(JointDist_mc.sum(), np.percentile(weights_mc, 95))

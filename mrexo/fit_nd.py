@@ -15,8 +15,8 @@ from .aic_nd import run_aic
 
 def fit_relation(DataDict, SigmaLimit=1e-3, 
 		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
-		Num_MonteCarlo=0,
-		k_fold=None, num_boot=0, cores=1, abs_tol=1e-8, verbose=2):
+		NumMonteCarlo=0, NumBootstrap=0, 
+		k_fold=None, cores=1, abs_tol=1e-8, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
@@ -36,11 +36,11 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
 		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
-	Num_MonteCarlo: Integer, default=0
+	NumMonteCarlo: Integer, default=0
 		Number of Monte-Carlo simulations to run
 	k_fold : int, optional
 		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
-	num_boot : int, default=100
+	NumBootstrap : int, default=100
 		The number of bootstraps to perform (must be greater than 1).
 	cores : int, default=1
 		The number of cores to use for parallel processing. This is used in the
@@ -56,7 +56,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	initialfit_result : dict
 		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
 	bootstrap_results : dict
-		TBD. Only returned if ``num_boot`` > 0.
+		TBD. Only returned if ``NumBootstrap`` > 0.
 	
 	"""
 
@@ -142,14 +142,14 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	###########################################################
 	## Step 3: Run Monte-Carlo
 
-	if Num_MonteCarlo > 0:
+	if NumMonteCarlo > 0:
 		message = '=========Started Monte-Carlo Simulation at {}\n'.format(starttime)
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		MonteCarloDirectory = os.path.join(aux_output_location, 'MonteCarlo')
 		if not os.path.exists(MonteCarloDirectory): os.mkdir(MonteCarloDirectory)
 
-		Inputs_MonteCarloPool = ((i, DataDict, deg_per_dim, MonteCarloDirectory, verbose, abs_tol) for i in range(Num_MonteCarlo))
+		Inputs_MonteCarloPool = ((i, DataDict, deg_per_dim, MonteCarloDirectory, verbose, abs_tol) for i in range(NumMonteCarlo))
 
 		if cores > 1:
 			# Parallelize the Monte-Carlo
@@ -165,7 +165,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		for mc, MonteCarloDict in enumerate(MonteCarloResultList):
-			_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, bootstrap=False, Num_MonteCarlo=mc)
+			_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, NumMonteCarlo=mc)
 
 		message = '=========Finished Saving Monte-Carlo Simulation at {}\n'.format(starttime)
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -173,9 +173,35 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	###########################################################
 	## Step 4: Run Bootstrap
-	if num_boot == 0:
-		message='Bootstrap not run since num_boot = 0'
+	if NumBootstrap == 0:
+		message='Bootstrap not run since NumBootstrap = 0'
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+		BootstrapDirectory = os.path.join(aux_output_location, 'Bootstrap')
+		if not os.path.exists(MonteCarloDirectory): os.mkdir(BootstrapDirectory)
+
+		Inputs_BootstrapPool = ((i, DataDict, deg_per_dim, BootstrapDirectory, verbose, abs_tol) for i in range(NumBootstrap))
+
+		if cores > 1:
+			# Parallelize the Bootstrap
+			pool = Pool(processes=cores, initializer=np.random.seed)
+			BootstrapResultList = list(pool.imap(_RunBootstrap_MLE, Inputs_BootstrapPool))
+
+		else:
+			BootstrapResultList = []
+			for mc, inputs in enumerate(Inputs_BootstrapPool):
+				BootstrapResultList.append(_RunBootstrap_MLE(inputs))
+
+		message = '=========Finished Bootstraps at {}\n'.format(starttime)
+		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+		for bs, BootstrapDict in enumerate(BootstrapResultList):
+			_save_dictionary(dictionary=BootstrapDict, output_location=BootstrapDirectory, NumBootstrap=bs)
+
+		message = '=========Finished Saving Bootstraps at {}\n'.format(starttime)
+		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
+
+
 		return initialfit_result, _
 	else:
 		print("Bootstrapping hasn't been coded up")
@@ -228,3 +254,24 @@ def _RunMonteCarlo_MLE(Inputs):
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return MonteCarloResult
+
+
+def _RunBootstrap_MLE(Inputs):
+	"""
+	Copy over and modify from Monte-Carlo
+	"""
+	
+	BootstrapIndex = Inputs[0]
+	OriginalDataDict = Inputs[1]
+	deg_per_dim = Inputs[2]
+	save_path = Inputs[3]
+	verbose = Inputs[4]
+	abs_tol = Inputs[5]
+
+	message = 'Started Running Bootstrap # {} at {}\n'.format(BootstrapIndex, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	message = 'Finished Running Bootstrap # {} at {}\n'.format(BootstrapIndex, datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	return BootstrapResult

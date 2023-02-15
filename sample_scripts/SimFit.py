@@ -37,8 +37,8 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_T
 
 # Try = [[], []]
 
-for N in [200]:
-	for LSigma in [0.1, 0.2, 0.25, 0.33]:
+for N in [100]:
+	for LSigma in [0.5]:
 		for USigma in [LSigma]:
 		
 			#############################
@@ -51,8 +51,8 @@ for N in [200]:
 			Radius_sigma2 = Radius_n*1*USigma
 			Radius = np.abs(np.random.normal(loc=Radius_n, scale=np.average([Radius_sigma1, Radius_sigma2], axis=0)))
 
-			# Radius_sigma1, Radius_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
-			# Radius = Radius_n
+			Radius_sigma1, Radius_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
+			Radius = Radius_n
 
 			
 			RadiusBounds = [0.1, 20]
@@ -63,8 +63,8 @@ for N in [200]:
 			Mass_sigma2 = Mass_n*1*USigma
 			Mass = np.random.normal(loc=Mass_n, scale=np.average([Mass_sigma1, Mass_sigma2], axis=0))
 
-			# Mass_sigma1, Mass_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
-			# Mass = Mass_n
+			Mass_sigma1, Mass_sigma2 = np.repeat(np.nan, N), np.repeat(np.nan, N)
+			Mass = Mass_n
 
 
 			MassBounds = [1, 200]
@@ -91,6 +91,7 @@ for N in [200]:
 			# InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 			RunName = 'Sim_ConstantY_N{}_USigma{}_LSigma{}_aic_symm'.format(N, USigma, LSigma)
+			RunName = 'Test_N{}_ConstantY_NoError_SingleNormal_d100'.format(N)
 			print(RunName)
 	
 			InputDictionaries = [RadiusDict, MassDict]#, StellarMassDict]
@@ -102,7 +103,11 @@ for N in [200]:
 
 			if __name__ == '__main__':
 
-				cProfile.run("outputs, _ = fit_relation(DataDict, select_deg='aic', save_path=save_path, num_boot=0, degree_max=40, cores=4, SymmetricDegreePerDimension=True)", os.path.join(save_path, 'Profile.prof'))
+				# initialfit_result = MLE_fit(DataDict,  deg_per_dim=[20, 20],
+						# save_path=save_path, verbose=2, abs_tol=1e-8,
+						# OutputWeightsOnly=False, CalculateJointDist=True)
+
+				cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=[100,100], save_path=save_path, NumBootstrap=0, degree_max=40, cores=4, SymmetricDegreePerDimension=True)", os.path.join(save_path, 'Profile.prof'))
 
 				file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 				profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

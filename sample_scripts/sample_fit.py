@@ -219,13 +219,13 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	# deg_per_dim = [25, 25, 25, 30]
 
 
-	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
+	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
 	select_deg = 'aic'
 
 	if __name__ == '__main__':
 
-		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, num_boot=0, degree_max=120, cores=15, SymmetricDegreePerDimension=True, Num_MonteCarlo=100)", os.path.join(save_path, 'Profile.prof'))
+		cProfile.run("outputs, _ = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, NumBootstrap=0, degree_max=120, cores=15, SymmetricDegreePerDimension=True, NumMonteCarlo=100)", os.path.join(save_path, 'Profile.prof'))
 
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

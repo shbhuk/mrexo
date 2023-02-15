@@ -8,7 +8,7 @@ else:
 	from functools32 import lru_cache
 
 def _save_dictionary(dictionary, output_location,
-	bootstrap=False, Num_MonteCarlo=False):
+	NumBootstrap=False, NumMonteCarlo=False):
 
 	"""
 	Need to update
@@ -17,16 +17,25 @@ def _save_dictionary(dictionary, output_location,
 	aux_output_location = os.path.join(output_location, 'other_data_products')
 
 
-	if Num_MonteCarlo is not False:
+	if NumMonteCarlo is not False:
 		unpadded_weights = dictionary['UnpaddedWeights']
 		weights = dictionary['Weights']
 		JointDist = dictionary['JointDist']
 
-		np.savetxt(os.path.join(output_location,'weights_MCSim{}.txt'.format(str(Num_MonteCarlo))),weights, comments='#', header='Weights for Beta densities  from Monte-Carlo Sim # = {}'.format(str(Num_MonteCarlo)))
-		np.savetxt(os.path.join(output_location,'unpadded_weights_MCSim{}.txt'.format(str(Num_MonteCarlo))),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from Monte-Carlo Sim # = {}'.format(str(Num_MonteCarlo)))
-		np.save(os.path.join(output_location,'JointDist_MCSim{}.npy'.format(str(Num_MonteCarlo))), JointDist)
+		np.savetxt(os.path.join(output_location,'weights_MCSim{}.txt'.format(str(NumMonteCarlo))),weights, comments='#', header='Weights for Beta densities  from Monte-Carlo Sim # = {}'.format(str(NumMonteCarlo)))
+		np.savetxt(os.path.join(output_location,'unpadded_weights_MCSim{}.txt'.format(str(NumMonteCarlo))),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from Monte-Carlo Sim # = {}'.format(str(NumMonteCarlo)))
+		np.save(os.path.join(output_location,'JointDist_MCSim{}.npy'.format(str(NumMonteCarlo))), JointDist)
 	
-	elif not bootstrap:
+	elif NumBootstrap is not False:
+		unpadded_weights = dictionary['UnpaddedWeights']
+		weights = dictionary['Weights']
+		JointDist = dictionary['JointDist']
+
+		np.savetxt(os.path.join(output_location,'weights_BSSim{}.txt'.format(str(NumBootstrap))),weights, comments='#', header='Weights for Beta densities  from Bootstrap # = {}'.format(str(NumBootstrap)))
+		np.savetxt(os.path.join(output_location,'unpadded_weights_BSSim{}.txt'.format(str(NumBootstrap))),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from Bootstrap # = {}'.format(str(NumBootstrap)))
+		np.save(os.path.join(output_location,'JointDist_BSSim{}.npy'.format(str(NumBootstrap))), JointDist)
+
+	else:
 		unpadded_weights = dictionary['UnpaddedWeights']
 		weights = dictionary['Weights']
 		deg_per_dim = dictionary['deg_per_dim']
