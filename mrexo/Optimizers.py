@@ -56,6 +56,7 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
     20201123 - Adjusted for n dimensions
     """
 
+    C_pdf_sparse = C_pdf
     C_pdf_sparse = sparse.csr_matrix(C_pdf)
 
     ReducedDegs = np.array(deg_per_dim) - 2

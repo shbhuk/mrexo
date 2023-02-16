@@ -11,6 +11,7 @@ from scipy.interpolate import interpn, interp1d
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
 from scipy.special import erfinv
+from scipy import sparse
 
 import datetime,os
 from multiprocessing import current_process
@@ -250,7 +251,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	for deg in deg_per_dim:
 		deg_product *= deg-2
 		
-	C_pdf = np.zeros((n, deg_product))
+	C_pdf = sparse.csr_matrix(np.zeros((n, deg_product)))
 	
 	message = 'Started Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -274,14 +275,14 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 		C_pdf[i,:] = kron_temp
 
-	C_pdf = C_pdf.T
+	C_pdf = C_pdf.transpose()
 
 	# Log of 0 throws weird errors
 	C_pdf[C_pdf <= 1e-10] = 1e-300
-	C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
 
 	if SaveCMatrix:
-		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf)
+		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf.toarray())
 	return C_pdf
 
 
