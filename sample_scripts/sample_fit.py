@@ -16,6 +16,7 @@ if Platform == 'win32':
 	HomeDir =  'C:\\Users\\skanodia\\Documents\\\\GitHub\\'
 else:
 	HomeDir = r"/storage/home/szk381/work/"
+	HomeDir = r"/home/skanodia/work/"
 
 
 try :
@@ -26,7 +27,7 @@ except NameError:
 
 
 DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlanets')
-
+print(DataDirectory)
 
 UTeff = 7000
 
@@ -197,7 +198,7 @@ from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
 InputDictionaries = [RadiusDict, MassDict]#, InsolationDict]
-# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)
@@ -211,8 +212,8 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	# RunName = 'Kepler_127_M_R_bounded'
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
-	RunName = 'GiantPlanet_AIC_MC100_4D_MRSStM'
-	RunName = 'Test_2d_Bootstrap'
+	RunName = 'GiantPlanet_d60_Bootstrap100_4D_MRSStM'
+	#RunName = 'Test_2d_Bootstrap'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -222,11 +223,12 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = [20, 20]
+	select_deg = [60, 60, 60, 60]
 
 	if __name__ == '__main__':
 
-		cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=3, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=20)", os.path.join(save_path, 'Profile.prof'))
+		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=25,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)
+		#cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=40, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)", os.path.join(save_path, 'Profile.prof'))
 
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)

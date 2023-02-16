@@ -150,12 +150,12 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		if cores > 1:
 			# Parallelize the Monte-Carlo
 			pool = Pool(processes=cores, initializer=np.random.seed)
-			MonteCarloResultList = list(pool.imap(_RunMonteCarlo_MLE, Inputs_MonteCarloPool))
+			_ = list(pool.imap(_RunMonteCarlo_MLE, Inputs_MonteCarloPool))
 
 		else:
 			for mc, inputs in enumerate(Inputs_MonteCarloPool):
-				MonteCarloDict = _RunMonteCarlo_MLE(inputs)
-				_save_dictionary(dictionary=MonteCarloDict, output_location=MonteCarloDirectory, NumBootstrap=False, NumMonteCarlo=mc)
+				_ = _RunMonteCarlo_MLE(inputs)
+
 
 		message = '=========Finished Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -164,7 +164,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	## Step 4: Run Bootstrap
 
 	if NumBootstrap > 0:
-		message='=========Started Monte-Carlo Simulation at {}\n'.format(datetime.datetime.now())
+		message='=========Started Bootstrap Simulation at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 		BootstrapDirectory = os.path.join(aux_output_location, 'Bootstrap')
@@ -175,12 +175,12 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		if cores > 1:
 			# Parallelize the Bootstrap
 			pool = Pool(processes=cores, initializer=np.random.seed)
-			pool.imap(_RunBootstrap_MLE, Inputs_BootstrapPool)
+			_ = list(pool.imap(_RunBootstrap_MLE, Inputs_BootstrapPool))
 
 		else:
 			for mc, inputs in enumerate(Inputs_BootstrapPool):
-				BootstrapDict = _RunBootstrap_MLE(inputs)
-				_save_dictionary(dictionary=BootstrapDict, output_location=BootstrapDirectory, NumBootstrap=bs, NumMonteCarlo=False)
+				_ = _RunBootstrap_MLE(inputs)
+
 
 		message = '=========Finished Bootstraps at {}\n'.format(datetime.datetime.now())
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
@@ -234,6 +234,7 @@ def _RunMonteCarlo_MLE(Inputs):
 	message = 'Finished Running Monte-Carlo Sim # {} at {}\n'.format(MonteCarloIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
+	return _
 
 def _RunBootstrap_MLE(Inputs):
 	"""
@@ -266,3 +267,4 @@ def _RunBootstrap_MLE(Inputs):
 	message = 'Finished Running Bootstrap # {} at {}\n'.format(BootstrapIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
+	return _
