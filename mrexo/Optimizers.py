@@ -6,11 +6,11 @@ from .utils_nd import _logging
 import os
 
 
-def LogLikelihood(Cpdf, w, n, sparse=False):
+def LogLikelihood(C_pdf, w, n, sparse=False):
 	if sparse:
-		return np.sum(np.log((weights_sparse*Cnew_sparse).todense()))
+		return np.sum(np.log((w.transpose() * C_pdf).toarray()))
 	else:
-		return np.sum(np.log(np.matmul(w, Cpdf)))
+		return np.sum(np.log(np.matmul(w, C_pdf)))
 
 def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
 
@@ -72,16 +72,17 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
 
     FractionalError = np.ones(MaxIter)
     loglike = np.zeros(MaxIter)
+    #loglike_old = np.zeros(MaxIter)
 
     t = 1
 
     while np.abs(FractionalError[t-1]) > rtol:
-        TempMatrix =  C_pdf * w[:, None]
+        #TempMatrix =  C_pdf * w[:, None]
         TempMatrix = C_pdf_sparse.multiply(w_sparse)
         IntMatrix = TempMatrix / np.sum(TempMatrix, axis=0)
-        w_sparse = np.mean(IntMatrix, axis=1)
+        w_sparse = sparse.csr_matrix(np.mean(IntMatrix, axis=1))
 
-        # loglike[t] = LogLikelihood(C_pdf, w, n)
+        #loglike_old[t] = LogLikelihood(C_pdf, w, n)
         loglike[t] = LogLikelihood(C_pdf_sparse, w_sparse, n, sparse=True)
         FractionalError[t] = (loglike[t] - loglike[t-1])/np.abs(loglike[t-1])
 
@@ -95,4 +96,4 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
     _ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 
-    return w, loglike[np.nonzero(loglike)][-1]
+    return w_sparse.todense().flatten(), loglike[np.nonzero(loglike)][-1]
