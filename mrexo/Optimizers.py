@@ -1,12 +1,16 @@
 from scipy.optimize import fmin_slsqp, minimize
 import numpy as np
 import datetime
+from scipy import sparse
 from .utils_nd import _logging
 import os
 
 
-def LogLikelihood(Cpdf, w, n):
-    return np.sum(np.log(np.matmul(w, Cpdf)))
+def LogLikelihood(Cpdf, w, n, sparse=False):
+	if sparse:
+		return np.sum(np.log((weights_sparse*Cnew_sparse).todense()))
+	else:
+		return np.sum(np.log(np.matmul(w, Cpdf)))
 
 def SLSQP_optimizer(C_pdf, deg, verbose, save_path):
 
@@ -52,13 +56,17 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
     20201123 - Adjusted for n dimensions
     """
 
+    C_pdf_sparse = sparse.csr_matrix(C_pdf)
+
     ReducedDegs = np.array(deg_per_dim) - 2
-    n = np.shape(C_pdf)[1] # Sample size
+    n = np.shape(C_pdf_sparse)[1] # Sample size
 
     DegProduct = np.product(ReducedDegs)
 
     # Initial value for weights
     w = np.ones(DegProduct)/DegProduct
+    # w_sparse = sparse.csr_matrix(w)
+    w_sparse = sparse.csr_matrix(w[:, None])
 
     # w_final = np.zeros(np.shape(x0))
 
@@ -69,10 +77,12 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3):
 
     while np.abs(FractionalError[t-1]) > rtol:
         TempMatrix =  C_pdf * w[:, None]
+        TempMatrix = C_pdf_sparse.multiply(w_sparse)
         IntMatrix = TempMatrix / np.sum(TempMatrix, axis=0)
-        w = np.mean(IntMatrix, axis=1)
+        w_sparse = np.mean(IntMatrix, axis=1)
 
-        loglike[t] = LogLikelihood(C_pdf, w, n)
+        # loglike[t] = LogLikelihood(C_pdf, w, n)
+        loglike[t] = LogLikelihood(C_pdf_sparse, w_sparse, n, sparse=True)
         FractionalError[t] = (loglike[t] - loglike[t-1])/np.abs(loglike[t-1])
 
         t+=1

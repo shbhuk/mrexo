@@ -277,7 +277,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	C_pdf = C_pdf.T
 
 	# Log of 0 throws weird errors
-	C_pdf[C_pdf <= 0] = 1e-300
+	C_pdf[C_pdf <= 1e-10] = 1e-300
 	C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
 
 	if SaveCMatrix:
