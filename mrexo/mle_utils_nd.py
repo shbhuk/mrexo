@@ -273,7 +273,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
 			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
 
-		C_pdf[i,:] = kron_temp
+		C_pdf[i,:] = kron_temp; 
 
 	C_pdf = C_pdf.transpose()
 
