@@ -82,3 +82,21 @@ for i in range(100000):
 	RSample.append(InterpCDF(p))
 
 plt.hist(RSample, density=True)
+
+####################################################
+
+from mrexo.mle_utils_nd import calc_C_matrix, _ComputeConvolvedPDF
+from mrexo.Optimizers import optimizer, LogLikelihood
+import datetime
+
+deg_per_dim = [40, 40, 40]
+
+s = datetime.datetime.now()
+C_pdf = calc_C_matrix(DataDict, deg_per_dim, abs_tol=1e-8, save_path='', verbose=2, UseSparseMatrix=UseSparseMatrix)
+w = optimizer(C_pdf, deg_per_dim, verbose=2, save_path='', MaxIter=500, rtol=1e-3, UseSparseMatrix=UseSparseMatrix)
+e = datetime.datetime.now()
+
+print("Using Sparse Matrix = "+str(UseSparseMatrix))
+print("C_pdf shape =", np.shape(C_pdf), ':: NumElements x 1e6 = ', np.prod(np.shape(C_pdf))/1e6)
+print("Sys.getsize for C_pdf = {}, LogLikelihood = {}, Median weight = {}".format(sys.getsizeof(C_pdf), w[1], np.median(w[0])))
+print(e-s)

@@ -39,7 +39,7 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230214_R
 
 t = t[~np.isnan(t['pl_insolerr1'])]
 
-RadiusBounds = [5, 20]
+RadiusBounds = [5, 12]
 MassBounds = [5, 3000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
@@ -197,8 +197,8 @@ from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
-InputDictionaries = [RadiusDict, MassDict]#, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)

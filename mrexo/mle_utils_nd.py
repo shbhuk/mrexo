@@ -143,7 +143,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
 
-	message = '=========Started MLE run at {}\n'.format(starttime)
+	message = '=========Started MLE run at {}'.format(starttime)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = DataDict["ndim"]
@@ -162,7 +162,7 @@ def MLE_fit(DataDict, deg_per_dim,
 		verbose=verbose, 
 		SaveCMatrix=False)
 
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.\n'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
@@ -174,15 +174,6 @@ def MLE_fit(DataDict, deg_per_dim,
 	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=np.array(deg_per_dim),
 		verbose=verbose, save_path=save_path)
 	
-	# unpadded_weight, n_log_lik = SLSQP_optimizer(C_pdf=C_pdf, deg=deg_per_dim[0], 
-		# verbose=verbose, save_path=save_path)
-	# print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
-	# rand = np.random.randn()
-	# np.savetxt(os.path.join(save_path, 'loglikelihoodtest{:.3f}.txt'.format(rand)), [n_log_lik])
-	# np.savetxt(os.path.join(save_path, 'Cpdf{:.3f}.txt'.format(rand)), C_pdf)
-	# np.savetxt(os.path.join(save_path, 'IntermediateWeight{:.3f}.txt'.format(rand)), w_hat)
-
-
 	# Pad the weight array with zeros for the
 	w_sq = np.reshape(unpadded_weight, np.array(deg_per_dim)-2)
 	w_sq_padded = np.zeros(deg_per_dim)
@@ -232,7 +223,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
-		abs_tol, save_path, verbose, SaveCMatrix=False):
+		abs_tol, save_path, verbose, SaveCMatrix=False,
+		UseSparseMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
@@ -251,7 +243,10 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	for deg in deg_per_dim:
 		deg_product *= deg-2
 		
-	C_pdf = sparse.csr_matrix(np.zeros((n, deg_product)))
+	if UseSparseMatrix:
+		C_pdf = sparse.csc_matrix(np.zeros((n, deg_product)))
+	else:
+		C_pdf = np.zeros((n, deg_product))
 	
 	message = 'Started Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -280,6 +275,9 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	# Log of 0 throws weird errors
 	C_pdf[C_pdf <= 1e-10] = 1e-300
 	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+
+	message = 'Finished Integration at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
 		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf.toarray())
@@ -778,7 +776,7 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 	'''
 	ndim = DataDict['ndim']
 	
-	message = 'Calculating Joint Distribution for {} dimensions at {}\n'.format(ndim, datetime.datetime.now())
+	message = 'Calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	
