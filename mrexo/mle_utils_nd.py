@@ -244,9 +244,9 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		deg_product *= deg-2
 		
 	if UseSparseMatrix:
-		C_pdf = sparse.csc_matrix(np.zeros((n, deg_product)))
+		C_pdf = sparse.csc_matrix(np.zeros((deg_product, n)))
 	else:
-		C_pdf = np.zeros((n, deg_product))
+		C_pdf = np.zeros((deg_product, n))
 	
 	message = 'Started Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -268,15 +268,23 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
 			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
 
-		C_pdf[i,:] = kron_temp; 
-
-	C_pdf = C_pdf.transpose()
-
-	# Log of 0 throws weird errors
-	C_pdf[C_pdf <= 1e-10] = 1e-300
-	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+		C_pdf[:,i] = kron_temp;
 
 	message = 'Finished Integration at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	# if UseSparseMatrix:
+		# C_pdf = C_pdf.tocsr().transpose()
+	# else:
+		# C_pdf = C_pdf.transpose()
+
+	# Log of 0 throws weird errors
+	# C_pdf[C_pdf <= 1e-10] = 1e-300
+	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+
+	C_pdf[C_pdf <= 1e-10] = 0
+
+	message = 'Finished Transpose at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:

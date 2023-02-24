@@ -56,8 +56,8 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3, Us
 	20201123 - Adjusted for n dimensions
 	"""
 
-	if UseSparseMatrix:
-		C_pdf = sparse.csr_matrix(C_pdf)
+	# if UseSparseMatrix:
+		# C_pdf = sparse.csr_matrix(C_pdf)
 
 	ReducedDegs = np.array(deg_per_dim) - 2
 	n = np.shape(C_pdf)[1] # Sample size
