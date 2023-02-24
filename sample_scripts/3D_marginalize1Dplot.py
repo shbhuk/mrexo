@@ -2,28 +2,31 @@ import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
 import glob
-import imageio
 
-from mrexo.mle_utils_nd import calculate_conditional_distribution
 
 ConditionString = 'r,p|stm'
 
 ################ Run Conditional Distribution ################ 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
-ConditionString = 'm|r,p'
-# ConditionString = 'm|r'
-# ConditionString = 'm,r|p'
-ConditionString = 'r,p|stm'
-# ConditionString = 'm|r,stm'
-# ConditionString = 'm,r|p,stm'
-# ConditionString = 'm,r|feh'
-# ConditionString = 'm,r|p'
+
+
+ConditionString = 'm,r|insol'
 # ConditionString = 'r|stm'
 
 
-ConditionName = '3D_URad_3Re_'+ConditionString.replace('|', '_').replace(',', '_')
+RunName = r"Trial_FGKM_3D_MRS"
+
+save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+
+ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
 PlotFolder = os.path.join(save_path, ConditionName)
+
+deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
+DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
+DataSequences = np.loadtxt(os.path.join(save_path, 'output', 'other_data_products', 'DataSequences.txt'))
+weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
+JointDist = np.load(os.path.join(save_path, 'output', 'JointDist.npy'), allow_pickle=True)
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
@@ -35,18 +38,21 @@ LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_ch
 RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
 
 
-xseq = outputs['DataSequence'][LHSDimensions[0]]
-yseq = outputs['DataSequence'][LHSDimensions[1]]
-zseq = outputs['DataSequence'][RHSDimensions[0]]
-# t = outputs['DataSequence'][3]
+xseq = DataDict['DataSequence'][LHSDimensions[0]]
+yseq = DataDict['DataSequence'][LHSDimensions[1]]
+zseq = DataDict['DataSequence'][RHSDimensions[0]]
 
-DataDict = DataDict
 MeasurementDict = {'r':[[1, 2], [np.nan, np.nan]], 'p':[[1, 1], [np.nan, np.nan]], 'stm':[[0.1, 0.3], [np.nan, np.nan]]}
 MeasurementDict = {'r':[[10**0.2, 10**0.4, 10**0.6], [np.nan, np.nan, np.nan]]}#, 'p':[[1, 1, 10], [np.nan, np.nan]], 'stm':[[0.5], [np.nan, np.nan]]}
 MeasurementDict = {'stm':[[0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.57, 0.6], [np.nan]*9]}#, 'r':[[1], [np.nan]]}
 # MeasurementDict = {'r':[[1, 1, 1], [np.nan, np.nan, np.nan]], 'p':[[1, 5, 10], [np.nan, np.nan, np.nan]]}
-MeasurementDict = {RHSTerms[0]:[[10**0.0], [np.nan]]}
-# MeasurementDict = {'r':[[1], [np.nan]]}
+MeasurementDict = {RHSTerms[0]:[[10**0.0], [[np.nan, np.nan]]]}
+
+MeasurementDict = \
+{
+	RHSTerms[0]:[[10**2.0], [[np.nan, np.nan]]], 
+}
+
 
 
 for k in np.arange(0, len(zseq), 2, dtype=int):
@@ -54,36 +60,37 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 	ChosenZ = zseq[k]
 	print(10**ChosenZ)
 
-	MeasurementDict = {RHSTerms[0]:[[10**ChosenZ], [np.nan]]}
-	LogMeasurementDict = {ke:np.log10(MeasurementDict[ke]) for ke in MeasurementDict.keys()}
+	MeasurementDict = {RHSTerms[0]:[[ChosenZ], [[np.nan, np.nan]]]}
+	# LogMeasurementDict = {ke:[np.log10(MeasurementDict[ke][0]), [[np.nan, np.nan]]] for ke in MeasurementDict.keys()}
+	# LogMeasurementDict = {RHSTerms[0]:[[ChosenZ], [[np.nan, np.nan]]]}
 
 
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
-		JointDist, LogMeasurementDict)
+		JointDist, MeasurementDict)
 
 
 	_ = NumericalIntegrate2D(xseq, yseq, ConditionalDist[0], [xseq.min(), xseq.max()], [yseq.min(), yseq.max()])
 	print(_)
 
-	i=0
+	i = 0
 	fig = plt.figure(figsize=(8.5,6.5))
 	im = plt.imshow(ConditionalDist[i], extent=(xseq.min(), xseq.max(), yseq.min(), yseq.max()), aspect='auto', origin='lower'); 
 	# plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
-	plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(MeasurementDict[RHSTerms[0]][0][i]))
+	plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(10**MeasurementDict[RHSTerms[0]][0][i]))
 	plt.xlabel(DataDict['ndim_label'][LHSDimensions[0]])
 	plt.ylabel(DataDict['ndim_label'][LHSDimensions[1]])
 
-	plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
-	plt.ylim(DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1])
+	plt.xlim(DataDict['ndim_bounds'][LHSDimensions[0]][0], DataDict['ndim_bounds'][LHSDimensions[0]][1])
+	plt.ylim(DataDict['ndim_bounds'][LHSDimensions[1]][0], DataDict['ndim_bounds'][LHSDimensions[1]][1])
 	plt.tight_layout()
 
 	XTicks = np.linspace(xseq.min(), xseq.max(), 5)
 	# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
 	# XTicks = np.log10(np.array([1, 2, 3, 5, 10]))
-	XTicks = np.log10(np.array([1.0, 1.5, 2, 2.5, 3, 4]))
+	# XTicks = np.log10(np.array([1.0, 1.5, 2, 2.5, 3, 4]))
 	YTicks = np.linspace(yseq.min(), yseq.max(), 5)
-	YTicks = np.log10(np.array([0.5, 1, 10, 30,  50, 100, 300]))
+	# YTicks = np.log10(np.array([0.5, 1, 10, 30,  50, 100, 300]))
 	# YTicks = np.log10(np.array([1, 5, 10, 30, 50]))
 
 	XLabels = np.round(10**XTicks, 1)
@@ -94,10 +101,12 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 	cbar = fig.colorbar(im, ticks=[np.min(ConditionalDist[i]), np.max(ConditionalDist[i])], fraction=0.037, pad=0.04)
 	cbar.ax.set_yticklabels(['Min', 'Max'])
 	plt.tight_layout()
-	# plt.show(block=False)
+	plt.show(block=False)
 
 
-	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(MeasurementDict[RHSTerms[0]][0][i],3))))
+	# plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(MeasurementDict[RHSTerms[0]][0][i],3))))
+	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(k)))
+
 	plt.close("all")
 	
 	

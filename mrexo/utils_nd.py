@@ -8,7 +8,7 @@ else:
 	from functools32 import lru_cache
 
 def _save_dictionary(dictionary, output_location,
-	bootstrap=False):
+	NumBootstrap=False, NumMonteCarlo=False):
 
 	"""
 	Need to update
@@ -16,7 +16,26 @@ def _save_dictionary(dictionary, output_location,
 	"""
 	aux_output_location = os.path.join(output_location, 'other_data_products')
 
-	if not bootstrap:
+
+	if NumMonteCarlo is not False:
+		unpadded_weights = dictionary['UnpaddedWeights']
+		weights = dictionary['Weights']
+		JointDist = dictionary['JointDist']
+
+		np.savetxt(os.path.join(output_location,'weights_MCSim{}.txt'.format(str(NumMonteCarlo))),weights, comments='#', header='Weights for Beta densities  from Monte-Carlo Sim # = {}'.format(str(NumMonteCarlo)))
+		np.savetxt(os.path.join(output_location,'unpadded_weights_MCSim{}.txt'.format(str(NumMonteCarlo))),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from Monte-Carlo Sim # = {}'.format(str(NumMonteCarlo)))
+		np.save(os.path.join(output_location,'JointDist_MCSim{}.npy'.format(str(NumMonteCarlo))), JointDist)
+	
+	elif NumBootstrap is not False:
+		unpadded_weights = dictionary['UnpaddedWeights']
+		weights = dictionary['Weights']
+		JointDist = dictionary['JointDist']
+
+		np.savetxt(os.path.join(output_location,'weights_BSSim{}.txt'.format(str(NumBootstrap))),weights, comments='#', header='Weights for Beta densities  from Bootstrap # = {}'.format(str(NumBootstrap)))
+		np.savetxt(os.path.join(output_location,'unpadded_weights_BSSim{}.txt'.format(str(NumBootstrap))),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from Bootstrap # = {}'.format(str(NumBootstrap)))
+		np.save(os.path.join(output_location,'JointDist_BSSim{}.npy'.format(str(NumBootstrap))), JointDist)
+
+	else:
 		unpadded_weights = dictionary['UnpaddedWeights']
 		weights = dictionary['Weights']
 		deg_per_dim = dictionary['deg_per_dim']
@@ -28,7 +47,7 @@ def _save_dictionary(dictionary, output_location,
 		np.savetxt(os.path.join(output_location,'deg_per_dim.txt'), deg_per_dim, comments='#', header='Degrees per dimensions')
 		np.save(os.path.join(output_location,'JointDist.npy'), JointDist)
 		np.savetxt(os.path.join(aux_output_location,'DataSequences.txt'), DataSequences, comments='#', header='Data Sequence for each dimensions')
-
+	
 def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
 	"""
 	INPUTS:

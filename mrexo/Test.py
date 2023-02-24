@@ -17,7 +17,18 @@ for i in range(1000):
 end = datetime.datetime.now()
 print(end-start)
 
+i = 50
+dim = 1
 
+a=DataDict["ndim_data"][dim][i]
+a_LSigma=DataDict["ndim_LSigma"][dim][i]
+a_USigma=DataDict["ndim_USigma"][dim][i]
+deg=deg_per_dim[dim]
+deg_vec=deg_vec_per_dim[dim]
+a_max=DataDict["ndim_bounds"][dim][1]
+a_min=DataDict["ndim_bounds"][dim][0]
+
+"""
 start = datetime.datetime.now()
 for i in range(10000):
 	_ = stats.norm.pdf(i, i, 100)
@@ -51,4 +62,41 @@ for i in range(1000000):
 	_ = scipy.math.factorial(n-1)
 end = datetime.datetime.now()
 print(end-start)
+"""
 
+R_points = np.array(pd.read_csv(r"C:\Users\skanodia\Downloads\Compare_MRExo\Test_N100_Diagonal_0.1Error_Scatter\R_points.csv").iloc[:,1])
+M_points = np.array(pd.read_csv(r"C:\Users\skanodia\Downloads\Compare_MRExo\Test_N100_Diagonal_0.1Error_Scatter\M_points.csv").iloc[:,1])
+
+qtls = np.arange(0, 100)
+
+# ECDF for mass given R=6 
+M_cond_R6 = pd.read_csv(r"C:\Users\skanodia\Downloads\Compare_MRExo\Test_N100_Diagonal_0.1Error_Scatter\M_cond_R6_qtl100.csv")
+R6_cdf = np.array(M_cond_R6.iloc[:,1])
+
+InterpCDF = interp1d(qtls, R6_cdf, bounds_error=False, fill_value=(R6_cdf[0], R6_cdf[-1]))
+
+RSample = []
+
+for i in range(100000):
+	p = np.random.uniform(0, 1)*100
+	RSample.append(InterpCDF(p))
+
+plt.hist(RSample, density=True)
+
+####################################################
+
+from mrexo.mle_utils_nd import calc_C_matrix, _ComputeConvolvedPDF
+from mrexo.Optimizers import optimizer, LogLikelihood
+import datetime
+
+deg_per_dim = [40, 40, 40]
+
+s = datetime.datetime.now()
+C_pdf = calc_C_matrix(DataDict, deg_per_dim, abs_tol=1e-8, save_path='', verbose=2, UseSparseMatrix=UseSparseMatrix)
+w = optimizer(C_pdf, deg_per_dim, verbose=2, save_path='', MaxIter=500, rtol=1e-3, UseSparseMatrix=UseSparseMatrix)
+e = datetime.datetime.now()
+
+print("Using Sparse Matrix = "+str(UseSparseMatrix))
+print("C_pdf shape =", np.shape(C_pdf), ':: NumElements x 1e6 = ', np.prod(np.shape(C_pdf))/1e6)
+print("Sys.getsize for C_pdf = {}, LogLikelihood = {}, Median weight = {}".format(sys.getsizeof(C_pdf), w[1], np.median(w[0])))
+print(e-s)

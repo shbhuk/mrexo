@@ -349,7 +349,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	if cores > 1:
 		# Parallelize the AIC
-		pool = Pool(processes=cores)
+		pool = Pool(processes=cores, initializer=np.random.seed)
 		aic_results = list(pool.imap(_AIC_MLE, inputs_aicpool))
 
 		
@@ -440,6 +440,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 		plt.axvline(DegreeChosen[0], linestyle='dashed', c='k')
 		plt.tight_layout()
 		fig.savefig(os.path.join(save_path, 'AIC.png'))
+		plt.close("all")
 
 	return DegreeChosen
 	

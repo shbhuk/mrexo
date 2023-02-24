@@ -30,11 +30,7 @@ DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlane
 
 UTeff = 7000
 
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Kepler_Teff_6500_ExcUpperLimits_20210908.csv'))
 t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_Thesis.csv'))
-# t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
-# t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
 RadiusBounds = [4, 15]
 MassBounds = [4, 3000]
@@ -54,29 +50,7 @@ if StellarMassBounds is not None:
 RemovePlanets = ['Kepler-54 b', 'Kepler-54 c']
 t = t[~np.isin(t.pl_name, RemovePlanets)]
 
-#t = t.iloc[0:20]
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
-
-
-
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127.csv'))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127_Metallicity.csv'))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_6000_ExcUpperLimits_20210216.csv'))
-
-# t = t[t['st_mass'] < 10]
-# t= t[t['pl_hostname'] != 'TRAPPIST-1']
-# t = t[t['pl_masse'] < 50]
-# t = t[t['pl_rade'] < 4]
-# t = t[t['pl_rade'] > 0.8]
-# t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 print(len(t))
-# t = t[np.isfinite(t['pl_insol'])]
-# t = t[t['pl_insol'] > 1e-10]
-
-# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
-# t = Table.read(os.path.join(pwd,'FGK_20190406.csv'))
 
 
 # In Earth units
@@ -90,13 +64,6 @@ Radius = np.array(t['pl_rade'])
 Radius_sigma1 = np.array(abs(t['pl_radeerr1']))
 Radius_sigma2 = np.array(abs(t['pl_radeerr2']))
 
-"""
-Period = np.array(t['pl_orbper'])
-PeriodSigma = np.repeat(np.nan, len(Period))
-
-"""
-
-
 StellarMass = np.array(t['st_mass'])
 StellarMassSigma = np.array(t['st_masserr1'])
 
@@ -106,83 +73,13 @@ StellarMassSigma = np.array(t['st_masserr1'])
 Insolation = np.array(t['pl_insol'])
 InsolationSigma = np.array(t['pl_insolerr1'])
 
-"""
-#############################
-### Fake Mass, Radius, Insolation
-#############################
-
-Radius = 10**np.linspace(-0.3, 2.5)
-# Symmetrical errorbars
-Radius_sigma1 = Radius*0.1
-Radius_sigma2 = Radius*0.1
-RadiusBounds = [0.1, 300]
-
-Mass = Radius*10
-# Symmetrical errorbars
-Mass_sigma1 = Mass*0.1
-Mass_sigma2 = Mass*0.1
-MassBounds = [1, 3000]
-
-Insolation = np.ones(len(Radius))
-InsolationSigma = np.ones(len(Radius))*0.1
-InsolationBounds = [0.9, 1.1]
-
-StellarMass = np.ones(len(Radius))*0.5
-StellarMassSigma = StellarMass*0.2
-StellarMassBounds = [0.25, 0.75]
-
-
-#############################
-#############################
-#############################
-"""
-
-
-"""
-# Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
-# find the optimum number of degrees.
-
-FakePeriod = np.ones(len(Period))
-# FakePeriod = Radius
-NPoints = len(Radius)
-# FakePeriod = np.concatenate([np.random.lognormal(0, 1, NPoints//2), \
-	# np.random.lognormal(5, 1, NPoints//2+1)])
-
-# FakePeriodSigma = FakePeriod*0.01
-# Period_sigma = FakePeriodSigma
-
-
-# Simulation
-# Radius = 10**np.linspace(0, 1)
-Radius_sigma1 = 0.1*Radius# np.repeat(np.nan, len(Radius))
-Radius_sigma2 = np.copy(Radius_sigma1)
-Mass = 10**(2*np.log10(Radius)*np.log10(Radius) - 0.5*np.log10(Radius))
-# Mass =  np.ones(len(Radius))/2
-Mass_sigma1 = np.repeat(np.nan, len(Radius))
-Mass_sigma2 = np.repeat(np.nan, len(Radius))
-Period = np.ones(len(Radius))/2
-StellarMass_Sigma1 = np.repeat(np.nan, len(Radius))
-# Period = Radius# np.linspace(0, 1, len(Radius))
-PeriodSigma = 0.1*Period #np.repeat(np.nan, len(Radius))
-
-"""
 
 Max, Min = 1, 0
 Max, Min = np.nan, np.nan
-# Max += 0.2
-# Min -= 0.2
-
 
 RadiusDict = {'Data': Radius, 'LSigma': Radius_sigma1,  "USigma":Radius_sigma2, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
 MassDict = {'Data': Mass, 'LSigma': Mass_sigma1, "USigma":Mass_sigma2, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
-
-#FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
-# PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
 StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassSigma, "USigma":StellarMassSigma, 'Max':np.log10(StellarMassBounds[1]), 'Min':np.log10(StellarMassBounds[0]), 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
-#MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':1, 'Min':-0.45, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-# MetallicityDict = {'Data': 10**(-Metallicity), 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
-
 InsolationDict = {'Data': Insolation, 'LSigma': InsolationSigma, "USigma":InsolationSigma, 'Max':np.log10(InsolationBounds[1]), 'Min':np.log10(InsolationBounds[0]), 'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
 
 degree_candidates = np.loadtxt( r"/storage/home/szk381/work/mrexo/sample_scripts/TestRuns/Trial_FGKM_2D_MR_aic_asymm_degmin10_20c/output/other_data_products/degree_candidates.txt")
@@ -202,19 +99,7 @@ for xdeg in degree_candidates[0].astype(int):
 		select_deg = [xdeg, ydeg]
 		print(RunName)
 
-		# InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-		# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
-
-		# InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict, MetallicityDict]
-		# InputDictionaries = [RadiusDict, StellarMassDict, PeriodDict]
-		# InputDictionaries = [RadiusDict, InsolationDict]
 		InputDictionaries = [RadiusDict,  MassDict]
-
-
-		# InputDictionaries = [RadiusDict, PeriodDict, StellarMassDict]
-		# InputDictionaries = [RadiusDict, PeriodDict, MetallicityDict]
-
-		# InputDictionaries = [RadiusDict, InsolationDict, StellarMassDict]
 
 		DataDict = InputData(InputDictionaries)
 
@@ -223,25 +108,6 @@ for xdeg in degree_candidates[0].astype(int):
 		 
 		ndim = len(InputDictionaries)
 		# deg_per_dim = [25, 25, 25, 30]
-
-		"""
-		outputs = MLE_fit(DataDict, 
-			deg_per_dim=deg_per_dim,
-			save_path=save_path, OutputWeightsOnly=False, CalculateJointDist=True)
-
-		from mrexo.utils import _logging
-		from multiprocessing import Pool
-
-		verbose=2
-		select_deg = 'cv'
-		num_boot=0
-		degree_max=40
-		cores=1
-		k_fold=10
-		NumCandidates=10
-		"""
-
-		# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, num_boot=0, degree_max=15)
 
 		if __name__ == '__main__':
 

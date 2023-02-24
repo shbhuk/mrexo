@@ -2,13 +2,17 @@ import numpy as np
 from scipy.stats import beta,norm
 import scipy
 from scipy.stats import beta
+
 from decimal import Decimal
+from scipy.stats import rv_continuous
 from scipy.integrate import quad
 from scipy.optimize import brentq as root
 from scipy.interpolate import interpn, interp1d	
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import RectBivariateSpline
 from scipy.special import erfinv
+from scipy import sparse
+
 import datetime,os
 from multiprocessing import current_process
 from functools import lru_cache
@@ -84,6 +88,11 @@ def InputData(ListofDictionaries):
 		ndim_data[d] = ListofDictionaries[d]['Data']
 		ndim_LSigma[d] = ListofDictionaries[d]['LSigma']
 		ndim_USigma[d] = ListofDictionaries[d]['USigma']
+
+		# Anything greater than 50 sigma significance  will use only the Beta function with the sigma values set to NaN
+		ndim_LSigma[d][(np.abs(ndim_data[d]/ndim_LSigma[d]) > 50)] = np.nan
+		ndim_USigma[d][(np.abs(ndim_data[d]/ndim_USigma[d]) > 50)] = np.nan
+
 		ndim_sigma[d] = np.average([np.abs(ndim_LSigma[d]), np.abs(ndim_USigma[d])], axis=0)
 		ndim_char.append(ListofDictionaries[d]['Char'])
 		ndim_label.append(ListofDictionaries[d]['Label'])
@@ -120,7 +129,7 @@ def InputData(ListofDictionaries):
 
 
 def MLE_fit(DataDict, deg_per_dim, 
-			Log=True, abs_tol=1e-8, 
+			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2):
 	'''
@@ -176,7 +185,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
 
-	message = '=========\nStarted MLE run at {}'.format(starttime)
+	message = '=========Started MLE run at {}'.format(starttime)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = DataDict["ndim"]
@@ -192,7 +201,6 @@ def MLE_fit(DataDict, deg_per_dim,
 		deg_per_dim=np.array(deg_per_dim), 
 		abs_tol=abs_tol, 
 		save_path=save_path, 
-		Log=Log, 
 		verbose=verbose, 
 		SaveCMatrix=False)
 
@@ -208,15 +216,6 @@ def MLE_fit(DataDict, deg_per_dim,
 	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=np.array(deg_per_dim),
 		verbose=verbose, save_path=save_path)
 	
-	# unpadded_weight, n_log_lik = SLSQP_optimizer(C_pdf=C_pdf, deg=deg_per_dim[0], 
-		# verbose=verbose, save_path=save_path)
-	# print("AAAAAAAAAAAAAAAA   {}".format(n_log_lik))
-	# rand = np.random.randn()
-	# np.savetxt(os.path.join(save_path, 'loglikelihoodtest{:.3f}.txt'.format(rand)), [n_log_lik])
-	# np.savetxt(os.path.join(save_path, 'Cpdf{:.3f}.txt'.format(rand)), C_pdf)
-	# np.savetxt(os.path.join(save_path, 'IntermediateWeight{:.3f}.txt'.format(rand)), w_hat)
-
-
 	# Pad the weight array with zeros for the
 	w_sq = np.reshape(unpadded_weight, np.array(deg_per_dim)-2)
 	w_sq_padded = np.zeros(deg_per_dim)
@@ -241,7 +240,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 
 		# fi = rank_FI_matrix(C_pdf, unpadded_weight)
-		aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight))
+		# aic_fi = -n_log_lik*2 + 2*(rank_FI_matrix(C_pdf, unpadded_weight))
+		aic_fi = 0 # Matrix multiplication to calculate FI is expensive.
 		# bic = -n_log_lik*2 + np.log(n)*(deg**2 - 1)
 		
 		DataSeq = DataDict['DataSequence'] 
@@ -265,7 +265,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 def calc_C_matrix(DataDict, deg_per_dim,
-		Log, abs_tol, save_path, verbose, SaveCMatrix=False):
+		abs_tol, save_path, verbose, SaveCMatrix=False,
+		UseSparseMatrix=False):
 	'''
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
@@ -284,7 +285,10 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	for deg in deg_per_dim:
 		deg_product *= deg-2
 		
-	C_pdf = np.zeros((n, deg_product))
+	if UseSparseMatrix:
+		C_pdf = sparse.csc_matrix(np.zeros((deg_product, n)))
+	else:
+		C_pdf = np.zeros((deg_product, n))
 	
 	message = 'Started Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -298,7 +302,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 				deg=deg_per_dim[dim], deg_vec=deg_vec_per_dim[dim],
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
-				Log=Log)
+				Log=True)
 			
 			# kron_temp = np.kron(indv_pdf_per_dim[dim][i,:], kron_temp) # Old method
 			
@@ -306,16 +310,27 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
 			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
 
-		C_pdf[i,:] = kron_temp
+		C_pdf[:,i] = kron_temp;
 
-	C_pdf = C_pdf.T
+	message = 'Finished Integration at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
+	# if UseSparseMatrix:
+		# C_pdf = C_pdf.tocsr().transpose()
+	# else:
+		# C_pdf = C_pdf.transpose()
 
 	# Log of 0 throws weird errors
-	C_pdf[C_pdf == 0] = 1e-300
-	C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+	# C_pdf[C_pdf <= 1e-10] = 1e-300
+	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
+
+	C_pdf[C_pdf <= 1e-10] = 0
+
+	message = 'Finished Transpose at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
-		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf)
+		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf.toarray())
 	return C_pdf
 
 
@@ -374,9 +389,9 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
 
-	if Log == True:
+	if Log == True: # Integrating in Log Space
 		norm_beta = _PDF_Normal(a_obs, loc=10**a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
-	else:
+	else: # Integrating in Linear Space
 		norm_beta = _PDF_Normal(a_obs, loc=a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
 	return norm_beta
 
@@ -395,7 +410,7 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 	Log = Log
 
 	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
-						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	return integration_product[0]
 
 
@@ -412,21 +427,21 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 	shape2 = deg - degree + 1
 	Log = Log
 
-	if Log:
+	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=np.log10(a_obs), b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	else:
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs = abs_tol, epsrel = 1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
 	return integration_product_L[0] + integration_product_U[0]
 
 
 # Ndim - 20201130
-def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol=1e-8, Log=False):
+def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, abs_tol=1e-8, Log=False):
 	'''
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 	If the data has uncertainty, the joint distribution is modelled using a
@@ -440,6 +455,7 @@ def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=np.nan, abs_tol
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
 	'''
 
+	a_std = a_LSigma
 
 	if np.isnan(a_std):
 		if Log:
@@ -464,7 +480,7 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 
 	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
 	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
-	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in linear space. 
+	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in log space. 
 	Therefore, while calculating the C_pdf, log=True, so that for the PDF of the normal function, everything is in linear space. 
 
 	Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for x between log(x_min) and log(x_max), and there is no measurement uncertainty. 
@@ -483,6 +499,8 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 		PDF = np.array([_PDF_Beta(a_norm, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
 		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+		# PDF = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+
 
 	return PDF
 
@@ -819,7 +837,7 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 	elif ndim==4:
 		Joint, indv_pdf_per_dim = CalculateJointDist4D(DataDict, weights, deg_per_dim)
 		
-	message = 'Finished calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
+	message = 'Finished calculating Joint Distribution for {} dimensions at {}\n'.format(ndim, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return Joint, indv_pdf_per_dim
@@ -1151,3 +1169,27 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
 	# Integral2 = simps(simps(Matrix, xarray), yarray)
 	return Integral
+
+
+def ObtainScipyPDF(xseq, PDF):
+	"""
+	Take PDF as a function of xseq and convert it into a scipy class object in rv_continuous
+
+	"""
+
+	Inter = interp1d(xseq, PDF, bounds_error=False)
+	class pdf_gen(rv_continuous):
+		def _pdf(self, x):
+			return Inter(x)
+
+	CustomPDF = pdf_gen("CustomPDF")
+
+	# Re-define the bounds to not be +- inf
+	CustomPDF.a = xseq[0]
+	CustomPDF.b = xseq[-1]
+
+	# Can then obtain a random sample as follows
+	# sample = CustomPDF.rvs(size=500)
+
+	return CustomPDF
+	
