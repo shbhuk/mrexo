@@ -56,9 +56,6 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3, Us
 	20201123 - Adjusted for n dimensions
 	"""
 
-	# if UseSparseMatrix:
-		# C_pdf = sparse.csr_matrix(C_pdf)
-
 	ReducedDegs = np.array(deg_per_dim) - 2
 	n = np.shape(C_pdf)[1] # Sample size
 
@@ -67,9 +64,8 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3, Us
 	# Initial value for weights
 	w = np.ones(DegProduct)/DegProduct
 	if UseSparseMatrix:
-		w = sparse.csr_matrix(w[:, None])
-
-	# w_final = np.zeros(np.shape(x0))
+		C_pdf = C_pdf.tocsr()
+		w = sparse.csr_matrix((np.ones(DegProduct)/DegProduct)[:, None])
 
 	FractionalError = np.ones(MaxIter)
 	loglike = np.zeros(MaxIter)
@@ -78,7 +74,7 @@ def optimizer(C_pdf, deg_per_dim, verbose, save_path, MaxIter=500, rtol=1e-3, Us
 
 	while np.abs(FractionalError[t-1]) > rtol:
 		if UseSparseMatrix:
-			TempMatrix = C_pdf.multiply(w)
+			TempMatrix = (C_pdf.multiply(w)).tocsr()
 			IntMatrix = TempMatrix / np.sum(TempMatrix, axis=0)
 			w = sparse.csr_matrix(np.mean(IntMatrix, axis=1))
 		else:
