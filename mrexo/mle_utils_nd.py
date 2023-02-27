@@ -231,7 +231,6 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
 	'''
-
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
 	# For degree 'd', actually using d-2 since the boundaries are zero padded.
@@ -244,7 +243,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		deg_product *= deg-2
 		
 	if UseSparseMatrix:
-		C_pdf = sparse.csc_matrix(np.zeros((deg_product, n)))
+		C_pdf = sparse.lil_matrix(np.zeros((deg_product, n)))
 	else:
 		C_pdf = np.zeros((deg_product, n))
 	
@@ -267,30 +266,16 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			# Starting 20210323, we're flipping the order for the kron product
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
 			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+			kron_temp[kron_temp <= 1e-10] = 0
 
 		C_pdf[:,i] = kron_temp;
 
 	message = 'Finished Integration at {}'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
-	# if UseSparseMatrix:
-		# C_pdf = C_pdf.tocsr().transpose()
-	# else:
-		# C_pdf = C_pdf.transpose()
-
-	# Log of 0 throws weird errors
-	# C_pdf[C_pdf <= 1e-10] = 1e-300
-	# C_pdf[np.where(np.isnan(C_pdf))] = 1e-300
-
-	C_pdf[C_pdf <= 1e-10] = 0
-
-	message = 'Finished Transpose at {}'.format(datetime.datetime.now())
-	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
-
 	if SaveCMatrix:
 		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf.toarray())
 	return C_pdf
-
 
 def InvertHalfNormalPDF(x, p, loc=0):
 	"""
