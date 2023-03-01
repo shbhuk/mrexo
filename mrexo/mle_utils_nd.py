@@ -131,7 +131,8 @@ def InputData(ListofDictionaries):
 def MLE_fit(DataDict, deg_per_dim, 
 			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
-			save_path=None, verbose=2):
+			save_path=None, verbose=2,
+			UseSparseMatrix=True):
 	'''
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
 	Also, use those weights to calculate the conditional density distributions.
@@ -160,7 +161,8 @@ def MLE_fit(DataDict, deg_per_dim,
 		abs_tol=abs_tol, 
 		save_path=save_path, 
 		verbose=verbose, 
-		SaveCMatrix=False)
+		SaveCMatrix=False,
+		UseSparseMatrix=UseSparseMatrix)
 
 	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -172,7 +174,8 @@ def MLE_fit(DataDict, deg_per_dim,
 	# Weights are a 1D vector of length deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	# They can be reshaped into an `ndim` dimensional array 
 	unpadded_weight, n_log_lik = optimizer(C_pdf=C_pdf, deg_per_dim=np.array(deg_per_dim),
-		verbose=verbose, save_path=save_path)
+		verbose=verbose, save_path=save_path,
+		UseSparseMatrix=UseSparseMatrix)
 	
 	# Pad the weight array with zeros for the
 	w_sq = np.reshape(unpadded_weight, np.array(deg_per_dim)-2)
@@ -231,6 +234,11 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
 	'''
+
+
+	message = 'Starting C matrix calculation at {}'.format(datetime.datetime.now())
+	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
+
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
 	# For degree 'd', actually using d-2 since the boundaries are zero padded.
@@ -243,13 +251,12 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		deg_product *= deg-2
 		
 	if UseSparseMatrix:
-		C_pdf = sparse.lil_matrix(np.zeros((deg_product, n)))
+		C_pdf = sparse.lil_matrix((deg_product, n))
+		message = 'Using Sparse Matrix for C_pdf'
+		_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 	else:
 		C_pdf = np.zeros((deg_product, n))
 	
-	message = 'Started Integration at {}'.format(datetime.datetime.now())
-	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
-
 	# Loop across each data point.
 	for i in range(0,n):
 		kron_temp = 1

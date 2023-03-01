@@ -87,9 +87,12 @@ plt.hist(RSample, density=True)
 
 from mrexo.mle_utils_nd import calc_C_matrix, _ComputeConvolvedPDF
 from mrexo.Optimizers import optimizer, LogLikelihood
+from mrexo.utils_nd import _logging
 import datetime
+from scipy import sparse
 
-deg_per_dim = [40, 40, 40]
+
+deg_per_dim = [120, 120, 120]
 
 s = datetime.datetime.now()
 C_pdf = calc_C_matrix(DataDict, deg_per_dim, abs_tol=1e-8, save_path='', verbose=2, UseSparseMatrix=UseSparseMatrix)
@@ -98,5 +101,10 @@ e = datetime.datetime.now()
 
 print("Using Sparse Matrix = "+str(UseSparseMatrix))
 print("C_pdf shape =", np.shape(C_pdf), ':: NumElements x 1e6 = ', np.prod(np.shape(C_pdf))/1e6)
-print("Sys.getsize for C_pdf = {}, LogLikelihood = {}, Median weight = {}".format(sys.getsizeof(C_pdf), w[1], np.median(w[0])))
+if UseSparseMatrix:
+	print("Size for C_pdf in MB = {:.3f}, LogLikelihood = {:.1f}, 95% weight = {}".format(C_pdf.data.size/(1024**2), w[1], np.percentile(w[0], q=95)))
+	# print("{:.2f}% of elements are < 1e-10".format(100*np.size(C_pdf.toarray()[C_pdf.toarray() < 1e-10])/np.size(C_pdf.toarray())))
+else:
+	print("Size for C_pdf in MB = {:.3f}, LogLikelihood = {:.1f}, 95% weight = {}".format(C_pdf.nbytes/(1024**2), w[1], np.percentile(w[0], q=95)))
+	# print("{:.2f}% of elements are < 1e-10".format(100*np.size(C_pdf[C_pdf < 1e-10])/np.size(C_pdf)))
 print(e-s)

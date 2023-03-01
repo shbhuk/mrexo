@@ -197,7 +197,7 @@ from mrexo.mle_utils_nd import InputData, MLE_fit
 from mrexo.fit_nd import fit_relation
 import matplotlib.pyplot as plt
 
-InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict]
 # InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
@@ -213,7 +213,7 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
 	RunName = 'GiantPlanet_d60_Bootstrap100_4D_MRSStM'
-	#RunName = 'Test_2d_Bootstrap'
+	RunName = 'Test_2d_MR_yesSparse'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -223,13 +223,14 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = [60, 60, 60, 60]
+	select_deg = [60, 60]
 
 	if __name__ == '__main__':
 
-		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=25,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)
+		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=25,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
 		#cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=40, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)", os.path.join(save_path, 'Profile.prof'))
 
+		"""
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')
 		profile = pstats.Stats(os.path.join(save_path, 'Profile.prof'), stream=file)
 		profile.sort_stats('cumulative') # Sorts the result according to the supplied criteria
@@ -241,6 +242,7 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 		profile.sort_stats('time') # Sorts the result according to the supplied criteria
 		profile.print_stats(30) # Prints the first 15 lines of the sorted report
 		file.close()
+		"""
 
 		JointDist = outputs['JointDist']
 		weights = outputs['Weights']
