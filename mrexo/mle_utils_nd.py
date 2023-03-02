@@ -157,6 +157,8 @@ def MLE_fit(DataDict, deg_per_dim,
         The folder name (including path) to save results in.
     verbose : int, default=2
         Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+    UseSparseMatrix : bool, default=True
+        Whether to use a sparse matrix for the C_pdf calculation (to reduce memory for large problem sizes).
     
     Returns
     -------
@@ -205,9 +207,6 @@ def MLE_fit(DataDict, deg_per_dim,
 		verbose=verbose, 
 		SaveCMatrix=False,
 		UseSparseMatrix=UseSparseMatrix)
-
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
-	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
 	# Run optimization to find the weights
@@ -319,7 +318,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 		C_pdf[:,i] = kron_temp;
 
-	message = 'Finished Integration at {}'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
@@ -359,7 +358,7 @@ def _PDF_Normal(a, loc, scale):
 
 @lru_cache(maxsize=200)
 def _GammaFunction(a):
-	return scipy.math.factorial(a-1)
+	return scipy.special.factorial(a-1)
 
 
 def _PDF_Beta(x,a,b):
