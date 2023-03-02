@@ -136,8 +136,52 @@ def MLE_fit(DataDict, deg_per_dim,
 	'''
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
 	Also, use those weights to calculate the conditional density distributions.
-	Ning et al. 2018 Sec 2.2, Eq 9.
-
+	
+    See Ning et al. 2018, Sec 2.2, Eq 9.
+    
+    Parameters
+    ----------
+    DataDict : dict
+        A dictionary containing the data, as returned by :py:func:`InputData`.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    Log : bool, default=True
+        Whether to perform the calculation in log space for all of the dimensions.
+    abs_tol : float, default=1e-8
+        The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
+    OutputWeightsOnly : bool, default=False
+        Whether to only output the (unpadded) weights (and log likelihood).
+    CalculateJointDist : bool, default=False
+        Whether to also calculate the join distribution.
+    save_path : str, optional
+        The folder name (including path) to save results in.
+    verbose : int, default=2
+        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+    UseSparseMatrix : bool, default=True
+        Whether to use a sparse matrix for the C_pdf calculation (to reduce memory for large problem sizes).
+    
+    Returns
+    -------
+    outputs : dict
+        The dictionary containing the outputs, if ``OutputWeightsOnly=False``.
+    unpadded_weight : array[float]
+        A 1-d array of unpadded weights (of length = product(deg_i - 2) where i in indexes through the dimensions), if ``OutputWeightsOnly=True``.
+    n_log_lik : array[float]
+        A 1-d array of log likelihood values, if ``OutputWeightsOnly=True``.
+    
+    
+    The output dictionary ``outputs`` contains the following fields:
+    
+    - `UnpaddedWeights`: Same as the ``unpadded_weight`` above.
+    - `Weights`: A 1-d array of weights that has been padded with zeros around the edges of each dimension (i.e. the first and last element of each 1-d slice).
+    - `loglike`: Same as the ``n_log_like`` above.
+    - `deg_per_dim`: Same as the input.
+    - `DataSequence`: The 'DataSequence' field of ``DataDict``; see :py:func:`InputData`.
+    - `C_pdf`: See the output of :py:func:`calc_C_matrix`.
+    - `EffectiveDOF`: The effective number of degrees of freedom (i.e. number of important weights) based on Kish's effective sample size.
+    - `aic`: The Akaike information criterion (based on the effective degrees of freedom).
+    - `aic_fi`: The Akaike information criterion (based on the rank of the Fisher information matrix).
+    - `JointDist`: The joint distribution (only returned if ``CalculateJointDist=True``); see the output of :py:func:`CalculateJointDistribution`.
 	'''
 
 	starttime = datetime.datetime.now()
@@ -163,9 +207,6 @@ def MLE_fit(DataDict, deg_per_dim,
 		verbose=verbose, 
 		SaveCMatrix=False,
 		UseSparseMatrix=UseSparseMatrix)
-
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
-	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	###########################################################
 	# Run optimization to find the weights
@@ -277,7 +318,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 		C_pdf[:,i] = kron_temp;
 
-	message = 'Finished Integration at {}'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
@@ -317,7 +358,7 @@ def _PDF_Normal(a, loc, scale):
 
 @lru_cache(maxsize=200)
 def _GammaFunction(a):
-	return scipy.math.factorial(a-1)
+	return scipy.special.factorial(a-1)
 
 
 def _PDF_Beta(x,a,b):
