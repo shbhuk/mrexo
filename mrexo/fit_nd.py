@@ -1,8 +1,6 @@
-#%cd "C:/Users/shbhu/Documents/Git/Py_Y_X_working/PyCode"
 import numpy as np
 from multiprocessing import Pool,cpu_count
 import os
-from astropy.table import Table
 import datetime
 
 from .mle_utils_nd import MLE_fit
