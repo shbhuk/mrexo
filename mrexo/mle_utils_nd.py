@@ -221,7 +221,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	# Pad the weight array with zeros for the
 	w_sq = np.reshape(unpadded_weight, np.array(deg_per_dim)-2)
 	w_sq_padded = np.zeros(deg_per_dim)
-	w_sq_padded[[slice(1,-1) for i in range(ndim)]] = w_sq
+	w_sq_padded[tuple(slice(1,-1) for i in range(ndim))] = w_sq
 	w_hat = w_sq_padded.flatten()
 
 	if OutputWeightsOnly == True:
