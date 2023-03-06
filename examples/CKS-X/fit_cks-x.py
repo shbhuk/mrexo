@@ -4,12 +4,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import sparse
 
-sys.path.append("/Users/hematthi/Documents/MRExo/mrexo/")
+# sys.path.append("/Users/hematthi/Documents/MRExo/mrexo/")
 from mrexo.mle_utils_nd import InputData, MLE_fit, calc_C_matrix
 from mrexo.Optimizers import optimizer, LogLikelihood
 from mrexo.fit_nd import fit_relation
+from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInputDataHistogram
 
-pwd = os.path.dirname(__file__)
+
+# pwd = os.path.dirname(__file__)
 
 
 
@@ -56,16 +58,17 @@ stmass_bounds = [0.4, 1.6]
 period_dict = {'Data': periods, 'LSigma': periods_lerr, 'USigma': periods_uerr, 'Max': np.log10(period_bounds[1]), 'Min': np.log10(period_bounds[0]), 'Label': 'Period (days)', 'Char': 'P'}
 bolflux_dict = {'Data': bolfluxes, 'LSigma': bolfluxes_lerr, 'USigma': bolfluxes_uerr, 'Max': np.log10(bolflux_bounds[1]), 'Min': np.log10(bolflux_bounds[0]), 'Label': 'Bolometric flux (Sgeo)', 'Char': 'S'}
 radius_dict = {'Data': radii, 'LSigma': radii_lerr, 'USigma': radii_uerr, 'Max': np.log10(radius_bounds[1]), 'Min': np.log10(radius_bounds[0]), 'Label': 'Planet radius ($R_\oplus$)', 'Char': 'Rp'}
-stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': stmasses_uerr, 'Max': stmass_bounds[1], 'Min': stmass_bounds[0], 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
+stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': stmasses_uerr, 'Max': np.log10(stmass_bounds[1]), 'Min': np.log10(stmass_bounds[0]), 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
 
 input_dicts = [bolflux_dict, radius_dict, stmass_dict] # period_dict, bolflux_dict
+input_dicts = [radius_dict, period_dict]
 DataDict = InputData(input_dicts)
 ndim = len(input_dicts)
 
-select_deg = [60, 60, 60]
+select_deg = [120, 120]
 
-run_name = 'CKS-X_flux_radius_stmass' #'CKS-X_period_radius_stmass'
-save_path = os.path.join(pwd, run_name)
+run_name = 'CKS-X_radius_period_d120' #'CKS-X_period_radius_stmass'
+save_path = os.path.join(run_name)
 
 
 
@@ -73,3 +76,10 @@ save_path = os.path.join(pwd, run_name)
 
 # No Monte Carlo drawing of parameters or bootstrap sampling of data:
 outputs = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=100, cores=4, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
+
+_ = Plot1DInputDataHistogram(save_path)
+
+if ndim==2:
+		
+	_ = Plot2DJointDistribution(save_path)
+	_ = Plot2DWeights(save_path)
