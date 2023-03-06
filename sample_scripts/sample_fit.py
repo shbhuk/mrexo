@@ -29,25 +29,23 @@ except NameError:
 DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlanets')
 print(DataDirectory)
 
-UTeff = 7000
-
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210823.csv'.format(UTeff)))
-t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230214_RpGt20.csv'))
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230306RpLt20.csv'))
 # t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20220401_Thesis.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Cool_stars_20181214_exc_upperlim.csv'))
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
 t = t[~np.isnan(t['pl_insolerr1'])]
 
-RadiusBounds = [5, 12]
-MassBounds = [5, 3000]
+RadiusBounds = None# [0, 100]
+MassBounds = None# [0, 6000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
 
-t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
-t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
-# t = t[t.pl_eqt < 950]
+if RadiusBounds is not None:
+	t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
 
+if MassBounds is not None:
+	t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
 
 if InsolationBounds is not None:
 	t = t[(t.pl_insol > InsolationBounds[0]) & (t.pl_insol < InsolationBounds[1])]
@@ -114,75 +112,12 @@ InsolationUSigma = np.array(t['pl_insolerr1'])
 InsolationLSigma = np.array(t['pl_insolerr2'])
 
 
-"""
-#############################
-### Fake Mass, Radius, Insolation
-#############################
-
-Radius = 10**np.linspace(-0.3, 2.5)
-# Symmetrical errorbars
-Radius_sigma1 = Radius*0.1
-Radius_sigma2 = Radius*0.1
-RadiusBounds = [0.1, 300]
-
-Mass = Radius*10
-# Symmetrical errorbars
-Mass_sigma1 = Mass*0.1
-Mass_sigma2 = Mass*0.1
-MassBounds = [1, 3000]
-
-Insolation = np.ones(len(Radius))
-InsolationSigma = np.ones(len(Radius))*0.1
-InsolationBounds = [0.9, 1.1]
-
-StellarMass = np.ones(len(Radius))*0.5
-StellarMassSigma = StellarMass*0.2
-StellarMassBounds = [0.25, 0.75]
-
-
-#############################
-#############################
-#############################
-"""
-
-
-"""
-# Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
-# find the optimum number of degrees.
-
-FakePeriod = np.ones(len(Period))
-# FakePeriod = Radius
-NPoints = len(Radius)
-# FakePeriod = np.concatenate([np.random.lognormal(0, 1, NPoints//2), \
-	# np.random.lognormal(5, 1, NPoints//2+1)])
-
-# FakePeriodSigma = FakePeriod*0.01
-# Period_sigma = FakePeriodSigma
-
-
-# Simulation
-# Radius = 10**np.linspace(0, 1)
-Radius_sigma1 = 0.1*Radius# np.repeat(np.nan, len(Radius))
-Radius_sigma2 = np.copy(Radius_sigma1)
-Mass = 10**(2*np.log10(Radius)*np.log10(Radius) - 0.5*np.log10(Radius))
-# Mass =  np.ones(len(Radius))/2
-Mass_sigma1 = np.repeat(np.nan, len(Radius))
-Mass_sigma2 = np.repeat(np.nan, len(Radius))
-Period = np.ones(len(Radius))/2
-StellarMass_Sigma1 = np.repeat(np.nan, len(Radius))
-# Period = Radius# np.linspace(0, 1, len(Radius))
-PeriodSigma = 0.1*Period #np.repeat(np.nan, len(Radius))
-
-"""
-
 Max, Min = 1, 0
 Max, Min = np.nan, np.nan
-# Max += 0.2
-# Min -= 0.2
 
 
-RadiusDict = {'Data': Radius, 'LSigma': RadiusLSigma,  "USigma":RadiusUSigma, 'Max':np.log10(RadiusBounds[1]), 'Min':np.log10(RadiusBounds[0]), 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
-MassDict = {'Data': Mass, 'LSigma': MassLSigma, "USigma":MassUSigma, 'Max':np.log10(MassBounds[1]), 'Min':np.log10(MassBounds[0]), 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+RadiusDict = {'Data': Radius, 'LSigma': RadiusLSigma,  "USigma":RadiusUSigma, 'Max':Max, 'Min':Min, 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'LSigma': MassLSigma, "USigma":MassUSigma,  'Max':Max, 'Min':Min, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
 #FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
 # PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
@@ -210,11 +145,10 @@ ndim = len(InputDictionaries)
 for d in [20]:#, 40, 80, 100, 500, 1000]:
 	# print(d)
 
-	# RunName = 'Kepler_127_M_R_bounded'
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
 	RunName = 'GiantPlanet_d60_Bootstrap100_4D_MRSStM'
-	RunName = 'Test_2d_MR_yesSparse'
+	RunName = 'AllPlanet_RpLt20_MR_AIC'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -224,7 +158,7 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = [60, 60]
+	select_deg = 'aic'
 
 	if __name__ == '__main__':
 
