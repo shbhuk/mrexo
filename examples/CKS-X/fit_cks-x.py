@@ -58,7 +58,7 @@ stmass_bounds = [0.4, 1.6]
 period_dict = {'Data': periods, 'LSigma': periods_lerr, 'USigma': periods_uerr, 'Max': np.log10(period_bounds[1]), 'Min': np.log10(period_bounds[0]), 'Label': 'Period (days)', 'Char': 'P'}
 bolflux_dict = {'Data': bolfluxes, 'LSigma': bolfluxes_lerr, 'USigma': bolfluxes_uerr, 'Max': np.log10(bolflux_bounds[1]), 'Min': np.log10(bolflux_bounds[0]), 'Label': 'Bolometric flux (Sgeo)', 'Char': 'S'}
 radius_dict = {'Data': radii, 'LSigma': radii_lerr, 'USigma': radii_uerr, 'Max': np.log10(radius_bounds[1]), 'Min': np.log10(radius_bounds[0]), 'Label': 'Planet radius ($R_\oplus$)', 'Char': 'Rp'}
-stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': np.log10(stmasses_uerr), 'Max': np.log10(stmass_bounds[1]), 'Min': stmass_bounds[0], 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
+stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': stmasses_uerr, 'Max': np.log10(stmass_bounds[1]), 'Min': np.log10(stmass_bounds[0]), 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
 
 input_dicts = [bolflux_dict, radius_dict, stmass_dict] # period_dict, bolflux_dict
 input_dicts = [radius_dict, period_dict]
