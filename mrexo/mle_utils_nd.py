@@ -397,7 +397,7 @@ def _PDF_Normal(a, loc, scale):
 @lru_cache(maxsize=200)
 def _GammaFunction(a):
     """Evaluate the Gamma function at ``a``."""
-	return scipy.special.factorial(a-1)
+    return scipy.special.factorial(a-1)
 
 
 def _PDF_Beta(x,a,b):
