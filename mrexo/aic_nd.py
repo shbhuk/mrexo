@@ -434,13 +434,14 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			fig.savefig(os.path.join(save_path, 'NonZero_n_AIC.png'))
 
 	else:
-		fig = plt.figure()
-		plt.plot(degree_candidates[0], np.diag(AICgrid))
-		plt.xlabel("Degrees"); plt.ylabel("AIC")
-		plt.axvline(DegreeChosen[0], linestyle='dashed', c='k')
-		plt.tight_layout()
-		fig.savefig(os.path.join(save_path, 'AIC.png'))
-		plt.close("all")
+		if ndim == 2:
+			fig = plt.figure()
+			plt.plot(degree_candidates[0], np.diag(AICgrid))
+			plt.xlabel("Degrees"); plt.ylabel("AIC")
+			plt.axvline(DegreeChosen[0], linestyle='dashed', c='k')
+			plt.tight_layout()
+			fig.savefig(os.path.join(save_path, 'AIC.png'))
+			plt.close("all")
 
 	return DegreeChosen
 	
