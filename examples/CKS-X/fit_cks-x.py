@@ -19,7 +19,15 @@ pwd = os.path.dirname(__file__)
 # To read the CSV data file:
 table = pd.read_csv('CKS-X_planets_stars.csv')
 
-table = table[(table['Rp'] < 10.) & (table['E_Mstar-iso'] != 0)] # filter out very large planet radii, including some spurious values (a few planets have thousands of Earth radii)
+# To apply various selection criteria for the planet sample:
+bools_keep = np.full(len(table), True) # to be overwritten with all of the filtering criteria for the sample
+bools_keep[table['Rp'] < 0.6] = False # filter out very small planets
+bools_keep[table['Rp'] > 6.] = False # filter out very large planets, including some spurious values (a few planets have thousands of Earth radii)
+bools_keep[table['Per'] < 1.] = False # filter out very short periods
+bools_keep[table['Per'] > 100.] = False # filter out long periods
+bools_keep[table['E_Mstar-iso'] == 0] = False # filter out stars with no mass errors
+
+table = table[bools_keep]
 
 # To select the dimensions to model:
 # (Should choose one of either period or bolometric flux)
@@ -47,15 +55,16 @@ feh_uerr = np.array(table['e_FeH'])
 feh_lerr = feh_uerr
 
 # To set the bounds for each dimension:
+print('Number of planets in sample: %s' % len(table))
 print('Min/max periods: [%s, %s] days' % (np.min(periods), np.max(periods)))
 print('Min/max fluxes: [%s, %s] Sgeo' % (np.min(bolfluxes), np.max(bolfluxes)))
 print('Min/max planet radii: [%s, %s] R_earth' % (np.min(radii), np.max(radii)))
 print('Min/max stellar masses: [%s, %s] M_sun' % (np.min(stmasses), np.max(stmasses)))
 print('Min/max metallicities: [%s, %s] dex' % (np.min(feh), np.max(feh)))
 
-period_bounds = [0.1, 550.]
+period_bounds = [1., 100.] #[0.1, 550.]
 bolflux_bounds = [0.1, 6000.]
-radius_bounds = [0.4, 10.]
+radius_bounds = [0.6, 6.] #[0.4, 10.]
 stmass_bounds = [0.4, 1.6]
 feh_bounds = [-0.9, 0.5]
 
@@ -72,9 +81,9 @@ ndim = len(input_dicts)
 
 select_deg = [60, 60, 60] #[120, 120]
 
-run_name = 'CKS-X_period_radius_stmass_aic'
+#run_name = 'CKS-X_period_radius_stmass_aic' #_aic
 #run_name = 'CKS-X_flux_radius_stmass'
-#run_name = 'CKS-X_radius_period_d120'
+run_name = 'CKS-X_reduced_period_radius_stmass_aic'
 #run_name = 'CKS-X_period_radius_stmass_feh'
 save_path = os.path.join(run_name)
 
@@ -83,7 +92,7 @@ save_path = os.path.join(run_name)
 ##### To run the model fitting:
 
 # No Monte Carlo drawing of parameters or bootstrap sampling of data:
-outputs = fit_relation(DataDict, select_deg='aic', save_path=save_path, degree_max=100, cores=1, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
+outputs = fit_relation(DataDict, select_deg='aic', save_path=save_path, degree_max=100, cores=1, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0) # select_deg='aic'
 
 _ = Plot1DInputDataHistogram(save_path)
 
