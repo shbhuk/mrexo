@@ -79,11 +79,11 @@ input_dicts = [period_dict, radius_dict, stmass_dict] # period_dict, bolflux_dic
 DataDict = InputData(input_dicts)
 ndim = len(input_dicts)
 
-select_deg = [60, 60, 60] #[120, 120]
+select_deg = [30, 30, 30] #[60, 60, 60] #[120, 120]
 
 #run_name = 'CKS-X_period_radius_stmass_aic' #_aic
 #run_name = 'CKS-X_flux_radius_stmass'
-run_name = 'CKS-X_reduced_period_radius_stmass_aic'
+run_name = 'CKS-X_reduced_period_radius_stmass_deg30'
 #run_name = 'CKS-X_period_radius_stmass_feh'
 save_path = os.path.join(run_name)
 
@@ -92,7 +92,7 @@ save_path = os.path.join(run_name)
 ##### To run the model fitting:
 
 # No Monte Carlo drawing of parameters or bootstrap sampling of data:
-outputs = fit_relation(DataDict, select_deg='aic', save_path=save_path, degree_max=100, cores=1, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0) # select_deg='aic'
+outputs = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=100, cores=1, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0) # select_deg='aic'
 
 _ = Plot1DInputDataHistogram(save_path)
 

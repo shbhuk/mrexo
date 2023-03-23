@@ -18,8 +18,8 @@ savefigures = False
 
 # Load the model:
 #run_path = 'CKS-X_period_radius_stmass_aic'
-#run_path = 'CKS-X_reduced_period_radius_stmass'
-run_path = 'CKS-X_flux_radius_stmass'
+run_path = 'CKS-X_reduced_period_radius_stmass_deg30'
+#run_path = 'CKS-X_flux_radius_stmass'
 
 deg_per_dim = np.loadtxt(os.path.join(run_path, 'output', 'deg_per_dim.txt')).astype(int)
 DataDict = np.load(os.path.join(run_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
@@ -31,8 +31,8 @@ deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim]
 ndim = DataDict['ndim']
 
 # Define the dimensions to be conditioned (must have the same strings as defined in the run for the model!):
-ConditionString = 'S,Rp|Mstar'
-#ConditionString = 'P,Rp|Mstar'
+#ConditionString = 'S,Rp|Mstar'
+ConditionString = 'P,Rp|Mstar'
 
 ConditionName = ConditionString.replace('|', '_cond_').replace(',', '_')
 PlotFolder = os.path.join(run_path, ConditionName)
@@ -76,7 +76,7 @@ for k,logz in enumerate(zcond):
     plt.ylabel(DataDict['ndim_label'][idy], fontsize=20)
 
     ax.tick_params(axis='both', labelsize=16)
-    plt.xlim(DataDict['ndim_bounds'][idx][::-1]) # [::-1] to reverse x-direction, e.g. for flux
+    plt.xlim(DataDict['ndim_bounds'][idx]) # [::-1] to reverse x-direction, e.g. for flux
     plt.ylim(DataDict['ndim_bounds'][idy])
     #plt.tight_layout()
 
