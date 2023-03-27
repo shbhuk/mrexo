@@ -16,7 +16,7 @@ if Platform == 'win32':
 	HomeDir =  'C:\\Users\\skanodia\\Documents\\\\GitHub\\'
 else:
 	HomeDir = r"/storage/home/szk381/work/"
-	HomeDir = r"/home/skanodia/work/"
+	#HomeDir = r"/home/skanodia/work/"
 
 
 try :
@@ -35,11 +35,16 @@ t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230306Rp
 # t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 
 t = t[~np.isnan(t['pl_insolerr1'])]
+t = t[~np.isnan(t['pl_masse'])]
+
 
 RadiusBounds = None# [0, 100]
 MassBounds = None# [0, 6000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
+
+t['st_masserr1'][t['st_masserr1'] < 0.005] = np.nan
+t['st_masserr2'][t['st_masserr2'] < 0.005] = np.nan
 
 if RadiusBounds is not None:
 	t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
@@ -57,30 +62,8 @@ if StellarMassBounds is not None:
 RemovePlanets = ['Kepler-54 b', 'Kepler-54 c']
 t = t[~np.isin(t.pl_name, RemovePlanets)]
 
-#t = t.iloc[0:20]
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_ExcUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316_Metallicity.csv'.format(UTeff)))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_{}_IncUpperLimits_20210316.csv'.format(UTeff)))
 
-
-
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127.csv'))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_4400_IncUpperLimits_20210127_Metallicity.csv'))
-# t = pd.read_csv(os.path.join(DataDirectory, 'Teff_6000_ExcUpperLimits_20210216.csv'))
-
-# t = t[t['st_mass'] < 10]
-# t= t[t['pl_hostname'] != 'TRAPPIST-1']
-# t = t[t['pl_masse'] < 50]
-# t = t[t['pl_rade'] < 4]
-# t = t[t['pl_rade'] > 0.8]
-# t = pd.read_csv(os.path.join(pwd, 'Kepler_MR_inputs.csv'))
 print(len(t))
-# t = t[np.isfinite(t['pl_insol'])]
-# t = t[t['pl_insol'] > 1e-10]
-
-# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
-# t = Table.read(os.path.join(pwd,'FGK_20190406.csv'))
-
 
 # In Earth units
 Mass = np.array(t['pl_masse'])
@@ -119,7 +102,6 @@ Max, Min = np.nan, np.nan
 RadiusDict = {'Data': Radius, 'LSigma': RadiusLSigma,  "USigma":RadiusUSigma, 'Max':Max, 'Min':Min, 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
 MassDict = {'Data': Mass, 'LSigma': MassLSigma, "USigma":MassUSigma,  'Max':Max, 'Min':Min, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
 
-#FakePeriodDict = {'Data': FakePeriod, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':np.nan, 'Min':np.nan, 'Label':'Period (d)', 'Char':'p'}
 # PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
 StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassLSigma, "USigma":StellarMassUSigma, 'Max':Max, 'Min':Min, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
 #MetallicityDict = {'Data': 10**Metallicity, 'LSigma': np.repeat(np.nan, len(Metallicity)), "USigma":np.repeat(np.nan, len(Metallicity)), 'Max':np.nan, 'Min':np.nan, 'Label':'Metallicity [Fe/H]', 'Char':'feh'}
@@ -133,8 +115,8 @@ from mrexo.fit_nd import fit_relation
 from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInputDataHistogram
 import matplotlib.pyplot as plt
 
-InputDictionaries = [RadiusDict, MassDict]
-# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)
@@ -148,7 +130,8 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	RunName = 'Mdwarf_3D_20220409_M_R_S_bounded'
 	RunName = 'Fake_4D_MRSStM'
 	RunName = 'GiantPlanet_d60_Bootstrap100_4D_MRSStM'
-	RunName = 'AllPlanet_RpLt20_MR_AIC'
+	RunName = 'AllPlanet_RpLt20_MRS_d60_100MC_100BS'
+	RunName = 'AllPlanet_RpLt20_MRSStM_d60_100MC_100BS'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -158,11 +141,12 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = 'aic'
+	select_deg = [60,60,60,60]
+	# select_deg = 'aic'
 
 	if __name__ == '__main__':
 
-		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=25,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
+		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=5,SymmetricDegreePerDimension=True, NumMonteCarlo=100, NumBootstrap=100)
 		#cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=40, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)", os.path.join(save_path, 'Profile.prof'))
 
 		"""
