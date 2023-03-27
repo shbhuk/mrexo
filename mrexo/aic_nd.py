@@ -375,14 +375,15 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 
 	else:
 		
-		for i, inputs in enumerate(inputs_aicpool):
+		i  = 0
+		for inputs in inputs_aicpool:
 			output = _AIC_MLE(inputs)
 			Index = output['index']
 			AIC = output['aic']
 			AIC_FI = output['aic_fi']
 			LogLike = output['loglike']
 			Weights = output['Weights']
-			ESS = outputs['EffectiveDOF']
+			ESS = output['EffectiveDOF']
 			
 			AICgrid[tuple(Index)] = AIC
 			AIC_FIgrid[tuple(Index)] = AIC_FI
@@ -393,6 +394,7 @@ def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_pat
 			LoglikeGrid[Index] = LogLike
 			ThresholdGrid8[Index] = len(w[w>1e-8])
 			ESSGrid[Index] = ESS
+			i += 1
 
 		
 	MinAICIndexFlat = np.nanargmin(AICgrid)
