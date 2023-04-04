@@ -38,7 +38,7 @@ t = t[~np.isnan(t['pl_insolerr1'])]
 t = t[~np.isnan(t['pl_masse'])]
 
 
-RadiusBounds = None# [0, 100]
+RadiusBounds = [0, 10]# None# [0, 100]
 MassBounds = None# [0, 6000]
 InsolationBounds = None# [0.01, 5000]
 StellarMassBounds = None# [0.2, 1.2]
@@ -116,7 +116,7 @@ from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInpu
 import matplotlib.pyplot as plt
 
 InputDictionaries = [RadiusDict, MassDict, InsolationDict]
-InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
+# InputDictionaries = [RadiusDict, MassDict, InsolationDict, StellarMassDict]
 DataDict = InputData(InputDictionaries)
 
 ndim = len(InputDictionaries)
@@ -131,7 +131,7 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 	RunName = 'Fake_4D_MRSStM'
 	RunName = 'GiantPlanet_d60_Bootstrap100_4D_MRSStM'
 	RunName = 'AllPlanet_RpLt20_MRS_d60_100MC_100BS'
-	RunName = 'AllPlanet_RpLt20_MRSStM_d60_100MC_100BS'
+	RunName = 'AllPlanet_RpLt20_MRS_test'
 
 	# save_path = os.path.join(pwd, 'TestRuns', 'Mdwarf_4D_20220325_M_R_S_StM')
 	save_path = os.path.join(pwd, 'TestRuns',  RunName)
@@ -141,12 +141,13 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 	# outputs, _ = fit_relation(DataDict, select_deg=34, save_path=save_path, NumBootstrap=0, degree_max=15)
 
-	select_deg = [60,60,60,60]
+	deg_per_dim = [25, 25, 25]
+
 	# select_deg = 'aic'
 
 	if __name__ == '__main__':
 
-		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=5,SymmetricDegreePerDimension=True, NumMonteCarlo=100, NumBootstrap=100)
+		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=30, cores=2,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
 		#cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=40, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)", os.path.join(save_path, 'Profile.prof'))
 
 		"""

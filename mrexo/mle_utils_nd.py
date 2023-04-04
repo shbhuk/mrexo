@@ -16,7 +16,7 @@ from scipy import sparse
 import datetime,os
 from multiprocessing import current_process
 from functools import lru_cache
-
+import tracemalloc
 
 from .utils_nd import _logging
 from .Optimizers import optimizer
@@ -266,6 +266,10 @@ def MLE_fit(DataDict, deg_per_dim,
 		return outputs
 
 # Ndim - 20201130
+
+from memory_profiler import profile
+@profile
+
 def calc_C_matrix(DataDict, deg_per_dim,
 		abs_tol, save_path, verbose, SaveCMatrix=False,
 		UseSparseMatrix=False):
@@ -297,10 +301,13 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 	else:
 		C_pdf = np.zeros((deg_product, n))
-	
+
 	# Loop across each data point.
 	for i in range(0,n):
-		kron_temp = 1
+		if UseSparseMatrix:
+			kron_temp = sparse.csr_matrix(1)
+		else:
+			kron_temp = 1
 		for dim in range(0,ndim):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["ndim_data"][dim][i], 
 				a_LSigma=DataDict["ndim_LSigma"][dim][i], a_USigma=DataDict["ndim_USigma"][dim][i],
@@ -313,10 +320,19 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			
 			# Starting 20210323, we're flipping the order for the kron product
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
-			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
-			kron_temp[kron_temp <= 1e-10] = 0
+			if UseSparseMatrix:
+				kron_temp = sparse.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+			else:
+				kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+				kron_temp[kron_temp <= 1e-10] = 0
 
-		C_pdf[:,i] = kron_temp;
+		if UseSparseMatrix:
+			C_pdf[:,i] = kron_temp.T
+		else:
+			C_pdf[:,i] = kron_temp
+	
+	# print(tracemalloc.get_traced_memory())
+	# tracemalloc.stop()
 
 	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)

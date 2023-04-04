@@ -18,7 +18,7 @@ from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInpu
 ##### To set up the data and inputs:
 
 # To read the CSV data file:
-table = pd.read_csv('CKS-X_planets_stars.csv')
+table = pd.read_csv(r'C:\Users\skanodia\Documents\GitHub\mrexo\examples\CKS-X\CKS-X_planets_stars.csv')
 
 table = table[(table['Rp'] < 10.) & (table['E_Mstar-iso'] != 0)] # filter out very large planet radii, including some spurious values (a few planets have thousands of Earth radii)
 
@@ -60,26 +60,27 @@ bolflux_dict = {'Data': bolfluxes, 'LSigma': bolfluxes_lerr, 'USigma': bolfluxes
 radius_dict = {'Data': radii, 'LSigma': radii_lerr, 'USigma': radii_uerr, 'Max': np.log10(radius_bounds[1]), 'Min': np.log10(radius_bounds[0]), 'Label': 'Planet radius ($R_\oplus$)', 'Char': 'Rp'}
 stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': stmasses_uerr, 'Max': np.log10(stmass_bounds[1]), 'Min': np.log10(stmass_bounds[0]), 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
 
-input_dicts = [bolflux_dict, radius_dict, stmass_dict] # period_dict, bolflux_dict
-input_dicts = [radius_dict, period_dict]
+input_dicts = [bolflux_dict, radius_dict] # period_dict, bolflux_dict
+# input_dicts = [radius_dict, period_dict]
 DataDict = InputData(input_dicts)
 ndim = len(input_dicts)
 
-select_deg = [120, 120]
+select_deg = [20, 20]
 
-run_name = 'CKS-X_radius_period_d120' #'CKS-X_period_radius_stmass'
+run_name = 'CKS-X_insol_radius_d60'
 save_path = os.path.join(run_name)
 
 
 
 ##### To run the model fitting:
 
-# No Monte Carlo drawing of parameters or bootstrap sampling of data:
-outputs = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=100, cores=4, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
+if __name__ == '__main__':
+	# No Monte Carlo drawing of parameters or bootstrap sampling of data:
+	outputs = fit_relation(DataDict, select_deg='aic', save_path=save_path, degree_max=30, cores=2, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
 
-_ = Plot1DInputDataHistogram(save_path)
+	_ = Plot1DInputDataHistogram(save_path)
 
-if ndim==2:
-		
-	_ = Plot2DJointDistribution(save_path)
-	_ = Plot2DWeights(save_path)
+	if ndim==2:
+			
+		_ = Plot2DJointDistribution(save_path)
+		_ = Plot2DWeights(save_path)
