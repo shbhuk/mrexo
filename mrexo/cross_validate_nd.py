@@ -111,13 +111,13 @@ def _cv_parallelize(cv_input):
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	unpadded_weight, n_log_like = MLE_fit(TrainDataDict,  deg_per_dim=np.array(deg_per_dim), 
-		Log=True, abs_tol=abs_tol,
+		abs_tol=abs_tol,
 		save_path=save_path,  verbose=verbose, 
 		OutputWeightsOnly=True, CalculateJointDist=False)
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(TestDataDict, deg_per_dim=np.array(deg_per_dim), 
-		Log=True, abs_tol=abs_tol, 
+		abs_tol=abs_tol, 
 		save_path=save_path, 
 		verbose=verbose, 
 		SaveCMatrix=False)
