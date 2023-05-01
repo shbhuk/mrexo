@@ -216,6 +216,7 @@ def _RunMonteCarlo_MLE(Inputs):
 	NewDataDict = OriginalDataDict.copy()
 
 	AveragedSigma = np.mean([np.abs(OriginalDataDict['ndim_LSigma']), np.abs(OriginalDataDict['ndim_USigma'])], axis=0)
+	AveragedSigma[np.isnan(AveragedSigma)] = 0 # For the Monte-Carlo do not propagate NaNs while resampling the posteriors, i.e. measurements with sigma as NaN will not be changed
 	NewDataDict['ndim_data']  = np.random.normal(OriginalDataDict['ndim_data'], AveragedSigma)
 
 	for dim in range(ndim):
