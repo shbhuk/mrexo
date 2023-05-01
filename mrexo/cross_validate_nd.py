@@ -6,7 +6,7 @@ from .mle_utils_nd import MLE_fit, calc_C_matrix
 from .utils_nd import _logging, GiveDegreeCandidates
 from .aic_nd import FlattenGrid, MakePlot
 from .Optimizers import LogLikelihood
-
+import matplotlib.pyplot as plt
 
 def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
 	SymmetricDegreePerDimension=True,
