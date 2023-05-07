@@ -53,7 +53,7 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 
 	# Save likelihood file
 	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'), likelihood_per_degree)
-	deg_choose = FlattenedDegrees[np.argmax(likelihood_per_degree)]
+	deg_choose = FlattenedDegrees[np.nanargmax(likelihood_per_degree)]
 
 	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({str(deg_choose)})
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
