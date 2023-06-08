@@ -62,6 +62,8 @@ def Plot2DJointDistribution(save_path):
 	DataSequences = np.loadtxt(os.path.join(save_path, 'output', 'other_data_products', 'DataSequences.txt'))
 	weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
 	JointDist = np.load(os.path.join(save_path, 'output', 'JointDist.npy'), allow_pickle=True)
+	cmap = matplotlib.cm.YlGnBu
+
 
 	################ Plot Joint Distribution ################ 
 	x = DataDict['DataSequence'][0]
@@ -70,8 +72,10 @@ def Plot2DJointDistribution(save_path):
 	fig = plt.figure(figsize=(8.5,6.5))
 	im = plt.imshow(JointDist.T, 
 		extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
-		aspect='auto', origin='lower'); 
-	plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
+		aspect='auto', origin='lower', cmap=cmap); 
+	plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=(0.434*DataDict['ndim_LSigma'][0]/DataDict['ndim_data'][0], 0.434*DataDict['ndim_USigma'][0]/DataDict['ndim_data'][0]), 
+							yerr=(0.434*DataDict['ndim_LSigma'][1]/DataDict['ndim_data'][1], 0.434*DataDict['ndim_USigma'][1]/DataDict['ndim_data'][1]),
+							fmt='.', color='k', alpha=0.4)
 	plt.ylabel(DataDict['ndim_label'][1]);
 	plt.xlabel(DataDict['ndim_label'][0]);
 	plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
@@ -88,6 +92,6 @@ def Plot2DJointDistribution(save_path):
 	cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
 	cbar.ax.set_yticklabels(['Min', 'Max'])
 	plt.tight_layout()
-	plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'))
+	plt.savefig(os.path.join(save_path, 'output', 'JointDist.png'), dpi=360)
 
 	return fig
