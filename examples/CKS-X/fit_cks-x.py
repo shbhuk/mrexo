@@ -4,14 +4,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import sparse
 
-# sys.path.append("/Users/hematthi/Documents/MRExo/mrexo/")
+sys.path.append("/Users/hematthi/Documents/MRExo/mrexo/")
 from mrexo.mle_utils_nd import InputData, MLE_fit, calc_C_matrix
 from mrexo.Optimizers import optimizer, LogLikelihood
 from mrexo.fit_nd import fit_relation
 from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInputDataHistogram
 
-
-# pwd = os.path.dirname(__file__)
+pwd = os.path.dirname(__file__)
 
 
 
@@ -20,7 +19,15 @@ from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInpu
 # To read the CSV data file:
 table = pd.read_csv(r'C:\Users\skanodia\Documents\GitHub\mrexo\examples\CKS-X\CKS-X_planets_stars.csv')
 
-table = table[(table['Rp'] < 10.) & (table['E_Mstar-iso'] != 0)] # filter out very large planet radii, including some spurious values (a few planets have thousands of Earth radii)
+# To apply various selection criteria for the planet sample:
+bools_keep = np.full(len(table), True) # to be overwritten with all of the filtering criteria for the sample
+bools_keep[table['Rp'] < 0.6] = False # filter out very small planets
+bools_keep[table['Rp'] > 6.] = False # filter out very large planets, including some spurious values (a few planets have thousands of Earth radii)
+bools_keep[table['Per'] < 1.] = False # filter out very short periods
+bools_keep[table['Per'] > 100.] = False # filter out long periods
+bools_keep[table['E_Mstar-iso'] == 0] = False # filter out stars with no mass errors
+
+table = table[bools_keep]
 
 # To select the dimensions to model:
 # (Should choose one of either period or bolometric flux)
@@ -43,31 +50,42 @@ stmasses = np.array(table['Mstar-iso']) # stellar masses (Solar masses)
 stmasses_uerr = np.array(table['E_Mstar-iso'])
 stmasses_lerr = np.array(abs(table['e_Mstar-iso']))
 
+feh = np.array(table['FeH']) # metallicities (dex)
+feh_uerr = np.array(table['e_FeH'])
+feh_lerr = feh_uerr
+
 # To set the bounds for each dimension:
+print('Number of planets in sample: %s' % len(table))
 print('Min/max periods: [%s, %s] days' % (np.min(periods), np.max(periods)))
 print('Min/max fluxes: [%s, %s] Sgeo' % (np.min(bolfluxes), np.max(bolfluxes)))
 print('Min/max planet radii: [%s, %s] R_earth' % (np.min(radii), np.max(radii)))
 print('Min/max stellar masses: [%s, %s] M_sun' % (np.min(stmasses), np.max(stmasses)))
+print('Min/max metallicities: [%s, %s] dex' % (np.min(feh), np.max(feh)))
 
-period_bounds = [0.1, 550.]
+period_bounds = [1., 100.] #[0.1, 550.]
 bolflux_bounds = [0.1, 6000.]
-radius_bounds = [0.4, 10.]
+radius_bounds = [0.6, 6.] #[0.4, 10.]
 stmass_bounds = [0.4, 1.6]
+feh_bounds = [-0.9, 0.5]
 
 # To construct the data dictionaries:
 period_dict = {'Data': periods, 'LSigma': periods_lerr, 'USigma': periods_uerr, 'Max': np.log10(period_bounds[1]), 'Min': np.log10(period_bounds[0]), 'Label': 'Period (days)', 'Char': 'P'}
 bolflux_dict = {'Data': bolfluxes, 'LSigma': bolfluxes_lerr, 'USigma': bolfluxes_uerr, 'Max': np.log10(bolflux_bounds[1]), 'Min': np.log10(bolflux_bounds[0]), 'Label': 'Bolometric flux (Sgeo)', 'Char': 'S'}
 radius_dict = {'Data': radii, 'LSigma': radii_lerr, 'USigma': radii_uerr, 'Max': np.log10(radius_bounds[1]), 'Min': np.log10(radius_bounds[0]), 'Label': 'Planet radius ($R_\oplus$)', 'Char': 'Rp'}
 stmass_dict = {'Data': stmasses, 'LSigma': stmasses_lerr, 'USigma': stmasses_uerr, 'Max': np.log10(stmass_bounds[1]), 'Min': np.log10(stmass_bounds[0]), 'Label': 'Stellar mass ($M_\odot$)', 'Char': 'Mstar'}
+feh_dict = {'Data': feh, 'LSigma': feh_lerr, 'USigma': feh_uerr, 'Max': np.log10(feh_bounds[1]), 'Min': np.log10(feh_bounds[0]), 'Label': 'Metallicity (dex)', 'Char': 'FeH'}
 
-input_dicts = [bolflux_dict, radius_dict] # period_dict, bolflux_dict
-# input_dicts = [radius_dict, period_dict]
+input_dicts = [period_dict, radius_dict, stmass_dict] # period_dict, bolflux_dict, feh_dict
 DataDict = InputData(input_dicts)
 ndim = len(input_dicts)
 
-select_deg = [20, 20]
+select_deg = [30, 30, 30] #[60, 60, 60] #[120, 120]
 
-run_name = 'CKS-X_insol_radius_d60'
+#run_name = 'CKS-X_period_radius_stmass_aic' #_aic
+#run_name = 'CKS-X_flux_radius_stmass'
+run_name = 'CKS-X_reduced_period_radius_stmass_deg30'
+#run_name = 'CKS-X_period_radius_stmass_feh'
+
 save_path = os.path.join(run_name)
 
 

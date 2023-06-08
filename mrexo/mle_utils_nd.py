@@ -133,7 +133,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2,
 			UseSparseMatrix=True):
-	'''
+	"""
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
 	Also, use those weights to calculate the conditional density distributions.
 	
@@ -182,7 +182,7 @@ def MLE_fit(DataDict, deg_per_dim,
     - `aic`: The Akaike information criterion (based on the effective degrees of freedom).
     - `aic_fi`: The Akaike information criterion (based on the rank of the Fisher information matrix).
     - `JointDist`: The joint distribution (only returned if ``CalculateJointDist=True``); see the output of :py:func:`CalculateJointDistribution`.
-	'''
+	"""
 
 	starttime = datetime.datetime.now()
 	if save_path is None:
@@ -273,12 +273,33 @@ from memory_profiler import profile
 def calc_C_matrix(DataDict, deg_per_dim,
 		abs_tol, save_path, verbose, SaveCMatrix=False,
 		UseSparseMatrix=False):
-	'''
+	"""
 	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
 	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
-	'''
+ 
+    Parameters
+    ----------
+    DataDict : dict
+        A dictionary containing the data, as returned by :py:func:`InputData`.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    abs_tol : float ##### TODO: this is not being used in this function! Remove (check that it doesn't break other functions calling this function first)?
+    save_path : str
+        The folder name (including path) to save results in.
+    verbose : int, default=2
+        Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
+    SaveCMatrix : bool, default=False
+        Whether to save the C_pdf to a text file.
+    UseSparseMatrix : bool, default=False
+        Whether to use a sparse matrix for the C_pdf calculation (to reduce memory for large problem sizes).
+    
+    Returns
+    -------
+    C_pdf : array[float] or lil_matrix
+        A 2-d matrix (or 'lil_matrix', if UseSparseMatrix=True) of shape = (N x product(d-2)), where 'N' is the number of data points and 'd' is the number of degrees in each dimension. For example in two dimensions this would be (N x ((d1-2)x(d2-2))).
+	"""
 
 
 	message = 'Starting C matrix calculation at {}'.format(datetime.datetime.now())
@@ -341,20 +362,25 @@ def calc_C_matrix(DataDict, deg_per_dim,
 		np.savetxt(os.path.join(save_path, 'C_pdf.txt'), C_pdf.toarray())
 	return C_pdf
 
-def InvertHalfNormalPDF(x, p, loc=0):
+def InvertHalfNormalPDF(x, p, loc=0.):
 	"""
-	Invert the normal PDF to find the sigma that gives '1 - (1-p/2)' as the cumulative probability at 'x'.
-	In other words, P(> x) = 1-p
+	Invert the (half-)normal PDF to find the standard deviation that gives '1 - (1-p/2)' as the cumulative probability at 'x' (i.e., P(> x) = 1-p).
 
-	For example, if you care about 99.7% upper limits, p=0.997. Then we will invert the normal distribution to find the 
-	quantile at 1 - (1-0.997/2) = 0.9985, because the upper limits are being approximated as a half-normal,  centered at 0.
-	
-	INPUTS:
-		x: Point at which  P(> x) = 1-p
-		p: Probability (decimal)
-		loc: Median value of Gaussian Distribution
-	OUTPUTS:
-		scale: Sigma of Gaussian Distribution
+	For example, if you care about 99.7% upper limits, set p=0.997. The function will invert the normal distribution to find the quantile at '1 - (1-0.997/2) = 0.9985', because the upper limits are being approximated as a half-normal,  centered at ``loc=0``.
+
+    Parameters
+    ----------
+    x : float
+        The point at which 'P(>x) = 1-p' for the normal distribution.
+    p : float
+        The probability of being less than ``x`` for the normal distribution. Must be between 0 and 1.
+    loc : float, default=0.
+        The location (mean) of the normal distribution.
+    
+    Returns
+    -------
+    scale : float
+        The scale (standard deviation) of the normal distribution that gives probability ``1-p/2`` above ``x``.
 	"""
 
 	p = 1 - (1-p)/2
@@ -364,23 +390,38 @@ def InvertHalfNormalPDF(x, p, loc=0):
 
 
 def _PDF_Normal(a, loc, scale):
-	'''
-	Find the PDF for a normal distribution. Identical to scipy.stats.norm.pdf.
-	Runs much quicker without the generic function handling.
-	'''
+	"""
+	Evaluate the PDF for a normal distribution. Identical to scipy.stats.norm.pdf, but runs much quicker without the generic function handling.
+ 
+    Parameters
+    ----------
+    a : float
+        The value at which to evaluate the PDF.
+    loc : float
+        The location (mean) of the normal distribution.
+    scale : float
+        The scale (standard deviation) of the normal distribution.
+    
+    Returns
+    -------
+    The probability density function of the normal distribution evaluated at ``a``.
+    """
 	N = (a - loc)/scale
 	return (np.e**(-N*N/2))/((2*np.pi)**0.5)/scale # 6x faster
 	# return (np.exp(-N*N/2))/(np.sqrt(2*np.pi))/scale
 
 @lru_cache(maxsize=200)
 def _GammaFunction(a):
-	return scipy.special.factorial(a-1)
+    """Evaluate the Gamma function at ``a``."""
+    return scipy.special.factorial(a-1)
 
 
 def _PDF_Beta(x,a,b):
-	'''
-	About 50x faster than scipy.stats.beta.pdf
-	'''
+	"""
+	Evaluate the PDF for a Beta distribution.
+
+    About 50x faster than scipy.stats.beta.pdf.
+	"""
 	if (a>=170) | (b>=170) | (a+b>170):
 		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
 	else:
