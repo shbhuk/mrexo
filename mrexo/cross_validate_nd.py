@@ -6,7 +6,7 @@ from .mle_utils_nd import MLE_fit, calc_C_matrix
 from .utils_nd import _logging, GiveDegreeCandidates
 from .aic_nd import FlattenGrid, MakePlot
 from .Optimizers import LogLikelihood
-
+import matplotlib.pyplot as plt
 
 def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
 	SymmetricDegreePerDimension=True,
@@ -53,7 +53,7 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 
 	# Save likelihood file
 	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'), likelihood_per_degree)
-	deg_choose = FlattenedDegrees[np.argmax(likelihood_per_degree)]
+	deg_choose = FlattenedDegrees[np.nanargmax(likelihood_per_degree)]
 
 	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({str(deg_choose)})
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -111,13 +111,13 @@ def _cv_parallelize(cv_input):
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	unpadded_weight, n_log_like = MLE_fit(TrainDataDict,  deg_per_dim=np.array(deg_per_dim), 
-		Log=True, abs_tol=abs_tol,
+		abs_tol=abs_tol,
 		save_path=save_path,  verbose=verbose, 
 		OutputWeightsOnly=True, CalculateJointDist=False)
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(TestDataDict, deg_per_dim=np.array(deg_per_dim), 
-		Log=True, abs_tol=abs_tol, 
+		abs_tol=abs_tol, 
 		save_path=save_path, 
 		verbose=verbose, 
 		SaveCMatrix=False)

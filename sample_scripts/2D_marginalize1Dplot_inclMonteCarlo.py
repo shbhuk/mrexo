@@ -18,12 +18,12 @@ ConditionString = 'm|r'
 
 UseMonteCarlo = True
 Runs = ['AIC_4real_MonteCarlo_2D']#, 'AIC_4real_MonteCarlo_2D']
-Runs = ['d20_MR_MC100_2D', 'd40_MR_MC100_2D', 'd80_MR_MC100_2D']
+Runs = ['d20_MR_MC100_2D', 'd40_MR_MC100_2D', 'd80_MR_MC100_2D', 'd100_MR_MC100_2D']
 SupTitle = 'Testing Monte-Carlo'
 
 Titles = np.repeat('', len(Runs))
 # Titles = ["{}$\sigma$".format(str(np.round(1/s, 1))) for s in np.array(Sigma).astype(float)] #np.round(1/np.array(Sigma).astype(float), 2)
-Titles = ['20x20', '40x40', '80x80']
+Titles = ['20x20', '40x40', '80x80', '100x100']
 TitlePos = np.repeat(100, len(Runs))
 
 

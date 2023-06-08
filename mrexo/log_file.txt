@@ -1,0 +1,20 @@
+Using core 25176:Starting C matrix calculation at 2023-04-04 11:54:05.526669Using core 25176:Finished Integration at 2023-04-04 11:54:52.932582. 
+Calculated the PDFs for Integrated beta and normal density.Using core 25176:Optimization run finished at 2023-04-04 11:54:53.151763, with 9 iterations.
+Sum of weights = 1.0000000000000018 		
+LogLikelihood = -3126.055272399809, Fractional Error = 0.0009661657929382559
+
+Using core 25460:Starting C matrix calculation at 2023-04-04 11:56:41.722100Using core 25460:Using Sparse Matrix for C_pdfUsing core 26524:Starting C matrix calculation at 2023-04-04 11:56:54.388641Using core 26524:Using Sparse Matrix for C_pdfUsing core 25460:Finished Integration at 2023-04-04 11:57:39.165516. 
+Calculated the PDFs for Integrated beta and normal density.Using core 25460:Optimization run finished at 2023-04-04 11:57:40.151397, with 9 iterations.
+Sum of weights = 1.0000000000000036 		
+LogLikelihood = -3126.0525256596707, Fractional Error = 0.0009662468493108696
+
+Using core 26524:Finished Integration at 2023-04-04 11:57:54.085982. 
+Calculated the PDFs for Integrated beta and normal density.Using core 26524:Optimization run finished at 2023-04-04 11:57:54.791442, with 9 iterations.
+Sum of weights = 1.0000000000000036 		
+LogLikelihood = -3126.0525256596707, Fractional Error = 0.0009662468493108696
+
+Using core 29040:Starting C matrix calculation at 2023-04-04 11:57:58.459848Using core 29040:Finished Integration at 2023-04-04 11:58:42.019384. 
+Calculated the PDFs for Integrated beta and normal density.Using core 29040:Optimization run finished at 2023-04-04 11:58:42.276841, with 9 iterations.
+Sum of weights = 1.0000000000000018 		
+LogLikelihood = -3126.055272399809, Fractional Error = 0.0009661657929382559
+

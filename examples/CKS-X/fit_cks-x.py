@@ -17,7 +17,7 @@ pwd = os.path.dirname(__file__)
 ##### To set up the data and inputs:
 
 # To read the CSV data file:
-table = pd.read_csv('CKS-X_planets_stars.csv')
+table = pd.read_csv(r'C:\Users\skanodia\Documents\GitHub\mrexo\examples\CKS-X\CKS-X_planets_stars.csv')
 
 # To apply various selection criteria for the planet sample:
 bools_keep = np.full(len(table), True) # to be overwritten with all of the filtering criteria for the sample
@@ -85,17 +85,20 @@ select_deg = [30, 30, 30] #[60, 60, 60] #[120, 120]
 #run_name = 'CKS-X_flux_radius_stmass'
 run_name = 'CKS-X_reduced_period_radius_stmass_deg30'
 #run_name = 'CKS-X_period_radius_stmass_feh'
+
 save_path = os.path.join(run_name)
 
 
 
 ##### To run the model fitting:
 
-# No Monte Carlo drawing of parameters or bootstrap sampling of data:
-outputs = fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=100, cores=1, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0) # select_deg='aic'
+if __name__ == '__main__':
+	# No Monte Carlo drawing of parameters or bootstrap sampling of data:
+	outputs = fit_relation(DataDict, select_deg='aic', save_path=save_path, degree_max=30, cores=2, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
 
-_ = Plot1DInputDataHistogram(save_path)
+	_ = Plot1DInputDataHistogram(save_path)
 
-if ndim==2:
-	_ = Plot2DJointDistribution(save_path)
-	_ = Plot2DWeights(save_path)
+	if ndim==2:
+			
+		_ = Plot2DJointDistribution(save_path)
+		_ = Plot2DWeights(save_path)
