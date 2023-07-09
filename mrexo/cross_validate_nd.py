@@ -7,6 +7,7 @@ from .utils_nd import _logging, GiveDegreeCandidates
 from .aic_nd import FlattenGrid, MakePlot
 from .Optimizers import LogLikelihood
 import matplotlib.pyplot as plt
+import datetime
 
 def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
 	SymmetricDegreePerDimension=True,
@@ -55,7 +56,7 @@ def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20,
 	np.savetxt(os.path.join(save_path,'likelihood_per_degree.txt'), likelihood_per_degree)
 	deg_choose = FlattenedDegrees[np.nanargmax(likelihood_per_degree)]
 
-	message='Finished CV. Picked {} degrees by maximizing likelihood'.format({str(deg_choose)})
+	message='Finished CV. Picked {} degrees by maximizing likelihood with a loglike = {}'.format({str(deg_choose)}, np.nanmax(likelihood_per_degree))
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if ndim == 2:
@@ -107,7 +108,7 @@ def _cv_parallelize(cv_input):
 		TrainDataDict[k] = DataDict[k][:,InvertMask] 
 	TrainDataDict['DataLength'] = len(TrainDataDict['ndim_data'][1])
 
-	message='Running cross validation for {} degree check and {} th-fold\n'.format(deg_per_dim, i_fold)
+	message='Started cross validation for {} degree check and {} th-fold at {}'.format(deg_per_dim, i_fold, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	unpadded_weight, n_log_like = MLE_fit(TrainDataDict,  deg_per_dim=np.array(deg_per_dim), 
@@ -125,7 +126,7 @@ def _cv_parallelize(cv_input):
 	# Calculate the final loglikelihood
 	like_pred = LogLikelihood(C_pdf, unpadded_weight, TestDataDict['DataLength'])
 
-	message='Running cross validation for {} degree check and {} th-fold. LogLike = {}\n'.format(deg_per_dim, i_fold, like_pred)
+	message='Finished cross validation for {} degree check and {} th-fold. LogLike = {} at {}\n'.format(deg_per_dim, i_fold, like_pred, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return like_pred
