@@ -132,7 +132,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2,
-			UseSparseMatrix=True):
+			UseSparseMatrix=False):
 	"""
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
 	Also, use those weights to calculate the conditional density distributions.
@@ -188,7 +188,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
 
-	message = '=========Started MLE run at {}'.format(starttime)
+	message = '=========Started MLE run at {}========='.format(starttime)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = DataDict["ndim"]
@@ -267,8 +267,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 
-from memory_profiler import profile
-@profile
+#from memory_profiler import profile
+#@profile
 
 def calc_C_matrix(DataDict, deg_per_dim,
 		abs_tol, save_path, verbose, SaveCMatrix=False,
@@ -355,7 +355,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	# print(tracemalloc.get_traced_memory())
 	# tracemalloc.stop()
 
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. Calculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
