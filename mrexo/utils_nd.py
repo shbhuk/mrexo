@@ -59,9 +59,9 @@ def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
 	"""
 	
 	if type(degree_max) == int:
-		degree_candidates = np.array([np.linspace(5, degree_max, ncandidates, dtype=int) for i in range(ndim)])
+		degree_candidates = np.array([np.linspace(10, degree_max, ncandidates, dtype=int) for i in range(ndim)])
 	else:
-		degree_candidates =  np.array([np.linspace(5, d, ncandidates, dtype=int) for d in degree_max])
+		degree_candidates =  np.array([np.linspace(10, d, ncandidates, dtype=int) for d in degree_max])
 
 	return degree_candidates
 

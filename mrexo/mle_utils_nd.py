@@ -132,7 +132,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2,
-			UseSparseMatrix=True):
+			UseSparseMatrix=False):
 	"""
 	Perform maximum likelihood estimation to find the weights for the beta density basis functions.
 	Also, use those weights to calculate the conditional density distributions.
@@ -188,7 +188,7 @@ def MLE_fit(DataDict, deg_per_dim,
 	if save_path is None:
 		save_path = os.path.dirname(__file__)
 
-	message = '=========Started MLE run at {}'.format(starttime)
+	message = '=========Started MLE run at {}========='.format(starttime)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	ndim = DataDict["ndim"]
@@ -267,8 +267,8 @@ def MLE_fit(DataDict, deg_per_dim,
 
 # Ndim - 20201130
 
-from memory_profiler import profile
-@profile
+#from memory_profiler import profile
+#@profile
 
 def calc_C_matrix(DataDict, deg_per_dim,
 		abs_tol, save_path, verbose, SaveCMatrix=False,
@@ -355,7 +355,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	# print(tracemalloc.get_traced_memory())
 	# tracemalloc.stop()
 
-	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
+	message = 'Finished Integration at {}. Calculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	if SaveCMatrix:
@@ -620,18 +620,27 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 	RHSUncertainties = []
 	_ = [RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
 	_ = [RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
+	# RHSMeasurements = np.concatenate(RHSMeasurements).ravel()
+	# RHSUncertainties = np.concatenate(RHSUncertainties).ravel()
 	
 	RHSSequence = DataDict['DataSequence'][RHSDimensions]
 	LHSSequence = DataDict['DataSequence'][LHSDimensions]
 	NSeq = len(RHSSequence[0])
 	
-	NPoints = len(RHSMeasurements[0])
+	NPoints = len(np.hstack(MeasurementDict[RHSTerms[0]][0]))
 	ConditionalDist = np.zeros((NPoints, NSeq))
 	MeanPDF = np.zeros(NPoints)
 	VariancePDF = np.zeros(NPoints)
 	
 	# Initial values
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	for j in range(len(RHSTerms)):
+		# Handle concatenation issues with different MeasurementDict types/sizes
+		try:
+			MeasurementDict[RHSTerms[j]][0] = np.concatenate(MeasurementDict[RHSTerms[j]][0])
+		except:
+			MeasurementDict[RHSTerms[j]][0] = np.concatenate([MeasurementDict[RHSTerms[j]][0]])
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -652,6 +661,7 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		for j in range(len(RHSTerms)):
 			# jth RHS dimension, 0 refers to measurement (1 is uncertainty), and taking a slice of the ith measurement input
 			InterpSlices[RHSDimensions[j]] = MeasurementDict[RHSTerms[j]][0][i]
+
 		
 		# Interpolate the joint distribution on to a 1-D grid of points corresponding to the given RHS term to condition on, and sequence of LHS terms that we're querying for.
 		# For example to get f(m|r=5), the joint distribution will be interpolated on to (5, m_max), ...,  (5, m_min)
@@ -763,18 +773,27 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 	RHSUncertainties = []
 	_ = [RHSMeasurements.append(MeasurementDict[i][0]) for i in RHSTerms]
 	_ = [RHSUncertainties.append(MeasurementDict[i][1]) for i in RHSTerms]
+	# RHSMeasurements = np.concatenate(RHSMeasurements).ravel()
+	# RHSUncertainties = np.concatenate(RHSUncertainties).ravel()
 	
 	RHSSequence = DataDict['DataSequence'][RHSDimensions]
 	LHSSequence = DataDict['DataSequence'][LHSDimensions]
 	NSeq = len(RHSSequence[0])
 	
-	NPoints = len(RHSMeasurements[0])
+	NPoints = len(np.hstack(MeasurementDict[RHSTerms[0]][0]))
 	ConditionalDist = np.zeros(tuple([NPoints, *np.repeat(NSeq, len(LHSTerms))]))
 	MeanPDF = np.zeros((NPoints, len(LHSTerms)))
 	VariancePDF = np.zeros((NPoints, len(LHSTerms)))
 	
 	# Initial values
 	ReshapedWeights = np.reshape(weights, deg_per_dim)
+
+	for j in range(len(RHSTerms)):
+		# Handle concatenation issues with different MeasurementDict types/sizes
+		try:
+			MeasurementDict[RHSTerms[j]][0] = np.concatenate(MeasurementDict[RHSTerms[j]][0])
+		except:
+			MeasurementDict[RHSTerms[j]][0] = np.concatenate([MeasurementDict[RHSTerms[j]][0]])
 
 	for i in range(NPoints):
 		# Indices = [slice(0, None) for _ in range(DataDict['ndim'])]
@@ -829,6 +848,7 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 
 			ProductIndices = InputIndices.replace(Alphabets[rdim], '')
 			Subscripts = InputIndices+',' +''.join(Alphabets[rdim]) + '->' + ProductIndices
+
 
 			temp_denominator = TensorMultiplication(temp_denominator, indv_pdf, Subscripts=Subscripts)
 			InputIndices = ProductIndices
