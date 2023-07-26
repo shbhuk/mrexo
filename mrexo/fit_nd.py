@@ -36,10 +36,10 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
 	NumMonteCarlo: Integer, default=0
 		Number of Monte-Carlo simulations to run
-	k_fold : int, optional
-		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
-	NumBootstrap : int, default=100
+	NumBootstrap : int, default=0
 		The number of bootstraps to perform (must be greater than 1).
+    k_fold : int, optional
+        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	cores : int, default=1
 		The number of cores to use for parallel processing. This is used in the
 		   bootstrap and the cross validation. To use all the cores in the CPU,
@@ -51,11 +51,8 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	Returns
 	-------
-	initialfit_result : dict
+    FullFitResult : dict
 		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
-	bootstrap_results : dict
-		TBD. Only returned if ``NumBootstrap`` > 0.
-	
 	"""
 
 	starttime = datetime.datetime.now()
@@ -184,16 +181,6 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	return FullFitResult
-
-# message = """
- # _____  _   _  _____   _____  _   _ ______ 
-# |_   _|| | | ||  ___| |  ___|| \ | ||  _  \
-  # | |  | |_| || |__   | |__  |  \| || | | |
-  # | |  |  _  ||  __|  |  __| | . ` || | | |
-  # | |  | | | || |___  | |___ | |\  || |/ / 
-  # \_/  \_| |_/\____/  \____/ \_| \_/|___/  
-# """
-# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
 def _RunMonteCarlo_MLE(Inputs):

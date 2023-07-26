@@ -145,8 +145,6 @@ def MLE_fit(DataDict, deg_per_dim,
         A dictionary containing the data, as returned by :py:func:`InputData`.
     deg_per_dim : array[int]
         The number of degrees per dimension.
-    Log : bool, default=True
-        Whether to perform the calculation in log space for all of the dimensions.
     abs_tol : float, default=1e-8
         The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
     OutputWeightsOnly : bool, default=False
@@ -201,8 +199,7 @@ def MLE_fit(DataDict, deg_per_dim,
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(DataDict=DataDict, 
-		deg_per_dim=np.array(deg_per_dim), 
-		abs_tol=abs_tol, 
+		deg_per_dim=np.array(deg_per_dim),
 		save_path=save_path, 
 		verbose=verbose, 
 		SaveCMatrix=False,
@@ -270,12 +267,10 @@ def MLE_fit(DataDict, deg_per_dim,
 #from memory_profiler import profile
 #@profile
 
-def calc_C_matrix(DataDict, deg_per_dim,
-		abs_tol, save_path, verbose, SaveCMatrix=False,
+def calc_C_matrix(DataDict, deg_per_dim, save_path, verbose, SaveCMatrix=False,
 		UseSparseMatrix=False):
 	"""
-	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
-	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
+	Integrate the product of the normal and beta distributions and then take the Kronecker product.
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
  
@@ -285,10 +280,9 @@ def calc_C_matrix(DataDict, deg_per_dim,
         A dictionary containing the data, as returned by :py:func:`InputData`.
     deg_per_dim : array[int]
         The number of degrees per dimension.
-    abs_tol : float ##### TODO: this is not being used in this function! Remove (check that it doesn't break other functions calling this function first)?
     save_path : str
         The folder name (including path) to save results in.
-    verbose : int, default=2
+    verbose : int
         Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
     SaveCMatrix : bool, default=False
         Whether to save the C_pdf to a text file.
@@ -421,6 +415,18 @@ def _PDF_Beta(x,a,b):
 	Evaluate the PDF for a Beta distribution.
 
     About 50x faster than scipy.stats.beta.pdf.
+    
+    Parameters
+    ----------
+    x : float
+        The value at which to evaluate the PDF (must be between 0 and 1).
+    a, b : float
+        The shape parameters (must be greater than 0).
+    
+    Returns
+    -------
+    f : float
+        The probability density function of the Beta distribution evaluated at ``x``.
 	"""
 	if (a>=170) | (b>=170) | (a+b>170):
 		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
@@ -431,11 +437,31 @@ def _PDF_Beta(x,a,b):
 
 # Ndim - 20201130
 def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
-	'''
-	Product of Normal and beta distribution
+	"""
+	Evaluate the product of the PDFs of a normal and a Beta distribution.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+ 
+    Parameters
+    ----------
+    a : float
+        The location (mean or log10(mean), if ``Log=True``) of the normal distribution.
+    a_obs : float
+        The observed value at which to evaluate the normal distribution.
+    a_std : float
+        The scale (standard deviation) of the normal distribution.
+    a_max, a_min : float
+        The maximum and minimum values.
+    shape1, shape2 : float
+        The shape parameters of the Beta distribution (must be greater than 0).
+    Log : bool, default=True
+        Whether to integrate in log space (for the normal distribution).
+    
+    Returns
+    -------
+    norm_beta : float
+        The product of the probability densities of the normal and Beta distributions evaluated at ``a_obs``.
+	"""
 
 	if Log == True: # Integrating in Log Space
 		norm_beta = _PDF_Normal(a_obs, loc=10**a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
@@ -446,16 +472,34 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 
 # Ndim - 20201130
 def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
-	'''
-	Integrate the product of the normal and beta distribution.
+	"""
+	Numerically integrate the product of the normal and Beta distributions.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+ 
+    Parameters
+    ----------
+    data : float
+        The observed data point.
+    data_Sigma : float
+        The uncertainty (1-sigma) in the data point.
+    deg, degrees : float
+        The degree parameters. Transforms to the shape parameters of the Beta distribution (see :py:func:`mrexo.mle_utils_nd._PDF_NormalBeta`) via ``shape1 = degree``, ``shape2 = deg - degree + 1``.
+    a_max, a_min : float
+        The maximum and minimum values defining the integration bounds.
+    Log : bool, default=False
+        Whether to integrate in log space (for the normal distribution).
+    abs_tol : float, default=1e-8
+        The absolute error tolerance.
+    
+    Returns
+    -------
+    The integral of the product of the normal and Beta distributions.
+	"""
 	a_obs = data
 	a_std = data_Sigma
 	shape1 = degree
 	shape2 = deg - degree + 1
-	Log = Log
 
 	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
 						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
@@ -465,15 +509,18 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 		deg, degree, 
 		a_max, a_min, Log=False, abs_tol=1e-8):
-	'''
-	Integrate the product of the two half normal and beta distribution.
+	"""
+	Numerically integrate the product of the two half normal and Beta distributions.
 
-	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+    Includes the same parameters as :py:func:`mrexo.mle_utils_nd.IntegrateNormalBeta``, except ``data_Sigma`` (the 1-sigma uncertainty in the data point) is replaced with ``data_USigma`` and ``data_LSigma`` (the upper and lower 1-sigma uncertainties, respectively).
+    
+    Returns
+    -------
+    The integral of the product of the two half normal and Beta distributions.
+	"""
 	a_obs = data
 	shape1 = degree
 	shape2 = deg - degree + 1
-	Log = Log
 
 	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
