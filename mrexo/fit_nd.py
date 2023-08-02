@@ -46,7 +46,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
 	abs_tol : float, default=1e-8
 		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
-	verbose : int, default=2
+	verbose : {0,1,2}, default=2
 		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
 
 	Returns

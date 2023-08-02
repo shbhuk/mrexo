@@ -153,7 +153,7 @@ def MLE_fit(DataDict, deg_per_dim,
         Whether to also calculate the join distribution.
     save_path : str, optional
         The folder name (including path) to save results in.
-    verbose : int, default=2
+    verbose : {0,1,2}, default=2
         Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
     UseSparseMatrix : bool, default=True
         Whether to use a sparse matrix for the C_pdf calculation (to reduce memory for large problem sizes).
@@ -257,7 +257,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			JointDist, indv_pdf_per_dim = CalculateJointDistribution(DataDict=DataDict, 
 				weights=w_hat, 
 				deg_per_dim=deg_per_dim, 
-				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+				save_path=save_path, verbose=verbose)
 			outputs['JointDist'] = JointDist
 		
 		return outputs
@@ -282,7 +282,7 @@ def calc_C_matrix(DataDict, deg_per_dim, save_path, verbose, SaveCMatrix=False,
         The number of degrees per dimension.
     save_path : str
         The folder name (including path) to save results in.
-    verbose : int
+    verbose : {0,1,2}
         Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
     SaveCMatrix : bool, default=False
         Whether to save the C_pdf to a text file.
@@ -604,7 +604,33 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-			
+    """
+    Calculate a conditional distribution given a joint distribution.
+    
+    Parameters
+    ----------
+    ConditionString : str
+        A string specifying the dimensions to be conditioned on, e.g. in the form of 'X|Z' where X is conditioned on Z. More than one dimension can be conditioned on (e.g., 'X,Y|Z', 'X|Y,Z').
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+    weights : array[float]
+        A 1-d array of weights.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    JointDist : array[float]
+        The joint distribution.
+    MeasurementDict : dict
+        A dictionary containing the data points in the conditioned dimensions (e.g., 'Z') at which to compute the conditional distributions, of the form '{'Z': [[z1,...], [[z1_l, z1_u],...]]}' where z1 is a data point (log value) and z1_l, z1_u are the lower and upper uncertainties on z1 (can also be set to nan).
+    
+    Returns
+    -------
+    ConditionalDist : array[float]
+        The conditional distributions at each point in `MeasurementDict`.
+    MeanPDF : array[float]
+        The mean of the PDF at each point in `MeasurementDict`.
+    VariancePDF : array[float]
+        The variance of the PDF at each point in `MeasurementDict`.
+    """
 	ndim = DataDict['ndim']
 	
 	Condition = ConditionString.split('|')
@@ -632,24 +658,11 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-	'''
-	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
-	Based on Eqn 10 from Ning et al. 2018
-	INPUTS:
-		ConditionString = Example 'x|z or z|y'
-		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
-		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-			It is a list of 1-D vectors, where the number of elements in the list = ndim.
-			The number of elements in each vector is the number of degrees for that dimension
-		MeasurementDict: Example:
-			MeasurementDict = {}
-			MeasurementDict['r'] = [[np.log10(4), np.log10(2)], [np.nan, np.nan]] # Vector of radius measurements, vector of radius measurement uncertainties
-			MeasurementDict['p'] = [[np.log10(0.9999), np.log10(1)], [np.nan, np.nan]] # Likewise for period
-			
-		MeasurementDict assumes log values
-	'''
-		
+    """
+    Calculate a conditional distribution in 1D. Called by :py:func:`mrexo.mle_utils_nd.calculate_conditional_distribution`` in the 1D case, i.e. ``ConditionString`` = 'X|Z', with the same parameters and outputs.
+    
+    Based on Eq 10 from Ning et al. 2018.
+    """
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	ndim = DataDict['ndim']
 	
@@ -783,24 +796,14 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-	'''
-	Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
-	INPUTS:
-		ConditionString = Example 'x,y|z', or 'm|r,p'
-		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
-		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-			It is a list of 1-D vectors, where the number of elements in the list = ndim.
-			The number of elements in each vector is the number of degrees for that dimension
-		MeasurementDict: Example:
-			MeasurementDict = {}
-			MeasurementDict['r'] = [[np.log10(4), np.log10(2)], [np.nan, np.nan]] # Vector of radius measurements, vector of radius measurement uncertainties
-			MeasurementDict['p'] = [[np.log10(0.9999), np.log10(1)], [np.nan, np.nan]] # Likewise for period
-			
-		MeasurementDict assumes log values
-	'''
-	
-	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
+    """
+    Calculate a conditional distribution in 2D. Called by :py:func:`mrexo.mle_utils_nd.calculate_conditional_distribution` in the 2D case, i.e. ``ConditionString`` = 'X,Y|Z' or 'X|Y,Z', with the same parameters and outputs.
+    
+    Based on Eq 10 from Ning et al. 2018.
+    """
+    # TODO: which one of these (or both) is true?
+    # Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
+    # Assuming it is x|y,z, i.e. there is only one dimension on the LHS
 	
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	ndim = DataDict['ndim']
@@ -924,21 +927,32 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 			
 	return ConditionalDist, MeanPDF, VariancePDF
 
-def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
-	'''
-	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
-	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
-	Refer to Ning et al. 2018 Sec 2.1, Eq 7
-	
-	INPUT:
-	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-	
-	OUTPUT:
-	joint distribution = 
-	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-		It is a list of 1-D vectors, where the number of elements in the list = ndim.
-		The number of elements in each vector is the number of degrees for that dimension
-	'''
+def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose):
+    """
+    Calculate the joint distribution in up to 4D.
+    
+    Refer to Ning et al. 2018 Sec 2.1, Eq 7.
+    
+    Parameters
+    ----------
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+    weights : array[float]
+        A 1-d array of weights.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    save_path : str
+        The folder name (including path) to save the logging outputs in.
+    verbose : {0,1,2}
+        Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
+    
+    Returns
+    -------
+    Joint : array[float]
+        The joint distribution.
+    indv_pdf_per_dim : list[array[float]]
+        The individual PDF for each point in the sequence in ``DataDict``. This is a list of 1D vectors, where the number of vectors in the list is 'ndim' and the number of elements in each vector is the number of degrees for that dimension (given by ``deg_per_dim``).
+    """
 	ndim = DataDict['ndim']
 	
 	message = 'Calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
@@ -958,10 +972,9 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 	return Joint, indv_pdf_per_dim
 
 def CalculateJointDist2D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 2D distribution
-	"""
-	
+    """
+    Calculate the joint distribution in 2D. Called by :py:func:`mrexo.mle_utils_nd.CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -990,9 +1003,9 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	
 
 def CalculateJointDist3D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 3D distribution
-	"""
+    """
+    Calculate the joint distribution in 3D. Called by :py:func:`mrexo.mle_utils_nd.CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -1031,9 +1044,9 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 
 
 def CalculateJointDist4D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 4D distribution
-	"""
+    """
+    Calculate the joint distribution in 4D. Called by :py:func:`mrexo.mle_utils_nd.CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
