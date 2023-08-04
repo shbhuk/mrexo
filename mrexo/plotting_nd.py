@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import os, sys
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib
 
 
@@ -17,8 +16,9 @@ save_path = r"C:\Users\skanodia\Documents\GitHub\mrexo\examples\CKS-X\CKS-X_radi
 
 
 def Plot1DInputDataHistogram(save_path):
-	'''
-	'''
+    """
+    Plot a 1D histogram for the data in each dimension and save the figures in ``save_path``.
+    """
 
 	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
 	ndim = DataDict['ndim']
@@ -34,10 +34,9 @@ def Plot1DInputDataHistogram(save_path):
 		plt.close("all")
 
 def Plot2DWeights(save_path):
-	'''
-
-
-	'''
+    """
+    Plot a 2D heat-map of the weights and save the figure in ``save_path``.
+    """
 
 	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 	weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
@@ -51,11 +50,9 @@ def Plot2DWeights(save_path):
 	return fig
 
 def Plot2DJointDistribution(save_path):
-	'''
-	Open the results directory passed by the user and plot up the 2D joint distribution, with the input dataset overlaid.
-	The resultant figure will be returned by the code, and also saved in the 'outputs' directory.
-
-	'''
+    """
+    Plot a 2D heat-map of the joint distribution with the input data overlaid, and save the figure in ``save_path``.
+    """
 
 	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()

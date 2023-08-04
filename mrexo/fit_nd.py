@@ -30,7 +30,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
 	degree_max : int, optional
 		The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
-	SymmetricDegreePerDimension: boolean, default=True
+	SymmetricDegreePerDimension: bool, default=True
 		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
 		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
