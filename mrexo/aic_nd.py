@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils_nd import _logging, GiveDegreeCandidates, MakePlot
+from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
 import matplotlib.pyplot as plt
 
 """
@@ -267,29 +267,7 @@ def _RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	np.save(os.path.join(save_path, 'NonZero.npy'), NonZero)
 	
 			
-	return DegreeChosen	
-
-def FlattenGrid(Inputs, ndim):
-	"""
-	Take n dimensions for Inputs.
-	Use meshgrid to combine them, and then flatten them.
-	Output long 1D vector with all the values, where each element of the vector has ndim elements.
-	
-	
-	Example: 
-	Inputs = [[1,2,3,4], [1,2,3,4], [1,2,3,4]] in the case of 3 dimensions with 4 points each
-	
-	Output:
-	[[1,1,1], [1,1,2], [1,1,3], [1,1,4], [1,2,1], [1,2,2],[1,2,3],....]
-
-	"""
-	
-	Mesh = np.meshgrid(*Inputs)
-	i_flat = [Mesh[i].flatten() for i in range(ndim)]
-	FlattenedMesh = [[(ix[i]) for ix in i_flat] for i in range(len(i_flat[0]))]
-	
-	return FlattenedMesh
-
+	return DegreeChosen
 
 
 def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_path, verbose, 

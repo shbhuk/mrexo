@@ -127,3 +127,25 @@ def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False
     plt.ylabel("Degrees ($d_2$)")
     
     return fig
+
+
+def FlattenGrid(Inputs, ndim):
+    """
+    Take n dimensions for Inputs.
+    Use meshgrid to combine them, and then flatten them.
+    Output long 1D vector with all the values, where each element of the vector has ndim elements.
+    
+    
+    Example:
+    Inputs = [[1,2,3,4], [1,2,3,4], [1,2,3,4]] in the case of 3 dimensions with 4 points each
+    
+    Output:
+    [[1,1,1], [1,1,2], [1,1,3], [1,1,4], [1,2,1], [1,2,2],[1,2,3],....]
+
+    """
+    
+    Mesh = np.meshgrid(*Inputs)
+    i_flat = [Mesh[i].flatten() for i in range(ndim)]
+    FlattenedMesh = [[(ix[i]) for ix in i_flat] for i in range(len(i_flat[0]))]
+    
+    return FlattenedMesh

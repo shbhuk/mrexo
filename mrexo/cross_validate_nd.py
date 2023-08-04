@@ -3,8 +3,7 @@ import numpy as np
 import os
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils_nd import _logging, GiveDegreeCandidates, MakePlot
-from .aic_nd import FlattenGrid
+from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
 from .Optimizers import LogLikelihood
 import matplotlib.pyplot as plt
 import datetime
