@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils_nd import _logging, GiveDegreeCandidates
+from .utils_nd import _logging, GiveDegreeCandidates, MakePlot
 import matplotlib.pyplot as plt
 
 """
@@ -44,7 +44,7 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 """
 
 
-def run_aic(DataDict, degree_max, NumCandidates=20, 
+def RunAIC(DataDict, degree_max, NumCandidates=20,
 	SymmetricDegreePerDimension=True,
 	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
 
@@ -67,15 +67,15 @@ def run_aic(DataDict, degree_max, NumCandidates=20,
 	if cores==1:
 			
 		if ndim==2:
-			DegreeChosen = RunAIC2D(DataDict=DataDict, 
+			DegreeChosen = _RunAIC2D(DataDict=DataDict,
 				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
 				save_path=save_path, verbose=verbose)
 		elif ndim==3:
-			DegreeChosen = RunAIC3D(DataDict=DataDict, 
+			DegreeChosen = _RunAIC3D(DataDict=DataDict,
 				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
 				save_path=save_path, verbose=verbose)
 		elif ndim==4:
-			DegreeChosen = RunAIC4D(DataDict=DataDict, 
+			DegreeChosen = _RunAIC4D(DataDict=DataDict,
 				degree_candidates=degree_candidates, NumCandidates=NumCandidates, 
 				save_path=save_path, verbose=verbose)
 	else:
@@ -92,30 +92,7 @@ def run_aic(DataDict, degree_max, NumCandidates=20,
 	return DegreeChosen
 
 
-def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False):
-	"""
-	
-	"""
-	
-	plt.close("all")
-	fig = plt.figure()
-	if Interpolate:
-		im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower', interpolation='bicubic')
-	else:
-		im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
-
-	if AddContour:
-		contours = plt.contour(degree_candidates[0], degree_candidates[1], Data, 20, colors='black')
-		plt.clabel(contours, inline=1, fontsize=10)
-
-	plt.title(Title)
-	plt.colorbar(im)
-	plt.xlabel("Degrees ($d_1$)")
-	plt.ylabel("Degrees ($d_2$)")
-	
-	return fig
-
-def RunAIC2D(DataDict, degree_candidates, NumCandidates, 
+def _RunAIC2D(DataDict, degree_candidates, NumCandidates,
 	save_path, verbose):
 	
 	n = DataDict['DataLength']
@@ -190,7 +167,7 @@ def RunAIC2D(DataDict, degree_candidates, NumCandidates,
 	
 	return DegreeChosen
 	
-def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
+def _RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
@@ -241,7 +218,7 @@ def RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	return DegreeChosen
 	
 
-def RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
+def _RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']

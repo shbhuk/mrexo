@@ -103,3 +103,27 @@ def _logging(message, filepath, verbose, append=True):
 		print('Using core '+message)
 
 	return 1
+
+
+def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False):
+    """
+    
+    """
+    
+    plt.close("all")
+    fig = plt.figure()
+    if Interpolate:
+        im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower', interpolation='bicubic')
+    else:
+        im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
+
+    if AddContour:
+        contours = plt.contour(degree_candidates[0], degree_candidates[1], Data, 20, colors='black')
+        plt.clabel(contours, inline=1, fontsize=10)
+
+    plt.title(Title)
+    plt.colorbar(im)
+    plt.xlabel("Degrees ($d_1$)")
+    plt.ylabel("Degrees ($d_2$)")
+    
+    return fig
