@@ -41,6 +41,7 @@ Sigma = ['0.1', '0.2', '0.25', '0.33']
 Runs  = ['Sim_ConstantY_N200_USigma{}_LSigma{}_aic_symm'.format(s, s) for s in Sigma]
 # Runs = ['Sim_2D_N200_USigma0.1_LSigma0.1_c20', 'Sim_2D_N200_USigma0.1_LSigma0.1_c30', 'Sim_2D_N200_USigma0.1_LSigma0.1_c40', 'Sim_2D_N200_USigma0.1_LSigma0.1_c60']#, 'Sim_2D_N200_USigma0.1_LSigma0.1_c80']
 Runs = ['Trial_FGKM_2D_MR_aic_asymm', 'Mdwarf_2D_aic_20221001_M_R']
+Runs = ['AllPlanet_RpLt4_StMlt1.5_MR_CV_100MC_100BS']
 SupTitle = ''#Varying degrees'
 
 

@@ -1,26 +1,28 @@
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
-import glob
+import glob, os
 
 
 ConditionString = 'r,p|stm'
 
 ################ Run Conditional Distribution ################ 
-from mrexo.mle_utils_nd import calculate_conditional_distribution
+from mrexo.mle_utils_nd import calculate_conditional_distribution, NumericalIntegrate2D
 
 
 
-ConditionString = 'm,r|insol'
-# ConditionString = 'r|stm'
+ConditionString = 'insol,r|stm'
+# ConditionString = 'm,r|insol'
 
 
 RunName = r"Trial_FGKM_3D_MRS"
+RunName = r"AllPlanet_RpLt4_StMlt1.5_RSStM_CV_0MC_0BS"
 
 save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
 
 ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
 PlotFolder = os.path.join(save_path, ConditionName)
+if not os.path.exists(PlotFolder): os.makedirs(PlotFolder)
 
 deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
@@ -75,7 +77,7 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 
 	i = 0
 	fig = plt.figure(figsize=(8.5,6.5))
-	im = plt.imshow(ConditionalDist[i], extent=(xseq.min(), xseq.max(), yseq.min(), yseq.max()), aspect='auto', origin='lower'); 
+	im = plt.imshow(ConditionalDist[i], extent=(xseq.min(), xseq.max(), yseq.min(), yseq.max()), aspect='auto', origin='lower', interpolation='bicubic'); 
 	# plt.plot(np.log10(Mass), np.log10(Radius),  'k.')
 	plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(10**MeasurementDict[RHSTerms[0]][0][i]))
 	plt.xlabel(DataDict['ndim_label'][LHSDimensions[0]])
@@ -101,7 +103,7 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 	cbar = fig.colorbar(im, ticks=[np.min(ConditionalDist[i]), np.max(ConditionalDist[i])], fraction=0.037, pad=0.04)
 	cbar.ax.set_yticklabels(['Min', 'Max'])
 	plt.tight_layout()
-	plt.show(block=False)
+	# plt.show(block=False)
 
 
 	# plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(MeasurementDict[RHSTerms[0]][0][i],3))))
@@ -111,14 +113,15 @@ for k in np.arange(0, len(zseq), 2, dtype=int):
 	
 	
 ###############
-"""
+# """
+import imageio
 ListofPlots = glob.glob(os.path.join(PlotFolder, '3*.png'))
 ListofPlots.sort(key=os.path.getmtime)
 
-writer = imageio.get_writer(os.path.join(PlotFolder, ConditionName+'.mp4'), fps=2)
+writer = imageio.get_writer(os.path.join(PlotFolder, ConditionName+'.gif'), duration=500)
 
 for im in ListofPlots:
 		#print(order, im)
 		writer.append_data(imageio.imread(os.path.join(PlotFolder, im)))
 writer.close()
-"""
+# """

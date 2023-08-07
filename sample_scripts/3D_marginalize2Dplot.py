@@ -8,9 +8,10 @@ from mrexo.mle_utils_nd import calculate_conditional_distribution
 ConditionString = 'm|r,p'
 ConditionString = 'r|stm,feh'
 ConditionString = 'r|p,stm'
-ConditionString = 'm|r,insol'
+ConditionString = 'm|insol,r'
 
-RunName = r"Trial_FGKM_3D_MRS"
+RunName = r"AllPlanet_RpLt4_StMlt1.2_MRS_CV_100MC_100BS"
+
 
 
 save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)

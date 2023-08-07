@@ -7,7 +7,7 @@ import glob, os
 # import imageio
 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
-from mrexo.aic_nd import MakePlot
+from mrexo.utils_nd import MakePlot
 
 
 matplotlib.rcParams['xtick.labelsize'] = 25

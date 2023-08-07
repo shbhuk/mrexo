@@ -9,7 +9,9 @@ ConditionString = 'r|stm,feh,p'
 ConditionString = 'm|insol,r,stm'
 ConditionName = '4D_'+ConditionString.replace('|', '_').replace(',', '_')
 
-ResultDirectory = r'C:\\Users\\shbhu\\Documents\\GitHub\\PostDoc\\Data\\Mdwarf_4D_20210823_M_R_S_StM_30_Rp_lt4'
+# C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts\TestRuns\AllPlanet_RpLt4_StMlt1.5_MRSStM_AIC_100MC_100BS
+# ResultDirectory = r'C:\\Users\\shbhu\\Documents\\GitHub\\PostDoc\\Data\\Mdwarf_4D_20210823_M_R_S_StM_30_Rp_lt4'
+ResultDirectory = r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts\TestRuns\AllPlanet_RpLt4_StMlt1.5_MRSStM_d40_0MC_0BS"
 PlotFolder = os.path.join(ResultDirectory, ConditionName)
 
 if not os.path.exists(PlotFolder):
@@ -42,17 +44,17 @@ zdata = DataDict['ndim_data'][RHSDimensions[2]]
 XTicks = np.linspace(x.min(), x.max(), 5)
 XLabels = np.round(10**XTicks, 2)
 # XLabels = np.array([0.7, 1, 3, 5, 10])
-XLabels = np.array([0.3, 1, 10, 50, 100])
+# XLabels = np.array([0.3, 1, 10, 50, 100])
 XTicks = np.log10(XLabels)
 
 YTicks = np.linspace(y.min(), y.max(), 5)
 YLabels = np.round(10**YTicks, 2)
-YLabels = np.array([0.7, 1, 3, 5, 10])
-YLabels = np.array([1, 2, 3, 4])
+# YLabels = np.array([0.7, 1, 3, 5, 10])
+# YLabels = np.array([1, 2, 3, 4])
 YTicks = np.log10(YLabels)
 # YLabels = np.round(YTicks, 2) # For Metallicity 
 
-for k in np.arange(0, len(z), 2, dtype=int):
+for k in np.arange(0, len(z), 10, dtype=int):
 	
 	ChosenZ = z[k]
 	print(ChosenZ)
@@ -61,7 +63,11 @@ for k in np.arange(0, len(z), 2, dtype=int):
 
 	for i in range(len(x)):
 		for j in range(len(y)):
-			MeasurementDict = {RHSTerms[0]:[[x[i]], [np.nan]], RHSTerms[1]:[[y[j]], [np.nan]], RHSTerms[2]:[[ChosenZ],[np.nan]]}
+			MeasurementDict = {
+				RHSTerms[0]:[[x[i]], [[np.nan, np.nan]]], 
+				RHSTerms[1]:[[y[j]], [[np.nan, np.nan]]],
+				RHSTerms[2]:[[ChosenZ],[[np.nan, np.nan]]]
+			}
 
 			ConditionalDist, MeanPDF[i,j], VariancePDF[i,j] = calculate_conditional_distribution(
 				ConditionString, DataDict, weights, deg_per_dim,
@@ -130,14 +136,14 @@ for k in np.arange(0, len(z), 2, dtype=int):
 		# XTicks = np.linspace(x.min(), x.max(), 5)
 		# XLabels = np.round(10**XTicks, 2)
 		plt.xticks(XTicks, XLabels)
-		# plt.xlim(x.min(), x.max())
-		plt.xlim(np.log10(0.3), np.log10(100))
+		plt.xlim(x.max(), x.min())
+		# plt.xlim(np.log10(0.3), np.log10(100))
 
 	if RHSTerms[1] == 'feh':
 		YTicks = np.linspace(-0.5, 0.5, 5)
 		YLabels = YTicks
 		plt.yticks(YTicks, YLabels)
-		plt.ylim(-0.55, 0.45)
+		# plt.ylim(-0.55, 0.45)
 
 	else:
 		# YTicks = np.linspace(y.min(), y.max(), 5)
@@ -151,15 +157,15 @@ for k in np.arange(0, len(z), 2, dtype=int):
 	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(10**ChosenZ,3))))
 	plt.close()
 
-"""
+# """
 ListofPlots = glob.glob(os.path.join(PlotFolder, '4*.png'))
 ListofPlots.sort(key=os.path.getmtime)
 
-writer = imageio.get_writer(os.path.join(PlotFolder, ConditionName+'.mp4'), fps=2)
+writer = imageio.get_writer(os.path.join(PlotFolder, ConditionName+'.gif'), duration=500)
 
 for im in ListofPlots:
 		#print(order, im)
 		writer.append_data(imageio.imread(os.path.join(PlotFolder, im)))
 writer.close()
-"""
+# """
 
