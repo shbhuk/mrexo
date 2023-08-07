@@ -3,8 +3,7 @@ import numpy as np
 import os
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit, calc_C_matrix
-from .utils_nd import _logging, GiveDegreeCandidates
-from .aic_nd import FlattenGrid, MakePlot
+from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
 from .Optimizers import LogLikelihood
 import matplotlib.pyplot as plt
 import datetime
@@ -12,14 +11,42 @@ import datetime
 def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
 	SymmetricDegreePerDimension=True,
 	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
-	"""
-
-	"""
+    """
+    Calculate the optimal number of degrees in each dimension using the k-fold cross validation (CV) method.
+    
+    Parameters
+    ----------
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+    degree_max : int
+        The maximum degree checked during degree selection.
+    k_fold : int, default=10
+        The number of folds to use for cross validation.
+    NumCandidates : int, default=20
+        The number of degree candidates to test.
+    SymmetricDegreePerDimension: bool, default=True
+        If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
+        If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+    cores : int, default=1
+        The number of cores to use for parallel processing. To use all the cores in the CPU,
+           set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
+    save_path : str, default=os.path.dirname(__file__)
+        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+    verbose : {0,1,2}, default=2
+        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+    abs_tol : float, default=1e-8
+        The absolute tolerance to be used for the numerical integrations.
+    
+    Returns
+    -------
+    deg_choose : array[int]
+        The optimal number of degrees in each dimension, chosen by k-fold CV.
+    """
 
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
 
-	degree_candidates = GiveDegreeCandidates(degree_max=degree_max, n=n, ndim=ndim, ncandidates=NumCandidates)
+	degree_candidates = GiveDegreeCandidates(degree_max=degree_max, ndim=ndim, ncandidates=NumCandidates)
 	np.savetxt(os.path.join(save_path, 'degree_candidates.txt'), degree_candidates)
 
 	message = 'Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = {}'.format(degree_max)
@@ -118,7 +145,7 @@ def _cv_parallelize(cv_input):
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(TestDataDict, deg_per_dim=np.array(deg_per_dim), 
-		abs_tol=abs_tol, 
+		abs_tol=abs_tol,
 		save_path=save_path, 
 		verbose=verbose, 
 		SaveCMatrix=False)

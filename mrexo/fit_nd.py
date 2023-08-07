@@ -7,7 +7,7 @@ from .mle_utils_nd import MLE_fit
 from .cross_validate_nd import run_cross_validation
 # from .profile_likelihood import run_profile_likelihood
 from .utils_nd import _logging, _save_dictionary
-from .aic_nd import run_aic
+from .aic_nd import RunAIC
 
 
 
@@ -30,32 +30,29 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		The number of degrees (or method of determining the number of degrees) for the beta densities. If "cv", will use cross validation to find the optimal number of  degrees. If "aic", will use AIC minimization. If "bic", will use BIC minimization. If an integer, will use that number and skip the optimization process for the number of degrees. NOTE: Use AIC or BIC optimization only for large (>200) sample sizes.
 	degree_max : int, optional
 		The maximum degree checked during degree selection. By default, uses ``n/np.log10(n)``, where ``n`` is the number of data points.
-	SymmetricDegreePerDimension: boolean, default=True
+	SymmetricDegreePerDimension: bool, default=True
 		If True, while optimizing the number of degrees, it assumes the same number of degrees in each dimension (i.e. symmetric).
 		In the symmetric case, it runs through ``NumCandidates`` iterations, typically 20. So the degree candidates are [d1, d1], [d2, d2], etc..
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
 	NumMonteCarlo: Integer, default=0
 		Number of Monte-Carlo simulations to run
-	k_fold : int, optional
-		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
-	NumBootstrap : int, default=100
+	NumBootstrap : int, default=0
 		The number of bootstraps to perform (must be greater than 1).
+    k_fold : int, optional
+        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	cores : int, default=1
 		The number of cores to use for parallel processing. This is used in the
 		   bootstrap and the cross validation. To use all the cores in the CPU,
 		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
 	abs_tol : float, default=1e-8
 		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
-	verbose : int, default=2
+	verbose : {0,1,2}, default=2
 		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
 
 	Returns
 	-------
-	initialfit_result : dict
+    FullFitResult : dict
 		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
-	bootstrap_results : dict
-		TBD. Only returned if ``NumBootstrap`` > 0.
-	
 	"""
 
 	starttime = datetime.datetime.now()
@@ -110,7 +107,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		print("Profile Likelihood is not implemented yet")
 	elif select_deg == 'aic' :
 
-		deg_per_dim = run_aic(DataDict, degree_max, NumCandidates=20, 
+		deg_per_dim = RunAIC(DataDict, degree_max, NumCandidates=20,
 			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
 			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 
@@ -184,16 +181,6 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	return FullFitResult
-
-# message = """
- # _____  _   _  _____   _____  _   _ ______ 
-# |_   _|| | | ||  ___| |  ___|| \ | ||  _  \
-  # | |  | |_| || |__   | |__  |  \| || | | |
-  # | |  |  _  ||  __|  |  __| | . ` || | | |
-  # | |  | | | || |___  | |___ | |\  || |/ / 
-  # \_/  \_| |_/\____/  \____/ \_| \_/|___/  
-# """
-# _ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 
 def _RunMonteCarlo_MLE(Inputs):

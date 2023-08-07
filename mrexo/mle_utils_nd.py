@@ -145,8 +145,6 @@ def MLE_fit(DataDict, deg_per_dim,
         A dictionary containing the data, as returned by :py:func:`InputData`.
     deg_per_dim : array[int]
         The number of degrees per dimension.
-    Log : bool, default=True
-        Whether to perform the calculation in log space for all of the dimensions.
     abs_tol : float, default=1e-8
         The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
     OutputWeightsOnly : bool, default=False
@@ -155,7 +153,7 @@ def MLE_fit(DataDict, deg_per_dim,
         Whether to also calculate the join distribution.
     save_path : str, optional
         The folder name (including path) to save results in.
-    verbose : int, default=2
+    verbose : {0,1,2}, default=2
         Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
     UseSparseMatrix : bool, default=True
         Whether to use a sparse matrix for the C_pdf calculation (to reduce memory for large problem sizes).
@@ -201,8 +199,7 @@ def MLE_fit(DataDict, deg_per_dim,
 
 	# C_pdf is of shape n x deg_product where deg_product = Product of (deg_i - 2) for i in ndim
 	C_pdf = calc_C_matrix(DataDict=DataDict, 
-		deg_per_dim=np.array(deg_per_dim), 
-		abs_tol=abs_tol, 
+		deg_per_dim=np.array(deg_per_dim),
 		save_path=save_path, 
 		verbose=verbose, 
 		SaveCMatrix=False,
@@ -260,7 +257,7 @@ def MLE_fit(DataDict, deg_per_dim,
 			JointDist, indv_pdf_per_dim = CalculateJointDistribution(DataDict=DataDict, 
 				weights=w_hat, 
 				deg_per_dim=deg_per_dim, 
-				save_path=save_path, verbose=verbose, abs_tol=abs_tol)
+				save_path=save_path, verbose=verbose)
 			outputs['JointDist'] = JointDist
 		
 		return outputs
@@ -270,12 +267,10 @@ def MLE_fit(DataDict, deg_per_dim,
 #from memory_profiler import profile
 #@profile
 
-def calc_C_matrix(DataDict, deg_per_dim,
-		abs_tol, save_path, verbose, SaveCMatrix=False,
+def calc_C_matrix(DataDict, deg_per_dim, save_path, verbose, SaveCMatrix=False,
 		UseSparseMatrix=False):
 	"""
-	Integrate the product of the normal and beta distributions for Y and X and then take the Kronecker product.
-	2D matrix with shape = (N x product(degrees-2)). For example in two dimensions this would be (N x (d1-2).(d2-2))
+	Integrate the product of the normal and beta distributions and then take the Kronecker product.
 
 	Refer to Ning et al. 2018 Sec 2.2 Eq 8 and 9.
  
@@ -285,10 +280,9 @@ def calc_C_matrix(DataDict, deg_per_dim,
         A dictionary containing the data, as returned by :py:func:`InputData`.
     deg_per_dim : array[int]
         The number of degrees per dimension.
-    abs_tol : float ##### TODO: this is not being used in this function! Remove (check that it doesn't break other functions calling this function first)?
     save_path : str
         The folder name (including path) to save results in.
-    verbose : int, default=2
+    verbose : {0,1,2}
         Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
     SaveCMatrix : bool, default=False
         Whether to save the C_pdf to a text file.
@@ -421,6 +415,18 @@ def _PDF_Beta(x,a,b):
 	Evaluate the PDF for a Beta distribution.
 
     About 50x faster than scipy.stats.beta.pdf.
+    
+    Parameters
+    ----------
+    x : float
+        The value at which to evaluate the PDF (must be between 0 and 1).
+    a, b : float
+        The shape parameters (must be greater than 0).
+    
+    Returns
+    -------
+    f : float
+        The probability density function of the Beta distribution evaluated at ``x``.
 	"""
 	if (a>=170) | (b>=170) | (a+b>170):
 		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
@@ -431,11 +437,31 @@ def _PDF_Beta(x,a,b):
 
 # Ndim - 20201130
 def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
-	'''
-	Product of Normal and beta distribution
+	"""
+	Evaluate the product of the PDFs of a normal and a Beta distribution.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+ 
+    Parameters
+    ----------
+    a : float
+        The location (mean or log10(mean), if ``Log=True``) of the normal distribution.
+    a_obs : float
+        The observed value at which to evaluate the normal distribution.
+    a_std : float
+        The scale (standard deviation) of the normal distribution.
+    a_max, a_min : float
+        The maximum and minimum values.
+    shape1, shape2 : float
+        The shape parameters of the Beta distribution (must be greater than 0).
+    Log : bool, default=True
+        Whether to integrate in log space (for the normal distribution).
+    
+    Returns
+    -------
+    norm_beta : float
+        The product of the probability densities of the normal and Beta distributions evaluated at ``a_obs``.
+	"""
 
 	if Log == True: # Integrating in Log Space
 		norm_beta = _PDF_Normal(a_obs, loc=10**a, scale=a_std) * _PDF_Beta((a - a_min)/(a_max - a_min), a=shape1, b=shape2)/(a_max - a_min)
@@ -446,16 +472,34 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 
 # Ndim - 20201130
 def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
-	'''
-	Integrate the product of the normal and beta distribution.
+	"""
+	Numerically integrate the product of the normal and Beta distributions.
 
 	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+ 
+    Parameters
+    ----------
+    data : float
+        The observed data point.
+    data_Sigma : float
+        The uncertainty (1-sigma) in the data point.
+    deg, degrees : float
+        The degree parameters. Transforms to the shape parameters of the Beta distribution (see :py:func:`_PDF_NormalBeta`) via ``shape1 = degree``, ``shape2 = deg - degree + 1``.
+    a_max, a_min : float
+        The maximum and minimum values defining the integration bounds.
+    Log : bool, default=False
+        Whether to integrate in log space (for the normal distribution).
+    abs_tol : float, default=1e-8
+        The absolute error tolerance.
+    
+    Returns
+    -------
+    The integral of the product of the normal and Beta distributions.
+	"""
 	a_obs = data
 	a_std = data_Sigma
 	shape1 = degree
 	shape2 = deg - degree + 1
-	Log = Log
 
 	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
 						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
@@ -465,15 +509,18 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 		deg, degree, 
 		a_max, a_min, Log=False, abs_tol=1e-8):
-	'''
-	Integrate the product of the two half normal and beta distribution.
+	"""
+	Numerically integrate the product of the two half normal and Beta distributions.
 
-	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-	'''
+    Includes the same parameters as :py:func:`IntegrateNormalBeta``, except ``data_Sigma`` (the 1-sigma uncertainty in the data point) is replaced with ``data_USigma`` and ``data_LSigma`` (the upper and lower 1-sigma uncertainties, respectively).
+    
+    Returns
+    -------
+    The integral of the product of the two half normal and Beta distributions.
+	"""
 	a_obs = data
 	shape1 = degree
 	shape2 = deg - degree + 1
-	Log = Log
 
 	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
@@ -489,7 +536,7 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 
 
 # Ndim - 20201130
-def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, abs_tol=1e-8, Log=False):
+def __OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, abs_tol=1e-8, Log=False):
 	'''
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 	If the data has uncertainty, the joint distribution is modelled using a
@@ -519,25 +566,42 @@ def _OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_US
 def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
 	a_LSigma=np.nan, a_USigma=np.nan,
 	abs_tol=1e-8, Log=False):
-	'''
-	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
+    """
+    Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 
-	If the data has uncertainty, the joint distribution is modelled using a
-	convolution of beta and normal distributions. Whereas for data without uncertainty, the convolution basically decomposes to the value of the beta function
-	at x = x_obs.
+    If the data has uncertainty, the joint distribution is modelled using a convolution of beta and normal distributions. Whereas for data without uncertainty, the convolution basically decomposes to the value of the beta function at x = x_obs.
+    
+    Note
+    ----
+    For data with uncertainty, ``Log`` should be True, because all the computations are done in log space where the observables are considered to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures the measurement uncertainties, the observed quantities, i.e. ``a`` and ``a_LSigma``, ``a_USigma`` are in linear space, whereas ``x`` the quantity being integrated over is in log space.
+    Therefore, while calculating the C_pdf, ``Log=True``, so that for the PDF of the normal function, everything is in linear space.
 
-	For data with uncertainty, log should be True, because all the computations are done in log space where the observables are considered
-	to be in linear space. The individual PDF here is the convolution of a beta and normal function, where the normal distribution captures 
-	the measurement uncertainties, the observed quantities, i,e x_obs and x_sigma are in linear space, whereas x the quantity being integrated over is in log space. 
-	Therefore, while calculating the C_pdf, log=True, so that for the PDF of the normal function, everything is in linear space. 
+    Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for ``a`` between ``log(a_min)`` and ``log(a_max)``, and there is no measurement uncertainty. It is taking the weights (already computed considering the measurement uncertainty) and computing the underlying PDF. Therefore, everything is in logspace.
 
-	Conversely, the joint distribution is being computed for the data sequence in logspace , i.e. for x between log(x_min) and log(x_max), and there is no measurement uncertainty. 
-	It is taking the weights (already computed considering the measurement uncertainty) and computing the underlying PDF. Therefore, everything is in logspace.
-
-	Refer to Ning et al. 2018 Sec 2.2, Eq 8.
-
-	'''
-
+    Refer to Ning et al. 2018 Sec 2.2, Eq 8.
+    
+    Parameters
+    ----------
+    a : float
+        The data point.
+    deg : int
+        The number of degrees.
+    deg_vec : array[int]
+        The vector of degrees.
+    a_max, a_min : float
+        The maximum and minimum values.
+    a_LSigma, a_USigma : float, optional
+        The lower and upper uncertainties (1-sigma) in the data point.
+    abs_tol : float, default=1e-8
+        The absolute error tolerance.
+    Log : bool, default=False
+        Whether to compute in log space. See note above.
+    
+    Returns
+    -------
+    PDF : array[float]
+        The probability density function.
+    """
 
 	if np.isnan(a_USigma) | np.isnan(a_LSigma):
 		if Log:
@@ -549,7 +613,6 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 		# PDF = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
 
-
 	return PDF
 
 
@@ -557,7 +620,33 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-			
+    """
+    Calculate a conditional distribution given a joint distribution.
+    
+    Parameters
+    ----------
+    ConditionString : str
+        A string specifying the dimensions to be conditioned on, e.g. in the form of 'X|Z' where X is conditioned on Z. More than one dimension can be conditioned on (e.g., 'X,Y|Z', 'X|Y,Z').
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`InputData`.
+    weights : array[float]
+        A 1-d array of weights.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    JointDist : array[float]
+        The joint distribution.
+    MeasurementDict : dict
+        A dictionary containing the data points in the conditioned dimensions (e.g., 'Z') at which to compute the conditional distributions, of the form '{'Z': [[z1,...], [[z1_l, z1_u],...]]}' where z1 is a data point (log value) and z1_l, z1_u are the lower and upper uncertainties on z1 (can also be set to nan).
+    
+    Returns
+    -------
+    ConditionalDist : array[float]
+        The conditional distributions at each point in `MeasurementDict`.
+    MeanPDF : array[float]
+        The mean of the PDF at each point in `MeasurementDict`.
+    VariancePDF : array[float]
+        The variance of the PDF at each point in `MeasurementDict`.
+    """
 	ndim = DataDict['ndim']
 	
 	Condition = ConditionString.split('|')
@@ -566,13 +655,13 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
 	
 	if len(LHSTerms) == 1:
-		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution1D_LHS(
+		ConditionalDist, MeanPDF, VariancePDF = _CalculateConditionalDistribution1D_LHS(
 			ConditionString, DataDict, 
 			weights, deg_per_dim, 
 			JointDist,
 			MeasurementDict)
 	elif len(LHSTerms) == 2:
-		ConditionalDist, MeanPDF, VariancePDF = CalculateConditionalDistribution2D_LHS(
+		ConditionalDist, MeanPDF, VariancePDF = _CalculateConditionalDistribution2D_LHS(
 			ConditionString, DataDict, 
 			weights, deg_per_dim, 
 			JointDist,
@@ -581,28 +670,15 @@ def calculate_conditional_distribution(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 		
 
-def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict, 
+def _CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-	'''
-	Tested 2021-01-12. Results similar to the old cond_density_quantile() function for one dimension on LHS.
-	Based on Eqn 10 from Ning et al. 2018
-	INPUTS:
-		ConditionString = Example 'x|z or z|y'
-		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
-		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-			It is a list of 1-D vectors, where the number of elements in the list = ndim.
-			The number of elements in each vector is the number of degrees for that dimension
-		MeasurementDict: Example:
-			MeasurementDict = {}
-			MeasurementDict['r'] = [[np.log10(4), np.log10(2)], [np.nan, np.nan]] # Vector of radius measurements, vector of radius measurement uncertainties
-			MeasurementDict['p'] = [[np.log10(0.9999), np.log10(1)], [np.nan, np.nan]] # Likewise for period
-			
-		MeasurementDict assumes log values
-	'''
-		
+    """
+    Calculate a conditional distribution in 1D. Called by :py:func:`calculate_conditional_distribution`` in the 1D case, i.e. ``ConditionString`` = 'X|Z', with the same parameters and outputs.
+    
+    Based on Eq 10 from Ning et al. 2018.
+    """
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	ndim = DataDict['ndim']
 	
@@ -732,28 +808,18 @@ def CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 	return ConditionalDist, MeanPDF, VariancePDF
 
 
-def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict, 
+def _CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 		weights, deg_per_dim, 
 		JointDist,
 		MeasurementDict):
-	'''
-	Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
-	INPUTS:
-		ConditionString = Example 'x,y|z', or 'm|r,p'
-		JointDist = An n-dimensional cube with each dimension of same length. Typically 100.
-		weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-		indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-			It is a list of 1-D vectors, where the number of elements in the list = ndim.
-			The number of elements in each vector is the number of degrees for that dimension
-		MeasurementDict: Example:
-			MeasurementDict = {}
-			MeasurementDict['r'] = [[np.log10(4), np.log10(2)], [np.nan, np.nan]] # Vector of radius measurements, vector of radius measurement uncertainties
-			MeasurementDict['p'] = [[np.log10(0.9999), np.log10(1)], [np.nan, np.nan]] # Likewise for period
-			
-		MeasurementDict assumes log values
-	'''
-	
-	# Assuming it is x|y,z, i.e. there is only one dimension on the LHS
+    """
+    Calculate a conditional distribution in 2D. Called by :py:func:`calculate_conditional_distribution` in the 2D case, i.e. ``ConditionString`` = 'X,Y|Z' or 'X|Y,Z', with the same parameters and outputs.
+    
+    Based on Eq 10 from Ning et al. 2018.
+    """
+    # TODO: which one of these (or both) is true?
+    # Verified to work fine for 2 dim in LHS and 1 dim in RHS - 2021-01-12
+    # Assuming it is x|y,z, i.e. there is only one dimension on the LHS
 	
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	ndim = DataDict['ndim']
@@ -877,21 +943,32 @@ def CalculateConditionalDistribution2D_LHS(ConditionString, DataDict,
 			
 	return ConditionalDist, MeanPDF, VariancePDF
 
-def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
-	'''
-	# X_points, X_min, X_max, Y_points, Y_min, Y_max, weights, abs_tol):
-	Calculcate the joint distribution of Y and X (Y and X) : f(y,x|w,d,d')
-	Refer to Ning et al. 2018 Sec 2.1, Eq 7
-	
-	INPUT:
-	weights = Padded weights with dimensionality (1 x (d1 x d2 x d3 x .. x dn)) where di are the degrees per dimension
-	
-	OUTPUT:
-	joint distribution = 
-	indv_pdf_per_dim = This is the individual PDF for each point in the sequence . 
-		It is a list of 1-D vectors, where the number of elements in the list = ndim.
-		The number of elements in each vector is the number of degrees for that dimension
-	'''
+def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose):
+    """
+    Calculate the joint distribution in up to 4D.
+    
+    Refer to Ning et al. 2018 Sec 2.1, Eq 7.
+    
+    Parameters
+    ----------
+    DataDict : dict
+        The dictionary containing the data. See the output of :py:func:`InputData`.
+    weights : array[float]
+        A 1-d array of weights.
+    deg_per_dim : array[int]
+        The number of degrees per dimension.
+    save_path : str
+        The folder name (including path) to save the logging outputs in.
+    verbose : {0,1,2}
+        Integer specifying verbosity for logging (see :py:func:`utils_nd._logging`).
+    
+    Returns
+    -------
+    Joint : array[float]
+        The joint distribution.
+    indv_pdf_per_dim : list[array[float]]
+        The individual PDF for each point in the sequence in ``DataDict``. This is a list of 1D vectors, where the number of vectors in the list is 'ndim' and the number of elements in each vector is the number of degrees for that dimension (given by ``deg_per_dim``).
+    """
 	ndim = DataDict['ndim']
 	
 	message = 'Calculating Joint Distribution for {} dimensions at {}'.format(ndim, datetime.datetime.now())
@@ -899,22 +976,21 @@ def CalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbos
 
 	
 	if ndim==2:
-		Joint, indv_pdf_per_dim = CalculateJointDist2D(DataDict, weights, deg_per_dim)
+		Joint, indv_pdf_per_dim = _CalculateJointDist2D(DataDict, weights, deg_per_dim)
 	elif ndim==3:
-		Joint, indv_pdf_per_dim = CalculateJointDist3D(DataDict, weights, deg_per_dim)
+		Joint, indv_pdf_per_dim = _CalculateJointDist3D(DataDict, weights, deg_per_dim)
 	elif ndim==4:
-		Joint, indv_pdf_per_dim = CalculateJointDist4D(DataDict, weights, deg_per_dim)
+		Joint, indv_pdf_per_dim = _CalculateJointDist4D(DataDict, weights, deg_per_dim)
 		
 	message = 'Finished calculating Joint Distribution for {} dimensions at {}\n'.format(ndim, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 	return Joint, indv_pdf_per_dim
 
-def CalculateJointDist2D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 2D distribution
-	"""
-	
+def _CalculateJointDist2D(DataDict, weights, deg_per_dim):
+    """
+    Calculate the joint distribution in 2D. Called by :py:func:`CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -942,10 +1018,10 @@ def CalculateJointDist2D(DataDict, weights, deg_per_dim):
 	return Joint, indv_pdf_per_dim
 	
 
-def CalculateJointDist3D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 3D distribution
-	"""
+def _CalculateJointDist3D(DataDict, weights, deg_per_dim):
+    """
+    Calculate the joint distribution in 3D. Called by :py:func:`CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -964,14 +1040,6 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 				a_max=DataDict["ndim_bounds"][dim][1], 
 				a_min=DataDict["ndim_bounds"][dim][0], 
 				Log=False)
-	"""
-	for i in range(NSeq):
-		Intermediate1 =  TensorMultiplication(indv_pdf_per_dim[0][i,:], ReshapedWeights)
-		for j in range(NSeq):
-			Intermediate2 =  TensorMultiplication(indv_pdf_per_dim[1][j,:], Intermediate1)
-			for k in range(NSeq):
-				Joint[i,j,k] = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
-	"""
 	
 	for i in range(NSeq):
 		Intermediate1 =  TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[2][i,:])
@@ -983,10 +1051,10 @@ def CalculateJointDist3D(DataDict, weights, deg_per_dim):
 	return Joint, indv_pdf_per_dim
 
 
-def CalculateJointDist4D(DataDict, weights, deg_per_dim):
-	"""
-	Calculate joint distribution for 4D distribution
-	"""
+def _CalculateJointDist4D(DataDict, weights, deg_per_dim):
+    """
+    Calculate the joint distribution in 4D. Called by :py:func:`CalculateJointDistribution`.
+    """
 	# DataSequence is a uniformly distributed (in log space) sequence of equal size for each dimension (typically 100).
 	NSeq = len(DataDict['DataSequence'][0])
 	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
@@ -1014,20 +1082,11 @@ def CalculateJointDist4D(DataDict, weights, deg_per_dim):
 				Intermediate3 = TensorMultiplication(indv_pdf_per_dim[2][k,:], Intermediate2)
 				for l in range(NSeq):
 					Joint[i,j,k, l] = TensorMultiplication(indv_pdf_per_dim[3][l,:], Intermediate3)
-	"""
-	for i in range(NSeq):
-		Intermediate1 =  TensorMultiplication(ReshapedWeights, indv_pdf_per_dim[1][i,:])
-		for j in range(NSeq):
-			Intermediate2 =  TensorMultiplication(Intermediate1, indv_pdf_per_dim[1][j,:])
-			for k in range(NSeq):
-				Intermediate3 =  TensorMultiplication(Intermediate2, indv_pdf_per_dim[1][k,:])
-				for l in range(NSeq):
-					Joint[i,j,k, l] = TensorMultiplication(Intermediate3, indv_pdf_per_dim[0][l,:])
-	"""		
+	
 	return Joint, indv_pdf_per_dim
 
 
-def _OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
+def __OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
 	'''
 	Much slower than the previous one
 	'''
@@ -1061,7 +1120,7 @@ def _OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
 
 
 
-def _OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 	'''
 	
@@ -1114,7 +1173,7 @@ def _OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, ve
 	return joint, indv_pdf_per_dim
 
 
-def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __OldCalculateJointDistribution2(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
 	'''
 
 	'''
@@ -1161,16 +1220,24 @@ def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, v
 
 
 def TensorMultiplication(A, B, Subscripts=None):
-	"""
-	Calculate the tensor contraction of A and B.
-	If Subscripts = None: Calculate along the last dimension of A, and the first dimension of B 
-		which must match in size.
-		C[i,j,...,l,...,n] = A[i,j,...,k] * B[k,l,...n]
-		NOTE: if dimension n is length 1, C is reshaped to reduce that dimension.
-	else:
-		Provide Subscripts example: 'ijk,klm -> ijlm'
-	"""
-	
+    """
+    Calculate the tensor contraction of A and B.
+    
+    Parameters
+    ----------
+    A, B : array[float]
+        The n-dimensional arrays/tensors.
+    Subscripts : str, optional
+        A string specifying the indices to contract, e.g. 'ijk,klm -> ijlm'. If None, will calculate along the last dimension of ``A`` and the first dimension of ``B``, which must match in size. I.e., ``C[i,j,...,l,...,n] = A[i,j,...,k] * B[k,l,...n]``.
+    
+    Returns
+    -------
+    The tensor product of ``A`` and ``B``.
+    
+    Note
+    ----
+    If dimension 'n' of the resulting tensor product is length 1, it is reshaped to reduce that dimension.
+    """
 	
 	Alphabets = [chr(i) for i in range(105,123)] # Lower case ASCII characters
 	NdimA = A.ndim
@@ -1184,14 +1251,20 @@ def TensorMultiplication(A, B, Subscripts=None):
 
 
 def rank_FI_matrix(C_pdf, w):
-	"""
-	Compute the Rank of the Fisher Information Matrix as an estimate of the DoFs for AIC.
-
-	INPUT:
-		C_pdf: 2d array with [n, (deg-2)^2]
-		w: 2D array with [deg-2, deg-2]
-	OUTPUT:
-		Rank (Integer)
+    """
+    Compute the Rank of the Fisher Information Matrix as an estimate of the degrees of freedom in calculating the AIC.
+    
+    Parameters
+    ----------
+    C_pdf : array[float]
+        The 2-d array of as returned by :py:func:`calc_C_matrix`, with dimensions [n, (deg-2)^2].
+    w : array[float]
+        The 2-d array of weights, with dimensions [deg-2, deg-2].
+    
+    Returns
+    -------
+    Rank : int
+        The rank of the Fisher Information matrix.
 	"""
 	n = np.shape(C_pdf)[1] # number of data points
 
@@ -1202,12 +1275,11 @@ def rank_FI_matrix(C_pdf, w):
 	return Rank
 
 def _rank_FI_matrix(C_pdf, w):
-	"""
-	INPUT:
-	C_pdf: 2d array with [n, (deg-2)^2]
-	w: 2D array with [deg-2, deg-2]
-
-	"""
+    """
+    Same as :py:func:`rank_FI_matrix`, but computed using a different method.
+    
+    Slower than previous method; keep for testing purposes.
+    """
 	n = np.shape(C_pdf)[1] # number of data points
 	deg_min2_sq = np.shape(C_pdf)[0]
 
@@ -1228,10 +1300,23 @@ def _rank_FI_matrix(C_pdf, w):
 	
 
 def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
-	"""
-	
-	
-	"""
+    """
+    Numerically integrate a 2-d array (e.g. a joint probability distribution, for normalization). First fits a bivariate spline to the 2-d grid of sampled points (``Matrix``) before integrating.
+    
+    Parameters
+    ----------
+    xarray, yarray : array[float]
+        The 1-d arrays defining the points along each dimension where the 2-d array ``Matrix`` is sampled.
+    Matrix : array[float]
+        The 2-d array to be integrated over.
+    xlimits, ylimits : tuple[float]
+        The integration bounds (min, max) along each dimension.
+    
+    Returns
+    -------
+    Integral : float
+        The integral over the ``Matrix`` between the bounds given by ``xlimits`` and ``ylimits``.
+    """
 	
 	Integral = RectBivariateSpline(xarray, yarray, Matrix).integral(
 		xa=xlimits[0], xb=xlimits[1], ya=ylimits[0], yb=ylimits[1])
@@ -1239,10 +1324,9 @@ def NumericalIntegrate2D(xarray, yarray, Matrix, xlimits, ylimits):
 	return Integral
 
 
-def ObtainScipyPDF(xseq, PDF):
-	"""
-	Take PDF as a function of xseq and convert it into a scipy class object in rv_continuous
-
+def _ObtainScipyPDF(xseq, PDF):
+    """
+	Take PDF as a function of xseq and convert it into a scipy class object in rv_continuous.
 	"""
 
 	Inter = interp1d(xseq, PDF, bounds_error=False)

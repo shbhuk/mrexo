@@ -48,15 +48,24 @@ def _save_dictionary(dictionary, output_location,
 		np.save(os.path.join(output_location,'JointDist.npy'), JointDist)
 		np.savetxt(os.path.join(aux_output_location,'DataSequences.txt'), DataSequences, comments='#', header='Data Sequence for each dimensions')
 	
-def GiveDegreeCandidates(degree_max, n, ndim, ncandidates=10):
-	"""
-	INPUTS:
-		degree_max = A np.array with number of elements equal to number of degrees, 
-			with each element corresponding to the maximum degree for each dimension.
-			Or else an integer
-		ndim = Number of dimensions
-		n = Size of dataset
-	"""
+def GiveDegreeCandidates(degree_max, ndim, ncandidates=10):
+    """
+    Create a vector of degree candidates in each dimension.
+    
+    Parameters
+    ----------
+    degree_max : int or array[int]
+        The maximum degree to be considered (if an integer), or the maximum degree to be considered in each dimension (if an array of integers).
+    ndim : int
+        The number of dimensions.
+    ncandidates : int, default=10
+        The number of degree candidates to consider.
+    
+    Returns
+    -------
+    degree_candidates : array[int]
+        A 2D array containing the vector of degree candidates in each dimension.
+    """
 	
 	if type(degree_max) == int:
 		degree_candidates = np.array([np.linspace(10, degree_max, ncandidates, dtype=int) for i in range(ndim)])
@@ -103,3 +112,76 @@ def _logging(message, filepath, verbose, append=True):
 		print('Using core '+message)
 
 	return 1
+
+
+def MakePlot(Data, Title, degree_candidates, Interpolate=False, AddContour=False):
+    """
+    Plot a 2D heat-map as a function of the degree candidates in each dimension.
+    
+    Parameters
+    ----------
+    Data : array[float]
+        The 2-d array to plot.
+    Title : str
+        The title of the figure.
+    degree_candidates : array[int] or list[array[int]]
+        The array or list containing the vector of degree candidates in each dimension.
+    Interpolate : bool, default=False
+        Whether to interpolate the heat-map from ``Data``.
+    AddContour : bool, default=False
+        Whether to add contour levels to the plot.
+    
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        The figure containing the plot.
+    """
+    
+    plt.close("all")
+    fig = plt.figure()
+    if Interpolate:
+        im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower', interpolation='bicubic')
+    else:
+        im = plt.imshow(Data, extent=[degree_candidates[0].min(), degree_candidates[0].max(), degree_candidates[1].min(), degree_candidates[1].max()], origin='lower')
+
+    if AddContour:
+        contours = plt.contour(degree_candidates[0], degree_candidates[1], Data, 20, colors='black')
+        plt.clabel(contours, inline=1, fontsize=10)
+
+    plt.title(Title)
+    plt.colorbar(im)
+    plt.xlabel("Degrees ($d_1$)")
+    plt.ylabel("Degrees ($d_2$)")
+    
+    return fig
+
+
+def FlattenGrid(Inputs, ndim):
+    """
+    Create a flattened mesh of ``Inputs``.
+    
+    Parameters
+    ----------
+    Inputs : list[list[float]] or array[float]
+        The input list/array of lists/arrays or 2D array.
+    ndim : int
+        The number of dimensions in (length of) ``Inputs``.
+    
+    Returns
+    -------
+    FlattenedMesh : list[list[float]]
+        The flattened list of mesh points; see example below.
+    
+    Examples
+    --------
+    >>> Inputs = [[1,2,3,4], [1,2,3,4], [1,2,3,4]] # 3 dimensions with 4 points
+    >>> FlattenGrid(Inputs, 3)
+    [[1,1,1], [1,1,2], [1,1,3], [1,1,4], [2,1,1], [2,1,2], [2,1,3], ..., [4,4,3], [4,4,4]]
+    """
+    # TODO: can just calculate 'ndim' from the Inputs (e.g., 'ndim = len(Inputs)') instead of passing as a parameter?
+    
+    Mesh = np.meshgrid(*Inputs)
+    i_flat = [Mesh[i].flatten() for i in range(ndim)]
+    FlattenedMesh = [[(ix[i]) for ix in i_flat] for i in range(len(i_flat[0]))]
+    
+    return FlattenedMesh
