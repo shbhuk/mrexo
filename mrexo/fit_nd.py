@@ -38,8 +38,8 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		Number of Monte-Carlo simulations to run
 	NumBootstrap : int, default=0
 		The number of bootstraps to perform (must be greater than 1).
-    k_fold : int, optional
-        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
+	k_fold : int, optional
+		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	cores : int, default=1
 		The number of cores to use for parallel processing. This is used in the
 		   bootstrap and the cross validation. To use all the cores in the CPU,
@@ -51,7 +51,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 	Returns
 	-------
-    FullFitResult : dict
+	FullFitResult : dict
 		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
 	"""
 
@@ -79,10 +79,10 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 
 	message = """
-	___  _________  _____              
-	|  \/  || ___ \|  ___|             
+	___  _________  _____			  
+	|  \/  || ___ \|  ___|			 
 	| .  . || |_/ /| |__  __  __  ___  
-	| |\/| ||    / |  __| \ \/ / / _ \ 
+	| |\/| ||	/ |  __| \ \/ / / _ \ 
 	| |  | || |\ \ | |___  >  < | (_) |
 	\_|  |_/\_| \_|\____/ /_/\_\ \___/ 
 	"""
