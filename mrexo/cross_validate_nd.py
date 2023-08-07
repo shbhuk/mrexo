@@ -8,7 +8,7 @@ from .Optimizers import LogLikelihood
 import matplotlib.pyplot as plt
 import datetime
 
-def run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
+def RunCrossValidation(DataDict, degree_max, k_fold=10, NumCandidates=20, 
 	SymmetricDegreePerDimension=True,
 	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
 	"""

@@ -5,13 +5,13 @@
 
 """
 
-from .predict import mass_100_percent_iron_planet, radius_100_percent_iron_planet
+# from .predict import mass_100_percent_iron_planet, radius_100_percent_iron_planet
 from .fit_nd import fit_relation
-from .mle_utils_nd import MLE_fit
-from .utils_nd import _load_lookup_table, _logging
-from .cross_validate_nd import run_cross_validation
-from .profile_likelihood import run_profile_likelihood
-# from .aic_nd import run_aic
+from .mle_utils_nd import MLE_fit, InputData
+from .plotting_nd import Plot2DWeights, Plot2DJointDistribution, Plot1DInputDataHistogram
+from .utils_nd import GiveDegreeCandidates
+from .cross_validate_nd import RunCrossValidation
+from .aic_nd import RunAIC
 from .Optimizers import optimizer
 
 __version__ = '0.3'

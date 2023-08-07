@@ -4,8 +4,7 @@ import os
 import datetime
 
 from .mle_utils_nd import MLE_fit
-from .cross_validate_nd import run_cross_validation
-# from .profile_likelihood import run_profile_likelihood
+from .cross_validate_nd import RunCrossValidation
 from .utils_nd import _logging, _save_dictionary
 from .aic_nd import RunAIC
 
@@ -99,7 +98,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	print(select_deg)
 	if select_deg == 'cv':
 
-		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
+		deg_per_dim = RunCrossValidation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
 			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
 			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
 
