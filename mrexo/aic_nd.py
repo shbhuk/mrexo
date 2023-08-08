@@ -3,13 +3,13 @@ import numpy as np
 import os
 import pandas as pd
 from multiprocessing import Pool
-from .mle_utils_nd import MLE_fit, calc_C_matrix
+from .mle_utils_nd import MLE_fit
 from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
 import matplotlib.pyplot as plt
 
 """
 def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
-	save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+	save_path=os.path.dirname(__file__), verbose=2):
 	'''
 	Symmetric version of degree optimization using the AIC method. 
 	Here instead of n different degrees chosen for 'n' dimensions, each dimension
@@ -46,7 +46,7 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 
 def RunAIC(DataDict, degree_max, NumCandidates=20,
 	SymmetricDegreePerDimension=True,
-	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+	cores=1, save_path=os.path.dirname(__file__), verbose=2):
 	"""
 	Calculate the optimal number of degrees in each dimension using the AIC method.
 	
@@ -68,8 +68,6 @@ def RunAIC(DataDict, degree_max, NumCandidates=20,
 		The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
 	verbose : {0,1,2}, default=2
 		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
-	abs_tol : float, default=1e-8
-		The absolute tolerance to be used for the numerical integrations.
 	
 	Returns
 	-------

@@ -3,13 +3,13 @@ import numpy as np
 import os
 import pandas as pd
 from multiprocessing import Pool
-from .mle_utils_nd import MLE_fit, calc_C_matrix
+from .mle_utils_nd import MLE_fit
 from .utils_nd import _logging, GiveDegreeCandidates
 
 
 
 def run_profile_likelihood(DataDict, degree_max, cores=1,
-	save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+	save_path=os.path.dirname(__file__), verbose=2):
 	"""
 	Choose the number of degrees for each dimension using the profile likelihood.
 	
@@ -25,8 +25,7 @@ def run_profile_likelihood(DataDict, degree_max, cores=1,
 		The folder name (including path) to save results in.
 	verbose : int, default=2
 		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
-	abs_tol : float, default=1e-8
-		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
+
 	
 	Returns
 	-------
@@ -62,7 +61,7 @@ def run_profile_likelihood(DataDict, degree_max, cores=1,
 		loglike = np.zeros(ncand_per_dim)
 		
 		for idx, _ in np.ndenumerate(loglike): # 'idx' is a tuple of indices for each dimension
-			_, loglike[idx] = MLE_fit(DataDict, deg_per_dim=[degree_candidates[d][idx[d]] for d in range(ndim)], abs_tol=abs_tol, save_path=save_path, OutputWeightsOnly=True, CalculateJointDist=False, verbose=verbose)
+			_, loglike[idx] = MLE_fit(DataDict, deg_per_dim=[degree_candidates[d][idx[d]] for d in range(ndim)], save_path=save_path, OutputWeightsOnly=True, CalculateJointDist=False, verbose=verbose)
 
 	Gradient = np.gradient(loglike, *degree_candidates)
 	TotalDerivative = (Gradient[0]**2 + Gradient[1]**2) # QUESTION: is this really the "total derivative"? It looks more like the magnitude of the gradient.
@@ -89,7 +88,7 @@ def run_profile_likelihood(DataDict, degree_max, cores=1,
 '''
 def _profilelikelihood_parallelize(pl_input):
 
-	Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg, abs_tol, save_path, verbose = pl_input
+	Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg,  save_path, verbose = pl_input
 
 	message = "\nRunning profile likelihod for deg = "+str(deg)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -97,7 +96,7 @@ def _profilelikelihood_parallelize(pl_input):
 
 	_, loglike = MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
 			Y_bounds=Y_bounds, X_bounds=X_bounds, Y_char=Y_char, X_char=X_char,
-			deg=deg, abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
+			deg=deg, save_path=save_path, output_weights_only=True, verbose=verbose)
 	return loglike
 '''
 
@@ -107,7 +106,7 @@ def _profilelikelihood_parallelize(pl_input):
 def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 						X_char='x', Y_char='y',
 						degree_max=None, degree_candidates=None,
-						cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+						cores=1, save_path=os.path.dirname(__file__), verbose=2):
 	#'''
 	\nINPUTS:
 		Y: Numpy array of Y measurements. In LINEAR SCALE.
@@ -131,8 +130,6 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 		cores: Number of cores for parallel processing. This is used in the
 				bootstrap and the cross validation. Default=1.
 				To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
-		abs_tol : Absolute tolerance to be used for the numerical integration for product of normal and beta distribution.
-				Default : 1e-8
 		cores: this program uses parallel computing for bootstrap. Default=1
 		save_path: Location of folder within results for auxiliary output files
 		verbose: Integer specifying verbosity for logging.
@@ -183,7 +180,7 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 		_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
 
 		pl_input = ((Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char,
-					d, abs_tol, save_path, verbose) for d in degree_candidates)
+					d,  save_path, verbose) for d in degree_candidates)
 
 		# Run in parallel
 		pool = Pool(processes = cores)
@@ -219,7 +216,7 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 			# Calculate the optimum weights using MLE for a given input test_degree
 			_, loglike[t] = MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
 					Y_bounds=Y_bounds, X_bounds=X_bounds, Y_char=Y_char, X_char=X_char,
-					deg=degree_candidates[t], abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
+					deg=degree_candidates[t], save_path=save_path, output_weights_only=True, verbose=verbose)
 			if t > 0:
 				FractionalChange[t] = (loglike[t] - loglike[t-1])/np.abs(loglike[t-1])
 				print(t, degree_candidates[t], loglike[t], FractionalChange[t])
@@ -249,7 +246,7 @@ def run_profile_likelihood(Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds,
 
 def _profilelikelihood_parallelize(pl_input):
 
-	Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg, abs_tol, save_path, verbose = pl_input
+	Y, X, Y_sigma, X_sigma, Y_bounds, X_bounds, Y_char, X_char, deg,  save_path, verbose = pl_input
 
 	message = "\nRunning profile likelihod for deg = "+str(deg)
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -257,6 +254,6 @@ def _profilelikelihood_parallelize(pl_input):
 
 	_, loglike = MLE_fit(Y=Y, X=X, Y_sigma=Y_sigma, X_sigma=X_sigma,
 			Y_bounds=Y_bounds, X_bounds=X_bounds, Y_char=Y_char, X_char=X_char,
-			deg=deg, abs_tol=abs_tol, save_path=save_path, output_weights_only=True, verbose=verbose)
+			deg=deg,  save_path=save_path, output_weights_only=True, verbose=verbose)
 	return loglike
 """

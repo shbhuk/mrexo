@@ -129,7 +129,6 @@ def InputData(ListofDictionaries):
 
 
 def MLE_fit(DataDict, deg_per_dim, 
-			abs_tol=1e-8, 
 			OutputWeightsOnly=False, CalculateJointDist = False, 
 			save_path=None, verbose=2,
 			UseSparseMatrix=False):
@@ -145,8 +144,6 @@ def MLE_fit(DataDict, deg_per_dim,
 		A dictionary containing the data, as returned by :py:func:`InputData`.
 	deg_per_dim : array[int]
 		The number of degrees per dimension.
-	abs_tol : float, default=1e-8
-		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
 	OutputWeightsOnly : bool, default=False
 		Whether to only output the (unpadded) weights (and log likelihood).
 	CalculateJointDist : bool, default=False
@@ -471,7 +468,7 @@ def _PDF_NormalBeta(a, a_obs, a_std, a_max, a_min, shape1, shape2, Log=True):
 
 
 # Ndim - 20201130
-def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, abs_tol=1e-8):
+def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False):
 	"""
 	Numerically integrate the product of the normal and Beta distributions.
 
@@ -489,8 +486,6 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 		The maximum and minimum values defining the integration bounds.
 	Log : bool, default=False
 		Whether to integrate in log space (for the normal distribution).
-	abs_tol : float, default=1e-8
-		The absolute error tolerance.
 	
 	Returns
 	-------
@@ -502,13 +497,13 @@ def IntegrateNormalBeta(data, data_Sigma, deg, degree, a_max, a_min, Log=False, 
 	shape2 = deg - degree + 1
 
 	integration_product = quad(_PDF_NormalBeta, a=a_min, b=a_max,
-						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
+						  args=(a_obs, a_std, a_max, a_min, shape1, shape2, Log), epsabs=1e-8, epsrel=1e-8)
 	return integration_product[0]
 
 
 def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 		deg, degree, 
-		a_max, a_min, Log=False, abs_tol=1e-8):
+		a_max, a_min, Log=False):
 	"""
 	Numerically integrate the product of the two half normal and Beta distributions.
 
@@ -524,19 +519,19 @@ def IntegrateDoubleHalfNormalBeta(data, data_USigma, data_LSigma,
 
 	if Log: 
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=np.log10(a_obs),
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=1e-8, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=np.log10(a_obs), b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=1e-8, epsrel=1e-8)
 	else:
 		integration_product_L = quad(_PDF_NormalBeta, a=a_min, b=a_obs,
-							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
+							  args=(a_obs, data_LSigma, a_max, a_min, shape1, shape2, Log), epsabs=1e-8, epsrel=1e-8)
 		integration_product_U = quad(_PDF_NormalBeta, a=a_obs, b=a_max,
-							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=abs_tol, epsrel=1e-8)
+							  args=(a_obs, data_USigma, a_max, a_min, shape1, shape2, Log), epsabs=1e-8, epsrel=1e-8)
 	return integration_product_L[0] + integration_product_U[0]
 
 
 # Ndim - 20201130
-def __OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, abs_tol=1e-8, Log=False):
+def __OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_USigma=np.nan, Log=False):
 	'''
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 	If the data has uncertainty, the joint distribution is modelled using a
@@ -559,13 +554,13 @@ def __OldComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_LSigma=np.nan, a_U
 			a_std = (a - a_min)/(a_max - a_min)
 		a_beta_indv = np.array([_PDF_Beta(a_std, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
-		a_beta_indv = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+		a_beta_indv = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_std, deg=deg, degree=d, a_max=a_max, a_min=a_min, Log=Log) for d in deg_vec])
 	return a_beta_indv
 
 
 def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
 	a_LSigma=np.nan, a_USigma=np.nan,
-	abs_tol=1e-8, Log=False):
+	Log=False):
 	"""
 	Find the individual probability density function for a variable which is a convolution of a beta function with something else.
 
@@ -592,8 +587,6 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 		The maximum and minimum values.
 	a_LSigma, a_USigma : float, optional
 		The lower and upper uncertainties (1-sigma) in the data point.
-	abs_tol : float, default=1e-8
-		The absolute error tolerance.
 	Log : bool, default=False
 		Whether to compute in log space. See note above.
 	
@@ -610,8 +603,8 @@ def _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min,
 			a_norm = (a - a_min)/(a_max - a_min)
 		PDF = np.array([_PDF_Beta(a_norm, a=d, b=deg - d + 1)/(a_max - a_min) for d in deg_vec])
 	else:
-		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
-		# PDF = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, abs_tol=abs_tol, Log=Log) for d in deg_vec])
+		PDF = np.array([IntegrateDoubleHalfNormalBeta(data=a, data_USigma=a_USigma, data_LSigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min,  Log=Log) for d in deg_vec])
+		# PDF = np.array([IntegrateNormalBeta(data=a, data_Sigma=a_LSigma, deg=deg, degree=d, a_max=a_max, a_min=a_min, Log=Log) for d in deg_vec])
 
 	return PDF
 
@@ -1120,7 +1113,7 @@ def __OldCalculateJointDist2D(DataDict, weights, deg_per_dim):
 
 
 
-def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, verbose):
 	'''
 	'''
 	
@@ -1173,7 +1166,7 @@ def __OldCalculateJointDistribution(DataDict, weights, deg_per_dim, save_path, v
 	return joint, indv_pdf_per_dim
 
 
-def __OldCalculateJointDistribution2(DataDict, weights, deg_per_dim, save_path, verbose, abs_tol):
+def __OldCalculateJointDistribution2(DataDict, weights, deg_per_dim, save_path, verbose):
 	'''
 
 	'''
