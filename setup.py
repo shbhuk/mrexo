@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='mrexo',
-      version='0.3',
+      version='1.0dev',
       description='Nonparametric mass radius relationship for exoplanets',
       long_description=readme(),
       long_description_content_type="text/markdown",
@@ -19,4 +19,4 @@ setup(name='mrexo',
       include_package_data = True,
       license='GPLv3',
       classifiers=['Topic :: Scientific/Engineering :: Astronomy'],
-      keywords='Mass-Radius relationship Non parametric Exoplanets' )
+      keywords='Mass-Radius+ relationship Non parametric Exoplanets' )
