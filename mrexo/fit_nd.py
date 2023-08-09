@@ -4,8 +4,7 @@ import os
 import datetime
 
 from .mle_utils_nd import MLE_fit
-from .cross_validate_nd import run_cross_validation
-# from .profile_likelihood import run_profile_likelihood
+from .cross_validate_nd import RunCrossValidation
 from .utils_nd import _logging, _save_dictionary
 from .aic_nd import RunAIC
 
@@ -14,7 +13,7 @@ from .aic_nd import RunAIC
 def fit_relation(DataDict, SigmaLimit=1e-3, 
 		save_path=None, select_deg=None, degree_max=None, SymmetricDegreePerDimension=True, 
 		NumMonteCarlo=0, NumBootstrap=0, 
-		k_fold=None, cores=1, abs_tol=1e-8, verbose=2):
+		k_fold=None, cores=1, verbose=2):
 	"""
 	Fit an n-dimensional relationship using a non parametric model with beta densities.
 
@@ -38,20 +37,18 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		Number of Monte-Carlo simulations to run
 	NumBootstrap : int, default=0
 		The number of bootstraps to perform (must be greater than 1).
-    k_fold : int, optional
-        The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
+	k_fold : int, optional
+		The number of folds, if using k-fold validation. Only used if ``select_deg='cv'``. By default, uses 10 folds for n > 60, and 5 folds otherwise.
 	cores : int, default=1
 		The number of cores to use for parallel processing. This is used in the
 		   bootstrap and the cross validation. To use all the cores in the CPU,
 		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
-	abs_tol : float, default=1e-8
-		The absolute tolerance to be used for the numerical integration for the product of normal and beta distributions.
 	verbose : {0,1,2}, default=2
 		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
 
 	Returns
 	-------
-    FullFitResult : dict
+	FullFitResult : dict
 		Output dictionary from initial fitting without bootstrap using Maximum Likelihood Estimation. See the output of :py:func:`mrexo.mle_utils_nd.MLE_fit`.
 	"""
 
@@ -79,10 +76,10 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 
 	message = """
-	___  _________  _____              
-	|  \/  || ___ \|  ___|             
+	___  _________  _____			  
+	|  \/  || ___ \|  ___|			 
 	| .  . || |_/ /| |__  __  __  ___  
-	| |\/| ||    / |  __| \ \/ / / _ \ 
+	| |\/| ||	/ |  __| \ \/ / / _ \ 
 	| |  | || |\ \ | |___  >  < | (_) |
 	\_|  |_/\_| \_|\____/ /_/\_\ \___/ 
 	"""
@@ -99,9 +96,9 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	print(select_deg)
 	if select_deg == 'cv':
 
-		deg_per_dim = run_cross_validation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
+		deg_per_dim = RunCrossValidation(DataDict, degree_max, k_fold=10, NumCandidates=10, 
 			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
-			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+			cores=cores, save_path=aux_output_location, verbose=verbose)
 
 	elif select_deg == 'profile':
 		print("Profile Likelihood is not implemented yet")
@@ -109,7 +106,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 
 		deg_per_dim = RunAIC(DataDict, degree_max, NumCandidates=20,
 			SymmetricDegreePerDimension=SymmetricDegreePerDimension,
-			cores=cores, save_path=aux_output_location, verbose=verbose, abs_tol=abs_tol)
+			cores=cores, save_path=aux_output_location, verbose=verbose)
 
 	else:
 		# Use user defined value
@@ -122,7 +119,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 	_ = _logging(message=message, filepath=aux_output_location, verbose=verbose, append=True)
 
 	FullFitResult = MLE_fit(DataDict,  deg_per_dim=deg_per_dim,
-	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	save_path=save_path, verbose=verbose, 
 	OutputWeightsOnly=False, CalculateJointDist=True)
 
 	message = 'Finished full dataset MLE run at {}\n'.format(datetime.datetime.now())
@@ -140,7 +137,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		MonteCarloDirectory = os.path.join(aux_output_location, 'MonteCarlo')
 		if not os.path.exists(MonteCarloDirectory): os.mkdir(MonteCarloDirectory)
 
-		Inputs_MonteCarloPool = ((i, DataDict, deg_per_dim, MonteCarloDirectory, verbose, abs_tol) for i in range(NumMonteCarlo))
+		Inputs_MonteCarloPool = ((i, DataDict, deg_per_dim, MonteCarloDirectory, verbose) for i in range(NumMonteCarlo))
 
 		if cores > 1:
 			# Parallelize the Monte-Carlo
@@ -165,7 +162,7 @@ def fit_relation(DataDict, SigmaLimit=1e-3,
 		BootstrapDirectory = os.path.join(aux_output_location, 'Bootstrap')
 		if not os.path.exists(BootstrapDirectory): os.mkdir(BootstrapDirectory)
 
-		Inputs_BootstrapPool = ((i, DataDict, deg_per_dim, BootstrapDirectory, verbose, abs_tol) for i in range(NumBootstrap))
+		Inputs_BootstrapPool = ((i, DataDict, deg_per_dim, BootstrapDirectory, verbose) for i in range(NumBootstrap))
 
 		if cores > 1:
 			# Parallelize the Bootstrap
@@ -194,7 +191,6 @@ def _RunMonteCarlo_MLE(Inputs):
 	deg_per_dim = Inputs[2]
 	save_path = Inputs[3]
 	verbose = Inputs[4]
-	abs_tol = Inputs[5]
 
 	message = 'Started Running Monte-Carlo Sim # {} at {}'.format(MonteCarloIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -212,7 +208,7 @@ def _RunMonteCarlo_MLE(Inputs):
 		NewDataDict['ndim_data'][dim][NewDataDict['ndim_data'][dim] > 10**NewDataDict['ndim_bounds'][dim][1]] = 10**NewDataDict['ndim_bounds'][dim][1]
 
 	MonteCarloResult = MLE_fit(NewDataDict,  deg_per_dim=deg_per_dim,
-	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	save_path=save_path, verbose=verbose,
 	OutputWeightsOnly=False, CalculateJointDist=True)
 
 	_save_dictionary(dictionary=MonteCarloResult, output_location=save_path, NumBootstrap=False, NumMonteCarlo=MonteCarloIndex)
@@ -232,7 +228,6 @@ def _RunBootstrap_MLE(Inputs):
 	deg_per_dim = Inputs[2]
 	save_path = Inputs[3]
 	verbose = Inputs[4]
-	abs_tol = Inputs[5]
 
 	message = 'Started Running Bootstrap # {} at {}'.format(BootstrapIndex, datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -245,7 +240,7 @@ def _RunBootstrap_MLE(Inputs):
 	for k in ['ndim_data', 'ndim_sigma', 'ndim_LSigma', 'ndim_USigma']: NewDataDict[k] = OriginalDataDict[k][:, n_boot_iter]
 
 	BootstrapResult = MLE_fit(NewDataDict,  deg_per_dim=deg_per_dim,
-	save_path=save_path, verbose=verbose, abs_tol=abs_tol,
+	save_path=save_path, verbose=verbose, 
 	OutputWeightsOnly=False, CalculateJointDist=True)
 
 	_save_dictionary(dictionary=BootstrapResult, output_location=save_path, NumBootstrap=BootstrapIndex, NumMonteCarlo=False)

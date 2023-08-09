@@ -14,16 +14,18 @@ matplotlib.rcParams['ytick.labelsize'] = 25
 from mrexo.mle_utils_nd import calculate_conditional_distribution
 
 # ConditionString = 'm|r,p'
-ConditionString = 'm|r'
+ConditionString = 'mdust|stm'
 
-UseMonteCarlo = True
+UseMonteCarlo = False
 Runs = ['AIC_4real_MonteCarlo_2D']#, 'AIC_4real_MonteCarlo_2D']
 Runs = ['d20_MR_MC100_2D', 'd40_MR_MC100_2D', 'd80_MR_MC100_2D', 'd100_MR_MC100_2D']
-SupTitle = 'Testing Monte-Carlo'
+Runs = ['AllPlanet_RpLt4_StMlt1.5_MR_CV_100MC_100BS']
+Runs = ['LupusClassII_2d_CV_100MC_100BS']
+SupTitle = '' # Testing Monte-Carlo'
 
 Titles = np.repeat('', len(Runs))
 # Titles = ["{}$\sigma$".format(str(np.round(1/s, 1))) for s in np.array(Sigma).astype(float)] #np.round(1/np.array(Sigma).astype(float), 2)
-Titles = ['20x20', '40x40', '80x80', '100x100']
+Titles = ['', '20x20', '40x40', '80x80', '100x100']
 TitlePos = np.repeat(100, len(Runs))
 
 
@@ -31,12 +33,14 @@ fig, ax = plt.subplots(len(Runs), sharex=True, sharey=True, figsize=(6, 6))
 if np.size(ax) == 1: ax=[ax]
 
 for d, RunName in enumerate(Runs):
-	# save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
-	save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
+	save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+	# save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
 
-	ConditionName = '2D_Re_'+ConditionString.replace('|', '_').replace(',', '_')
+	ConditionName = '2D_StMass_'+ConditionString.replace('|', '_').replace(',', '_')
 	PlotFolder = os.path.join(save_path, ConditionName)
 	MonteCarloFolder = os.path.join(save_path, 'output', 'other_data_products', 'MonteCarlo')
+	# MonteCarloFolder = os.path.join(save_path, 'output', 'other_data_products', 'Bootstrap')
+
 	UseMonteCarlo = os.path.exists(MonteCarloFolder)
 	NumMonteCarlo =  len(glob.glob(os.path.join(MonteCarloFolder, 'JointDist_MCSim*.npy')))
 
@@ -58,11 +62,12 @@ for d, RunName in enumerate(Runs):
 	yseq = DataSequences[RHSDimensions[0]]
 
 
-	r = [8, 12]
-	colours = ["C3", "C2", "C1", "C0"]
+	r = [1, 1.5, 2, 3]
+	r = [0.1, 0.3, 0.5, 1.0]
+	colours = ["C3", "C2", "C1", "C0", "C4"]
 	MeasurementDict = {'r':[r, np.repeat(np.nan, len(r))]}
 	LogMeasurementDict = {
-												'r':[np.log10(r),  np.reshape(np.repeat(np.nan, 2*len(r)), (len(r), 2))]
+												'stm':[np.log10(r),  np.reshape(np.repeat(np.nan, 2*len(r)), (len(r), 2))]
 											}
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
@@ -98,18 +103,18 @@ for d, RunName in enumerate(Runs):
 		# logbins = np.logspace(np.log10(bins[0]),np.log10(bins[-1]),len(bins))
 		for i in range(len(r)):
 			hist = np.histogram(10**MeanMC[:,i])
-			ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  label='Radius = '+str(np.round(r[i], 1))+' R$_{\oplus}$', color=colours[i])
+			ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  label='Stellar Mass = '+str(r[i])+' M$_{\odot}$', color=colours[i])
 			
 		# _ = [ax[d].hist(10**MeanMC[:,i], label='Radius = '+str(np.round(r[i], 1))+' R$_{\oplus}$', color=colours[i]) for i in range(len(r))]
 	else:
 		_ = [ax[d].fill_betweenx(y=np.arange(ax[d].get_ylim()[0], ax[d].get_ylim()[1]*5), x1=10**(MeanPDF[i] - np.sqrt(VariancePDF[i])), x2=10**(MeanPDF[i] + np.sqrt(VariancePDF[i])), alpha=0.2, color=colours[i]) for i in range(len(r))]
 		_ = [ax[d].text(10**MeanPDF[i]*(1.1), 1, str(np.round(MeanPDF[i]/np.sqrt(VariancePDF[i]), 1)) + '$\sigma$', fontsize=22, c=colours[i]) for i in range(len(r))]	
 
-	_ = [ax[d].plot(10**xseq, ConditionalDist[i], label='Radius = '+str(np.round(r[i], 1))+' R$_{\oplus}$', c=colours[i]) for i in range(len(r))]
+	# _ = [ax[d].plot(10**xseq, ConditionalDist[i], label='Radius = '+str(np.round(r[i], 1))+' R$_{\oplus}$', c=colours[i]) for i in range(len(r))]
 
 
 	_ = [ax[d].axvline(10**MeanPDF[i], linestyle='dashed', c=colours[i]) for i in range(len(r))]
-	_ = [ax[d].text(10**MeanPDF[i]*(1.1), 1.5, str(np.round(10**MeanPDF[i], 1)) + ' M$_{\oplus}$', fontsize=22, c=colours[i]) for i in range(len(r))]
+	_ = [ax[d].text(10**MeanPDF[i]*(1.05), 1.2, str(np.round(10**MeanPDF[i], 1)) + ' M$_{\oplus}$', fontsize=22, c=colours[i]) for i in range(len(r))]
 
 	# _ = [ax[d].axvline(10**xseq[np.argmax(ConditionalDist[i])], linestyle='solid', c=colours[i]) for i in range(len(r))]
 
@@ -136,8 +141,8 @@ for d, RunName in enumerate(Runs):
 
 	# plt.xlim(10**DataDict['ndim_bounds'][0][0], 10**DataDict['ndim_bounds'][0][1])
 	ax[d].set_xscale("log")
-	ax[d].set_xlim(0, 2000)
-	# ax[d].set_ylim(0, 2.3)
+	ax[d].set_xlim(1, 200)
+	ax[d].set_ylim(0, 2)
 	ax[0].set_ylabel("Probability Density Function")
 
 ax[-1].set_xlabel(DataDict['ndim_label'][LHSDimensions[0]], size=25)

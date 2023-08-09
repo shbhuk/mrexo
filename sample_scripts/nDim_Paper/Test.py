@@ -7,15 +7,15 @@ a_USigma = 1
 
 start = datetime.datetime.now()
 for i in range(1000):
-    _ComputeOldConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=a_std, abs_tol=1e-8, Log=False)
+	_ComputeOldConvolvedPDF(a, deg, deg_vec, a_max, a_min, a_std=a_std, abs_tol=1e-8, Log=False)
 end = datetime.datetime.now()
 print(end-start)
 
 start = datetime.datetime.now()
 for i in range(1000):
-    _ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
-        a_LSigma=a_LSigma, a_USigma=a_USigma,
-        abs_tol=1e-8, Log=False)
+	_ComputeConvolvedPDF(a, deg, deg_vec, a_max, a_min, 
+		a_LSigma=a_LSigma, a_USigma=a_USigma,
+		abs_tol=1e-8, Log=False)
 end = datetime.datetime.now()
 print(end-start)
 
@@ -169,6 +169,7 @@ except NameError:
 
 
 from memory_profiler import profile
+import tracemalloc
 @profile
 
 def calc_C_matrix(DataDict, deg_per_dim,
@@ -196,6 +197,7 @@ def calc_C_matrix(DataDict, deg_per_dim,
 	for deg in deg_per_dim:
 		deg_product *= deg-2
 		
+	# tracemalloc.start()
 	if UseSparseMatrix:
 		C_pdf = sparse.lil_matrix((deg_product, n))
 		message = 'Using Sparse Matrix for C_pdf'
@@ -205,10 +207,10 @@ def calc_C_matrix(DataDict, deg_per_dim,
 
 	# Loop across each data point.
 	for i in range(0,n):
-		if UseSparseMatrix:
-			kron_temp = sparse.csr_matrix(1)
-		else:
-			kron_temp = 1
+		# if UseSparseMatrix:
+			# kron_temp = sparse.csr_matrix(1)
+		# else:
+		kron_temp = 1
 		for dim in range(0,ndim):
 			indv_pdf_per_dim[dim][i,:] = _ComputeConvolvedPDF(a=DataDict["ndim_data"][dim][i], 
 				a_LSigma=DataDict["ndim_LSigma"][dim][i], a_USigma=DataDict["ndim_USigma"][dim][i],
@@ -221,19 +223,21 @@ def calc_C_matrix(DataDict, deg_per_dim,
 			
 			# Starting 20210323, we're flipping the order for the kron product
 			# because there seems to be a flipping of degrees, only apparent in the asymmetric degree case
-			if UseSparseMatrix:
-				kron_temp = sparse.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
-			else:
-				kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
-				kron_temp[kron_temp <= 1e-10] = 0
 
-		if UseSparseMatrix:
-			C_pdf[:,i] = kron_temp.T
-		else:
-			C_pdf[:,i] = kron_temp
+			# if UseSparseMatrix:
+				# kron_temp = sparse.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+			# else:
+			kron_temp = np.kron(kron_temp, indv_pdf_per_dim[dim][i,:])
+			kron_temp[kron_temp <= 1e-10] = 0
+
+		# if UseSparseMatrix:
+			# C_pdf[:,i] = kron_temp
+		# else:
+		C_pdf[:,i] = kron_temp
 	
 	# print(tracemalloc.get_traced_memory())
 	# tracemalloc.stop()
+	# print("Sparsity = ", 1 - np.count_nonzero(C_pdf.todense())/C_pdf.todense().size)
 
 	message = 'Finished Integration at {}. \nCalculated the PDFs for Integrated beta and normal density.'.format(datetime.datetime.now())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
@@ -339,11 +343,10 @@ select_deg = 'aic'
 abs_tol = 1e-8
 degree_max = 50
 cores = 2
-SymmetricDegreePerDimension = True
 NumCandidates = 20
 deg_per_dim = [25,25,25]
 
-UseSparseMatrix = False
+UseSparseMatrix = True
 print("UseSparseMatrix = ",UseSparseMatrix)
 s = datetime.datetime.now()
 C_pdf = calc_C_matrix(DataDict, deg_per_dim, abs_tol=1e-8, save_path='', verbose=2, UseSparseMatrix=UseSparseMatrix)
@@ -351,8 +354,15 @@ w = optimizer(C_pdf, deg_per_dim, verbose=2, save_path='', MaxIter=500, rtol=1e-
 e = datetime.datetime.now()
 
 print(e-s)
-print("UseSparseMatrix = ",UseSparseMatrix)
 
+print("Using Sparse Matrix = "+str(UseSparseMatrix))
+print("C_pdf shape =", np.shape(C_pdf), ':: NumElements x 1e6 = ', np.prod(np.shape(C_pdf))/1e6)
+if UseSparseMatrix:
+	print("Size for C_pdf in MB = {:.3f}, LogLikelihood = {:.1f}, 95% weight = {}".format(C_pdf.data.size/(1024**2), w[1], np.percentile(w[0], q=95)))
+	# print("{:.2f}% of elements are < 1e-10".format(100*np.size(C_pdf.toarray()[C_pdf.toarray() < 1e-10])/np.size(C_pdf.toarray())))
+else:
+	print("Size for C_pdf in MB = {:.3f}, LogLikelihood = {:.1f}, 95% weight = {}".format(C_pdf.nbytes/(1024**2), w[1], np.percentile(w[0], q=95)))
+	# print("{:.2f}% of elements are < 1e-10".format(100*np.size(C_pdf[C_pdf < 1e-10])/np.size(C_pdf)))
 
 """
 ndim = DataDict['ndim']

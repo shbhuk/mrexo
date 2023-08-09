@@ -9,6 +9,8 @@ import pandas as pd
 import cProfile
 import pstats
 
+import shutil
+
 
 Platform = sys.platform
 
@@ -149,6 +151,8 @@ for d in [20]:#, 40, 80, 100, 500, 1000]:
 
 		outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=30, cores=2,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
 		#cProfile.run("outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=120, cores=40, SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=100)", os.path.join(save_path, 'Profile.prof'))
+		shutil.copy(os.path.join(pwd, 'sample_fit.py'), os.path.join(save_path, 'sample_fit_{}.py'.format(RunName)))
+
 
 		"""
 		file = open(os.path.join(save_path, 'FormattedCumulativeProfile.txt'), 'w')

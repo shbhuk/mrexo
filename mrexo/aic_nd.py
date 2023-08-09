@@ -3,13 +3,13 @@ import numpy as np
 import os
 import pandas as pd
 from multiprocessing import Pool
-from .mle_utils_nd import MLE_fit, calc_C_matrix
+from .mle_utils_nd import MLE_fit
 from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
 import matplotlib.pyplot as plt
 
 """
 def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
-	save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
+	save_path=os.path.dirname(__file__), verbose=2):
 	'''
 	Symmetric version of degree optimization using the AIC method. 
 	Here instead of n different degrees chosen for 'n' dimensions, each dimension
@@ -46,36 +46,34 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 
 def RunAIC(DataDict, degree_max, NumCandidates=20,
 	SymmetricDegreePerDimension=True,
-	cores=1, save_path=os.path.dirname(__file__), verbose=2, abs_tol=1e-8):
-    """
-    Calculate the optimal number of degrees in each dimension using the AIC method.
-    
-    Parameters
-    ----------
-    DataDict : dict
-        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
-    degree_max : int
-        The maximum degree checked during degree selection.
-    NumCandidates : int, default=20
-        The number of degree candidates to test.
-    SymmetricDegreePerDimension: bool, default=True
-        If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
-        If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
-    cores : int, default=1
-        The number of cores to use for parallel processing. To use all the cores in the CPU,
-           set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
-    save_path : str, default=os.path.dirname(__file__)
-        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
-    verbose : {0,1,2}, default=2
-        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
-    abs_tol : float, default=1e-8
-        The absolute tolerance to be used for the numerical integrations.
-    
-    Returns
-    -------
-    DegreeChosen : array[int]
-        The optimal number of degrees in each dimension, chosen by minimizing the AIC.
-    """
+	cores=1, save_path=os.path.dirname(__file__), verbose=2):
+	"""
+	Calculate the optimal number of degrees in each dimension using the AIC method.
+	
+	Parameters
+	----------
+	DataDict : dict
+		The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+	degree_max : int
+		The maximum degree checked during degree selection.
+	NumCandidates : int, default=20
+		The number of degree candidates to test.
+	SymmetricDegreePerDimension: bool, default=True
+		If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
+		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+	cores : int, default=1
+		The number of cores to use for parallel processing. To use all the cores in the CPU,
+		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
+	save_path : str, default=os.path.dirname(__file__)
+		The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+	verbose : {0,1,2}, default=2
+		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+	
+	Returns
+	-------
+	DegreeChosen : array[int]
+		The optimal number of degrees in each dimension, chosen by minimizing the AIC.
+	"""
 
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
@@ -123,10 +121,10 @@ def RunAIC(DataDict, degree_max, NumCandidates=20,
 
 def _RunAIC2D(DataDict, degree_candidates, NumCandidates,
 	save_path, verbose):
-    """
-    Calculate the optimal number of degrees using the AIC method in 2D. Previously called by :py:func:`RunAIC`.
-    """
-    
+	"""
+	Calculate the optimal number of degrees using the AIC method in 2D. Previously called by :py:func:`RunAIC`.
+	"""
+	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
 
@@ -200,10 +198,10 @@ def _RunAIC2D(DataDict, degree_candidates, NumCandidates,
 	return DegreeChosen
 	
 def _RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
-    """
-    Calculate the optimal number of degrees using the AIC method in 3D. Previously called by :py:func:`RunAIC`.
-    """
-    
+	"""
+	Calculate the optimal number of degrees using the AIC method in 3D. Previously called by :py:func:`RunAIC`.
+	"""
+	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
 
@@ -254,10 +252,10 @@ def _RunAIC3D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 	
 
 def _RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
-    """
-    Calculate the optimal number of degrees using the AIC method in 4D. Previously called by :py:func:`RunAIC`.
-    """
-    
+	"""
+	Calculate the optimal number of degrees using the AIC method in 4D. Previously called by :py:func:`RunAIC`.
+	"""
+	
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
 
@@ -310,33 +308,33 @@ def _RunAIC4D(DataDict, degree_candidates, NumCandidates, save_path, verbose):
 
 def RunAIC_flattened(DataDict, degree_candidates, NumCandidates, cores, save_path, verbose, 
 	SymmetricDegreePerDimension=False):
-    """
-    Called by :py:func:`RunAIC` to calculate the optimal number of degrees in each dimension using the AIC method.
-    
-    Parameters
-    ----------
-    DataDict : dict
-        The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
-    degree_candidates : array[int]
-        The vector of degree candidates (e.g., as given by :py:func:`mrexo.utils_nd.GiveDegreeCandidates`).
-    NumCandidates : int, default=20
-        The number of degree candidates to test.
-    cores : int
-        The number of cores to use for parallel processing. To use all the cores in the CPU,
-           set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
-    save_path : str, default=os.path.dirname(__file__)
-        The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
-    verbose : {0,1,2}, default=2
-        Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
-    SymmetricDegreePerDimension: bool, default=False
-        If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
-        If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
-    
-    Returns
-    -------
-    DegreeChosen : array[int]
-        The optimal number of degrees in each dimension, chosen by minimizing the AIC.
-    """
+	"""
+	Called by :py:func:`RunAIC` to calculate the optimal number of degrees in each dimension using the AIC method.
+	
+	Parameters
+	----------
+	DataDict : dict
+		The dictionary containing the data. See the output of :py:func:`mrexo.mle_utils_nd.InputData`.
+	degree_candidates : array[int]
+		The vector of degree candidates (e.g., as given by :py:func:`mrexo.utils_nd.GiveDegreeCandidates`).
+	NumCandidates : int, default=20
+		The number of degree candidates to test.
+	cores : int
+		The number of cores to use for parallel processing. To use all the cores in the CPU,
+		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
+	save_path : str, default=os.path.dirname(__file__)
+		The folder name (including path) to save results in. For example, ``save_path = '~/mrexo_working/trial_result'`` will create the 'trial_result' folder in 'mrexo_working' to contain the results.
+	verbose : {0,1,2}, default=2
+		Integer specifying verbosity for logging: 0 (will not log in the log file or print statements), 1 (will write log file only), or 2 (will write log file and print statements).
+	SymmetricDegreePerDimension: bool, default=False
+		If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
+		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+	
+	Returns
+	-------
+	DegreeChosen : array[int]
+		The optimal number of degrees in each dimension, chosen by minimizing the AIC.
+	"""
 
 	n = DataDict['DataLength']
 	ndim = DataDict['ndim']
