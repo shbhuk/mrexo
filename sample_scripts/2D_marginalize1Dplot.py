@@ -1,76 +1,57 @@
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
-# from scipy.interpolate import UnivariateSpline
-
 import glob, os
-# import imageio
 
 from mrexo.mle_utils_nd import calculate_conditional_distribution
-
 
 matplotlib.rcParams['xtick.labelsize'] = 25
 matplotlib.rcParams['ytick.labelsize'] = 25
+cmap = matplotlib.cm.viridis
+cmap = matplotlib.cm.Spectral
+
 
 ################ Run Conditional Distribution ################ 
-from mrexo.mle_utils_nd import calculate_conditional_distribution
 
-# ConditionString = 'm|r,p'
+# Specify condition string based on the characters defined in DataDict for different dimensions. 
+# This particular example is for a 2D fit.
 ConditionString = 'm|r'
-# ConditionString = 'm,r|p'
-# ConditionString = 'r,p|stm'
-# ConditionString = 'm|r,stm'
-# ConditionString = 'm,r|p,stm'
-# ConditionString = 'm,r|feh'
-# ConditionString = 'm,r|p'
-# ConditionString = 'r|stm'
 
-RunName1 = 'Kepler_127_M_R'; d=0 # Original Ning 2018 Kepler sample with 127 planets
-RunName2= 'Mdwaf_24_Kanodia2019_M_R_deg17'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
-RunName3 = 'Mdwarf_2D_20220325_M_R'; d=2 # Sample from 20220325 w/ 63 M dwarf planets
+UseMonteCarlo = False
+UseBootstrap = False
 
-RunName1 = 'Kepler_127_M_R_bounded'; d=0 # Original Ning 2018 Kepler sample with 127 planets
-RunName2= 'Mdwarf_Kanodia2019_bounded'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
-RunName3 = 'Mdwarf_2D_20220325_M_R_bounded'; d=2 # Sample from 20220325 w/ 63 M dwarf planets
-
-RunName1 = 'FGK_2D_GiantPlanets_20220602' # FGK giant planet sample current w/ 348 planets
-RunName2= 'ThesisRuns/Mdwarf_Kanodia2019_bounded'; d=1 # Original Kanodia 2019 M dwarf sample with 24 planets
-RunName3 = 'Mdwarf_2D_GiantPlanets_20220602' # M dwarf giant planet sample current w/ 15 planets
-
-Sigma = ['0.1', '0.2', '0.25', '0.33']
-Runs  = ['Sim_ConstantY_N200_USigma{}_LSigma{}_aic_symm'.format(s, s) for s in Sigma]
-# Runs = ['Sim_2D_N200_USigma0.1_LSigma0.1_c20', 'Sim_2D_N200_USigma0.1_LSigma0.1_c30', 'Sim_2D_N200_USigma0.1_LSigma0.1_c40', 'Sim_2D_N200_USigma0.1_LSigma0.1_c60']#, 'Sim_2D_N200_USigma0.1_LSigma0.1_c80']
-Runs = ['Trial_FGKM_2D_MR_aic_asymm', 'Mdwarf_2D_aic_20221001_M_R']
+# Directory name for each run to compare. Can specify more than one if want to compare multiple datasets or fits
 Runs = ['AllPlanet_RpLt4_StMlt1.5_MR_CV_100MC_100BS']
-SupTitle = ''#Varying degrees'
 
+# Specify the master title for the figure
+SuperTitle = '' # Testing Monte-Carlo'
 
-# Runs = [RunName0, RunName1, RunName2, RunName3, RunName4]
+# Specify the title for each run that is being compared
+Titles = ['Run 1', 'Run 2']
 Titles = np.repeat('', len(Runs))
-Titles = ["{}$\sigma$".format(str(np.round(1/s, 1))) for s in np.array(Sigma).astype(float)] #np.round(1/np.array(Sigma).astype(float), 2)
-Titles = [' FGK Gas Giant', 'M-dwarf Gas Giant']
-# Titles = [20, 30, 40, 60, 80]
-TitlePos = np.repeat(300, len(Runs))
+TitlePos = np.repeat(100, len(Runs))
 
-# RunName1 = 'Sim_2D_N200_USigma0.1_LSigma0.1_aic_asymm' 
-# RunName2 = 'Sim_2D_N200_USigma0.1_LSigma0.1_aic_asymm_SLSQP'
 
-# Runs = [RunName1, RunName2]
-# Titles = ['MM', 'SLSQP']
-# TitlePos = [130, 130, 270]
-
-fig, ax = plt.subplots(len(Runs), sharex=True, sharey=True, figsize=(6, 6))
-# ax = [ax]
+fig, ax = plt.subplots(len(Runs), sharex=True, sharey=True, figsize=(9, 6))
+if np.size(ax) == 1: ax=[ax]
 
 for d, RunName in enumerate(Runs):
-
+	# Specify the path for the result directories
 	save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
-	# save_path = os.path.join(r"/storage/home/szk381/work/mrexo/sample_scripts", 'TestRuns', RunName)
 
+	ConditionName = '2D_'+ConditionString.replace('|', '_').replace(',', '_')
+	PlotFolder = os.path.join(save_path, ConditionName) # Folder to save plots if needed
+	if not os.path.exists(PlotFolder): os.makedirs(PlotFolder)
 
+	if UseMonteCarlo:
+		MonteCarloFolder = os.path.join(save_path, 'output', 'other_data_products', 'MonteCarlo')
+		if not os.path.exists(MonteCarloFolder): raise Exception("Directory with Monte-Carlo results does not exist. Set `UseMonteCarlo` = False")
+		NumMonteCarlo =  len(glob.glob(os.path.join(MonteCarloFolder, 'JointDist_MCSim*.npy')))
 
-	ConditionName = '2D_Re_'+ConditionString.replace('|', '_').replace(',', '_')
-	PlotFolder = os.path.join(save_path, ConditionName)
+	if UseBootstrap:
+		BootstrapFolder = os.path.join(save_path, 'output', 'other_data_products', 'Bootstrap')
+		if not os.path.exists(BootstrapFolder): raise Exception("Directory with Bootstrap results does not exist. Set `UseBootstrap` = False")
+		NumBootstrap =  len(glob.glob(os.path.join(MonteCarloFolder, 'JointDist_MCSim*.npy')))
 
 	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
@@ -86,145 +67,97 @@ for d, RunName in enumerate(Runs):
 	LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
 	RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
 
-
 	xseq = DataSequences[LHSDimensions[0]]
 	yseq = DataSequences[RHSDimensions[0]]
-	# t = outputs['DataSequence'][3]
-
-	DataDict = DataDict
-	MeasurementDict = {'r':[[1, 2], [np.nan, np.nan]], 'p':[[1, 1], [np.nan, np.nan]], 'stm':[[0.1, 0.3], [np.nan, np.nan]]}
-	MeasurementDict = {'r':[[10**0.2, 10**0.4, 10**0.6], [np.nan, np.nan, np.nan]]}#, 'p':[[1, 1, 10], [np.nan, np.nan]], 'stm':[[0.5], [np.nan, np.nan]]}
-	MeasurementDict = {'stm':[[0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.57, 0.6], [np.nan]*9]}#, 'r':[[1], [np.nan]]}
-	# MeasurementDict = {'r':[[1, 1, 1], [np.nan, np.nan, np.nan]], 'p':[[1, 5, 10], [np.nan, np.nan, np.nan]]}
-	MeasurementDict = {RHSTerms[0]:[[10**0.0], [np.nan]]}
 
 
-	r = [12]
-	colours = ["C3", "C2", "C1", "C0"]
-	MeasurementDict = {'r':[r, np.repeat(np.nan, len(r))]}
+	r = [1, 2,  3, 4]
+	# colours = ["C0", "C1", "C2", "C3", "C4", "C5", "C6"]
+
+	norm = matplotlib.colors.Normalize(vmin=np.min(r), vmax=np.max(r))
+	colours = [cmap(norm(r[i])) for i in range(len(r))]
+
+
+	# The keyword for the measurement dictionary must be the RHS of the condition string.
+	# Final measurement dictionary must be in log10 units.
+	# Can specify measurement uncertainty if needed but np.nan works fine for the most bit.
+
 	LogMeasurementDict = {
-												'r':[np.log10(r),  np.reshape(np.repeat(np.nan, 2*len(r)), (len(r), 2))]
+												'r':[np.log10(r),  [[np.nan, np.nan]]*len(r)]
 											}
-
-
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(ConditionString, DataDict, weights, deg_per_dim,
 		JointDist, LogMeasurementDict)
 
-	# y = 10^x
-	# dy = y * dx * ln(10)
-		
-	LinearVariancePDF = (10**MeanPDF * np.log(10))**2 * VariancePDF
-	LinearSigmaPDF = np.sqrt(LinearVariancePDF)
+	if UseMonteCarlo:
+		ConditionalMC = np.zeros((NumMonteCarlo, *np.shape(ConditionalDist)))
+		MeanMC = np.zeros((NumMonteCarlo, *np.shape(MeanPDF)))
+		VarianceMC = np.zeros((NumMonteCarlo, *np.shape(VariancePDF)))
+	
+		print("Conditioning the model from each Monte-Carlo simulation")
+		for mc in range(NumMonteCarlo):
+				weights_mc = np.loadtxt(os.path.join(MonteCarloFolder, 'weights_MCSim{}.txt'.format(str(mc))))
+				JointDist_mc = np.load(os.path.join(MonteCarloFolder, 'JointDist_MCSim{}.npy'.format(str(mc))), allow_pickle=True)
+				ConditionalMC[mc], MeanMC[mc], VarianceMC[mc] = calculate_conditional_distribution(ConditionString, DataDict, weights_mc, deg_per_dim,
+					JointDist_mc, LogMeasurementDict)
+
+	if UseBootstrap:
+		ConditionalBS = np.zeros((NumBootstrap, *np.shape(ConditionalDist)))
+		MeanBS = np.zeros((NumBootstrap, *np.shape(MeanPDF)))
+		VarianceBS = np.zeros((NumBootstrap, *np.shape(VariancePDF)))
+	
+		print("Conditioning the model from each Bootstrap simulation")
+		for bs in range(NumBootstrap):
+				weights_bs = np.loadtxt(os.path.join(BootstrapFolder, 'weights_BSSim{}.txt'.format(str(bs))))
+				JointDist_bs = np.load(os.path.join(BootstrapFolder, 'JointDist_BSSim{}.npy'.format(str(bs))), allow_pickle=True)
+				ConditionalBS[bs], MeanBS[bs], VarianceBS[bs] = calculate_conditional_distribution(ConditionString, DataDict, weights_bs, deg_per_dim,
+					JointDist_bs, LogMeasurementDict)
 
 
 
-	# fig = plt.figure(figsize=(8.5,6.5))
-	_ = [ax[d].plot(10**xseq, ConditionalDist[i], label='Radius = '+str(np.round(r[i], 1))+' R$_{\oplus}$', c=colours[i]) for i in range(len(r))]
+
+	if UseMonteCarlo:
+		for i in range(len(r)):
+			hist = np.histogram(10**MeanMC[:,i])
+			if i == 0: ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  label='Monte-Carlo', color=colours[i], alpha=0.5)
+			else: ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  color=colours[i], alpha=0.5)
+	if UseBootstrap:
+		for i in range(len(r)):
+			hist = np.histogram(10**MeanBS[:,i])
+			if i ==0: ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  label='Bootstrap', color=colours[i], alpha=1.0)	
+			else: ax[d].hist(hist[1][:-1], hist[1], weights=hist[0]/np.max(hist[0]),  color=colours[i], alpha=1.0)	
+
+	# if not (UseMonteCarlo | UseBootstrap):
+		# _ = [ax[d].fill_betweenx(y=np.arange(ax[d].get_ylim()[0], ax[d].get_ylim()[1]*5), x1=10**(MeanPDF[i] - np.sqrt(VariancePDF[i])), x2=10**(MeanPDF[i] + np.sqrt(VariancePDF[i])), alpha=0.2, color=colours[i]) for i in range(len(r))]
+		# _ = [ax[d].text(10**MeanPDF[i]*(1.1), 1, str(np.round(MeanPDF[i]/np.sqrt(VariancePDF[i]), 1)) + '$\sigma$', fontsize=22, c=colours[i]) for i in range(len(r))]	
+	_ = [ax[d].plot(10**xseq, ConditionalDist[i]/np.nanmax(ConditionalDist[i]), c=colours[i], label=str(r[i]) + ' ' + DataDict['ndim_label'][RHSDimensions[0]]) for i in range(len(r))]
 	
 	_ = [ax[d].axvline(10**MeanPDF[i], linestyle='dashed', c=colours[i]) for i in range(len(r))]
-	# _ = [ax[d].fill_betweenx(y=np.arange(ax[d].get_ylim()[0], ax[d].get_ylim()[1]*5), x1=10**(MeanPDF[i] - np.sqrt(VariancePDF[i])), x2=10**(MeanPDF[i] + np.sqrt(VariancePDF[i])), alpha=0.2, color=colours[i]) for i in range(len(r))]
+	_ = [ax[d].text(10**MeanPDF[i]*(1.05), 0.8, str(np.round(10**MeanPDF[i], 1)) + ' ' + DataDict['ndim_label'][LHSDimensions[0]], fontsize=22, c=colours[i]) for i in range(len(r))]
+	ax[d].text(TitlePos[d], 1, Titles[d], fontsize=22)
 
-	# _ = [ax[d].axvline(10**xseq[np.argmax(ConditionalDist[i])], linestyle='solid', c=colours[i]) for i in range(len(r))]
-	_ = [ax[d].text(10**MeanPDF[i]*(1.1), 1.5, str(np.round(10**MeanPDF[i], 1)) + ' M$_{\oplus}$', fontsize=22, c=colours[i]) for i in range(len(r))]
-	# _ = [ax[d].text(10**MeanPDF[i]*(1.1), 1, str(np.round(MeanPDF[i]/np.sqrt(VariancePDF[i]), 1)) + '$\sigma$', fontsize=22, c=colours[i]) for i in range(len(r))]
+
 
 	# plt.title(DataDict['ndim_label'][2]+" = {:.3f}".format(MeasurementDict[RHSTerms[0]][0][i]))
-
-	ax[d].text(TitlePos[d], 1.9, Titles[d], fontsize=22)
-
 	# XTicks = np.linspace(xseq.min(), xseq.max(), 5)
-	# XTicks = np.log10(np.array([0.3, 1, 3, 10, 30, 100, 300]))
-	# XTicks = np.log10(np.array([1, 2, 3, 5, 10]))
-	# XTicks = np.log10(np.array([1.0, 1.5, 2, 2.5, 3, 4]))
-	# YTicks = np.linspace(yseq.min(), yseq.max(), 5)
-	# YTicks = np.log10(np.array([0.5, 1, 10, 30,  50, 100, 300]))
-	YTicks = [0, 0.5, 1, 1.5]
-
 	# XLabels = np.round(10**XTicks, 1)
-	YLabels = np.round(YTicks, 2)
-	# ax[d].set_yticks(YTicks)
-	# ax[d].set_yticklabels(YLabels)
+	# ax[d].set_xticks(10**XTicks)
+	# ax[d].set_xticklabels(XLabels)
+	# ax[d].set_xscale("log")
 
-
-
-	# plt.xlim(10**DataDict['ndim_bounds'][0][0], 10**DataDict['ndim_bounds'][0][1])
-	ax[d].set_xscale("log")
-	ax[d].set_xlim(0, 2000)
-	ax[d].set_ylim(0, 2.3)
+	# ax[d].set_ylim(0, 2)
 	ax[0].set_ylabel("Probability Density Function")
 
 ax[-1].set_xlabel(DataDict['ndim_label'][LHSDimensions[0]], size=25)
-ax[0].legend(loc=2, fontsize=20)
+ax[0].legend(loc=0, fontsize=15)
 fig.subplots_adjust(hspace=0.01)
-# plt.tight_layout()
-ax[0].set_title(SupTitle)
+ax[0].set_title(SuperTitle)
 plt.show(block=False)
 
+# Can then save the plot in PlotFolder if required
+# plt.savefig(os.path.join(PlotFolder, 'SomeFigureNameHere.pdf'))
 
-r"""
-## Plot Joint Distribution 
-
-
-for d, RunName in enumerate(Runs):
-
-	save_path = os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', 'ThesisRuns', RunName)
-
-
-
-	ConditionName = '2D_1Re_'+ConditionString.replace('|', '_').replace(',', '_')
-	PlotFolder = os.path.join(save_path, ConditionName)
-
-	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt'), dtype=int)
-	DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
-	DataSequences = np.loadtxt(os.path.join(save_path, 'output', 'other_data_products', 'DataSequences.txt'))
-	weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
-	JointDist = np.load(os.path.join(save_path, 'output', 'JointDist.npy'), allow_pickle=True)
-
-	Condition = ConditionString.split('|')
-	LHSTerms = Condition[0].split(',')
-	RHSTerms = Condition[1].split(',')
-	deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
-
-	LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
-	RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
-
-
-	xseq = DataSequences[LHSDimensions[0]]
-	yseq = DataSequences[RHSDimensions[0]]
-	# t = outputs['DataSequence'][3]
-
-
-	################ Plot Joint Distribution ################ 
-	x = DataDict['DataSequence'][0]
-	y = DataDict['DataSequence'][1]
-
-	fig = plt.figure(figsize=(8.5,6.5))
-	im = plt.imshow(JointDist.T, 
-		extent=(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1], DataDict['ndim_bounds'][1][0], DataDict['ndim_bounds'][1][1]), 
-		aspect='auto', origin='lower'); 
-	plt.errorbar(x=np.log10(DataDict['ndim_data'][0]), y=np.log10(DataDict['ndim_data'][1]), xerr=0.434*DataDict['ndim_sigma'][0]/DataDict['ndim_data'][0], yerr=0.434*DataDict['ndim_sigma'][1]/DataDict['ndim_data'][1], fmt='.', color='k', alpha=0.4)
-	# plt.title("Orbital Period = {} d".format(str(np.round(title,3))))
-	plt.ylabel(DataDict['ndim_label'][1]);
-	plt.xlabel(DataDict['ndim_label'][0]);
-	# plt.xlabel("Planetary Mass ($M_{\oplus}$)")
-	# plt.ylabel("Planetary Radius ($R_{\oplus}$)")
-	plt.xlim(DataDict['ndim_bounds'][0][0], DataDict['ndim_bounds'][0][1])
-	plt.ylim(np.log10(0.5), DataDict['ndim_bounds'][1][1])
-	plt.tight_layout()
-
-	XTicks = [0.5,1, 3, 10, 20]
-	YTicks = [0.5, 1, 3, 10, 30, 100, 300, 1000]
-	
-	XLabels = XTicks
-	YLabels = YTicks
-
-	plt.xticks(np.log10(XTicks), XLabels)
-	plt.yticks(np.log10(YTicks), YLabels)
-
-	cbar = fig.colorbar(im, ticks=[np.min(JointDist), np.max(JointDist)], fraction=0.037, pad=0.04)
-	cbar.ax.set_yticklabels(['Min', 'Max'])
-	plt.tight_layout()
-	plt.savefig(os.path.join(r"C:\Users\shbhu\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', 'ThesisRuns', RunName+'_JointDist.png'))
-	plt.close("all")
-"""
+# Outputs in log10
+# Standard Fit : ConditionalDist, MeanPDF, VariancePDF 
+# Monte-Carlo : ConditionalMC, MeanMC, VarianceMC  
+# Bootstrap : ConditionalBS, MeanBS, VarianceBS
