@@ -11,8 +11,6 @@ from mrexo.fit_nd import fit_relation
 from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInputDataHistogram
 import matplotlib.pyplot as plt
 
-
-
 Platform = sys.platform
 
 if Platform == 'win32':
