@@ -772,7 +772,7 @@ def _CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		# ConditionPDF = UnivariateSpline(LHSSequence[0], ConditionalDist[i]).integral(
 			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])
 		ConditionPDF = quad(
-			func = interp1d(LHSSequence[0], ConditionalDist[i]), 
+			func = interp1d(LHSSequence[0], ConditionalDist[i], kind='cubic'), 
 			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
 		)[0]
 
@@ -780,7 +780,7 @@ def _CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		# MeanPDF[i] = UnivariateSpline(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]).integral(
 			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1]) / ConditionPDF
 		MeanPDF[i] = quad(
-			func = interp1d(LHSSequence[0], ConditionalDist[i]*LHSSequence[0]), 
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*LHSSequence[0], kind='cubic'), 
 			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
 		)[0] / ConditionPDF
 
@@ -788,7 +788,7 @@ def _CalculateConditionalDistribution1D_LHS(ConditionString, DataDict,
 		# VariancePDF[i] = (UnivariateSpline(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)).integral(
 			# DataDict["ndim_bounds"][LHSDimensions[0]][0], DataDict["ndim_bounds"][LHSDimensions[0]][1])  /  ConditionPDF) - (MeanPDF[i]**2)
 		VariancePDF[i] = (quad(
-			func = interp1d(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2)), 
+			func = interp1d(LHSSequence[0], ConditionalDist[i]*(LHSSequence[0]**2), kind='cubic'), 
 			a=DataDict["ndim_bounds"][LHSDimensions[0]][0], b=DataDict["ndim_bounds"][LHSDimensions[0]][1]
 		)[0] / ConditionPDF) - (MeanPDF[i]**2)
 
