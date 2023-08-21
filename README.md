@@ -5,12 +5,10 @@
 
 [MRExo](https://shbhuk.github.io/mrexo/) is a Python script for non-parametric fitting and analysis of the Mass-Radius (M-R) relationship for exoplanets.
 
-We translate [Ning et al. (2018)](https://iopscience.iop.org/article/10.3847/1538-4357/aaeb31)'s `R` script into a publicly available `Python` package called [`MRExo`](http://bit.ly/mrexo_paper). It offers tools for fitting the M-R relationship to a given data
-set.  Along with the `MRExo` installation, the fit results from the M dwarf sample dataset from Kanodia et al. (2019) and the Kepler
-exoplanet sample from  Ning et al. (2018) are included. 
-The code also includes **predicting functions** (M->R, and R->M), and **plotting** functions to generate the plots used in the below preprint.
+In this work, we extend the existing nonparametric and probabilistic framework of MRExo to jointly model distributions beyond two dimensions.
+Our updated framework can now simultaneously model up to four observables, while also incorporating asymmetric measurement uncertainties and upper limits in the data.
 
-For detailed description of the code please see [Kanodia et al. (2019)](http://bit.ly/mrexo_paper)
+For detailed description of the code please see [Kanodia et al. (2019, 2023)](http://bit.ly/mrexo_paper)
 
 
 ==================
