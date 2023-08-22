@@ -29,6 +29,7 @@ extensions = [
    'sphinx.ext.napoleon',
    'sphinx_toolbox.installation',
    'sphinx_toolbox.collapse',
+   'sphinx_rtd_theme',
 ]
 autosummary_generate = True
 add_module_names = False # whether to prepend module names to functions/objects
