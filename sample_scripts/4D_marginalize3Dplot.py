@@ -1,34 +1,42 @@
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
+import matplotlib
 import numpy as np
-# import imageio
 import glob, os
-from mrexo.mle_utils_nd import calculate_conditional_distribution
 
-ConditionString = 'r|stm,feh,p'
+from mrexo.mle_utils_nd import calculate_conditional_distribution, NumericalIntegrate2D
+
+matplotlib.rcParams['xtick.labelsize'] = 25
+matplotlib.rcParams['ytick.labelsize'] = 25
+cmap = matplotlib.cm.viridis
+cmap = matplotlib.cm.Spectral
+
+
+################ Run Conditional Distribution ################ 
+
 ConditionString = 'm|insol,r,stm'
 ConditionName = '4D_'+ConditionString.replace('|', '_').replace(',', '_')
 
-# C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts\TestRuns\AllPlanet_RpLt4_StMlt1.5_MRSStM_AIC_100MC_100BS
-# ResultDirectory = r'C:\\Users\\shbhu\\Documents\\GitHub\\PostDoc\\Data\\Mdwarf_4D_20210823_M_R_S_StM_30_Rp_lt4'
-ResultDirectory = r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts\TestRuns\AllPlanet_RpLt4_StMlt1.5_MRSStM_d40_0MC_0BS"
-PlotFolder = os.path.join(ResultDirectory, ConditionName)
+# Result Directory for the small planet example shown in Kanodia et al. 2023 is included here - https://zenodo.org/record/8222163
+RunName = r"AllPlanet_RpLt4_StMlt1.5_MRSStM_d40_0MC_0BS"
+
+save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
+
+PlotFolder = os.path.join(save_path, ConditionName)
 
 if not os.path.exists(PlotFolder):
 	print("4D Plot folder does not exist")
 	os.mkdir(PlotFolder)
 
-deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt'))
-DataDict = np.load(os.path.join(ResultDirectory, 'input', 'DataDict.npy'), allow_pickle=True).item()
-JointDist = np.load(os.path.join(ResultDirectory, 'output', 'JointDist.npy'), allow_pickle=True).T
-weights = np.loadtxt(os.path.join(ResultDirectory, 'output', 'weights.txt'))
-deg_per_dim = np.loadtxt(os.path.join(ResultDirectory, 'output', 'deg_per_dim.txt')).astype(int)
+deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt'))
+DataDict = np.load(os.path.join(save_path, 'input', 'DataDict.npy'), allow_pickle=True).item()
+JointDist = np.load(os.path.join(save_path, 'output', 'JointDist.npy'), allow_pickle=True).T
+weights = np.loadtxt(os.path.join(save_path, 'output', 'weights.txt'))
+deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt')).astype(int)
 
 Condition = ConditionString.split('|')
 LHSTerms = Condition[0].split(',')
 RHSTerms = Condition[1].split(',')
 deg_vec_per_dim = [np.arange(1, deg+1) for deg in deg_per_dim] 
-
 
 LHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , l)])[0] for l in LHSTerms])
 RHSDimensions = np.array([(np.arange(DataDict['ndim'])[np.isin(DataDict['ndim_char'] , r)])[0] for r in RHSTerms])
@@ -43,121 +51,74 @@ zdata = DataDict['ndim_data'][RHSDimensions[2]]
 
 XTicks = np.linspace(x.min(), x.max(), 5)
 XLabels = np.round(10**XTicks, 2)
-# XLabels = np.array([0.7, 1, 3, 5, 10])
-# XLabels = np.array([0.3, 1, 10, 50, 100])
 XTicks = np.log10(XLabels)
 
 YTicks = np.linspace(y.min(), y.max(), 5)
 YLabels = np.round(10**YTicks, 2)
-# YLabels = np.array([0.7, 1, 3, 5, 10])
-# YLabels = np.array([1, 2, 3, 4])
 YTicks = np.log10(YLabels)
-# YLabels = np.round(YTicks, 2) # For Metallicity 
 
-for k in np.arange(0, len(z), 10, dtype=int):
+# Change to corresponding axes as required
+
+# """
+# Custom
+RadiusArray = np.arange(1.5, 3.1, 0.2)
+RadiusArray = [1.5, 3.0]
+x = np.log10(RadiusArray)
+InsolationArray = [100, 300]
+InsolationArray = np.logspace(-0.1, 3, 10)
+y = np.log10(InsolationArray)
+StellarMassArray = np.arange(0.2, 1.2, 0.1)
+StellarMassArray = [1]
+z = np.log10(StellarMassArray)
+# """
+
+CombinedQuery = np.rollaxis(np.array(np.meshgrid(x, y, z)), 0, 3).reshape(len(x)*len(y)*len(z),3)
+
+
+MeasurementDict=  {
+			'r':[CombinedQuery[:,0], [[np.nan, np.nan]]*len(CombinedQuery)], 
+			'insol':[CombinedQuery[:,1], [[np.nan, np.nan]]*len(CombinedQuery)],
+			'stm':[CombinedQuery[:,2], [[np.nan, np.nan]]*len(CombinedQuery)]
+}
+
+ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(
+	ConditionString, DataDict, weights, deg_per_dim,
+	JointDist.T, MeasurementDict)
+
+MeanPDF = MeanPDF.reshape((len(y), len(x), len(z)))
+
+for k in np.arange(0, len(z),  dtype=int):
 	
 	ChosenZ = z[k]
 	print(ChosenZ)
-	MeanPDF = np.zeros((len(x), len(y)))
-	VariancePDF = np.zeros((len(x), len(y)))
 
-	for i in range(len(x)):
-		for j in range(len(y)):
-			MeasurementDict = {
-				RHSTerms[0]:[[x[i]], [[np.nan, np.nan]]], 
-				RHSTerms[1]:[[y[j]], [[np.nan, np.nan]]],
-				RHSTerms[2]:[[ChosenZ],[[np.nan, np.nan]]]
-			}
-
-			ConditionalDist, MeanPDF[i,j], VariancePDF[i,j] = calculate_conditional_distribution(
-				ConditionString, DataDict, weights, deg_per_dim,
-				JointDist.T, MeasurementDict)
-			# print(MeanPDF)
-
-	###########################
-	
 	fig, ax1 = plt.subplots()
-
-	im = ax1.imshow(10**MeanPDF, 
+	im = ax1.imshow(10**MeanPDF[:,:,k], 
 		extent=(x.min(), x.max(), y.min(), y.max()), 
 		aspect='auto', origin='lower', interpolation='bicubic'); 
+	plt.show(block=False)
 
-	# plt.plot(np.log10(DataDict['ndim_data'][0]), np.log10(DataDict['ndim_data'][1]), 'k.')
 	# ax1.set_title("{} = {} d".format( DataDict['ndim_label'][RHSDimensions[2]], str(np.round(10**ChosenZ,3))))
-	ax1.set_xlabel(DataDict['ndim_label'][RHSDimensions[0]]);
-	ax1.set_ylabel(DataDict['ndim_label'][RHSDimensions[1]]);
-	# ax1.set_title('Rp|StM, Fe/H, Insol={} S_earth'.format(int(10**ChosenZ)))
+	ax1.set_ylabel(DataDict['ndim_label'][RHSDimensions[0]]);
+	ax1.set_xlabel(DataDict['ndim_label'][RHSDimensions[1]]);
 	ax1.set_title('Mp|Rp, Insol, StM ={:.3f} M_sun'.format(10**ChosenZ))
 
+	XTicks = np.linspace(x.min(), x.max(), 5)
+	YTicks = np.linspace(y.min(), y.max(), 5)
+	XLabels = np.round(10**XTicks, 1)
+	YLabels = np.round(10**YTicks, 2)
+
+	plt.xticks(XTicks, XLabels)
+	plt.yticks(YTicks, YLabels)
 	
-	plt.colorbar(im, label=DataDict['ndim_label'][LHSDimensions[0]])
-	
-	# ZMask = (zdata > 0.5*(10**ChosenZ)) & (zdata < 2*(10**ChosenZ))
-	ZMask = zdata <= 1
-	# ZMask = (zdata > 5) & (zdata <= 10)
-	# Zmask = zdata >10
-	ZMask = np.ones(len(zdata), dtype=bool)
-	xdataMasked = xdata[ZMask]
-	ydataMasked = ydata[ZMask]
-	Histogram = np.histogram2d(np.log10(xdataMasked), np.log10(ydataMasked))
-	HistogramMask = np.ones((np.shape(Histogram[0])))  
-	HistogramMask = np.ma.masked_where(Histogram[0] > 0, HistogramMask)
-
-	"""
-	ax1.imshow(HistogramMask, 
-		extent=(np.log10(xdata.min()), np.log10(xdata.max()), np.log10(ydata.min()), np.log10(ydata.max())),
-		# extent=(x.min(), x.max(), y.min(), y.max()),
-		 aspect='auto', origin='lower',
-		alpha=0.4, cmap='binary_r')	
-	"""
-
-	if RHSTerms[0] == 'stm':
-		XTicks = np.log10(np.array([0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]))
-		XLabels = np.round(10**XTicks, 2)
-		plt.xticks(XTicks, XLabels)
-		ax1.set_xticks(XTicks)
-		ax1.set_xticklabels(XLabels)
-		
-		ax1.set_xlim(np.log10(0.08), np.log10(0.6))
-		
-		ax2 = ax1.twiny()
-		ax2.set_xlim(ax1.get_xlim())
-		# formatter = FuncFormatter(lambda x, pos: '{:0.2f}'.format(np.sqrt(x)))
-		# ax2.xaxis.set_major_formatter(formatter)
-
-		ax2Ticks = np.log10(np.array([0.6, 0.39, 0.2, 0.1]))
-		ax2Labels = ['M0', 'M3', 'M5', 'M7']
-		# ax2.set_xticks(XTicks)
-		# ax2.set_xticklabels(XLabels)
-		ax2.set_xticks(ax2Ticks)
-		ax2.set_xticklabels(ax2Labels)
-		
-	else:
-		# XTicks = np.linspace(x.min(), x.max(), 5)
-		# XLabels = np.round(10**XTicks, 2)
-		plt.xticks(XTicks, XLabels)
-		plt.xlim(x.max(), x.min())
-		# plt.xlim(np.log10(0.3), np.log10(100))
-
-	if RHSTerms[1] == 'feh':
-		YTicks = np.linspace(-0.5, 0.5, 5)
-		YLabels = YTicks
-		plt.yticks(YTicks, YLabels)
-		# plt.ylim(-0.55, 0.45)
-
-	else:
-		# YTicks = np.linspace(y.min(), y.max(), 5)
-		# YLabels = np.round(10**YTicks, 2)
-		plt.yticks(YTicks, YLabels)
-		plt.ylim(np.log10(ydata.min()), np.log10(ydata.max()))
-	
+	plt.colorbar(im, label=DataDict['ndim_label'][LHSDimensions[0]])	
 	plt.tight_layout()
 	plt.show(block=False)
 	
 	plt.savefig(os.path.join(PlotFolder, ConditionName+'_z_{}.png'.format(np.round(10**ChosenZ,3))))
 	plt.close()
 
-# """
+"""
 ListofPlots = glob.glob(os.path.join(PlotFolder, '4*.png'))
 ListofPlots.sort(key=os.path.getmtime)
 
@@ -167,5 +128,5 @@ for im in ListofPlots:
 		#print(order, im)
 		writer.append_data(imageio.imread(os.path.join(PlotFolder, im)))
 writer.close()
-# """
+"""
 
