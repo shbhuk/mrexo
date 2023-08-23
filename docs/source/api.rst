@@ -19,6 +19,10 @@ Here, we provide detailed documentation for *many* of the functions that you may
 
     Contains the functions for running the degree selection using cross-validation.
 
+- :ref:`utils_nd.py <api_utils_nd>`
+
+    Contains some utility functions (including for logging outputs).
+
 
 .. toctree::
    :hidden:
@@ -27,3 +31,4 @@ Here, we provide detailed documentation for *many* of the functions that you may
    api_mle_utils_nd
    api_aic_nd
    api_cross_validate_nd
+   api_utils_nd
