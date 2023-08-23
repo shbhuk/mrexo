@@ -7,8 +7,13 @@ Here, we provide detailed documentation for *many* of the functions that you may
 
     Contains the main user-facing function for fitting the model.
 
+- :ref:`mle_utils_nd.py <api_mle_utils_nd>`
+
+    Contains most of the heavy-lifting functions for implementing the model.
+
 
 .. toctree::
    :hidden:
 
    api_fit_nd
+   api_mle_utils_nd
