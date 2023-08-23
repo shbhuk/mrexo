@@ -11,9 +11,14 @@ Here, we provide detailed documentation for *many* of the functions that you may
 
     Contains most of the heavy-lifting functions for implementing the model.
 
+- :ref:`aic_nd.py <api_aic_nd>`
+
+    Contains the functions for running the degree selection using AIC.
+
 
 .. toctree::
    :hidden:
 
    api_fit_nd
    api_mle_utils_nd
+   api_aic_nd
