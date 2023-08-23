@@ -21,3 +21,14 @@ Citation
 --------
 
 Details...
+
+
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+   :includehidden:
+
+   api
