@@ -7,8 +7,8 @@ def readme():
 
 
 setup(name='mrexo',
-      version='1.0dev',
-      description='Nonparametric mass radius relationship for exoplanets',
+      version='1.0',
+      description='Nonparametric mass radius+ inference for exoplanets',
       long_description=readme(),
       long_description_content_type="text/markdown",
       url='https://github.com/shbhuk/mrexo',
