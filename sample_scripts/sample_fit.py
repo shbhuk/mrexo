@@ -1,64 +1,118 @@
-import os
+import os, sys
 from astropy.table import Table
 import numpy as np
 from multiprocessing import cpu_count
 import numpy as np
+import pandas as pd
+import shutil
 
+from mrexo.mle_utils_nd import InputData, MLE_fit
+from mrexo.fit_nd import fit_relation
+from mrexo.plotting_nd import Plot2DJointDistribution, Plot2DWeights, Plot1DInputDataHistogram
+import matplotlib.pyplot as plt
 
-from mrexo import fit_xy_relation
+Platform = sys.platform
+
+if Platform == 'win32':
+	HomeDir =  'C:\\Users\\skanodia\\Documents\\\\GitHub\\'
+else:
+	HomeDir = r"/storage/home/szk381/work/"
+	#HomeDir = r"/home/skanodia/work/"
 
 
 try :
-    pwd = os.path.dirname(__file__)
+	pwd = os.path.dirname(__file__)
 except NameError:
-    pwd = ''
-    print('Could not find pwd')
+	pwd = os.path.join(HomeDir, 'mrexo', 'sample_scripts')
+	print('Could not find pwd')
 
+# Directory with dataset to be fit
+DataDirectory = os.path.join(HomeDir, 'Mdwarf-Exploration', 'Data', 'MdwarfPlanets')
+print(DataDirectory)
 
+t = pd.read_csv(os.path.join(DataDirectory, 'Teff_7000_ExcUpperLimits_20230306RpLt20.csv'))
 
-'''
-Sample script to fit mass-radius relationship.
-The CSV table is generated from the NASA Exoplanet Archive. The existing example
-is for the 24 M dwarf planets as explained in Kanodia 2019.
-This can be replaced with any other CSV file.
+# Mask NaNs
+t = t[~np.isnan(t['pl_insolerr1'])]
+t = t[~np.isnan(t['pl_masse'])]
 
-For this sample, the cross validation has already been performed and the optimum number of
-degrees has been established to be 17. For a new sample, set select_deg = 'cv' to
-use cross validation to find the optimum number of degrees.
+# Define bounds in different dimensions
+RadiusBounds = [0, 10]# None# [0, 100]
+MassBounds = None# [0, 6000]
+InsolationBounds = None# [0.01, 5000]
+StellarMassBounds = None# [0.2, 1.2]
 
-Can use parallel processing by setting cores > 1.
-To use all the cores in the CPU, cores=cpu_count() (from multiprocessing import cpu_count)
+# Measurements with very small errors are set to NaN to avoid integration errors
+t['st_masserr1'][t['st_masserr1'] < 0.005] = np.nan
+t['st_masserr2'][t['st_masserr2'] < 0.005] = np.nan
 
-To bootstrap and estimate the robustness of the median, set num_boot > 1.
-If cores > 1, then uses parallel processing to run the various boots. For large datasets,
-first run with num_boot to be a smaller number to estimate the computational time.
+if RadiusBounds is not None:
+	t = t[(t.pl_rade > RadiusBounds[0]) & (t.pl_rade < RadiusBounds[1])]
 
-For more detailed guidelines read the docuemtnation for the fit_mr_relation() function.
-'''
+if MassBounds is not None:
+	t = t[(t.pl_masse > MassBounds[0]) & (t.pl_masse < MassBounds[1])]
 
+if InsolationBounds is not None:
+	t = t[(t.pl_insol > InsolationBounds[0]) & (t.pl_insol < InsolationBounds[1])]
+	
+if StellarMassBounds is not None:
+	t = t[(t.st_mass > StellarMassBounds[0]) & (t.st_mass < StellarMassBounds[1])]
+	
+# Remove particular planets
+RemovePlanets = ['Kepler-54 b', 'Kepler-54 c']
+t = t[~np.isin(t.pl_name, RemovePlanets)]
 
-t = Table.read(os.path.join(pwd,'Cool_stars_20200520_exc_upperlim.csv'))
-# t = Table.read(os.path.join(pwd,'Kepler_MR_inputs.csv'))
-
-
-# Symmetrical errorbars
-Mass_sigma = (abs(t['pl_masseerr1'])) #+ abs(t['pl_masseerr2']))/2
-Radius_sigma = (abs(t['pl_radeerr1']))# + abs(t['pl_radeerr2']))/2
+print(len(t))
 
 # In Earth units
 Mass = np.array(t['pl_masse'])
+# Asymmetrical errorbars
+MassUSigma = np.array(abs(t['pl_masseerr1']))
+MassLSigma = np.array(abs(t['pl_masseerr2']))
+
 Radius = np.array(t['pl_rade'])
+# Asymmetrical errorbars
+RadiusUSigma = np.array(abs(t['pl_radeerr1']))
+RadiusLSigma = np.array(abs(t['pl_radeerr2']))
 
-# Directory to store results in
-result_dir = os.path.join(pwd,'Mdwarfs_20200520_40')
+StellarMass = np.array(t['st_mass'])
+StellarMassUSigma = np.array(t['st_masserr1'])
+StellarMassLSigma = np.array(t['st_masserr2'])
 
-# Run with 100 bootstraps. Selecting degrees to be 17. Alternatively can set select_deg = 'cv' to
-# find the optimum number of degrees.
+Insolation = np.array(t['pl_insol'])
+InsolationUSigma = np.array(t['pl_insolerr1'])
+InsolationLSigma = np.array(t['pl_insolerr2'])
 
-RadiusDict = {'X': Radius, 'X_sigma': Radius_sigma, 'X_max':None, 'X_min':None, 'X_label':'Radius', 'X_char':'r'}
-MassDict = {'Y': Mass, 'Y_sigma': Mass_sigma, 'Y_max':None, 'Y_min':None, 'Y_label':'Mass', 'Y_char':'m'}
+# Let the script pick the max and min bounds, or can hard code those in. Note that the dataset must fall within the bounds if they are specified.
+Max, Min = np.nan, np.nan
+
+# Define input dictionary for each dimension
+RadiusDict = {'Data': Radius, 'LSigma': RadiusLSigma,  "USigma":RadiusUSigma, 'Max':Max, 'Min':Min, 'Label':'Radius ($R_{\oplus}$)', 'Char':'r'}
+MassDict = {'Data': Mass, 'LSigma': MassLSigma, "USigma":MassUSigma,  'Max':Max, 'Min':Min, 'Label':'Mass ($M_{\oplus}$)', 'Char':'m'}
+# PeriodDict = {'Data': Period, 'LSigma': PeriodSigma, "USigma":PeriodSigma, 'Max':Max, 'Min':Min, 'Label':'Period (d)', 'Char':'p'}
+StellarMassDict = {'Data': StellarMass, 'LSigma': StellarMassLSigma, "USigma":StellarMassUSigma, 'Max':Max, 'Min':Min, 'Label':'Stellar Mass (M$_{\odot}$)', 'Char':'stm'}
+InsolationDict = {'Data': Insolation, 'LSigma': InsolationLSigma, "USigma":InsolationUSigma, 'Max':Max, 'Min':Min,  'Label':'Pl Insol ($S_{\oplus}$)', 'Char':'insol'}
+
+# 3D fit with planetary radius, mass and insolation
+InputDictionaries = [RadiusDict, MassDict, InsolationDict]
+DataDict = InputData(InputDictionaries)
+ndim = len(InputDictionaries)
+
+RunName = 'AllPlanet_RpLt20_MRS_test'
+save_path = os.path.join(pwd, 'TestRuns',  RunName)
+
+# Harcode the  number of degrees per dimension. Read the `fit_relation()` documentation for alternatives
+deg_per_dim = [25, 25, 25]
 
 if __name__ == '__main__':
-            initialfit_result, bootstrap_results = fit_xy_relation(**RadiusDict, **MassDict,
-                                                save_path = result_dir, select_deg = 'cv', 
-                                                num_boot = 50, cores = 6)
+
+	outputs= fit_relation(DataDict, select_deg=select_deg, save_path=save_path, degree_max=30, cores=2,SymmetricDegreePerDimension=True, NumMonteCarlo=0, NumBootstrap=0)
+	shutil.copy(os.path.join(pwd, 'sample_fit.py'), os.path.join(save_path, 'sample_fit_{}.py'.format(RunName)))
+
+	_ = Plot1DInputDataHistogram(save_path)
+
+	if ndim==2:
+			
+		_ = Plot2DJointDistribution(save_path)
+		_ = Plot2DWeights(save_path)
+

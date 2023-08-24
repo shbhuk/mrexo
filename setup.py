@@ -7,16 +7,16 @@ def readme():
 
 
 setup(name='mrexo',
-      version='0.2',
-      description='Nonparametric mass radius relationship for exoplanets',
+      version='1.0',
+      description='Nonparametric mass radius+ inference for exoplanets',
       long_description=readme(),
       long_description_content_type="text/markdown",
       url='https://github.com/shbhuk/mrexo',
       author='Shubham Kanodia',
       author_email='shbhuk@gmail.com',
-      install_requires=['astropy>2','matplotlib','numpy','scipy'],
+      install_requires=['astropy>2','matplotlib','numpy','scipy>1.8', 'pandas'],
       packages=['mrexo'],
       include_package_data = True,
       license='GPLv3',
       classifiers=['Topic :: Scientific/Engineering :: Astronomy'],
-      keywords='Mass-Radius relationship Non parametric Exoplanets' )
+      keywords='Mass-Radius+ relationship Non parametric Exoplanets' )
