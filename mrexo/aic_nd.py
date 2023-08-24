@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import os
-import pandas as pd
 from multiprocessing import Pool
 from .mle_utils_nd import MLE_fit
 from .utils_nd import _logging, GiveDegreeCandidates, MakePlot, FlattenGrid
