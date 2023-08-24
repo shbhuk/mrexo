@@ -1,6 +1,6 @@
 # MRExo
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3306969.svg)](https://doi.org/10.5281/zenodo.3306969)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8280169.svg)](https://doi.org/10.5281/zenodo.8280169)
 
 
 [MRExo]([https://shbhuk.github.io/mrexo/](https://mrexo.readthedocs.io/en/latest/)) is a Python package to jointly model distributions beyond two dimensions.
