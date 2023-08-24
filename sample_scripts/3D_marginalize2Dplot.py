@@ -18,8 +18,7 @@ cmap = matplotlib.cm.Spectral
 
 ConditionString = 'm|insol,r'
 
-RunName = r"AllPlanet_RpLt4_StMlt1.2_MRS_CV_100MC_100BS"
-
+RunName = r"AllPlanet_RpLt4_StMlt1.5_RSStM_CV_0MC_0BS"
 save_path = os.path.join(r"C:\Users\skanodia\Documents\GitHub\mrexo\sample_scripts", 'TestRuns', RunName)
 
 ConditionName = '3D_'+ConditionString.replace('|', '_').replace(',', '_')
@@ -47,9 +46,7 @@ y = DataDict['DataSequence'][RHSDimensions[1]]
 xdata = DataDict['ndim_data'][RHSDimensions[0]]
 ydata = DataDict['ndim_data'][RHSDimensions[1]]
 
-MeanPDF = np.zeros((len(x), len(y)))
-VariancePDF = np.zeros((len(x), len(y)))
-
+# Change to corresponding axes as required
 RadiusArray = np.arange(1.5, 3.1, 0.2)
 InsolationArray = [100, 300]
 InsolationArray = np.logspace(-0.1, 3)
