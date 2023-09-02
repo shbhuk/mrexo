@@ -10,6 +10,8 @@ We build upon the 2-dimensional nonparametric framework utilizing beta density f
 
 For detailed description of the code please see [Kanodia et al. (2019)](http://bit.ly/mrexo_paper) for the original and [Kanodia et al. (2023)](https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K/abstract) for the updated version.
 
+Documentation can be found [here](https://mrexo.readthedocs.io/en/latest/index.html).
+
 
 ==================
 
