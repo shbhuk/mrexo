@@ -3,12 +3,14 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8280169.svg)](https://doi.org/10.5281/zenodo.8280169)
 
 
-[MRExo]([https://shbhuk.github.io/mrexo/](https://mrexo.readthedocs.io/en/latest/)) is a Python package to jointly model distributions beyond two dimensions.
+[MRExo](https://mrexo.readthedocs.io/en/latest/) is a Python package to jointly model distributions beyond two dimensions.
 Our updated framework can now simultaneously model up to four observables, while also incorporating asymmetric measurement uncertainties and upper limits in the data.
 
 We build upon the 2-dimensional nonparametric framework utilizing beta density functions as the basis set for density estimation to perform simultaneous density estimation in up to 4-dimensions.
 
 For detailed description of the code please see [Kanodia et al. (2019)](http://bit.ly/mrexo_paper) for the original and [Kanodia et al. (2023)](https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K/abstract) for the updated version.
+
+Documentation can be found [here](https://mrexo.readthedocs.io/en/latest/index.html).
 
 
 ==================

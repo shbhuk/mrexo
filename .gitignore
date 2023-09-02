@@ -9,8 +9,7 @@ docs/.*
 *.swm
 *.swk
 *.swl
-PyCode/working_imap.py
-*.pyc
+
 
 build
 *.egg-info

@@ -1,34 +1,24 @@
 Welcome to MRExo's documentation!
 =================================
 
-`MRExo <https://shbhuk.github.io/mrexo/>`_ is a Python package for non-parametric fitting and analysis of the Mass-Radius (M-R) relationship for exoplanets.
+`MRExo <https://mrexo.readthedocs.io/en/latest/>`_  is a Python package to jointly model distributions beyond two dimensions. Our updated framework can now simultaneously model up to four observables, while also incorporating asymmetric measurement uncertainties and upper limits in the data.
 
-In this work, we extend the existing nonparametric and probabilistic framework of MRExo to jointly model distributions beyond two dimensions.
-Our updated framework can now simultaneously model up to four observables, while also incorporating asymmetric measurement uncertainties and upper limits in the data.
-
-For detailed description of the code please see `Kanodia et al. (2019, 2023) <http://bit.ly/mrexo_paper>`_.
+We build upon the 2-dimensional nonparametric framework utilizing beta density functions as the basis set for density estimation to perform simultaneous density estimation in up to 4-dimensions.
+For detailed description of the code please see `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_ for the original and `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_ for the updated version.
 
 
+Citing ``MRExo``
+--------------------
 
-Installation
-------------
+To cite ``MRExo``, please refer to the two publications `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_  , `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  and code on `Zenodo <https://zenodo.org/record/8280169>`_   .
 
-Instructions...
-
-
-
-Citation
---------
-
-Details...
-
-
-
-Contents
---------
 
 .. toctree::
    :maxdepth: 2
-   :includehidden:
+   :caption: Contents:
 
+
+   installation
+   fitting
+   inference
    api
