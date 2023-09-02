@@ -22,5 +22,5 @@ Contents
 
 
    installation
-   usage
+   fitting
    api
