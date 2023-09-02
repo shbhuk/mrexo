@@ -8,4 +8,5 @@ After performing a joint fit following the example :ref:`here <fitting>`, ``MREx
 2D Inference
 --------------------
 For 2D fits, say --- 2D *f(m, r)* ---,  the 2D PDF can be conditioned on a given radius *r=Rp*, to obtain the PDF --- *f(m|r=Rp)*, from which the user can obtain the expectation and variance of the distribution. 
+The sample script for this is included `here <../../2D_marginalize1Dplot.py>`_ 
 
