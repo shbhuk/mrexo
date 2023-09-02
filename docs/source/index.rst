@@ -13,9 +13,6 @@ Citing ``MRExo``
 To cite ``MRExo``, please refer to the two publications `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_  , `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  and code on `Zenodo <https://zenodo.org/record/8280169>`_   .
 
 
-Contents
---------------------
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

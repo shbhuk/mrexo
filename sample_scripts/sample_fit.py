@@ -1,7 +1,6 @@
 import os, sys
 from astropy.table import Table
 import numpy as np
-from multiprocessing import cpu_count
 import numpy as np
 import pandas as pd
 import shutil
