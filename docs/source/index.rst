@@ -7,10 +7,10 @@ We build upon the 2-dimensional nonparametric framework utilizing beta density f
 For detailed description of the code please see `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_ for the original and `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_ for the updated version.
 
 
-Citing ``mrexo``
+Citing ``MRExo``
 --------------------
 
-To cite ``mrexo``, please refer to the two publications `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_  , `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  and code on `Zenodo <https://zenodo.org/record/8280169>`_   .
+To cite ``MRExo``, please refer to the two publications `Kanodia et al. (2019) <https://ui.adsabs.harvard.edu/abs/2019ApJ...882...38K>`_  , `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  and code on `Zenodo <https://zenodo.org/record/8280169>`_   .
 
 
 Contents
@@ -22,4 +22,5 @@ Contents
 
 
    installation
+   usage
    api
