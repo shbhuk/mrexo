@@ -23,4 +23,5 @@ Contents
 
    installation
    fitting
+   inference
    api

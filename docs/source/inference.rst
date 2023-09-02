@@ -1,6 +1,8 @@
 
-Fitting
+Inference
 =================================
+
+After performing a fit following the methodology here :ref:`Fitting`.
 
 ``MRExo`` can be used to fit samples with two to four different observables (along with their measurement uncertainties).
 
