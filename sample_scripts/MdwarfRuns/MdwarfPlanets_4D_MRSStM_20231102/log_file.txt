@@ -1,0 +1,5 @@
+Using core 1698869:=========Started MLE run at 2023-11-02 10:49:00.670412=========Using core 1698869:Starting C matrix calculation at 2023-11-02 10:49:00.670558Using core 1698869:Finished Integration at 2023-11-02 10:49:12.617503. Calculated the PDFs for Integrated beta and normal density.Using core 1698869:Optimization run finished at 2023-11-02 10:49:22.121775, with 16 iterations.
+Sum of weights = 1.0000000000000657 		
+LogLikelihood = -656.2069441724717, Fractional Error = 0.0009189780997876681
+
+Using core 1698869:Calculating Joint Distribution for 4 dimensions at 2023-11-02 10:49:22.144328Using core 1698869:Finished calculating Joint Distribution for 4 dimensions at 2023-11-02 10:49:52.447716
