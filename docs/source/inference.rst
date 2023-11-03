@@ -34,4 +34,4 @@ Example, fitting a *f(m,r,insol)* 3D PDF, and obtaining the *f(m)* PDF by condit
 For 4D fits, say --- *f(x, y, z, t)* ---,  the 4D PDF can be conditioned on given measurements Y, Z, T  *y=Y, z=Z, t=T*, to obtain the  1D PDF --- *f(x|y=Y,  z=Z, t=T)*, from which the user can obtain the expectation and variance of the distribution. 
 Here *x, y, z, t* can refer to any four measured quantities. 
 
-Example is Figure 4 or 5 in `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  . The sample script for this is included in the ` 4D_marginalize3D script <https://github.com/shbhuk/mrexo/blob/master/sample_scripts/4D_marginalize3Dplot.py>`_  .  Other variants of conditioning can be coded up as well.
+Example is Figure 4 or 5 in `Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023arXiv230810615K>`_  . The sample script for this is included in the `4D_marginalize3D script <https://github.com/shbhuk/mrexo/blob/master/sample_scripts/4D_marginalize3Dplot.py>`_  .  Other variants of conditioning can be coded up as well.
