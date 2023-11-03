@@ -3,7 +3,9 @@
 M-dwarf Planetary Relations️
 =================================
 
-In v1.1 we also include a pre-conditioned M-dwarf sample fit consisting of  88 planets with precise (> 3-sigma) masses and radii, and stellar effective temperatures < 4200 K. We perform three fits of increasing complexity on this dataset in 2-D, 3-D and 4-D as follows. This is to account for the effect of stellar mass, insolation (in addition to planetary radius) to the planetary mass.  Though the example shown here is only for an M-dwarf planet sample, in principle, the same can be performed on any sample.
+In v1.1 we also include a pre-conditioned M-dwarf sample fit consisting of  88 planets with precise (> 3-sigma) masses and radii, and stellar effective temperatures < 4200 K. 
+We perform three fits of increasing complexity on this dataset in 2-D, 3-D and 4-D as follows. This is to account for the effect of stellar mass, insolation (in addition to planetary radius) to the planetary mass as shown in `Figure 6 from Kanodia et al. (2023) <https://ui.adsabs.harvard.edu/abs/2023ApJ...956...76K/abstract>`_ 
+Though the example shown here is only for an M-dwarf planet sample, in principle, the same can be performed on any sample.
 
 
 
