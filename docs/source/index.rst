@@ -21,4 +21,5 @@ To cite ``MRExo``, please refer to the two publications `Kanodia et al. (2019) <
    installation
    fitting
    inference
+   mdwarf
    api
