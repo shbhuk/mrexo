@@ -1,0 +1,687 @@
+Using core 1692318:
+	___  _________  _____			  
+	|  \/  || ___ \|  ___|			 
+	| .  . || |_/ /| |__  __  __  ___  
+	| |\/| ||	/ |  __| \ \/ / / _ \ 
+	| |  | || |\ \ | |___  >  < | (_) |
+	\_|  |_/\_| \_|\____/ /_/\_\ \___/ 
+	Using core 1692318:Started for cv degrees at 2023-11-02 10:36:18.598476, using 20 core/s 
+Using core 1692318:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 60Using core 1692445:Started cross validation for [10 10] degree check and 0 th-fold at 2023-11-02 10:36:18.642828Using core 1692446:Started cross validation for [15 15] degree check and 0 th-fold at 2023-11-02 10:36:18.642957Using core 1692445:=========Started MLE run at 2023-11-02 10:36:18.643356=========Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:18.643404Using core 1692446:=========Started MLE run at 2023-11-02 10:36:18.643401=========Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:18.643447Using core 1692447:Started cross validation for [21 21] degree check and 0 th-fold at 2023-11-02 10:36:18.643095Using core 1692449:Started cross validation for [32 32] degree check and 0 th-fold at 2023-11-02 10:36:18.643201Using core 1692448:Started cross validation for [26 26] degree check and 0 th-fold at 2023-11-02 10:36:18.643148Using core 1692447:=========Started MLE run at 2023-11-02 10:36:18.643584=========Using core 1692449:=========Started MLE run at 2023-11-02 10:36:18.643600=========Using core 1692447:Starting C matrix calculation at 2023-11-02 10:36:18.643627Using core 1692448:=========Started MLE run at 2023-11-02 10:36:18.643616=========Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:18.643647Using core 1692448:Starting C matrix calculation at 2023-11-02 10:36:18.643669Using core 1692450:Started cross validation for [37 37] degree check and 0 th-fold at 2023-11-02 10:36:18.643404Using core 1692450:=========Started MLE run at 2023-11-02 10:36:18.643904=========Using core 1692450:Starting C matrix calculation at 2023-11-02 10:36:18.643963Using core 1692453:Started cross validation for [54 54] degree check and 0 th-fold at 2023-11-02 10:36:18.643619Using core 1692451:Started cross validation for [43 43] degree check and 0 th-fold at 2023-11-02 10:36:18.643544Using core 1692453:=========Started MLE run at 2023-11-02 10:36:18.644035=========Using core 1692451:=========Started MLE run at 2023-11-02 10:36:18.644065=========Using core 1692452:Started cross validation for [48 48] degree check and 0 th-fold at 2023-11-02 10:36:18.643647Using core 1692453:Starting C matrix calculation at 2023-11-02 10:36:18.644083Using core 1692451:Starting C matrix calculation at 2023-11-02 10:36:18.644109Using core 1692452:=========Started MLE run at 2023-11-02 10:36:18.644142=========Using core 1692452:Starting C matrix calculation at 2023-11-02 10:36:18.644196Using core 1692454:Started cross validation for [60 60] degree check and 0 th-fold at 2023-11-02 10:36:18.643865Using core 1692454:=========Started MLE run at 2023-11-02 10:36:18.644362=========Using core 1692454:Starting C matrix calculation at 2023-11-02 10:36:18.644412Using core 1692456:Started cross validation for [15 15] degree check and 1 th-fold at 2023-11-02 10:36:18.644053Using core 1692456:=========Started MLE run at 2023-11-02 10:36:18.644478=========Using core 1692456:Starting C matrix calculation at 2023-11-02 10:36:18.644527Using core 1692458:Started cross validation for [26 26] degree check and 1 th-fold at 2023-11-02 10:36:18.644238Using core 1692457:Started cross validation for [21 21] degree check and 1 th-fold at 2023-11-02 10:36:18.644173Using core 1692458:=========Started MLE run at 2023-11-02 10:36:18.644618=========Using core 1692455:Started cross validation for [10 10] degree check and 1 th-fold at 2023-11-02 10:36:18.644255Using core 1692457:=========Started MLE run at 2023-11-02 10:36:18.644626=========Using core 1692458:Starting C matrix calculation at 2023-11-02 10:36:18.644662Using core 1692457:Starting C matrix calculation at 2023-11-02 10:36:18.644683Using core 1692455:=========Started MLE run at 2023-11-02 10:36:18.644680=========Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:18.644738Using core 1692460:Started cross validation for [37 37] degree check and 1 th-fold at 2023-11-02 10:36:18.644475Using core 1692459:Started cross validation for [32 32] degree check and 1 th-fold at 2023-11-02 10:36:18.644427Using core 1692460:=========Started MLE run at 2023-11-02 10:36:18.644853=========Using core 1692459:=========Started MLE run at 2023-11-02 10:36:18.644859=========Using core 1692461:Started cross validation for [43 43] degree check and 1 th-fold at 2023-11-02 10:36:18.644566Using core 1692460:Starting C matrix calculation at 2023-11-02 10:36:18.644910Using core 1692459:Starting C matrix calculation at 2023-11-02 10:36:18.644912Using core 1692461:=========Started MLE run at 2023-11-02 10:36:18.644956=========Using core 1692461:Starting C matrix calculation at 2023-11-02 10:36:18.644995Using core 1692462:Started cross validation for [48 48] degree check and 1 th-fold at 2023-11-02 10:36:18.644725Using core 1692462:=========Started MLE run at 2023-11-02 10:36:18.645120=========Using core 1692462:Starting C matrix calculation at 2023-11-02 10:36:18.645161Using core 1692464:Started cross validation for [60 60] degree check and 1 th-fold at 2023-11-02 10:36:18.645102Using core 1692463:Started cross validation for [54 54] degree check and 1 th-fold at 2023-11-02 10:36:18.645119Using core 1692464:=========Started MLE run at 2023-11-02 10:36:18.645522=========Using core 1692463:=========Started MLE run at 2023-11-02 10:36:18.645521=========Using core 1692464:Starting C matrix calculation at 2023-11-02 10:36:18.645565Using core 1692463:Starting C matrix calculation at 2023-11-02 10:36:18.645567Using core 1692455:Finished Integration at 2023-11-02 10:36:19.925364. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Optimization run finished at 2023-11-02 10:36:19.926480, with 11 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -457.19193345075837, Fractional Error = 0.0008653633360610116
+
+Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:19.926593Using core 1692445:Finished Integration at 2023-11-02 10:36:19.945931. Calculated the PDFs for Integrated beta and normal density.Using core 1692445:Optimization run finished at 2023-11-02 10:36:19.947271, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -440.78104696368996, Fractional Error = 0.0008993689793124609
+
+Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:19.947401Using core 1692455:Finished Integration at 2023-11-02 10:36:20.059993. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Finished cross validation for [10 10] degree check and 1 th-fold. LogLike = -41.56601879191728 at 2023-11-02 10:36:20.060064
+Using core 1692455:Started cross validation for [10 10] degree check and 2 th-fold at 2023-11-02 10:36:20.060450Using core 1692455:=========Started MLE run at 2023-11-02 10:36:20.060547=========Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:20.060577Using core 1692445:Finished Integration at 2023-11-02 10:36:20.071532. Calculated the PDFs for Integrated beta and normal density.Using core 1692445:Finished cross validation for [10 10] degree check and 0 th-fold. LogLike = -58.179195851782794 at 2023-11-02 10:36:20.071703
+Using core 1692445:Started cross validation for [15 15] degree check and 2 th-fold at 2023-11-02 10:36:20.072224Using core 1692445:=========Started MLE run at 2023-11-02 10:36:20.072338=========Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:20.072366Using core 1692446:Finished Integration at 2023-11-02 10:36:20.637786. Calculated the PDFs for Integrated beta and normal density.Using core 1692456:Finished Integration at 2023-11-02 10:36:20.638934. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Optimization run finished at 2023-11-02 10:36:20.646033, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -417.26311710437176, Fractional Error = 0.0008419603510833315
+
+Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:20.646361Using core 1692456:Optimization run finished at 2023-11-02 10:36:20.646530, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -431.06327359577955, Fractional Error = 0.0009448924392542683
+
+Using core 1692456:Starting C matrix calculation at 2023-11-02 10:36:20.646756Using core 1692446:Finished Integration at 2023-11-02 10:36:20.855842. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Finished cross validation for [15 15] degree check and 0 th-fold. LogLike = -53.63201191811917 at 2023-11-02 10:36:20.856008
+Using core 1692446:Started cross validation for [21 21] degree check and 2 th-fold at 2023-11-02 10:36:20.856504Using core 1692446:=========Started MLE run at 2023-11-02 10:36:20.856609=========Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:20.856637Using core 1692456:Finished Integration at 2023-11-02 10:36:20.871449. Calculated the PDFs for Integrated beta and normal density.Using core 1692456:Finished cross validation for [15 15] degree check and 1 th-fold. LogLike = -39.791355783151296 at 2023-11-02 10:36:20.871539
+Using core 1692456:Started cross validation for [26 26] degree check and 2 th-fold at 2023-11-02 10:36:20.871948Using core 1692456:=========Started MLE run at 2023-11-02 10:36:20.872050=========Using core 1692456:Starting C matrix calculation at 2023-11-02 10:36:20.872079Using core 1692455:Finished Integration at 2023-11-02 10:36:21.354634. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Optimization run finished at 2023-11-02 10:36:21.355250, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -444.9837334116581, Fractional Error = 0.000960160228420665
+
+Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:21.355333Using core 1692457:Finished Integration at 2023-11-02 10:36:21.441940. Calculated the PDFs for Integrated beta and normal density.Using core 1692447:Finished Integration at 2023-11-02 10:36:21.450047. Calculated the PDFs for Integrated beta and normal density.Using core 1692457:Optimization run finished at 2023-11-02 10:36:21.450977, with 11 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -412.4845771966316, Fractional Error = 0.0008970561490802738
+
+Using core 1692457:Starting C matrix calculation at 2023-11-02 10:36:21.451340Using core 1692447:Optimization run finished at 2023-11-02 10:36:21.461478, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -399.2943985350887, Fractional Error = 0.0009254839592204944
+
+Using core 1692447:Starting C matrix calculation at 2023-11-02 10:36:21.461980Using core 1692455:Finished Integration at 2023-11-02 10:36:21.498682. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Finished cross validation for [10 10] degree check and 2 th-fold. LogLike = -53.839145035038605 at 2023-11-02 10:36:21.498753
+Using core 1692455:Started cross validation for [32 32] degree check and 2 th-fold at 2023-11-02 10:36:21.499052Using core 1692455:=========Started MLE run at 2023-11-02 10:36:21.499153=========Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:21.499182Using core 1692447:Finished Integration at 2023-11-02 10:36:21.750069. Calculated the PDFs for Integrated beta and normal density.Using core 1692447:Finished cross validation for [21 21] degree check and 0 th-fold. LogLike = -52.14358743574785 at 2023-11-02 10:36:21.750206
+Using core 1692447:Started cross validation for [37 37] degree check and 2 th-fold at 2023-11-02 10:36:21.750613Using core 1692447:=========Started MLE run at 2023-11-02 10:36:21.750711=========Using core 1692447:Starting C matrix calculation at 2023-11-02 10:36:21.750739Using core 1692457:Finished Integration at 2023-11-02 10:36:21.761138. Calculated the PDFs for Integrated beta and normal density.Using core 1692457:Finished cross validation for [21 21] degree check and 1 th-fold. LogLike = -38.414455301389296 at 2023-11-02 10:36:21.761270
+Using core 1692457:Started cross validation for [43 43] degree check and 2 th-fold at 2023-11-02 10:36:21.761726Using core 1692457:=========Started MLE run at 2023-11-02 10:36:21.761824=========Using core 1692457:Starting C matrix calculation at 2023-11-02 10:36:21.761853Using core 1692458:Finished Integration at 2023-11-02 10:36:22.047451. Calculated the PDFs for Integrated beta and normal density.Using core 1692458:Optimization run finished at 2023-11-02 10:36:22.057177, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -401.651772409531, Fractional Error = 0.0008928232106829113
+
+Using core 1692458:Starting C matrix calculation at 2023-11-02 10:36:22.057518Using core 1692448:Finished Integration at 2023-11-02 10:36:22.073600. Calculated the PDFs for Integrated beta and normal density.Using core 1692448:Optimization run finished at 2023-11-02 10:36:22.083360, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -389.73008258536265, Fractional Error = 0.0009912466451356056
+
+Using core 1692448:Starting C matrix calculation at 2023-11-02 10:36:22.083705Using core 1692445:Finished Integration at 2023-11-02 10:36:22.108376. Calculated the PDFs for Integrated beta and normal density.Using core 1692445:Optimization run finished at 2023-11-02 10:36:22.119965, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -419.7338135438827, Fractional Error = 0.000909653464337522
+
+Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:22.120215Using core 1692445:Finished Integration at 2023-11-02 10:36:22.355388. Calculated the PDFs for Integrated beta and normal density.Using core 1692445:Finished cross validation for [15 15] degree check and 2 th-fold. LogLike = -50.784219886193384 at 2023-11-02 10:36:22.355675
+Using core 1692445:Started cross validation for [48 48] degree check and 2 th-fold at 2023-11-02 10:36:22.356317Using core 1692445:=========Started MLE run at 2023-11-02 10:36:22.356413=========Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:22.356444Using core 1692448:Finished Integration at 2023-11-02 10:36:22.434666. Calculated the PDFs for Integrated beta and normal density.Using core 1692448:Finished cross validation for [26 26] degree check and 0 th-fold. LogLike = -51.95930659609603 at 2023-11-02 10:36:22.434863
+Using core 1692448:Started cross validation for [54 54] degree check and 2 th-fold at 2023-11-02 10:36:22.435466Using core 1692448:=========Started MLE run at 2023-11-02 10:36:22.435567=========Using core 1692448:Starting C matrix calculation at 2023-11-02 10:36:22.435596Using core 1692458:Finished Integration at 2023-11-02 10:36:22.471220. Calculated the PDFs for Integrated beta and normal density.Using core 1692458:Finished cross validation for [26 26] degree check and 1 th-fold. LogLike = -37.68653763548393 at 2023-11-02 10:36:22.471549
+Using core 1692458:Started cross validation for [60 60] degree check and 2 th-fold at 2023-11-02 10:36:22.472239Using core 1692458:=========Started MLE run at 2023-11-02 10:36:22.472570=========Using core 1692458:Starting C matrix calculation at 2023-11-02 10:36:22.472600Using core 1692459:Finished Integration at 2023-11-02 10:36:22.778399. Calculated the PDFs for Integrated beta and normal density.Using core 1692459:Optimization run finished at 2023-11-02 10:36:22.788729, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -391.91541731040263, Fractional Error = 0.0008773573542891625
+
+Using core 1692459:Starting C matrix calculation at 2023-11-02 10:36:22.789038Using core 1692449:Finished Integration at 2023-11-02 10:36:22.817388. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Optimization run finished at 2023-11-02 10:36:22.828433, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -381.561472271766, Fractional Error = 0.0008730239162065488
+
+Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:22.828763Using core 1692459:Finished Integration at 2023-11-02 10:36:23.230574. Calculated the PDFs for Integrated beta and normal density.Using core 1692459:Finished cross validation for [32 32] degree check and 1 th-fold. LogLike = -37.22442952859152 at 2023-11-02 10:36:23.230764
+Using core 1692459:Started cross validation for [10 10] degree check and 3 th-fold at 2023-11-02 10:36:23.231525Using core 1692459:=========Started MLE run at 2023-11-02 10:36:23.231626=========Using core 1692459:Starting C matrix calculation at 2023-11-02 10:36:23.231657Using core 1692449:Finished Integration at 2023-11-02 10:36:23.243004. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Finished cross validation for [32 32] degree check and 0 th-fold. LogLike = -52.01822067615505 at 2023-11-02 10:36:23.243172
+Using core 1692449:Started cross validation for [15 15] degree check and 3 th-fold at 2023-11-02 10:36:23.243774Using core 1692449:=========Started MLE run at 2023-11-02 10:36:23.243872=========Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:23.243909Using core 1692460:Finished Integration at 2023-11-02 10:36:23.345928. Calculated the PDFs for Integrated beta and normal density.Using core 1692460:Optimization run finished at 2023-11-02 10:36:23.358272, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -385.90358999191795, Fractional Error = 0.0009232053507200418
+
+Using core 1692460:Starting C matrix calculation at 2023-11-02 10:36:23.358843Using core 1692450:Finished Integration at 2023-11-02 10:36:23.598973. Calculated the PDFs for Integrated beta and normal density.Using core 1692450:Optimization run finished at 2023-11-02 10:36:23.610621, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -376.6913564237075, Fractional Error = 0.0008852921954885085
+
+Using core 1692450:Starting C matrix calculation at 2023-11-02 10:36:23.611175Using core 1692446:Finished Integration at 2023-11-02 10:36:23.725931. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Optimization run finished at 2023-11-02 10:36:23.736565, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -401.3138108671719, Fractional Error = 0.0008581545998529671
+
+Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:23.736752Using core 1692460:Finished Integration at 2023-11-02 10:36:23.867233. Calculated the PDFs for Integrated beta and normal density.Using core 1692460:Finished cross validation for [37 37] degree check and 1 th-fold. LogLike = -37.01095183540475 at 2023-11-02 10:36:23.867947
+Using core 1692460:Started cross validation for [21 21] degree check and 3 th-fold at 2023-11-02 10:36:23.870605Using core 1692460:=========Started MLE run at 2023-11-02 10:36:23.870757=========Using core 1692460:Starting C matrix calculation at 2023-11-02 10:36:23.870791Using core 1692461:Finished Integration at 2023-11-02 10:36:23.979585. Calculated the PDFs for Integrated beta and normal density.Using core 1692461:Optimization run finished at 2023-11-02 10:36:23.994093, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -380.0258840859237, Fractional Error = 0.0009719374552058954
+
+Using core 1692461:Starting C matrix calculation at 2023-11-02 10:36:23.994569Using core 1692451:Finished Integration at 2023-11-02 10:36:24.049508. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Finished Integration at 2023-11-02 10:36:24.053361. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Finished cross validation for [21 21] degree check and 2 th-fold. LogLike = -49.375675100682486 at 2023-11-02 10:36:24.053455
+Using core 1692451:Optimization run finished at 2023-11-02 10:36:24.063705, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -371.78520861884243, Fractional Error = 0.0009373278780182677
+
+Using core 1692451:Starting C matrix calculation at 2023-11-02 10:36:24.064241Using core 1692446:Started cross validation for [26 26] degree check and 3 th-fold at 2023-11-02 10:36:24.074108Using core 1692446:=========Started MLE run at 2023-11-02 10:36:24.074237=========Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:24.074270Using core 1692450:Finished Integration at 2023-11-02 10:36:24.114327. Calculated the PDFs for Integrated beta and normal density.Using core 1692450:Finished cross validation for [37 37] degree check and 0 th-fold. LogLike = -51.757315974933896 at 2023-11-02 10:36:24.114963
+Using core 1692450:Started cross validation for [32 32] degree check and 3 th-fold at 2023-11-02 10:36:24.116934Using core 1692450:=========Started MLE run at 2023-11-02 10:36:24.117070=========Using core 1692450:Starting C matrix calculation at 2023-11-02 10:36:24.117100Using core 1692456:Finished Integration at 2023-11-02 10:36:24.493870. Calculated the PDFs for Integrated beta and normal density.Using core 1692456:Optimization run finished at 2023-11-02 10:36:24.496936, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -391.06502959567814, Fractional Error = 0.0009524508249691193
+
+Using core 1692456:Starting C matrix calculation at 2023-11-02 10:36:24.497095Using core 1692452:Finished Integration at 2023-11-02 10:36:24.559255. Calculated the PDFs for Integrated beta and normal density.Using core 1692452:Optimization run finished at 2023-11-02 10:36:24.574591, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -368.2104274683801, Fractional Error = 0.000981282840923245
+
+Using core 1692452:Starting C matrix calculation at 2023-11-02 10:36:24.575423Using core 1692461:Finished Integration at 2023-11-02 10:36:24.579385. Calculated the PDFs for Integrated beta and normal density.Using core 1692461:Finished cross validation for [43 43] degree check and 1 th-fold. LogLike = -36.73918503731078 at 2023-11-02 10:36:24.580042
+Using core 1692459:Finished Integration at 2023-11-02 10:36:24.598306. Calculated the PDFs for Integrated beta and normal density.Using core 1692459:Optimization run finished at 2023-11-02 10:36:24.599089, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -456.87239762410053, Fractional Error = 0.0008690934938100005
+
+Using core 1692459:Starting C matrix calculation at 2023-11-02 10:36:24.599200Using core 1692462:Finished Integration at 2023-11-02 10:36:24.603940. Calculated the PDFs for Integrated beta and normal density.Using core 1692461:Started cross validation for [37 37] degree check and 3 th-fold at 2023-11-02 10:36:24.583681Using core 1692461:=========Started MLE run at 2023-11-02 10:36:24.606096=========Using core 1692461:Starting C matrix calculation at 2023-11-02 10:36:24.606144Using core 1692451:Finished Integration at 2023-11-02 10:36:24.646339. Calculated the PDFs for Integrated beta and normal density.Using core 1692451:Finished cross validation for [43 43] degree check and 0 th-fold. LogLike = -51.40852143280221 at 2023-11-02 10:36:24.652496
+Using core 1692451:Started cross validation for [43 43] degree check and 3 th-fold at 2023-11-02 10:36:24.655701Using core 1692451:=========Started MLE run at 2023-11-02 10:36:24.655841=========Using core 1692451:Starting C matrix calculation at 2023-11-02 10:36:24.655886Using core 1692462:Optimization run finished at 2023-11-02 10:36:24.691538, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -375.47059851858603, Fractional Error = 0.0008996397259636433
+
+Using core 1692462:Starting C matrix calculation at 2023-11-02 10:36:24.692232Using core 1692459:Finished Integration at 2023-11-02 10:36:24.791988. Calculated the PDFs for Integrated beta and normal density.Using core 1692459:Finished cross validation for [10 10] degree check and 3 th-fold. LogLike = -41.81939961981281 at 2023-11-02 10:36:24.792060
+Using core 1692459:Started cross validation for [48 48] degree check and 3 th-fold at 2023-11-02 10:36:24.792326Using core 1692459:=========Started MLE run at 2023-11-02 10:36:24.792419=========Using core 1692459:Starting C matrix calculation at 2023-11-02 10:36:24.792448Using core 1692456:Finished Integration at 2023-11-02 10:36:24.902305. Calculated the PDFs for Integrated beta and normal density.Using core 1692456:Finished cross validation for [26 26] degree check and 2 th-fold. LogLike = -48.49891202174422 at 2023-11-02 10:36:24.902435
+Using core 1692456:Started cross validation for [54 54] degree check and 3 th-fold at 2023-11-02 10:36:24.903040Using core 1692456:=========Started MLE run at 2023-11-02 10:36:24.903142=========Using core 1692456:Starting C matrix calculation at 2023-11-02 10:36:24.903171Using core 1692452:Finished Integration at 2023-11-02 10:36:25.199653. Calculated the PDFs for Integrated beta and normal density.Using core 1692452:Finished cross validation for [48 48] degree check and 0 th-fold. LogLike = -51.221355390185416 at 2023-11-02 10:36:25.200250
+Using core 1692452:Started cross validation for [60 60] degree check and 3 th-fold at 2023-11-02 10:36:25.201935Using core 1692452:=========Started MLE run at 2023-11-02 10:36:25.202073=========Using core 1692452:Starting C matrix calculation at 2023-11-02 10:36:25.202103Using core 1692463:Finished Integration at 2023-11-02 10:36:25.216044. Calculated the PDFs for Integrated beta and normal density.Using core 1692463:Optimization run finished at 2023-11-02 10:36:25.241947, with 14 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -371.1395571417557, Fractional Error = 0.0009112358681715087
+
+Using core 1692463:Starting C matrix calculation at 2023-11-02 10:36:25.242843Using core 1692462:Finished Integration at 2023-11-02 10:36:25.327145. Calculated the PDFs for Integrated beta and normal density.Using core 1692462:Finished cross validation for [48 48] degree check and 1 th-fold. LogLike = -36.528389607894226 at 2023-11-02 10:36:25.339161
+Using core 1692462:Started cross validation for [10 10] degree check and 4 th-fold at 2023-11-02 10:36:25.345211Using core 1692462:=========Started MLE run at 2023-11-02 10:36:25.345371=========Using core 1692462:Starting C matrix calculation at 2023-11-02 10:36:25.345448Using core 1692453:Finished Integration at 2023-11-02 10:36:25.359171. Calculated the PDFs for Integrated beta and normal density.Using core 1692453:Optimization run finished at 2023-11-02 10:36:25.383441, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -364.4712659904462, Fractional Error = 0.0009943667007297958
+
+Using core 1692453:Starting C matrix calculation at 2023-11-02 10:36:25.384269Using core 1692449:Finished Integration at 2023-11-02 10:36:25.439818. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Optimization run finished at 2023-11-02 10:36:25.441361, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -431.94023278836914, Fractional Error = 0.0009949249410270888
+
+Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:25.441501Using core 1692449:Finished Integration at 2023-11-02 10:36:25.645329. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Finished cross validation for [15 15] degree check and 3 th-fold. LogLike = -38.894731879499474 at 2023-11-02 10:36:25.645411
+Using core 1692449:Started cross validation for [15 15] degree check and 4 th-fold at 2023-11-02 10:36:25.645807Using core 1692449:=========Started MLE run at 2023-11-02 10:36:25.645913=========Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:25.645941Using core 1692455:Finished Integration at 2023-11-02 10:36:25.858057. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Optimization run finished at 2023-11-02 10:36:25.866797, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -381.47284248923876, Fractional Error = 0.000913237672721378
+
+Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:25.867025Using core 1692464:Finished Integration at 2023-11-02 10:36:25.895648. Calculated the PDFs for Integrated beta and normal density.Using core 1692464:Optimization run finished at 2023-11-02 10:36:25.920555, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -367.5209423200099, Fractional Error = 0.0008684326271128117
+
+Using core 1692464:Starting C matrix calculation at 2023-11-02 10:36:25.921642Using core 1692463:Finished Integration at 2023-11-02 10:36:25.936802. Calculated the PDFs for Integrated beta and normal density.Using core 1692463:Finished cross validation for [54 54] degree check and 1 th-fold. LogLike = -36.39130884888313 at 2023-11-02 10:36:25.941977
+Using core 1692463:Started cross validation for [21 21] degree check and 4 th-fold at 2023-11-02 10:36:25.944491Using core 1692463:=========Started MLE run at 2023-11-02 10:36:25.944665=========Using core 1692463:Starting C matrix calculation at 2023-11-02 10:36:25.944698Using core 1692454:Finished Integration at 2023-11-02 10:36:25.957616. Calculated the PDFs for Integrated beta and normal density.Using core 1692454:Optimization run finished at 2023-11-02 10:36:26.044908, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -361.21911306520366, Fractional Error = 0.0009951064272696111
+
+Using core 1692454:Starting C matrix calculation at 2023-11-02 10:36:26.045861Using core 1692453:Finished Integration at 2023-11-02 10:36:26.073490. Calculated the PDFs for Integrated beta and normal density.Using core 1692453:Finished cross validation for [54 54] degree check and 0 th-fold. LogLike = -51.16814584372517 at 2023-11-02 10:36:26.081973
+Using core 1692453:Started cross validation for [26 26] degree check and 4 th-fold at 2023-11-02 10:36:26.083776Using core 1692453:=========Started MLE run at 2023-11-02 10:36:26.083932=========Using core 1692453:Starting C matrix calculation at 2023-11-02 10:36:26.083967Using core 1692455:Finished Integration at 2023-11-02 10:36:26.337672. Calculated the PDFs for Integrated beta and normal density.Using core 1692455:Finished cross validation for [32 32] degree check and 2 th-fold. LogLike = -47.93058505298253 at 2023-11-02 10:36:26.337757
+Using core 1692455:Started cross validation for [32 32] degree check and 4 th-fold at 2023-11-02 10:36:26.338268Using core 1692455:=========Started MLE run at 2023-11-02 10:36:26.338360=========Using core 1692455:Starting C matrix calculation at 2023-11-02 10:36:26.338387Using core 1692447:Finished Integration at 2023-11-02 10:36:26.642217. Calculated the PDFs for Integrated beta and normal density.Using core 1692447:Optimization run finished at 2023-11-02 10:36:26.649157, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -375.4606376256954, Fractional Error = 0.000945368791546016
+
+Using core 1692447:Starting C matrix calculation at 2023-11-02 10:36:26.649484Using core 1692464:Finished Integration at 2023-11-02 10:36:26.662058. Calculated the PDFs for Integrated beta and normal density.Using core 1692464:Finished cross validation for [60 60] degree check and 1 th-fold. LogLike = -36.29815975004432 at 2023-11-02 10:36:26.662946
+Using core 1692464:Started cross validation for [37 37] degree check and 4 th-fold at 2023-11-02 10:36:26.664633Using core 1692464:=========Started MLE run at 2023-11-02 10:36:26.664782=========Using core 1692464:Starting C matrix calculation at 2023-11-02 10:36:26.664819Using core 1692454:Finished Integration at 2023-11-02 10:36:26.747559. Calculated the PDFs for Integrated beta and normal density.Using core 1692454:Finished cross validation for [60 60] degree check and 0 th-fold. LogLike = -51.27285470045914 at 2023-11-02 10:36:26.756968
+Using core 1692454:Started cross validation for [43 43] degree check and 4 th-fold at 2023-11-02 10:36:26.758054Using core 1692454:=========Started MLE run at 2023-11-02 10:36:26.758198=========Using core 1692454:Starting C matrix calculation at 2023-11-02 10:36:26.758235Using core 1692462:Finished Integration at 2023-11-02 10:36:26.795809. Calculated the PDFs for Integrated beta and normal density.Using core 1692462:Optimization run finished at 2023-11-02 10:36:26.796989, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -447.5542003731087, Fractional Error = 0.0009101788768637284
+
+Using core 1692462:Starting C matrix calculation at 2023-11-02 10:36:26.797151Using core 1692462:Finished Integration at 2023-11-02 10:36:26.935564. Calculated the PDFs for Integrated beta and normal density.Using core 1692462:Finished cross validation for [10 10] degree check and 4 th-fold. LogLike = -51.21954507013539 at 2023-11-02 10:36:26.935640
+Using core 1692460:Finished Integration at 2023-11-02 10:36:26.936060. Calculated the PDFs for Integrated beta and normal density.Using core 1692462:Started cross validation for [48 48] degree check and 4 th-fold at 2023-11-02 10:36:26.936974Using core 1692462:=========Started MLE run at 2023-11-02 10:36:26.937089=========Using core 1692462:Starting C matrix calculation at 2023-11-02 10:36:26.937118Using core 1692460:Optimization run finished at 2023-11-02 10:36:26.948984, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -413.90215506835204, Fractional Error = 0.0009181930291070648
+
+Using core 1692460:Starting C matrix calculation at 2023-11-02 10:36:26.949156Using core 1692447:Finished Integration at 2023-11-02 10:36:27.169082. Calculated the PDFs for Integrated beta and normal density.Using core 1692447:Finished cross validation for [37 37] degree check and 2 th-fold. LogLike = -47.68448923122618 at 2023-11-02 10:36:27.169940
+Using core 1692447:Started cross validation for [54 54] degree check and 4 th-fold at 2023-11-02 10:36:27.170469Using core 1692447:=========Started MLE run at 2023-11-02 10:36:27.170588=========Using core 1692447:Starting C matrix calculation at 2023-11-02 10:36:27.170624Using core 1692457:Finished Integration at 2023-11-02 10:36:27.228131. Calculated the PDFs for Integrated beta and normal density.Using core 1692460:Finished Integration at 2023-11-02 10:36:27.232535. Calculated the PDFs for Integrated beta and normal density.Using core 1692460:Finished cross validation for [21 21] degree check and 3 th-fold. LogLike = -37.05169592921728 at 2023-11-02 10:36:27.232625
+Using core 1692460:Started cross validation for [60 60] degree check and 4 th-fold at 2023-11-02 10:36:27.233236Using core 1692460:=========Started MLE run at 2023-11-02 10:36:27.233351=========Using core 1692460:Starting C matrix calculation at 2023-11-02 10:36:27.233386Using core 1692457:Optimization run finished at 2023-11-02 10:36:27.249466, with 14 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -369.142527397258, Fractional Error = 0.000876898068292703
+
+Using core 1692457:Starting C matrix calculation at 2023-11-02 10:36:27.250102Using core 1692446:Finished Integration at 2023-11-02 10:36:27.648328. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Optimization run finished at 2023-11-02 10:36:27.650946, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -403.63496778026314, Fractional Error = 0.0008657982575661877
+
+Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:27.651060Using core 1692457:Finished Integration at 2023-11-02 10:36:27.795138. Calculated the PDFs for Integrated beta and normal density.Using core 1692457:Finished cross validation for [43 43] degree check and 2 th-fold. LogLike = -47.45504568389963 at 2023-11-02 10:36:27.795641
+Using core 1692449:Finished Integration at 2023-11-02 10:36:27.798528. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Optimization run finished at 2023-11-02 10:36:27.803665, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -422.68304290259624, Fractional Error = 0.00086416287471145
+
+Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:27.803814Using core 1692457:Started cross validation for [10 10] degree check and 5 th-fold at 2023-11-02 10:36:27.801647Using core 1692457:=========Started MLE run at 2023-11-02 10:36:27.804480=========Using core 1692457:Starting C matrix calculation at 2023-11-02 10:36:27.804519Using core 1692446:Finished Integration at 2023-11-02 10:36:28.007603. Calculated the PDFs for Integrated beta and normal density.Using core 1692446:Finished cross validation for [26 26] degree check and 3 th-fold. LogLike = -35.923194682172316 at 2023-11-02 10:36:28.007676
+Using core 1692446:Started cross validation for [15 15] degree check and 5 th-fold at 2023-11-02 10:36:28.008136Using core 1692446:=========Started MLE run at 2023-11-02 10:36:28.008232=========Using core 1692446:Starting C matrix calculation at 2023-11-02 10:36:28.008267Using core 1692449:Finished Integration at 2023-11-02 10:36:28.020634. Calculated the PDFs for Integrated beta and normal density.Using core 1692449:Finished cross validation for [15 15] degree check and 4 th-fold. LogLike = -47.78415215653287 at 2023-11-02 10:36:28.020734
+Using core 1692449:Started cross validation for [21 21] degree check and 5 th-fold at 2023-11-02 10:36:28.021026Using core 1692449:=========Started MLE run at 2023-11-02 10:36:28.021116=========Using core 1692449:Starting C matrix calculation at 2023-11-02 10:36:28.021143Using core 1692445:Finished Integration at 2023-11-02 10:36:28.317117. Calculated the PDFs for Integrated beta and normal density.Using core 1692445:Optimization run finished at 2023-11-02 10:36:28.325694, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -364.9396412696465, Fractional Error = 0.0009077679836535605
+
+Using core 1692445:Starting C matrix calculation at 2023-11-02 10:36:28.326386Using core 1693953:
+	___  _________  _____			  
+	|  \/  || ___ \|  ___|			 
+	| .  . || |_/ /| |__  __  __  ___  
+	| |\/| ||	/ |  __| \ \/ / / _ \ 
+	| |  | || |\ \ | |___  >  < | (_) |
+	\_|  |_/\_| \_|\____/ /_/\_\ \___/ 
+	Using core 1693953:Started for cv degrees at 2023-11-02 10:36:59.476365, using 20 core/s 
+Using core 1693953:Running cross validation to estimate the number of degrees of freedom for the weights. Max candidate = 60Using core 1694080:Started cross validation for [10 10] degree check and 0 th-fold at 2023-11-02 10:36:59.523898Using core 1694082:Started cross validation for [21 21] degree check and 0 th-fold at 2023-11-02 10:36:59.523986Using core 1694080:=========Started MLE run at 2023-11-02 10:36:59.524496=========Using core 1694082:=========Started MLE run at 2023-11-02 10:36:59.524518=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:36:59.524546Using core 1694081:Started cross validation for [15 15] degree check and 0 th-fold at 2023-11-02 10:36:59.524086Using core 1694082:Starting C matrix calculation at 2023-11-02 10:36:59.524570Using core 1694081:=========Started MLE run at 2023-11-02 10:36:59.524637=========Using core 1694085:Started cross validation for [37 37] degree check and 0 th-fold at 2023-11-02 10:36:59.524325Using core 1694081:Starting C matrix calculation at 2023-11-02 10:36:59.524692Using core 1694085:=========Started MLE run at 2023-11-02 10:36:59.524736=========Using core 1694085:Starting C matrix calculation at 2023-11-02 10:36:59.524786Using core 1694083:Started cross validation for [26 26] degree check and 0 th-fold at 2023-11-02 10:36:59.524335Using core 1694083:=========Started MLE run at 2023-11-02 10:36:59.524887=========Using core 1694083:Starting C matrix calculation at 2023-11-02 10:36:59.524959Using core 1694084:Started cross validation for [32 32] degree check and 0 th-fold at 2023-11-02 10:36:59.524465Using core 1694084:=========Started MLE run at 2023-11-02 10:36:59.525045=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:36:59.525093Using core 1694086:Started cross validation for [43 43] degree check and 0 th-fold at 2023-11-02 10:36:59.524847Using core 1694086:=========Started MLE run at 2023-11-02 10:36:59.525438=========Using core 1694086:Starting C matrix calculation at 2023-11-02 10:36:59.525485Using core 1694087:Started cross validation for [48 48] degree check and 0 th-fold at 2023-11-02 10:36:59.525035Using core 1694089:Started cross validation for [60 60] degree check and 0 th-fold at 2023-11-02 10:36:59.525149Using core 1694090:Started cross validation for [10 10] degree check and 1 th-fold at 2023-11-02 10:36:59.525217Using core 1694088:Started cross validation for [54 54] degree check and 0 th-fold at 2023-11-02 10:36:59.525160Using core 1694087:=========Started MLE run at 2023-11-02 10:36:59.525591=========Using core 1694089:=========Started MLE run at 2023-11-02 10:36:59.525592=========Using core 1694090:=========Started MLE run at 2023-11-02 10:36:59.525633=========Using core 1694087:Starting C matrix calculation at 2023-11-02 10:36:59.525644Using core 1694089:Starting C matrix calculation at 2023-11-02 10:36:59.525647Using core 1694088:=========Started MLE run at 2023-11-02 10:36:59.525669=========Using core 1694090:Starting C matrix calculation at 2023-11-02 10:36:59.525693Using core 1694088:Starting C matrix calculation at 2023-11-02 10:36:59.525720Using core 1694091:Started cross validation for [15 15] degree check and 1 th-fold at 2023-11-02 10:36:59.525566Using core 1694091:=========Started MLE run at 2023-11-02 10:36:59.526168=========Using core 1694091:Starting C matrix calculation at 2023-11-02 10:36:59.526218Using core 1694092:Started cross validation for [21 21] degree check and 1 th-fold at 2023-11-02 10:36:59.525737Using core 1694093:Started cross validation for [26 26] degree check and 1 th-fold at 2023-11-02 10:36:59.525922Using core 1694092:=========Started MLE run at 2023-11-02 10:36:59.526318=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:36:59.526369Using core 1694093:=========Started MLE run at 2023-11-02 10:36:59.526368=========Using core 1694093:Starting C matrix calculation at 2023-11-02 10:36:59.526417Using core 1694096:Started cross validation for [43 43] degree check and 1 th-fold at 2023-11-02 10:36:59.526089Using core 1694094:Started cross validation for [32 32] degree check and 1 th-fold at 2023-11-02 10:36:59.526108Using core 1694096:=========Started MLE run at 2023-11-02 10:36:59.526680=========Using core 1694094:=========Started MLE run at 2023-11-02 10:36:59.526699=========Using core 1694096:Starting C matrix calculation at 2023-11-02 10:36:59.526729Using core 1694095:Started cross validation for [37 37] degree check and 1 th-fold at 2023-11-02 10:36:59.526224Using core 1694094:Starting C matrix calculation at 2023-11-02 10:36:59.526747Using core 1694095:=========Started MLE run at 2023-11-02 10:36:59.526795=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:36:59.526840Using core 1694097:Started cross validation for [48 48] degree check and 1 th-fold at 2023-11-02 10:36:59.526407Using core 1694097:=========Started MLE run at 2023-11-02 10:36:59.527054=========Using core 1694097:Starting C matrix calculation at 2023-11-02 10:36:59.527101Using core 1694099:Started cross validation for [60 60] degree check and 1 th-fold at 2023-11-02 10:36:59.526927Using core 1694098:Started cross validation for [54 54] degree check and 1 th-fold at 2023-11-02 10:36:59.526866Using core 1694099:=========Started MLE run at 2023-11-02 10:36:59.527343=========Using core 1694098:=========Started MLE run at 2023-11-02 10:36:59.527347=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:36:59.527390Using core 1694098:Starting C matrix calculation at 2023-11-02 10:36:59.527395Using core 1694080:Finished Integration at 2023-11-02 10:37:00.744952. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Optimization run finished at 2023-11-02 10:37:00.746489, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -464.50979307466395, Fractional Error = 0.000879291060604501
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:00.746616Using core 1694090:Finished Integration at 2023-11-02 10:37:00.785484. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Optimization run finished at 2023-11-02 10:37:00.786901, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -429.48040254402076, Fractional Error = 0.0008310156989648532
+
+Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:00.787033Using core 1694080:Finished Integration at 2023-11-02 10:37:00.886431. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [10 10] degree check and 0 th-fold. LogLike = -34.126482214401015 at 2023-11-02 10:37:00.886504
+Using core 1694080:Started cross validation for [10 10] degree check and 2 th-fold at 2023-11-02 10:37:00.887037Using core 1694080:=========Started MLE run at 2023-11-02 10:37:00.887153=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:00.887191Using core 1694090:Finished Integration at 2023-11-02 10:37:00.892376. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Finished cross validation for [10 10] degree check and 1 th-fold. LogLike = -69.00628883611442 at 2023-11-02 10:37:00.892504
+Using core 1694090:Started cross validation for [15 15] degree check and 2 th-fold at 2023-11-02 10:37:00.893048Using core 1694090:=========Started MLE run at 2023-11-02 10:37:00.893154=========Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:00.893183Using core 1694081:Finished Integration at 2023-11-02 10:37:01.464188. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Optimization run finished at 2023-11-02 10:37:01.473058, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -437.6469747897198, Fractional Error = 0.0009554342800858342
+
+Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:01.473359Using core 1694091:Finished Integration at 2023-11-02 10:37:01.519433. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Optimization run finished at 2023-11-02 10:37:01.527750, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -407.377614807889, Fractional Error = 0.0008699783187209771
+
+Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:01.528046Using core 1694091:Finished Integration at 2023-11-02 10:37:01.706770. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Finished cross validation for [15 15] degree check and 1 th-fold. LogLike = -63.7909162969694 at 2023-11-02 10:37:01.706930
+Using core 1694091:Started cross validation for [21 21] degree check and 2 th-fold at 2023-11-02 10:37:01.707349Using core 1694091:=========Started MLE run at 2023-11-02 10:37:01.707448=========Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:01.707474Using core 1694081:Finished Integration at 2023-11-02 10:37:01.721837. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Finished cross validation for [15 15] degree check and 0 th-fold. LogLike = -33.26911000924166 at 2023-11-02 10:37:01.721983
+Using core 1694081:Started cross validation for [26 26] degree check and 2 th-fold at 2023-11-02 10:37:01.722530Using core 1694081:=========Started MLE run at 2023-11-02 10:37:01.722634=========Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:01.722663Using core 1694080:Finished Integration at 2023-11-02 10:37:02.156730. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Optimization run finished at 2023-11-02 10:37:02.157313, with 11 iterations.
+Sum of weights = 0.9999999999999999 		
+LogLikelihood = -457.31915751052554, Fractional Error = 0.0008468999179377621
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:02.157394Using core 1694082:Finished Integration at 2023-11-02 10:37:02.264589. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Optimization run finished at 2023-11-02 10:37:02.273734, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -418.66739450024494, Fractional Error = 0.0009118094645776214
+
+Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:02.274153Using core 1694080:Finished Integration at 2023-11-02 10:37:02.306349. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [10 10] degree check and 2 th-fold. LogLike = -41.39958774541386 at 2023-11-02 10:37:02.306421
+Using core 1694080:Started cross validation for [32 32] degree check and 2 th-fold at 2023-11-02 10:37:02.306699Using core 1694080:=========Started MLE run at 2023-11-02 10:37:02.306799=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:02.306826Using core 1694092:Finished Integration at 2023-11-02 10:37:02.377102. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:02.384710, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -390.47533598734395, Fractional Error = 0.0009221788741091224
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:02.384996Using core 1694082:Finished Integration at 2023-11-02 10:37:02.622020. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished cross validation for [21 21] degree check and 0 th-fold. LogLike = -32.29651049086855 at 2023-11-02 10:37:02.622288
+Using core 1694082:Started cross validation for [37 37] degree check and 2 th-fold at 2023-11-02 10:37:02.622899Using core 1694082:=========Started MLE run at 2023-11-02 10:37:02.623010=========Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:02.623040Using core 1694092:Finished Integration at 2023-11-02 10:37:02.630490. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [21 21] degree check and 1 th-fold. LogLike = -60.67985193063964 at 2023-11-02 10:37:02.630654
+Using core 1694092:Started cross validation for [43 43] degree check and 2 th-fold at 2023-11-02 10:37:02.631096Using core 1694092:=========Started MLE run at 2023-11-02 10:37:02.631197=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:02.631225Using core 1694083:Finished Integration at 2023-11-02 10:37:02.894951. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Optimization run finished at 2023-11-02 10:37:02.904480, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -407.74603005636766, Fractional Error = 0.0009137385927522223
+
+Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:02.904845Using core 1694090:Finished Integration at 2023-11-02 10:37:02.907714. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Optimization run finished at 2023-11-02 10:37:02.912792, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -429.74906318198424, Fractional Error = 0.000995228538258999
+
+Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:02.912928Using core 1694093:Finished Integration at 2023-11-02 10:37:02.971578. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Optimization run finished at 2023-11-02 10:37:03.012973, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -380.5363175459723, Fractional Error = 0.0008883126525421898
+
+Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:03.013312Using core 1694090:Finished Integration at 2023-11-02 10:37:03.181174. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Finished cross validation for [15 15] degree check and 2 th-fold. LogLike = -41.032360583503674 at 2023-11-02 10:37:03.181246
+Using core 1694090:Started cross validation for [48 48] degree check and 2 th-fold at 2023-11-02 10:37:03.181596Using core 1694090:=========Started MLE run at 2023-11-02 10:37:03.181690=========Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:03.181720Using core 1694093:Finished Integration at 2023-11-02 10:37:03.296541. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Finished cross validation for [26 26] degree check and 1 th-fold. LogLike = -59.21027711852375 at 2023-11-02 10:37:03.296678
+Using core 1694093:Started cross validation for [54 54] degree check and 2 th-fold at 2023-11-02 10:37:03.297195Using core 1694093:=========Started MLE run at 2023-11-02 10:37:03.297471=========Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:03.297499Using core 1694083:Finished Integration at 2023-11-02 10:37:03.319719. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Finished cross validation for [26 26] degree check and 0 th-fold. LogLike = -31.746697490321186 at 2023-11-02 10:37:03.319824
+Using core 1694083:Started cross validation for [60 60] degree check and 2 th-fold at 2023-11-02 10:37:03.320240Using core 1694083:=========Started MLE run at 2023-11-02 10:37:03.320338=========Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:03.320373Using core 1694084:Finished Integration at 2023-11-02 10:37:03.612713. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:03.623386, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -398.5577719689236, Fractional Error = 0.0009914269098946428
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:03.623747Using core 1694094:Finished Integration at 2023-11-02 10:37:03.633394. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Optimization run finished at 2023-11-02 10:37:03.644592, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -372.00414104811125, Fractional Error = 0.0009643923112727065
+
+Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:03.645269Using core 1694094:Finished Integration at 2023-11-02 10:37:03.972149. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Finished cross validation for [32 32] degree check and 1 th-fold. LogLike = -57.994934637355925 at 2023-11-02 10:37:03.972281
+Using core 1694094:Started cross validation for [10 10] degree check and 3 th-fold at 2023-11-02 10:37:03.973609Using core 1694094:=========Started MLE run at 2023-11-02 10:37:03.973714=========Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:03.973750Using core 1694085:Finished Integration at 2023-11-02 10:37:04.046420. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Optimization run finished at 2023-11-02 10:37:04.059641, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -392.3598251992271, Fractional Error = 0.0008626510139392564
+
+Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:04.060696Using core 1694084:Finished Integration at 2023-11-02 10:37:04.094587. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [32 32] degree check and 0 th-fold. LogLike = -31.311306227516447 at 2023-11-02 10:37:04.094712
+Using core 1694084:Started cross validation for [15 15] degree check and 3 th-fold at 2023-11-02 10:37:04.095190Using core 1694084:=========Started MLE run at 2023-11-02 10:37:04.095301=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:04.095331Using core 1694095:Finished Integration at 2023-11-02 10:37:04.267053. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:04.279509, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -366.4290100593204, Fractional Error = 0.0009861490981828373
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:04.280193Using core 1694091:Finished Integration at 2023-11-02 10:37:04.504038. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Optimization run finished at 2023-11-02 10:37:04.506857, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -410.4815298833776, Fractional Error = 0.0009179775634833579
+
+Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:04.507222Using core 1694085:Finished Integration at 2023-11-02 10:37:04.606883. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Finished cross validation for [37 37] degree check and 0 th-fold. LogLike = -31.01938915484885 at 2023-11-02 10:37:04.607940
+Using core 1694085:Started cross validation for [21 21] degree check and 3 th-fold at 2023-11-02 10:37:04.614297Using core 1694085:=========Started MLE run at 2023-11-02 10:37:04.614452=========Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:04.614523Using core 1694086:Finished Integration at 2023-11-02 10:37:04.650680. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Optimization run finished at 2023-11-02 10:37:04.665968, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -386.5446972466505, Fractional Error = 0.0009132801634157645
+
+Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:04.666946Using core 1694095:Finished Integration at 2023-11-02 10:37:04.672132. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [37 37] degree check and 1 th-fold. LogLike = -57.36588009553681 at 2023-11-02 10:37:04.672978
+Using core 1694095:Started cross validation for [26 26] degree check and 3 th-fold at 2023-11-02 10:37:04.678242Using core 1694095:=========Started MLE run at 2023-11-02 10:37:04.678415=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:04.678447Using core 1694091:Finished Integration at 2023-11-02 10:37:04.853589. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Finished cross validation for [21 21] degree check and 2 th-fold. LogLike = -40.334761505263614 at 2023-11-02 10:37:04.853966
+Using core 1694091:Started cross validation for [32 32] degree check and 3 th-fold at 2023-11-02 10:37:04.854639Using core 1694091:=========Started MLE run at 2023-11-02 10:37:04.854740=========Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:04.854770Using core 1694096:Finished Integration at 2023-11-02 10:37:04.927486. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Optimization run finished at 2023-11-02 10:37:04.944074, with 14 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -360.4361539781971, Fractional Error = 0.0009061874049439234
+
+Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:04.944854Using core 1694081:Finished Integration at 2023-11-02 10:37:05.124205. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Optimization run finished at 2023-11-02 10:37:05.126844, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -399.48152356854337, Fractional Error = 0.0009239118822894783
+
+Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:05.126988Using core 1694086:Finished Integration at 2023-11-02 10:37:05.276515. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Finished cross validation for [43 43] degree check and 0 th-fold. LogLike = -30.771420973441003 at 2023-11-02 10:37:05.276908
+Using core 1694086:Started cross validation for [37 37] degree check and 3 th-fold at 2023-11-02 10:37:05.283331Using core 1694086:=========Started MLE run at 2023-11-02 10:37:05.283484=========Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:05.283555Using core 1694087:Finished Integration at 2023-11-02 10:37:05.330767. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Optimization run finished at 2023-11-02 10:37:05.346709, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -382.44188813037664, Fractional Error = 0.000952592062629089
+
+Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:05.347524Using core 1694094:Finished Integration at 2023-11-02 10:37:05.367029. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Optimization run finished at 2023-11-02 10:37:05.367920, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -436.7862977551891, Fractional Error = 0.0008800611006460323
+
+Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:05.368043Using core 1694096:Finished Integration at 2023-11-02 10:37:05.404102. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Finished cross validation for [43 43] degree check and 1 th-fold. LogLike = -56.872129420062194 at 2023-11-02 10:37:05.404940
+Using core 1694096:Started cross validation for [43 43] degree check and 3 th-fold at 2023-11-02 10:37:05.406392Using core 1694096:=========Started MLE run at 2023-11-02 10:37:05.406532=========Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:05.406565Using core 1694094:Finished Integration at 2023-11-02 10:37:05.506846. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Finished cross validation for [10 10] degree check and 3 th-fold. LogLike = -62.309773816852 at 2023-11-02 10:37:05.506937
+Using core 1694094:Started cross validation for [48 48] degree check and 3 th-fold at 2023-11-02 10:37:05.507379Using core 1694094:=========Started MLE run at 2023-11-02 10:37:05.507481=========Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:05.507511Using core 1694081:Finished Integration at 2023-11-02 10:37:05.559623. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Finished cross validation for [26 26] degree check and 2 th-fold. LogLike = -39.815402656618716 at 2023-11-02 10:37:05.559700
+Using core 1694081:Started cross validation for [54 54] degree check and 3 th-fold at 2023-11-02 10:37:05.559997Using core 1694081:=========Started MLE run at 2023-11-02 10:37:05.560091=========Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:05.560118Using core 1694097:Finished Integration at 2023-11-02 10:37:05.575038. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Optimization run finished at 2023-11-02 10:37:05.591713, with 14 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -356.3564131101445, Fractional Error = 0.0009483313514108545
+
+Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:05.592546Using core 1694088:Finished Integration at 2023-11-02 10:37:05.971459. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Optimization run finished at 2023-11-02 10:37:05.990113, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -378.2964831441483, Fractional Error = 0.0009521552487324822
+
+Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:05.991366Using core 1694087:Finished Integration at 2023-11-02 10:37:06.039240. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Finished cross validation for [48 48] degree check and 0 th-fold. LogLike = -30.598659711991974 at 2023-11-02 10:37:06.039939
+Using core 1694087:Started cross validation for [60 60] degree check and 3 th-fold at 2023-11-02 10:37:06.041401Using core 1694087:=========Started MLE run at 2023-11-02 10:37:06.041539=========Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:06.041572Using core 1694097:Finished Integration at 2023-11-02 10:37:06.092969. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Finished cross validation for [48 48] degree check and 1 th-fold. LogLike = -56.591835598572125 at 2023-11-02 10:37:06.093980
+Using core 1694098:Finished Integration at 2023-11-02 10:37:06.095256. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Started cross validation for [10 10] degree check and 4 th-fold at 2023-11-02 10:37:06.095479Using core 1694097:=========Started MLE run at 2023-11-02 10:37:06.095619=========Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:06.095653Using core 1694098:Optimization run finished at 2023-11-02 10:37:06.141096, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -352.19705343814326, Fractional Error = 0.0009536985263672553
+
+Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:06.141860Using core 1694084:Finished Integration at 2023-11-02 10:37:06.362824. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:06.365610, with 11 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -413.2643732037201, Fractional Error = 0.0008562092372203673
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:06.365946Using core 1694084:Finished Integration at 2023-11-02 10:37:06.562078. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [15 15] degree check and 3 th-fold. LogLike = -57.44921279901389 at 2023-11-02 10:37:06.562194
+Using core 1694084:Started cross validation for [15 15] degree check and 4 th-fold at 2023-11-02 10:37:06.563150Using core 1694084:=========Started MLE run at 2023-11-02 10:37:06.563269=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:06.563298Using core 1694080:Finished Integration at 2023-11-02 10:37:06.566079. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Optimization run finished at 2023-11-02 10:37:06.574908, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -389.85445407695335, Fractional Error = 0.0008953529271607354
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:06.575150Using core 1694089:Finished Integration at 2023-11-02 10:37:06.605014. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Optimization run finished at 2023-11-02 10:37:06.630236, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -374.79048413116624, Fractional Error = 0.0009375220020334307
+
+Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:06.631270Using core 1694098:Finished Integration at 2023-11-02 10:37:06.734216. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Finished cross validation for [54 54] degree check and 1 th-fold. LogLike = -56.406466722565035 at 2023-11-02 10:37:06.734974
+Using core 1694098:Started cross validation for [21 21] degree check and 4 th-fold at 2023-11-02 10:37:06.736712Using core 1694098:=========Started MLE run at 2023-11-02 10:37:06.736863=========Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:06.736902Using core 1694088:Finished Integration at 2023-11-02 10:37:06.812255. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Finished cross validation for [54 54] degree check and 0 th-fold. LogLike = -30.438920711857328 at 2023-11-02 10:37:06.812976
+Using core 1694088:Started cross validation for [26 26] degree check and 4 th-fold at 2023-11-02 10:37:06.815215Using core 1694088:=========Started MLE run at 2023-11-02 10:37:06.815376=========Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:06.815407Using core 1694099:Finished Integration at 2023-11-02 10:37:06.929614. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:06.955283, with 14 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -348.66153551413686, Fractional Error = 0.0009387038139153927
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:06.956412Using core 1694080:Finished Integration at 2023-11-02 10:37:07.115396. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [32 32] degree check and 2 th-fold. LogLike = -39.38675864541152 at 2023-11-02 10:37:07.115477
+Using core 1694080:Started cross validation for [32 32] degree check and 4 th-fold at 2023-11-02 10:37:07.116107Using core 1694080:=========Started MLE run at 2023-11-02 10:37:07.116206=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:07.116235Using core 1694082:Finished Integration at 2023-11-02 10:37:07.415519. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Optimization run finished at 2023-11-02 10:37:07.430862, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -383.9750270574604, Fractional Error = 0.0009210945684374546
+
+Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:07.431214Using core 1694089:Finished Integration at 2023-11-02 10:37:07.453577. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Finished cross validation for [60 60] degree check and 0 th-fold. LogLike = -30.325331365097924 at 2023-11-02 10:37:07.453954
+Using core 1694089:Started cross validation for [37 37] degree check and 4 th-fold at 2023-11-02 10:37:07.455521Using core 1694089:=========Started MLE run at 2023-11-02 10:37:07.455652=========Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:07.455682Using core 1694097:Finished Integration at 2023-11-02 10:37:07.473631. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Optimization run finished at 2023-11-02 10:37:07.474572, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -451.37045338818643, Fractional Error = 0.0009239810186486952
+
+Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:07.474694Using core 1694099:Finished Integration at 2023-11-02 10:37:07.550409. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [60 60] degree check and 1 th-fold. LogLike = -56.35533445004813 at 2023-11-02 10:37:07.550944
+Using core 1694099:Started cross validation for [43 43] degree check and 4 th-fold at 2023-11-02 10:37:07.552462Using core 1694099:=========Started MLE run at 2023-11-02 10:37:07.552608=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:07.552647Using core 1694085:Finished Integration at 2023-11-02 10:37:07.566088. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Optimization run finished at 2023-11-02 10:37:07.597913, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -395.8534024382939, Fractional Error = 0.0008432692685862247
+
+Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:07.598098Using core 1694097:Finished Integration at 2023-11-02 10:37:07.621785. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Finished cross validation for [10 10] degree check and 4 th-fold. LogLike = -47.28181737108213 at 2023-11-02 10:37:07.621864
+Using core 1694097:Started cross validation for [48 48] degree check and 4 th-fold at 2023-11-02 10:37:07.622443Using core 1694097:=========Started MLE run at 2023-11-02 10:37:07.622555=========Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:07.622588Using core 1694085:Finished Integration at 2023-11-02 10:37:07.884536. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Finished cross validation for [21 21] degree check and 3 th-fold. LogLike = -54.757871975337736 at 2023-11-02 10:37:07.884767
+Using core 1694085:Started cross validation for [54 54] degree check and 4 th-fold at 2023-11-02 10:37:07.885260Using core 1694085:=========Started MLE run at 2023-11-02 10:37:07.885354=========Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:07.885382Using core 1694082:Finished Integration at 2023-11-02 10:37:07.984195. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished cross validation for [37 37] degree check and 2 th-fold. LogLike = -39.07799389853443 at 2023-11-02 10:37:07.984669
+Using core 1694082:Started cross validation for [60 60] degree check and 4 th-fold at 2023-11-02 10:37:07.985356Using core 1694082:=========Started MLE run at 2023-11-02 10:37:07.985473=========Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:07.985503Using core 1694092:Finished Integration at 2023-11-02 10:37:08.084755. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:08.102441, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -378.137242692924, Fractional Error = 0.0009811876705893314
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:08.102867Using core 1694095:Finished Integration at 2023-11-02 10:37:08.314759. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:08.317929, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -386.30804102984365, Fractional Error = 0.0009324432940692757
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:08.318082Using core 1694084:Finished Integration at 2023-11-02 10:37:08.633392. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:08.634765, with 10 iterations.
+Sum of weights = 0.9999999999999999 		
+LogLikelihood = -426.2469568905061, Fractional Error = 0.0009701470725693302
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:08.634910Using core 1694095:Finished Integration at 2023-11-02 10:37:08.652252. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [26 26] degree check and 3 th-fold. LogLike = -53.256349619869 at 2023-11-02 10:37:08.652329
+Using core 1694095:Started cross validation for [10 10] degree check and 5 th-fold at 2023-11-02 10:37:08.652868Using core 1694095:=========Started MLE run at 2023-11-02 10:37:08.652987=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:08.653015Using core 1694092:Finished Integration at 2023-11-02 10:37:08.713677. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [43 43] degree check and 2 th-fold. LogLike = -38.7740489646782 at 2023-11-02 10:37:08.714946
+Using core 1694092:Started cross validation for [15 15] degree check and 5 th-fold at 2023-11-02 10:37:08.715611Using core 1694092:=========Started MLE run at 2023-11-02 10:37:08.716662=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:08.716694Using core 1694084:Finished Integration at 2023-11-02 10:37:08.862017. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [15 15] degree check and 4 th-fold. LogLike = -44.65229260003308 at 2023-11-02 10:37:08.862085
+Using core 1694084:Started cross validation for [21 21] degree check and 5 th-fold at 2023-11-02 10:37:08.862538Using core 1694084:=========Started MLE run at 2023-11-02 10:37:08.862626=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:08.862655Using core 1694091:Finished Integration at 2023-11-02 10:37:09.149392. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Optimization run finished at 2023-11-02 10:37:09.153984, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -377.70212096710407, Fractional Error = 0.0008606661840653469
+
+Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:09.154250Using core 1694090:Finished Integration at 2023-11-02 10:37:09.215465. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Optimization run finished at 2023-11-02 10:37:09.234657, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -373.7471260198089, Fractional Error = 0.0008622481894000533
+
+Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:09.235183Using core 1694091:Finished Integration at 2023-11-02 10:37:09.563926. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Finished cross validation for [32 32] degree check and 3 th-fold. LogLike = -51.821022375181954 at 2023-11-02 10:37:09.564003
+Using core 1694091:Started cross validation for [26 26] degree check and 5 th-fold at 2023-11-02 10:37:09.564548Using core 1694091:=========Started MLE run at 2023-11-02 10:37:09.564643=========Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:09.564670Using core 1694098:Finished Integration at 2023-11-02 10:37:09.616784. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Optimization run finished at 2023-11-02 10:37:09.619311, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -408.5108334507806, Fractional Error = 0.0009367928325481672
+
+Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:09.619617Using core 1694093:Finished Integration at 2023-11-02 10:37:09.833790. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Optimization run finished at 2023-11-02 10:37:09.844796, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -370.00323051249836, Fractional Error = 0.0009771149606777804
+
+Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:09.845413Using core 1694098:Finished Integration at 2023-11-02 10:37:09.920587. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Finished cross validation for [21 21] degree check and 4 th-fold. LogLike = -42.404013415950104 at 2023-11-02 10:37:09.920890
+Using core 1694098:Started cross validation for [32 32] degree check and 5 th-fold at 2023-11-02 10:37:09.921833Using core 1694098:=========Started MLE run at 2023-11-02 10:37:09.921948=========Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:09.921978Using core 1694090:Finished Integration at 2023-11-02 10:37:09.921941. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Finished cross validation for [48 48] degree check and 2 th-fold. LogLike = -38.55340582378847 at 2023-11-02 10:37:09.922915
+Using core 1694090:Started cross validation for [37 37] degree check and 5 th-fold at 2023-11-02 10:37:09.923529Using core 1694090:=========Started MLE run at 2023-11-02 10:37:09.923623=========Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:09.923650Using core 1694095:Finished Integration at 2023-11-02 10:37:09.931760. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:09.932693, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -450.98619058072427, Fractional Error = 0.0009471682429121995
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:09.932827Using core 1694086:Finished Integration at 2023-11-02 10:37:10.067227. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Optimization run finished at 2023-11-02 10:37:10.071830, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -372.3708281640515, Fractional Error = 0.0008885794548242013
+
+Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:10.072103Using core 1694095:Finished Integration at 2023-11-02 10:37:10.107709. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [10 10] degree check and 5 th-fold. LogLike = -47.413329455781536 at 2023-11-02 10:37:10.107789
+Using core 1694095:Started cross validation for [43 43] degree check and 5 th-fold at 2023-11-02 10:37:10.108202Using core 1694095:=========Started MLE run at 2023-11-02 10:37:10.108298=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:10.108326Using core 1694088:Finished Integration at 2023-11-02 10:37:10.243250. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Optimization run finished at 2023-11-02 10:37:10.246083, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -398.3808810138593, Fractional Error = 0.0008750275560617711
+
+Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:10.246227Using core 1694083:Finished Integration at 2023-11-02 10:37:10.492788. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Optimization run finished at 2023-11-02 10:37:10.506355, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -366.57462267639255, Fractional Error = 0.0009502692517406824
+
+Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:10.507099Using core 1694086:Finished Integration at 2023-11-02 10:37:10.526008. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Finished cross validation for [37 37] degree check and 3 th-fold. LogLike = -50.92260317313324 at 2023-11-02 10:37:10.526321
+Using core 1694086:Started cross validation for [48 48] degree check and 5 th-fold at 2023-11-02 10:37:10.527187Using core 1694086:=========Started MLE run at 2023-11-02 10:37:10.527301=========Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:10.527334Using core 1694088:Finished Integration at 2023-11-02 10:37:10.620658. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Finished cross validation for [26 26] degree check and 4 th-fold. LogLike = -41.116926067577424 at 2023-11-02 10:37:10.620748
+Using core 1694088:Started cross validation for [54 54] degree check and 5 th-fold at 2023-11-02 10:37:10.621351Using core 1694088:=========Started MLE run at 2023-11-02 10:37:10.621465=========Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:10.621506Using core 1694093:Finished Integration at 2023-11-02 10:37:10.627430. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Finished cross validation for [54 54] degree check and 2 th-fold. LogLike = -38.28863354005082 at 2023-11-02 10:37:10.631934
+Using core 1694093:Started cross validation for [60 60] degree check and 5 th-fold at 2023-11-02 10:37:10.632903Using core 1694093:=========Started MLE run at 2023-11-02 10:37:10.633025=========Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:10.633062Using core 1694092:Finished Integration at 2023-11-02 10:37:10.765616. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:10.766788, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -423.49553695348254, Fractional Error = 0.0008193277971727989
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:10.766925Using core 1694096:Finished Integration at 2023-11-02 10:37:10.900029. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Optimization run finished at 2023-11-02 10:37:10.907140, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -367.07352151947566, Fractional Error = 0.0009359016061635864
+
+Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:10.907511Using core 1694092:Finished Integration at 2023-11-02 10:37:11.008375. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [15 15] degree check and 5 th-fold. LogLike = -46.980093219909975 at 2023-11-02 10:37:11.008442
+Using core 1694092:Started cross validation for [10 10] degree check and 6 th-fold at 2023-11-02 10:37:11.008676Using core 1694092:=========Started MLE run at 2023-11-02 10:37:11.008766=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:11.008792Using core 1694080:Finished Integration at 2023-11-02 10:37:11.244791. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Optimization run finished at 2023-11-02 10:37:11.248104, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -389.7589401752567, Fractional Error = 0.0009362482354167626
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:11.248246Using core 1694083:Finished Integration at 2023-11-02 10:37:11.350165. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Finished cross validation for [60 60] degree check and 2 th-fold. LogLike = -38.02948767123126 at 2023-11-02 10:37:11.350936
+Using core 1694083:Started cross validation for [15 15] degree check and 6 th-fold at 2023-11-02 10:37:11.351819Using core 1694083:=========Started MLE run at 2023-11-02 10:37:11.352203=========Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:11.352236Using core 1694094:Finished Integration at 2023-11-02 10:37:11.413459. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Optimization run finished at 2023-11-02 10:37:11.431665, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -363.32654449961575, Fractional Error = 0.0009638612593952325
+
+Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:11.432012Using core 1694096:Finished Integration at 2023-11-02 10:37:11.442724. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Finished cross validation for [43 43] degree check and 3 th-fold. LogLike = -50.03824352090854 at 2023-11-02 10:37:11.444004
+Using core 1694096:Started cross validation for [21 21] degree check and 6 th-fold at 2023-11-02 10:37:11.444931Using core 1694096:=========Started MLE run at 2023-11-02 10:37:11.445051=========Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:11.445083Using core 1694084:Finished Integration at 2023-11-02 10:37:11.640560. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:11.643282, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -404.8157459970079, Fractional Error = 0.0009535316418683865
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:11.643386Using core 1694080:Finished Integration at 2023-11-02 10:37:11.715884. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [32 32] degree check and 4 th-fold. LogLike = -40.09065803543152 at 2023-11-02 10:37:11.715963
+Using core 1694080:Started cross validation for [26 26] degree check and 6 th-fold at 2023-11-02 10:37:11.716401Using core 1694080:=========Started MLE run at 2023-11-02 10:37:11.716493=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:11.716520Using core 1694084:Finished Integration at 2023-11-02 10:37:11.979731. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [21 21] degree check and 5 th-fold. LogLike = -46.00163019186213 at 2023-11-02 10:37:11.979934
+Using core 1694084:Started cross validation for [32 32] degree check and 6 th-fold at 2023-11-02 10:37:11.980480Using core 1694084:=========Started MLE run at 2023-11-02 10:37:11.980574=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:11.980603Using core 1694094:Finished Integration at 2023-11-02 10:37:12.027538. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Finished cross validation for [48 48] degree check and 3 th-fold. LogLike = -49.42584980125852 at 2023-11-02 10:37:12.028783
+Using core 1694094:Started cross validation for [37 37] degree check and 6 th-fold at 2023-11-02 10:37:12.029162Using core 1694094:=========Started MLE run at 2023-11-02 10:37:12.029254=========Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:12.029280Using core 1694081:Finished Integration at 2023-11-02 10:37:12.143366. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Optimization run finished at 2023-11-02 10:37:12.164418, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -359.4796944275881, Fractional Error = 0.0009646004323781507
+
+Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:12.165097Using core 1694089:Finished Integration at 2023-11-02 10:37:12.166748. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Optimization run finished at 2023-11-02 10:37:12.182621, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -384.1381270894953, Fractional Error = 0.0009761404433454974
+
+Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:12.182779Using core 1694092:Finished Integration at 2023-11-02 10:37:12.310007. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:12.310701, with 11 iterations.
+Sum of weights = 0.9999999999999998 		
+LogLikelihood = -441.95112969718576, Fractional Error = 0.0009389891867174956
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:12.310791Using core 1694092:Finished Integration at 2023-11-02 10:37:12.437569. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [10 10] degree check and 6 th-fold. LogLike = -56.75104045079032 at 2023-11-02 10:37:12.437633
+Using core 1694092:Started cross validation for [43 43] degree check and 6 th-fold at 2023-11-02 10:37:12.437944Using core 1694092:=========Started MLE run at 2023-11-02 10:37:12.438034=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:12.438067Using core 1694089:Finished Integration at 2023-11-02 10:37:12.667212. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Finished cross validation for [37 37] degree check and 4 th-fold. LogLike = -39.490919272487275 at 2023-11-02 10:37:12.668063
+Using core 1694089:Started cross validation for [48 48] degree check and 6 th-fold at 2023-11-02 10:37:12.668607Using core 1694089:=========Started MLE run at 2023-11-02 10:37:12.668708=========Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:12.668736Using core 1694081:Finished Integration at 2023-11-02 10:37:12.806326. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Finished cross validation for [54 54] degree check and 3 th-fold. LogLike = -48.84461667549578 at 2023-11-02 10:37:12.806792
+Using core 1694081:Started cross validation for [54 54] degree check and 6 th-fold at 2023-11-02 10:37:12.807377Using core 1694081:=========Started MLE run at 2023-11-02 10:37:12.807479=========Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:12.807509Using core 1694091:Finished Integration at 2023-11-02 10:37:13.003129. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Optimization run finished at 2023-11-02 10:37:13.014612, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -393.8203709466127, Fractional Error = 0.0009108241487136402
+
+Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:13.014758Using core 1694099:Finished Integration at 2023-11-02 10:37:13.043963. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:13.051232, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -378.1736053259576, Fractional Error = 0.0009025908055359421
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:13.051660Using core 1694087:Finished Integration at 2023-11-02 10:37:13.233795. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Optimization run finished at 2023-11-02 10:37:13.251056, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -356.1707697027658, Fractional Error = 0.0009564009961035636
+
+Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:13.251857Using core 1694083:Finished Integration at 2023-11-02 10:37:13.392746. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Optimization run finished at 2023-11-02 10:37:13.393937, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -415.20752243538374, Fractional Error = 0.0008807118612959098
+
+Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:13.394056Using core 1694091:Finished Integration at 2023-11-02 10:37:13.421939. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Finished cross validation for [26 26] degree check and 5 th-fold. LogLike = -45.454390763504975 at 2023-11-02 10:37:13.422015
+Using core 1694091:Started cross validation for [60 60] degree check and 6 th-fold at 2023-11-02 10:37:13.422399Using core 1694091:=========Started MLE run at 2023-11-02 10:37:13.422491=========Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:13.422519Using core 1694097:Finished Integration at 2023-11-02 10:37:13.455320. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Optimization run finished at 2023-11-02 10:37:13.473111, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -374.24202010027136, Fractional Error = 0.0009324369941376652
+
+Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:13.473620Using core 1694083:Finished Integration at 2023-11-02 10:37:13.593933. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Finished cross validation for [15 15] degree check and 6 th-fold. LogLike = -55.3122434830914 at 2023-11-02 10:37:13.594003
+Using core 1694083:Started cross validation for [10 10] degree check and 7 th-fold at 2023-11-02 10:37:13.594251Using core 1694083:=========Started MLE run at 2023-11-02 10:37:13.594338=========Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:13.594365Using core 1694099:Finished Integration at 2023-11-02 10:37:13.621909. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [43 43] degree check and 4 th-fold. LogLike = -38.851835382389666 at 2023-11-02 10:37:13.622937
+Using core 1694099:Started cross validation for [15 15] degree check and 7 th-fold at 2023-11-02 10:37:13.623756Using core 1694099:=========Started MLE run at 2023-11-02 10:37:13.623852=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:13.623905Using core 1694087:Finished Integration at 2023-11-02 10:37:13.965411. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Finished cross validation for [60 60] degree check and 3 th-fold. LogLike = -48.39806181279408 at 2023-11-02 10:37:13.965995
+Using core 1694087:Started cross validation for [21 21] degree check and 7 th-fold at 2023-11-02 10:37:13.972371Using core 1694087:=========Started MLE run at 2023-11-02 10:37:13.972553=========Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:13.972588Using core 1694098:Finished Integration at 2023-11-02 10:37:14.096693. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Optimization run finished at 2023-11-02 10:37:14.107392, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -384.0362584250997, Fractional Error = 0.0008912008454698468
+
+Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:14.107527Using core 1694097:Finished Integration at 2023-11-02 10:37:14.119986. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Finished cross validation for [48 48] degree check and 4 th-fold. LogLike = -38.41180409654986 at 2023-11-02 10:37:14.120966
+Using core 1694097:Started cross validation for [26 26] degree check and 7 th-fold at 2023-11-02 10:37:14.122078Using core 1694097:=========Started MLE run at 2023-11-02 10:37:14.122212=========Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:14.122251Using core 1694096:Finished Integration at 2023-11-02 10:37:14.318374. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Optimization run finished at 2023-11-02 10:37:14.320276, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -396.3611326609228, Fractional Error = 0.0009744563813759807
+
+Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:14.320417Using core 1694085:Finished Integration at 2023-11-02 10:37:14.383364. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Optimization run finished at 2023-11-02 10:37:14.396665, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -370.299659646446, Fractional Error = 0.0009298887425605383
+
+Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:14.397299Using core 1694096:Finished Integration at 2023-11-02 10:37:14.597635. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Finished cross validation for [21 21] degree check and 6 th-fold. LogLike = -54.601760213496945 at 2023-11-02 10:37:14.597705
+Using core 1694096:Started cross validation for [32 32] degree check and 7 th-fold at 2023-11-02 10:37:14.598132Using core 1694096:=========Started MLE run at 2023-11-02 10:37:14.598227=========Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:14.598254Using core 1694098:Finished Integration at 2023-11-02 10:37:14.617529. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Finished cross validation for [32 32] degree check and 5 th-fold. LogLike = -45.13230947121869 at 2023-11-02 10:37:14.617606
+Using core 1694098:Started cross validation for [37 37] degree check and 7 th-fold at 2023-11-02 10:37:14.618005Using core 1694098:=========Started MLE run at 2023-11-02 10:37:14.618099=========Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:14.618128Using core 1694090:Finished Integration at 2023-11-02 10:37:14.674744. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Optimization run finished at 2023-11-02 10:37:14.679738, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -378.16657341040906, Fractional Error = 0.0008975565559288598
+
+Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:14.680227Using core 1694083:Finished Integration at 2023-11-02 10:37:14.914189. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Optimization run finished at 2023-11-02 10:37:14.914829, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -476.60451375324476, Fractional Error = 0.0009991941324126725
+
+Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:14.914930Using core 1694083:Finished Integration at 2023-11-02 10:37:15.038808. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Finished cross validation for [10 10] degree check and 7 th-fold. LogLike = -24.04892784770945 at 2023-11-02 10:37:15.038873
+Using core 1694083:Started cross validation for [43 43] degree check and 7 th-fold at 2023-11-02 10:37:15.039179Using core 1694083:=========Started MLE run at 2023-11-02 10:37:15.039268=========Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:15.039295Using core 1694082:Finished Integration at 2023-11-02 10:37:15.082136. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Finished Integration at 2023-11-02 10:37:15.082357. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Finished cross validation for [54 54] degree check and 4 th-fold. LogLike = -37.939570684773166 at 2023-11-02 10:37:15.082829
+Using core 1694085:Started cross validation for [48 48] degree check and 7 th-fold at 2023-11-02 10:37:15.083536Using core 1694085:=========Started MLE run at 2023-11-02 10:37:15.083642=========Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:15.083674Using core 1694082:Optimization run finished at 2023-11-02 10:37:15.098513, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -366.9664344871723, Fractional Error = 0.0009203274703747306
+
+Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:15.099186Using core 1694080:Finished Integration at 2023-11-02 10:37:15.165847. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Optimization run finished at 2023-11-02 10:37:15.168274, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -385.40549802999743, Fractional Error = 0.0009266986734571071
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:15.168380Using core 1694090:Finished Integration at 2023-11-02 10:37:15.226225. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Finished cross validation for [37 37] degree check and 5 th-fold. LogLike = -44.90007511341122 at 2023-11-02 10:37:15.226933
+Using core 1694090:Started cross validation for [54 54] degree check and 7 th-fold at 2023-11-02 10:37:15.227486Using core 1694090:=========Started MLE run at 2023-11-02 10:37:15.227592=========Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:15.227624Using core 1694095:Finished Integration at 2023-11-02 10:37:15.403094. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:15.409730, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -372.44497403913016, Fractional Error = 0.0009316415326613214
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:15.410073Using core 1694080:Finished Integration at 2023-11-02 10:37:15.526914. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [26 26] degree check and 6 th-fold. LogLike = -54.1038130019752 at 2023-11-02 10:37:15.527022
+Using core 1694080:Started cross validation for [60 60] degree check and 7 th-fold at 2023-11-02 10:37:15.527337Using core 1694080:=========Started MLE run at 2023-11-02 10:37:15.527425=========Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:15.527451Using core 1694099:Finished Integration at 2023-11-02 10:37:15.703407. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:15.704543, with 10 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -449.2736504910238, Fractional Error = 0.0009906207024168116
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:15.704639Using core 1694082:Finished Integration at 2023-11-02 10:37:15.880506. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished cross validation for [60 60] degree check and 4 th-fold. LogLike = -37.520064021460925 at 2023-11-02 10:37:15.880933
+Using core 1694082:Started cross validation for [10 10] degree check and 8 th-fold at 2023-11-02 10:37:15.881358Using core 1694082:=========Started MLE run at 2023-11-02 10:37:15.881457=========Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:15.881487Using core 1694099:Finished Integration at 2023-11-02 10:37:15.903501. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [15 15] degree check and 7 th-fold. LogLike = -22.66254384572556 at 2023-11-02 10:37:15.903579
+Using core 1694099:Started cross validation for [15 15] degree check and 8 th-fold at 2023-11-02 10:37:15.903948Using core 1694099:=========Started MLE run at 2023-11-02 10:37:15.904049=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:15.904080Using core 1694095:Finished Integration at 2023-11-02 10:37:16.037923. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [43 43] degree check and 5 th-fold. LogLike = -44.532066071734704 at 2023-11-02 10:37:16.038493
+Using core 1694095:Started cross validation for [21 21] degree check and 8 th-fold at 2023-11-02 10:37:16.039154Using core 1694095:=========Started MLE run at 2023-11-02 10:37:16.039254=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:16.039283Using core 1694084:Finished Integration at 2023-11-02 10:37:16.202538. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:16.208937, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -375.757232184938, Fractional Error = 0.0008884669248804117
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:16.209094Using core 1694086:Finished Integration at 2023-11-02 10:37:16.345681. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Optimization run finished at 2023-11-02 10:37:16.353113, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -368.3644132893298, Fractional Error = 0.000987572933995728
+
+Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:16.353417Using core 1694084:Finished Integration at 2023-11-02 10:37:16.613328. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [32 32] degree check and 6 th-fold. LogLike = -53.75478577939297 at 2023-11-02 10:37:16.613403
+Using core 1694084:Started cross validation for [26 26] degree check and 8 th-fold at 2023-11-02 10:37:16.613784Using core 1694084:=========Started MLE run at 2023-11-02 10:37:16.613874=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:16.613914Using core 1694094:Finished Integration at 2023-11-02 10:37:16.843355. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Optimization run finished at 2023-11-02 10:37:16.847843, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -369.8476776586751, Fractional Error = 0.0009297409912595341
+
+Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:16.848127Using core 1694087:Finished Integration at 2023-11-02 10:37:16.906246. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Optimization run finished at 2023-11-02 10:37:16.915528, with 11 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -430.3115757013996, Fractional Error = 0.0008914280445869251
+
+Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:16.915659Using core 1694088:Finished Integration at 2023-11-02 10:37:16.983162. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Optimization run finished at 2023-11-02 10:37:16.992714, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -364.2473239929819, Fractional Error = 0.000987921870016456
+
+Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:16.993269Using core 1694086:Finished Integration at 2023-11-02 10:37:17.039811. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Finished cross validation for [48 48] degree check and 5 th-fold. LogLike = -44.259087205531934 at 2023-11-02 10:37:17.040923
+Using core 1694086:Started cross validation for [32 32] degree check and 8 th-fold at 2023-11-02 10:37:17.041397Using core 1694086:=========Started MLE run at 2023-11-02 10:37:17.041498=========Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:17.041529Using core 1694087:Finished Integration at 2023-11-02 10:37:17.208734. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Finished cross validation for [21 21] degree check and 7 th-fold. LogLike = -21.42933273367134 at 2023-11-02 10:37:17.208803
+Using core 1694087:Started cross validation for [37 37] degree check and 8 th-fold at 2023-11-02 10:37:17.209113Using core 1694087:=========Started MLE run at 2023-11-02 10:37:17.209201=========Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:17.209227Using core 1694082:Finished Integration at 2023-11-02 10:37:17.219000. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Optimization run finished at 2023-11-02 10:37:17.219639, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -443.59586623865016, Fractional Error = 0.0009420581780488757
+
+Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:17.219723Using core 1694082:Finished Integration at 2023-11-02 10:37:17.330258. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished cross validation for [10 10] degree check and 8 th-fold. LogLike = -54.989857630027494 at 2023-11-02 10:37:17.330331
+Using core 1694082:Started cross validation for [43 43] degree check and 8 th-fold at 2023-11-02 10:37:17.330571Using core 1694082:=========Started MLE run at 2023-11-02 10:37:17.330658=========Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:17.330685Using core 1694094:Finished Integration at 2023-11-02 10:37:17.338373. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Finished cross validation for [37 37] degree check and 6 th-fold. LogLike = -53.51716857549819 at 2023-11-02 10:37:17.338909
+Using core 1694094:Started cross validation for [48 48] degree check and 8 th-fold at 2023-11-02 10:37:17.339339Using core 1694094:=========Started MLE run at 2023-11-02 10:37:17.339440=========Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:17.339470Using core 1694093:Finished Integration at 2023-11-02 10:37:17.592279. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Optimization run finished at 2023-11-02 10:37:17.606423, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -360.783260198515, Fractional Error = 0.0009663914888156178
+
+Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:17.607279Using core 1694097:Finished Integration at 2023-11-02 10:37:17.608957. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Optimization run finished at 2023-11-02 10:37:17.611354, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -419.4423246814407, Fractional Error = 0.0008936073002301845
+
+Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:17.611474Using core 1694088:Finished Integration at 2023-11-02 10:37:17.757212. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Finished cross validation for [54 54] degree check and 5 th-fold. LogLike = -43.98329124207672 at 2023-11-02 10:37:17.757641
+Using core 1694088:Started cross validation for [54 54] degree check and 8 th-fold at 2023-11-02 10:37:17.758259Using core 1694088:=========Started MLE run at 2023-11-02 10:37:17.758357=========Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:17.758384Using core 1694092:Finished Integration at 2023-11-02 10:37:17.812997. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:17.821301, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -363.68980730570684, Fractional Error = 0.0008743988748243129
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:17.821692Using core 1694097:Finished Integration at 2023-11-02 10:37:17.963718. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Finished cross validation for [26 26] degree check and 7 th-fold. LogLike = -20.84862672162787 at 2023-11-02 10:37:17.963788
+Using core 1694097:Started cross validation for [60 60] degree check and 8 th-fold at 2023-11-02 10:37:17.964049Using core 1694097:=========Started MLE run at 2023-11-02 10:37:17.964140=========Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:17.964167Using core 1694099:Finished Integration at 2023-11-02 10:37:18.064470. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:18.065628, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -419.40764811417466, Fractional Error = 0.0008769731772593468
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:18.065760Using core 1694099:Finished Integration at 2023-11-02 10:37:18.244478. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [15 15] degree check and 8 th-fold. LogLike = -51.103214397927026 at 2023-11-02 10:37:18.244545
+Using core 1694099:Started cross validation for [10 10] degree check and 9 th-fold at 2023-11-02 10:37:18.244962Using core 1694099:=========Started MLE run at 2023-11-02 10:37:18.245059=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:18.245086Using core 1694092:Finished Integration at 2023-11-02 10:37:18.359191. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [43 43] degree check and 6 th-fold. LogLike = -53.166068805264466 at 2023-11-02 10:37:18.359801
+Using core 1694092:Started cross validation for [15 15] degree check and 9 th-fold at 2023-11-02 10:37:18.360522Using core 1694092:=========Started MLE run at 2023-11-02 10:37:18.360624=========Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:18.360658Using core 1694093:Finished Integration at 2023-11-02 10:37:18.455922. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Finished cross validation for [60 60] degree check and 5 th-fold. LogLike = -43.74138756332976 at 2023-11-02 10:37:18.457013
+Using core 1694093:Started cross validation for [21 21] degree check and 9 th-fold at 2023-11-02 10:37:18.457862Using core 1694093:=========Started MLE run at 2023-11-02 10:37:18.457999=========Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:18.458033Using core 1694089:Finished Integration at 2023-11-02 10:37:18.648138. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Optimization run finished at 2023-11-02 10:37:18.656530, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -359.48585064748744, Fractional Error = 0.0009420102107424522
+
+Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:18.657041Using core 1694096:Finished Integration at 2023-11-02 10:37:18.726616. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Optimization run finished at 2023-11-02 10:37:18.730641, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -410.3871768625694, Fractional Error = 0.0009523386144006616
+
+Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:18.730788Using core 1694095:Finished Integration at 2023-11-02 10:37:18.933367. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:18.935192, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -402.37824714898835, Fractional Error = 0.0009871849599655898
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:18.935299Using core 1694096:Finished Integration at 2023-11-02 10:37:19.110104. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Finished cross validation for [32 32] degree check and 7 th-fold. LogLike = -20.26230725793145 at 2023-11-02 10:37:19.110380
+Using core 1694096:Started cross validation for [26 26] degree check and 9 th-fold at 2023-11-02 10:37:19.111048Using core 1694096:=========Started MLE run at 2023-11-02 10:37:19.111158=========Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:19.111187Using core 1694095:Finished Integration at 2023-11-02 10:37:19.173822. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [21 21] degree check and 8 th-fold. LogLike = -48.609729479399476 at 2023-11-02 10:37:19.173905
+Using core 1694095:Started cross validation for [32 32] degree check and 9 th-fold at 2023-11-02 10:37:19.174299Using core 1694095:=========Started MLE run at 2023-11-02 10:37:19.174390=========Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:19.174418Using core 1694089:Finished Integration at 2023-11-02 10:37:19.234498. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Finished cross validation for [48 48] degree check and 6 th-fold. LogLike = -52.92758300917116 at 2023-11-02 10:37:19.234945
+Using core 1694089:Started cross validation for [37 37] degree check and 9 th-fold at 2023-11-02 10:37:19.235461Using core 1694089:=========Started MLE run at 2023-11-02 10:37:19.235564=========Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:19.235594Using core 1694081:Finished Integration at 2023-11-02 10:37:19.375282. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Optimization run finished at 2023-11-02 10:37:19.386369, with 14 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -355.21533070517455, Fractional Error = 0.0009495213653677085
+
+Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:19.386926Using core 1694098:Finished Integration at 2023-11-02 10:37:19.423074. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Optimization run finished at 2023-11-02 10:37:19.427565, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -404.6176366881628, Fractional Error = 0.0009776047981029288
+
+Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:19.427709Using core 1694099:Finished Integration at 2023-11-02 10:37:19.462071. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:19.462666, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -432.8335186364116, Fractional Error = 0.0009839271518717126
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:19.462754Using core 1694099:Finished Integration at 2023-11-02 10:37:19.692126. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [10 10] degree check and 9 th-fold. LogLike = -67.08954246923226 at 2023-11-02 10:37:19.692197
+Using core 1694099:Started cross validation for [43 43] degree check and 9 th-fold at 2023-11-02 10:37:19.692424Using core 1694099:=========Started MLE run at 2023-11-02 10:37:19.692508=========Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:19.692533Using core 1694098:Finished Integration at 2023-11-02 10:37:19.862830. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Finished cross validation for [37 37] degree check and 7 th-fold. LogLike = -19.91684512639999 at 2023-11-02 10:37:19.863927
+Using core 1694098:Started cross validation for [48 48] degree check and 9 th-fold at 2023-11-02 10:37:19.864573Using core 1694098:=========Started MLE run at 2023-11-02 10:37:19.864669=========Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:19.864697Using core 1694081:Finished Integration at 2023-11-02 10:37:20.051420. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Finished cross validation for [54 54] degree check and 6 th-fold. LogLike = -52.74135956312121 at 2023-11-02 10:37:20.051814
+Using core 1694081:Started cross validation for [54 54] degree check and 9 th-fold at 2023-11-02 10:37:20.052338Using core 1694081:=========Started MLE run at 2023-11-02 10:37:20.052434=========Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:20.052462Using core 1694084:Finished Integration at 2023-11-02 10:37:20.195558. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:20.197984, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -392.45282974123666, Fractional Error = 0.0009295604113548087
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:20.198120Using core 1694092:Finished Integration at 2023-11-02 10:37:20.269106. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Optimization run finished at 2023-11-02 10:37:20.270495, with 10 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -408.71926106696196, Fractional Error = 0.000964991970103045
+
+Using core 1694092:Starting C matrix calculation at 2023-11-02 10:37:20.270601Using core 1694083:Finished Integration at 2023-11-02 10:37:20.457068. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Optimization run finished at 2023-11-02 10:37:20.463325, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -398.55896468062315, Fractional Error = 0.0008800228948619139
+
+Using core 1694083:Starting C matrix calculation at 2023-11-02 10:37:20.463829Using core 1694084:Finished Integration at 2023-11-02 10:37:20.495828. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [26 26] degree check and 8 th-fold. LogLike = -47.097920235862375 at 2023-11-02 10:37:20.495916
+Using core 1694084:Started cross validation for [60 60] degree check and 9 th-fold at 2023-11-02 10:37:20.496367Using core 1694084:=========Started MLE run at 2023-11-02 10:37:20.496460=========Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:20.496487Using core 1694091:Finished Integration at 2023-11-02 10:37:20.575193. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Optimization run finished at 2023-11-02 10:37:20.590625, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -351.6042799251208, Fractional Error = 0.0009274421496532236
+
+Using core 1694091:Starting C matrix calculation at 2023-11-02 10:37:20.591178Using core 1694092:Finished Integration at 2023-11-02 10:37:20.629801. Calculated the PDFs for Integrated beta and normal density.Using core 1694092:Finished cross validation for [15 15] degree check and 9 th-fold. LogLike = -62.62220171696268 at 2023-11-02 10:37:20.629874
+Using core 1694083:Finished Integration at 2023-11-02 10:37:20.956816. Calculated the PDFs for Integrated beta and normal density.Using core 1694083:Finished cross validation for [43 43] degree check and 7 th-fold. LogLike = -19.56218082109325 at 2023-11-02 10:37:20.957282
+Using core 1694085:Finished Integration at 2023-11-02 10:37:21.016043. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Optimization run finished at 2023-11-02 10:37:21.024451, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -394.516535598002, Fractional Error = 0.0009215938572451073
+
+Using core 1694085:Starting C matrix calculation at 2023-11-02 10:37:21.024798Using core 1694093:Finished Integration at 2023-11-02 10:37:21.080207. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Optimization run finished at 2023-11-02 10:37:21.092301, with 11 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -391.4706350577236, Fractional Error = 0.0009045773038523322
+
+Using core 1694093:Starting C matrix calculation at 2023-11-02 10:37:21.092459Using core 1694086:Finished Integration at 2023-11-02 10:37:21.263475. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Optimization run finished at 2023-11-02 10:37:21.267460, with 13 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -383.5547319702532, Fractional Error = 0.0008608091172744711
+
+Using core 1694086:Starting C matrix calculation at 2023-11-02 10:37:21.267567Using core 1694091:Finished Integration at 2023-11-02 10:37:21.301503. Calculated the PDFs for Integrated beta and normal density.Using core 1694091:Finished cross validation for [60 60] degree check and 6 th-fold. LogLike = -52.62525507173713 at 2023-11-02 10:37:21.302020
+Using core 1694085:Finished Integration at 2023-11-02 10:37:21.601548. Calculated the PDFs for Integrated beta and normal density.Using core 1694085:Finished cross validation for [48 48] degree check and 7 th-fold. LogLike = -19.363482719825036 at 2023-11-02 10:37:21.603930
+Using core 1694093:Finished Integration at 2023-11-02 10:37:21.612613. Calculated the PDFs for Integrated beta and normal density.Using core 1694093:Finished cross validation for [21 21] degree check and 9 th-fold. LogLike = -59.90545946999272 at 2023-11-02 10:37:21.612695
+Using core 1694086:Finished Integration at 2023-11-02 10:37:21.643286. Calculated the PDFs for Integrated beta and normal density.Using core 1694086:Finished cross validation for [32 32] degree check and 8 th-fold. LogLike = -45.91596903668889 at 2023-11-02 10:37:21.643375
+Using core 1694090:Finished Integration at 2023-11-02 10:37:21.755220. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Optimization run finished at 2023-11-02 10:37:21.766487, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -390.4400990401471, Fractional Error = 0.0009188980486378185
+
+Using core 1694090:Starting C matrix calculation at 2023-11-02 10:37:21.767039Using core 1694087:Finished Integration at 2023-11-02 10:37:22.053640. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Optimization run finished at 2023-11-02 10:37:22.058072, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -377.85820919212097, Fractional Error = 0.0008978906859397295
+
+Using core 1694087:Starting C matrix calculation at 2023-11-02 10:37:22.058178Using core 1694096:Finished Integration at 2023-11-02 10:37:22.233184. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Optimization run finished at 2023-11-02 10:37:22.236208, with 12 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -381.6570586171313, Fractional Error = 0.000874679835111326
+
+Using core 1694096:Starting C matrix calculation at 2023-11-02 10:37:22.236344Using core 1694090:Finished Integration at 2023-11-02 10:37:22.352420. Calculated the PDFs for Integrated beta and normal density.Using core 1694090:Finished cross validation for [54 54] degree check and 7 th-fold. LogLike = -19.174437893066614 at 2023-11-02 10:37:22.352929
+Using core 1694087:Finished Integration at 2023-11-02 10:37:22.466377. Calculated the PDFs for Integrated beta and normal density.Using core 1694087:Finished cross validation for [37 37] degree check and 8 th-fold. LogLike = -45.359260268749665 at 2023-11-02 10:37:22.466920
+Using core 1694080:Finished Integration at 2023-11-02 10:37:22.734920. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished Integration at 2023-11-02 10:37:22.737297. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Optimization run finished at 2023-11-02 10:37:22.744710, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -372.0418278924275, Fractional Error = 0.0009723529628763264
+
+Using core 1694082:Starting C matrix calculation at 2023-11-02 10:37:22.745241Using core 1694080:Optimization run finished at 2023-11-02 10:37:22.750557, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -386.9953290666246, Fractional Error = 0.0009038453968128043
+
+Using core 1694080:Starting C matrix calculation at 2023-11-02 10:37:22.751181Using core 1694096:Finished Integration at 2023-11-02 10:37:22.908084. Calculated the PDFs for Integrated beta and normal density.Using core 1694096:Finished cross validation for [26 26] degree check and 9 th-fold. LogLike = -58.261888147411725 at 2023-11-02 10:37:22.908168
+Using core 1694095:Finished Integration at 2023-11-02 10:37:22.965799. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Optimization run finished at 2023-11-02 10:37:22.969494, with 12 iterations.
+Sum of weights = 1.0 		
+LogLikelihood = -373.3250999212904, Fractional Error = 0.0009551167848108202
+
+Using core 1694095:Starting C matrix calculation at 2023-11-02 10:37:22.969613Using core 1694082:Finished Integration at 2023-11-02 10:37:23.201174. Calculated the PDFs for Integrated beta and normal density.Using core 1694082:Finished cross validation for [43 43] degree check and 8 th-fold. LogLike = -44.93307393354995 at 2023-11-02 10:37:23.201500
+Using core 1694094:Finished Integration at 2023-11-02 10:37:23.422627. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished Integration at 2023-11-02 10:37:23.427830. Calculated the PDFs for Integrated beta and normal density.Using core 1694080:Finished cross validation for [60 60] degree check and 7 th-fold. LogLike = -19.033609508227798 at 2023-11-02 10:37:23.428933
+Using core 1694094:Optimization run finished at 2023-11-02 10:37:23.430520, with 14 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -367.5707965444658, Fractional Error = 0.0008722837373807401
+
+Using core 1694094:Starting C matrix calculation at 2023-11-02 10:37:23.430840Using core 1694089:Finished Integration at 2023-11-02 10:37:23.578010. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Optimization run finished at 2023-11-02 10:37:23.582648, with 12 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -367.949433828717, Fractional Error = 0.0009928527573628261
+
+Using core 1694089:Starting C matrix calculation at 2023-11-02 10:37:23.582754Using core 1694095:Finished Integration at 2023-11-02 10:37:23.726066. Calculated the PDFs for Integrated beta and normal density.Using core 1694095:Finished cross validation for [32 32] degree check and 9 th-fold. LogLike = -56.89557447493798 at 2023-11-02 10:37:23.726426
+Using core 1694094:Finished Integration at 2023-11-02 10:37:23.940918. Calculated the PDFs for Integrated beta and normal density.Using core 1694094:Finished cross validation for [48 48] degree check and 8 th-fold. LogLike = -44.68514572455566 at 2023-11-02 10:37:23.941921
+Using core 1694088:Finished Integration at 2023-11-02 10:37:24.312131. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Optimization run finished at 2023-11-02 10:37:24.321483, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -363.6542931807192, Fractional Error = 0.00099879977832578
+
+Using core 1694088:Starting C matrix calculation at 2023-11-02 10:37:24.322017Using core 1694089:Finished Integration at 2023-11-02 10:37:24.418200. Calculated the PDFs for Integrated beta and normal density.Using core 1694089:Finished cross validation for [37 37] degree check and 9 th-fold. LogLike = -56.03796749913553 at 2023-11-02 10:37:24.418927
+Using core 1694099:Finished Integration at 2023-11-02 10:37:24.694953. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Optimization run finished at 2023-11-02 10:37:24.700859, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -362.3179386670962, Fractional Error = 0.0008977354251266305
+
+Using core 1694099:Starting C matrix calculation at 2023-11-02 10:37:24.700982Using core 1694088:Finished Integration at 2023-11-02 10:37:24.866717. Calculated the PDFs for Integrated beta and normal density.Using core 1694088:Finished cross validation for [54 54] degree check and 8 th-fold. LogLike = -44.55218433583386 at 2023-11-02 10:37:24.867106
+Using core 1694097:Finished Integration at 2023-11-02 10:37:25.041502. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Optimization run finished at 2023-11-02 10:37:25.055127, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -360.01885966112036, Fractional Error = 0.000982429935009886
+
+Using core 1694097:Starting C matrix calculation at 2023-11-02 10:37:25.055905Using core 1694098:Finished Integration at 2023-11-02 10:37:25.312607. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Optimization run finished at 2023-11-02 10:37:25.318903, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -358.62764907326346, Fractional Error = 0.0009177814324995261
+
+Using core 1694098:Starting C matrix calculation at 2023-11-02 10:37:25.319170Using core 1694097:Finished Integration at 2023-11-02 10:37:25.651357. Calculated the PDFs for Integrated beta and normal density.Using core 1694097:Finished cross validation for [60 60] degree check and 8 th-fold. LogLike = -44.50035069792224 at 2023-11-02 10:37:25.651774
+Using core 1694099:Finished Integration at 2023-11-02 10:37:25.653102. Calculated the PDFs for Integrated beta and normal density.Using core 1694099:Finished cross validation for [43 43] degree check and 9 th-fold. LogLike = -55.0930613405505 at 2023-11-02 10:37:25.653932
+Using core 1694081:Finished Integration at 2023-11-02 10:37:26.033384. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Optimization run finished at 2023-11-02 10:37:26.042672, with 13 iterations.
+Sum of weights = 1.0000000000000004 		
+LogLikelihood = -354.9183620809521, Fractional Error = 0.0009060738695138677
+
+Using core 1694081:Starting C matrix calculation at 2023-11-02 10:37:26.043173Using core 1694098:Finished Integration at 2023-11-02 10:37:26.362841. Calculated the PDFs for Integrated beta and normal density.Using core 1694098:Finished cross validation for [48 48] degree check and 9 th-fold. LogLike = -54.4396036130585 at 2023-11-02 10:37:26.363131
+Using core 1694084:Finished Integration at 2023-11-02 10:37:27.101972. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Optimization run finished at 2023-11-02 10:37:27.112635, with 13 iterations.
+Sum of weights = 1.0000000000000002 		
+LogLikelihood = -351.77138853010695, Fractional Error = 0.0008877334014178881
+
+Using core 1694084:Starting C matrix calculation at 2023-11-02 10:37:27.112997Using core 1694081:Finished Integration at 2023-11-02 10:37:27.177568. Calculated the PDFs for Integrated beta and normal density.Using core 1694081:Finished cross validation for [54 54] degree check and 9 th-fold. LogLike = -53.76201787495084 at 2023-11-02 10:37:27.178011
+Using core 1694084:Finished Integration at 2023-11-02 10:37:28.350284. Calculated the PDFs for Integrated beta and normal density.Using core 1694084:Finished cross validation for [60 60] degree check and 9 th-fold. LogLike = -53.1906048321495 at 2023-11-02 10:37:28.351097
+Using core 1693953:Finished CV. Picked {'[60 60]'} degrees by maximizing likelihood with a loglike = -423.71948699399877Using core 1693953:Running full dataset MLE before bootstrap
+Using core 1693953:Finished full dataset MLE run at 2023-11-02 10:37:35.869786
