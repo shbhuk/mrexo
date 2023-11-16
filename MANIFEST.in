@@ -1,2 +1,4 @@
 include sample_scripts/*.py
-include sample_scripts/MdwarfRuns
+include sample_scripts/MdwarfRuns/*
+graft sample_scripts/MdwarfRuns/*
+
