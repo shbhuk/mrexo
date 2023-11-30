@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.abspath('../../mrexo'))  # Source code dir relative t
 project = 'MRExo'
 copyright = '2023, Shubham Kanodia and Matthias Yang He'
 author = 'Shubham Kanodia, Matthias Yang He'
-release = 'v1.1.2'
+release = 'v1.1.3'
 
 
 # -- General configuration ---------------------------------------------------
