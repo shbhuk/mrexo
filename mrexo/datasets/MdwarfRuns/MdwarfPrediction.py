@@ -6,8 +6,7 @@ import glob, os
 from mrexo.mle_utils_nd import calculate_conditional_distribution, NumericalIntegrate2D
 
 location = os.path.dirname(os.path.abspath(__file__))
-#location = "/data/skanodia/work/mrexo/sample_scripts/MdwarfRuns"
-#print(location)
+print(location)
 
 matplotlib.rcParams['xtick.labelsize'] = 25
 matplotlib.rcParams['ytick.labelsize'] = 25
@@ -109,7 +108,7 @@ def Mdwarf_InferPlMass_FromPlRadiusStMass(
 	PlotFolder = os.path.join(save_path, ConditionName)
 	
 	if not os.path.exists(PlotFolder):
-		print("3D Plot folder does not exist")
+		# print("3D Plot folder does not exist")
 		os.mkdir(PlotFolder)
 	
 	deg_per_dim = np.loadtxt(os.path.join(save_path, 'output', 'deg_per_dim.txt'))
@@ -147,7 +146,7 @@ def Mdwarf_InferPlMass_FromPlRadiusStMass(
 
 	ConditionalDist, MeanPDF, VariancePDF = calculate_conditional_distribution(
 		ConditionString, DataDict, weights, deg_per_dim,
-		JointDist.T, MeasurementDict)
+		JointDist, MeasurementDict)
 
 	MeanPDF = MeanPDF.reshape((len(x), len(y)))
 
