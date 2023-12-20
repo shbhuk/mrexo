@@ -426,7 +426,10 @@ def _PDF_Beta(x,a,b):
 		The probability density function of the Beta distribution evaluated at ``x``.
 	"""
 	if (a>=170) | (b>=170) | (a+b>170):
-		f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
+		NormalMean = a/(a+b)
+		NormalSigma = np.sqrt((a*b)/(((a+b)**2) * (1+a+b)))
+		f =  _PDF_Normal(x, NormalMean, NormalSigma)
+		# f = float((Decimal(_GammaFunction(a+b)) * Decimal(x**(a-1)*(1-x)**(b-1))) / (Decimal(_GammaFunction(a))*Decimal(_GammaFunction(b))))
 	else:
 		f = (_GammaFunction(a+b) * x**(a-1)*(1-x)**(b-1)) / (_GammaFunction(a)*_GammaFunction(b))
 
