@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 from multiprocessing import current_process
 import sys
 if sys.version_info.major==3:
