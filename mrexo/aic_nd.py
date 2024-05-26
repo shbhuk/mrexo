@@ -44,7 +44,7 @@ def run_aic_symmetric(DataDict, degree_max, NumCandidates=20, cores=1,
 
 
 def RunAIC(DataDict, degree_max, NumCandidates=20,
-	SymmetricDegreePerDimension=True,
+	SymmetricDegreePerDimension=True, degree_candidates=None,
 	cores=1, save_path=os.path.dirname(__file__), verbose=2):
 	"""
 	Calculate the optimal number of degrees in each dimension using the AIC method.
@@ -60,6 +60,8 @@ def RunAIC(DataDict, degree_max, NumCandidates=20,
 	SymmetricDegreePerDimension: bool, default=True
 		If True, while optimizing the number of degrees, will assume the same number of degrees in each dimension (i.e. symmetric), running through ``NumCandidates`` iterations.
 		If False, while optimizing the number of degrees it can have ``NumCandidates ^ NumDimensions`` iterations. Therefore with 20 degree candidates in 2 dimensions, there will be 400 iterations to go through!
+	degree_candidates: List or np.array, default=None
+		If specified, then these ``degree_candidates`` will be used for the degree estimation, otherwise will use the default method.
 	cores : int, default=1
 		The number of cores to use for parallel processing. To use all the cores in the CPU,
 		   set ``cores=cpu_count()`` (requires '#from multiprocessing import cpu_count').
@@ -77,7 +79,7 @@ def RunAIC(DataDict, degree_max, NumCandidates=20,
 	ndim = DataDict['ndim']
 	n = DataDict['DataLength']
 
-	degree_candidates = GiveDegreeCandidates(degree_max=degree_max, ndim=ndim, ncandidates=NumCandidates)
+	if degree_candidates is None: degree_candidates = GiveDegreeCandidates(degree_max=degree_max, ndim=ndim, ncandidates=NumCandidates)
 
 	message = 'Using AIC method to estimate the number of degrees of freedom for the weights. Max candidate = {}\n'.format(degree_candidates.max())
 	_ = _logging(message=message, filepath=save_path, verbose=verbose, append=True)
