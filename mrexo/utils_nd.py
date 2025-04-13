@@ -1,11 +1,15 @@
 import numpy as np
 import os
 from multiprocessing import current_process
+import matplotlib.pyplot as plt
+
 import sys
 if sys.version_info.major==3:
 	from functools import lru_cache
 else:
 	from functools32 import lru_cache
+
+
 
 def _save_dictionary(dictionary, output_location,
 	NumBootstrap=False, NumMonteCarlo=False):
@@ -41,11 +45,13 @@ def _save_dictionary(dictionary, output_location,
 		deg_per_dim = dictionary['deg_per_dim']
 		DataSequences = dictionary['DataSequence']
 		JointDist = dictionary['JointDist']
+		aic = dictionary['aic']
 
 		np.savetxt(os.path.join(output_location,'weights.txt'),weights, comments='#', header='Weights for Beta densities from initial fitting w/o bootstrap')
 		np.savetxt(os.path.join(output_location,'unpadded_weights.txt'),unpadded_weights, comments='#', header='Unpadded weights for Beta densities from initial fitting w/o bootstrap')
 		np.savetxt(os.path.join(output_location,'deg_per_dim.txt'), deg_per_dim, comments='#', header='Degrees per dimensions')
 		np.save(os.path.join(output_location,'JointDist.npy'), JointDist)
+		np.savetxt(os.path.join(output_location, 'aic.txt'), [aic])
 		np.savetxt(os.path.join(aux_output_location,'DataSequences.txt'), DataSequences, comments='#', header='Data Sequence for each dimensions')
 	
 def GiveDegreeCandidates(degree_max, ndim, ncandidates=10):
